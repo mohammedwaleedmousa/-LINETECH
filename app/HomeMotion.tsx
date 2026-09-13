@@ -6,9 +6,9 @@ import { usePathname } from "next/navigation";
 const REVEAL_SELECTORS = [
   ".ref-section-heading",
   ".home-projects-heading",
-  ".ref-about-copy",
-  ".ref-about-art",
-  ".ref-about-lockup",
+  ".home-about-copy",
+  ".home-about-art",
+  ".home-about-path",
   ".home-why-intro",
   ".process-center-head",
   ".home-faq-intro",
