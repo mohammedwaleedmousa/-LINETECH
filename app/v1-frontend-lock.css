@@ -142,10 +142,10 @@
 }
 
 @media(max-width:620px){
-  .info-page{padding-top:70px}
+  .info-page{padding-top:82px}
   .not-found-page{
-    margin-top:70px;
-    min-height:calc(100svh - 70px)!important;
+    margin-top:82px;
+    min-height:calc(100svh - 82px)!important;
   }
   .service-detail-hero-copy,
   .project-detail-hero-copy{
@@ -168,6 +168,80 @@
   }
   .frontend-only-note{
     align-items:flex-start;
+  }
+}
+
+/* Every route hero occupies exactly one viewport below the shared navbar. */
+:root{--linetech-nav-space:96px}
+.ref-home .ref-hero,
+.ref-page>.ref-hero,
+.service-detail-page .service-detail-hero,
+.project-detail-page .project-detail-hero,
+.info-page .info-page-hero,
+.info-page .thank-you-hero{
+  height:calc(100svh - var(--linetech-nav-space))!important;
+  min-height:calc(100svh - var(--linetech-nav-space))!important;
+  max-height:calc(100svh - var(--linetech-nav-space))!important;
+  overflow:hidden!important;
+}
+.ref-home .ref-hero-grid,
+.ref-page>.ref-hero .ref-hero-grid,
+.service-detail-page .service-detail-hero-grid,
+.project-detail-page .project-detail-hero-grid{
+  height:100%!important;
+  min-height:0!important;
+  max-height:100%!important;
+}
+.info-page .info-page-hero{
+  align-items:center!important;
+}
+.info-page .info-page-hero>.ref-shell{
+  padding-top:40px!important;
+  padding-bottom:40px!important;
+}
+.info-page .thank-you-inner{
+  max-height:100%;
+  overflow:hidden;
+}
+
+@media(max-width:900px){
+  :root{--linetech-nav-space:82px}
+  .ref-home .ref-hero,
+  .ref-page>.ref-hero,
+  .service-detail-page .service-detail-hero,
+  .project-detail-page .project-detail-hero,
+  .info-page .info-page-hero,
+  .info-page .thank-you-hero{
+    height:calc(100svh - var(--linetech-nav-space))!important;
+    min-height:calc(100svh - var(--linetech-nav-space))!important;
+    max-height:calc(100svh - var(--linetech-nav-space))!important;
+  }
+  .service-detail-page .service-detail-visual,
+  .project-detail-page .project-detail-visual{
+    min-height:0!important;
+  }
+}
+
+@media(max-width:620px){
+  .ref-home .ref-hero-copy,
+  .ref-page>.ref-hero .ref-hero-copy,
+  .service-detail-page .service-detail-hero-copy,
+  .project-detail-page .project-detail-hero-copy{
+    overflow:auto;
+    overscroll-behavior:contain;
+    scrollbar-width:none;
+  }
+  .ref-home .ref-hero-copy::-webkit-scrollbar,
+  .ref-page>.ref-hero .ref-hero-copy::-webkit-scrollbar,
+  .service-detail-page .service-detail-hero-copy::-webkit-scrollbar,
+  .project-detail-page .project-detail-hero-copy::-webkit-scrollbar{display:none}
+  .info-page .info-page-hero>.ref-shell{
+    padding-top:28px!important;
+    padding-bottom:28px!important;
+  }
+  .info-page .thank-you-inner{
+    padding-top:36px!important;
+    padding-bottom:32px!important;
   }
 }
 
