@@ -42,24 +42,21 @@ export default function SiteNav() {
 
   useEffect(() => {
     if (!searchOpen) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const timer = window.setTimeout(() => inputRef.current?.focus(), 40);
+    const timer = window.setTimeout(() => inputRef.current?.focus(), 360);
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setSearchOpen(false);
     };
     window.addEventListener("keydown", onKeyDown);
     return () => {
       window.clearTimeout(timer);
-      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", onKeyDown);
     };
   }, [searchOpen]);
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return searchItems.slice(0, 7);
-    return searchItems.filter((item) => `${item.title} ${item.meta} ${item.keywords}`.toLowerCase().includes(q));
+    if (!q) return searchItems.slice(0, 5);
+    return searchItems.filter((item) => `${item.title} ${item.meta} ${item.keywords}`.toLowerCase().includes(q)).slice(0, 6);
   }, [query]);
 
   const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
@@ -81,9 +78,9 @@ export default function SiteNav() {
           })}
         </nav>
         <div className="ref-nav-end">
-          <button className="ref-search search-trigger" type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen(true); }}>⌕</button>
+          <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
-          <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(v => !v)}>
+          <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => { setSearchOpen(false); setOpen(v => !v); }}>
             <i/><i/>
           </button>
         </div>
@@ -104,26 +101,33 @@ export default function SiteNav() {
       </div>
 
       {searchOpen && (
-        <div className="site-search-overlay" role="dialog" aria-modal="true" aria-label="Search LINETECH" onMouseDown={(event) => { if (event.target === event.currentTarget) setSearchOpen(false); }}>
-          <div className="site-search-panel">
+        <div className="site-search-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSearchOpen(false); }}>
+          <div className="site-search-panel" role="dialog" aria-modal="false" aria-label="Search LINETECH">
+            <div className="site-search-rail" aria-hidden="true"><i/><i/><i/></div>
             <div className="site-search-topline">
-              <span>SEARCH LINETECH</span>
-              <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close search">ESC ×</button>
+              <span>SEARCH / LINETECH</span>
+              <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close search">ESC <b>×</b></button>
             </div>
-            <div className="site-search-field">
-              <span aria-hidden="true">⌕</span>
-              <input ref={inputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Search pages, services, projects..." aria-label="Search" />
+            <div className="site-search-content">
+              <div className="site-search-field">
+                <span aria-hidden="true">⌕</span>
+                <input ref={inputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="What are you looking for?" aria-label="Search" />
+              </div>
+              <div className="site-search-caption">
+                <span>{query ? "SEARCH RESULTS" : "QUICK ACCESS"}</span>
+                <span>{results.length.toString().padStart(2, "0")}</span>
+              </div>
+              <div className="site-search-results" aria-live="polite">
+                {results.length > 0 ? results.map((item, index) => (
+                  <Link key={`${item.title}-${item.href}`} href={item.href} prefetch onClick={() => setSearchOpen(false)}>
+                    <span className="site-search-index">{String(index + 1).padStart(2, "0")}</span>
+                    <span className="site-search-title">{item.title}<small>{item.meta}</small></span>
+                    <b>→</b>
+                  </Link>
+                )) : <p className="site-search-empty">No results found. Try another word.</p>}
+              </div>
+              <div className="site-search-hint"><span>Type to search</span><span>ESC to close</span></div>
             </div>
-            <div className="site-search-results" aria-live="polite">
-              {results.length > 0 ? results.map((item, index) => (
-                <Link key={`${item.title}-${item.href}`} href={item.href} prefetch onClick={() => setSearchOpen(false)}>
-                  <span className="site-search-index">{String(index + 1).padStart(2, "0")}</span>
-                  <span className="site-search-title">{item.title}<small>{item.meta}</small></span>
-                  <b>→</b>
-                </Link>
-              )) : <p className="site-search-empty">No results found. Try another word.</p>}
-            </div>
-            <div className="site-search-hint"><span>Type to search</span><span>ESC to close</span></div>
           </div>
         </div>
       )}
