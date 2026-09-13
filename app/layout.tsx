@@ -3,6 +3,7 @@ import "./globals.css";
 import "./inner.css";
 import "./polish.css";
 import "./home-reference.css";
+import "./inner-reference.css";
 
 export const metadata: Metadata = {
   title: {
