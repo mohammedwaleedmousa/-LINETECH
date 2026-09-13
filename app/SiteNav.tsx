@@ -97,9 +97,8 @@ export default function SiteNav() {
 
   function toggleLanguage(){
     const next:SiteLanguage = language === "ar" ? "en" : "ar";
-    setLanguage(next);
     window.localStorage.setItem(LANGUAGE_STORAGE_KEY,next);
-    window.dispatchEvent(new CustomEvent(LANGUAGE_EVENT,{detail:{language:next}}));
+    window.location.reload();
   }
 
   return (
