@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export const metadata = {
   title: "Thank You",
-  description: "Thank you for starting your line with LINETECH.",
+  description: "Frontend preview of the LINETECH project confirmation step.",
   robots: { index: false, follow: false },
 };
 
@@ -14,11 +14,12 @@ export default function ThankYouPage(){
         <div className="thank-you-beam" aria-hidden="true"/>
         <div className="ref-shell thank-you-inner">
           <span className="thank-you-index">01 / NEXT LINE</span>
+          <p className="frontend-only-note">Frontend preview only — no project data has been submitted or stored.</p>
           <p className="ref-kicker">THANK YOU</p>
           <h1>Your first line is ready.</h1>
-          <p className="thank-you-lead">We have prepared the next step in the LINETECH project journey. Keep your brief ready and continue through the contact channel you choose.</p>
+          <p className="thank-you-lead">This is the confirmation experience LINETECH can use once the final submission flow is connected later. For now, keep your brief ready and use the copy or share actions from the project form.</p>
           <div className="thank-you-actions">
-            <Link className="ref-btn primary" href="/" prefetch>Back to Home ↗</Link>
+            <Link className="ref-btn primary" href="/start" prefetch>Back to Project Brief ↗</Link>
             <Link className="ref-btn ghost" href="/projects" prefetch>View our work</Link>
           </div>
           <div className="thank-you-steps">
