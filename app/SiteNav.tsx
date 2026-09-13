@@ -27,7 +27,7 @@ const searchItems = [
   { title: "FAQ", meta: "Page", href: "/faq", keywords: "faq questions payments revisions support timeline" },
   { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief" },
   { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website" },
-  { title: "Login", meta: "Account", href: "/login", keywords: "login sign in account client workspace" },
+  { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace" },
   { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea" },
 ] as const;
 
@@ -91,8 +91,8 @@ export default function SiteNav() {
         </nav>
         <div className="ref-nav-end">
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
-          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
+          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
           <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => { setSearchOpen(false); setOpen(v => !v); }}>
             <i/><i/>
           </button>
@@ -110,8 +110,8 @@ export default function SiteNav() {
             );
           })}
         </nav>
-        <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>Login <span>↗</span></Link>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>Start Your Line <span>→</span></Link>
+        <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>Login / Create Account <span>↗</span></Link>
       </div>
 
       {searchOpen && (
