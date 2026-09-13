@@ -2,7 +2,6 @@
 
 import Localized from "../Localized";
 
-
 export default function TermsPage(){return <Localized><main className="info-page page-terms">
   <section className="info-page-hero legal-hero">
     <div className="ref-shell legal-hero-grid">
@@ -12,11 +11,7 @@ export default function TermsPage(){return <Localized><main className="info-page
         <h1>Clear expectations make better work.</h1>
         <p>These terms cover use of the LINETECH website. Individual projects are governed by the scope and agreement accepted for that project.</p>
       </div>
-      <div className="legal-hero-visual" aria-hidden="true">
-        <span>LINETECH / TERMS</span>
-        <div><strong>SCOPE</strong><strong>PAYMENTS</strong><strong>HANDOVER</strong><strong>CLARITY</strong></div>
-        <i/>
-      </div>
+      <div className="legal-hero-visual" aria-hidden="true"><i/></div>
     </div>
   </section>
   <section className="info-content"><div className="ref-shell info-content-grid"><aside className="info-content-aside"><p className="ref-kicker">LAST UPDATED</p><h2>September 2026</h2><p>Project scope, payment stages, deliverables and timelines should be confirmed before execution begins.</p></aside><div className="info-prose">
