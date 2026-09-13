@@ -4,7 +4,21 @@ export const metadata = {
 };
 
 export default function PrivacyPage(){return <main className="info-page page-privacy">
-  <section className="info-page-hero"><div className="ref-shell"><p className="ref-kicker">PRIVACY</p><h1>Your information should stay clear and controlled.</h1><p>This page explains how information is handled when you use the LINETECH website and project brief.</p></div></section>
+  <section className="info-page-hero legal-hero">
+    <div className="ref-shell legal-hero-grid">
+      <div className="legal-hero-copy">
+        <span className="legal-hero-index">01 / PRIVACY</span>
+        <p className="ref-kicker">PRIVACY</p>
+        <h1>Your information should stay clear and controlled.</h1>
+        <p>This page explains how information is handled when you use the LINETECH website and project brief.</p>
+      </div>
+      <div className="legal-hero-visual" aria-hidden="true">
+        <span>LINETECH / POLICY</span>
+        <div><strong>BROWSER-FIRST</strong><strong>CLEAR CONTROL</strong><strong>NO FORM STORAGE</strong></div>
+        <i/>
+      </div>
+    </div>
+  </section>
   <section className="info-content"><div className="ref-shell info-content-grid"><aside className="info-content-aside"><p className="ref-kicker">LAST UPDATED</p><h2>September 2026</h2><p>The current project brief is designed to keep your typed content in the browser until you choose to copy or share it.</p></aside><div className="info-prose">
     <section><h2>1. Information you choose to provide</h2><p>If you use the project brief, you may enter information about yourself, your business or a project. The current brief does not intentionally send that content to LINETECH automatically; it remains in your browser until you choose a copy or share action.</p></section>
     <section><h2>2. Technical website data</h2><p>Like most hosted websites, infrastructure providers may process technical request information needed to deliver and secure the site, such as IP address, browser information, timestamps and request logs. LINETECH does not use this page to claim access to data it does not actually receive.</p></section>
