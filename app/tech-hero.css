@@ -1,19 +1,195 @@
-/* LINETECH technology-first hero system.
-   No photographic hero art: all hero surfaces now use one technical visual language
-   built from grids, data lines, nodes and controlled blue light. */
+/* LINETECH — technology-first hero system v2.
+   Every hero keeps one strong digital language, but each route has its own visual concept.
+   No photography: only computational grids, circuits, signal fields, data systems and blue light. */
 
-.ref-home .ref-hero{--tech-x:78%;--tech-y:36%;--tech-tilt:-8deg}
-.page-services .ref-hero{--tech-x:74%;--tech-y:48%;--tech-tilt:8deg}
-.page-projects .ref-hero{--tech-x:80%;--tech-y:58%;--tech-tilt:-12deg}
-.page-about .ref-hero{--tech-x:72%;--tech-y:34%;--tech-tilt:11deg}
-.page-contact .ref-hero{--tech-x:81%;--tech-y:42%;--tech-tilt:-6deg}
-.service-detail-hero{--tech-x:79%;--tech-y:44%;--tech-tilt:-9deg}
-.project-detail-hero{--tech-x:76%;--tech-y:51%;--tech-tilt:9deg}
-.info-page-hero{--tech-x:80%;--tech-y:38%;--tech-tilt:-7deg}
-.thank-you-hero{--tech-x:78%;--tech-y:46%;--tech-tilt:7deg}
-.login-stage{--tech-x:79%;--tech-y:42%;--tech-tilt:-7deg}
-.not-found-page{--tech-x:74%;--tech-y:45%;--tech-tilt:8deg}
+/* -------------------------------------------------------------------------- */
+/* Route-specific visual DNA                                                   */
+/* -------------------------------------------------------------------------- */
 
+/* HOME — AI CORE / neural system */
+.ref-home .ref-hero{
+  --tech-tilt:-7deg;--tech-right:3%;--tech-top:8%;--tech-w:min(45vw,690px);--tech-h:76%;--tech-opacity:.86;--tech-radius:50%;
+  --tech-bg:
+    linear-gradient(90deg,rgba(1,3,6,.998) 0%,rgba(2,5,10,.95) 30%,rgba(2,7,14,.58) 54%,rgba(2,7,14,.15) 100%),
+    radial-gradient(circle at 78% 45%,rgba(56,130,246,.34) 0 2%,rgba(56,130,246,.13) 13%,transparent 34%),
+    radial-gradient(circle at 78% 45%,transparent 0 12%,rgba(104,174,255,.14) 12.3% 12.7%,transparent 13% 22%,rgba(104,174,255,.08) 22.3% 22.7%,transparent 23%),
+    repeating-linear-gradient(0deg,transparent 0 39px,rgba(114,163,224,.035) 40px,transparent 41px),
+    repeating-linear-gradient(90deg,transparent 0 39px,rgba(114,163,224,.035) 40px,transparent 41px),
+    linear-gradient(135deg,#010306 0%,#06101b 58%,#020407 100%);
+  --tech-panel:
+    radial-gradient(circle at 50% 50%,transparent 0 18%,rgba(91,164,255,.28) 18.3% 18.8%,transparent 19% 31%,rgba(91,164,255,.18) 31.2% 31.6%,transparent 32%),
+    radial-gradient(circle at 50% 50%,rgba(147,198,255,.95) 0 1.2%,transparent 1.8%),
+    radial-gradient(circle at 28% 30%,#70b0ff 0 1.2px,transparent 2.2px),
+    radial-gradient(circle at 71% 26%,#fff 0 1px,transparent 2px),
+    radial-gradient(circle at 79% 67%,#3882f6 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 31% 74%,#70b0ff 0 1.3px,transparent 2.3px),
+    conic-gradient(from 20deg at 50% 50%,transparent 0 12%,rgba(70,145,240,.14) 12.3% 12.8%,transparent 13% 31%,rgba(70,145,240,.09) 31.3% 31.8%,transparent 32% 100%);
+}
+
+/* SERVICES — CIRCUIT BOARD / capability map */
+.page-services .ref-hero{
+  --tech-tilt:0deg;--tech-right:2%;--tech-top:12%;--tech-w:min(46vw,700px);--tech-h:68%;--tech-opacity:.80;--tech-radius:8px;
+  --tech-bg:
+    linear-gradient(90deg,rgba(1,3,6,.998) 0%,rgba(2,5,9,.94) 34%,rgba(3,8,15,.52) 58%,rgba(2,4,7,.10) 100%),
+    linear-gradient(135deg,transparent 48%,rgba(56,130,246,.13) 49%,rgba(56,130,246,.13) 49.5%,transparent 50%),
+    repeating-linear-gradient(0deg,transparent 0 52px,rgba(125,174,236,.034) 53px,transparent 54px),
+    repeating-linear-gradient(90deg,transparent 0 52px,rgba(125,174,236,.034) 53px,transparent 54px),
+    radial-gradient(circle at 82% 34%,rgba(56,130,246,.25),transparent 28%),
+    linear-gradient(135deg,#010306,#06101a 62%,#020406);
+  --tech-panel:
+    linear-gradient(90deg,transparent 9%,rgba(90,155,235,.32) 9.2% 9.55%,transparent 9.8% 42%,rgba(90,155,235,.23) 42.2% 42.55%,transparent 42.8% 76%,rgba(90,155,235,.22) 76.2% 76.55%,transparent 76.8%),
+    linear-gradient(0deg,transparent 17%,rgba(90,155,235,.28) 17.2% 17.55%,transparent 17.8% 48%,rgba(90,155,235,.20) 48.2% 48.55%,transparent 48.8% 79%,rgba(90,155,235,.24) 79.2% 79.55%,transparent 79.8%),
+    radial-gradient(circle at 9.4% 17.4%,#91c1ff 0 2px,transparent 3px),
+    radial-gradient(circle at 42.4% 48.4%,#3882f6 0 2px,transparent 3px),
+    radial-gradient(circle at 76.4% 79.4%,#fff 0 1.5px,transparent 2.6px),
+    repeating-linear-gradient(0deg,transparent 0 26px,rgba(255,255,255,.025) 27px,transparent 28px);
+}
+
+/* PROJECTS — DATA MATRIX / deployed systems */
+.page-projects .ref-hero{
+  --tech-tilt:-9deg;--tech-right:1%;--tech-top:9%;--tech-w:min(48vw,720px);--tech-h:74%;--tech-opacity:.84;--tech-radius:3px;
+  --tech-bg:
+    linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,9,.95) 31%,rgba(4,9,16,.55) 57%,rgba(2,4,8,.12) 100%),
+    radial-gradient(ellipse at 82% 72%,rgba(56,130,246,.30),transparent 34%),
+    repeating-linear-gradient(0deg,transparent 0 31px,rgba(127,172,226,.03) 32px,transparent 33px),
+    repeating-linear-gradient(90deg,transparent 0 63px,rgba(127,172,226,.036) 64px,transparent 65px),
+    linear-gradient(145deg,#010306,#07101b 58%,#020407);
+  --tech-panel:
+    repeating-linear-gradient(0deg,transparent 0 9%,rgba(94,156,232,.17) 9.2% 9.55%,transparent 9.8% 18%),
+    linear-gradient(90deg,transparent 0 11%,rgba(56,130,246,.32) 11.3% 11.8%,transparent 12% 37%,rgba(95,168,255,.18) 37.3% 37.7%,transparent 38% 67%,rgba(255,255,255,.12) 67.3% 67.6%,transparent 68%),
+    linear-gradient(135deg,transparent 0 58%,rgba(56,130,246,.17) 58.3% 58.8%,transparent 59%),
+    radial-gradient(circle at 11.5% 72%,#3882f6 0 2px,transparent 3px),
+    radial-gradient(circle at 67.5% 27%,#9bc8ff 0 1.7px,transparent 2.8px);
+}
+
+/* ABOUT — DIGITAL BLUEPRINT / company architecture */
+.page-about .ref-hero{
+  --tech-tilt:12deg;--tech-right:4%;--tech-top:7%;--tech-w:min(43vw,650px);--tech-h:78%;--tech-opacity:.78;--tech-radius:0;
+  --tech-bg:
+    linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 32%,rgba(4,9,16,.50) 58%,rgba(2,5,9,.08) 100%),
+    linear-gradient(26deg,transparent 0 59%,rgba(81,151,239,.10) 59.3% 59.7%,transparent 60%),
+    linear-gradient(116deg,transparent 0 71%,rgba(81,151,239,.08) 71.3% 71.7%,transparent 72%),
+    radial-gradient(circle at 78% 28%,rgba(56,130,246,.28),transparent 28%),
+    repeating-linear-gradient(90deg,transparent 0 46px,rgba(122,171,232,.028) 47px,transparent 48px),
+    linear-gradient(135deg,#010306,#07111c 58%,#020406);
+  --tech-panel:
+    linear-gradient(135deg,transparent 0 18%,rgba(103,170,255,.34) 18.2% 18.55%,transparent 18.8% 43%,rgba(103,170,255,.19) 43.2% 43.5%,transparent 43.8%),
+    linear-gradient(45deg,transparent 0 58%,rgba(103,170,255,.16) 58.2% 58.55%,transparent 58.8%),
+    radial-gradient(circle at 18% 18%,#fff 0 1.4px,transparent 2.4px),
+    radial-gradient(circle at 43% 43%,#3882f6 0 2px,transparent 3px),
+    radial-gradient(circle at 70% 69%,#7cb7ff 0 1.7px,transparent 2.7px),
+    repeating-linear-gradient(0deg,transparent 0 47px,rgba(255,255,255,.025) 48px,transparent 49px);
+}
+
+/* CONTACT — SIGNAL / communication field */
+.page-contact .ref-hero{
+  --tech-tilt:0deg;--tech-right:5%;--tech-top:12%;--tech-w:min(41vw,620px);--tech-h:68%;--tech-opacity:.86;--tech-radius:50%;
+  --tech-bg:
+    linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.96) 33%,rgba(3,8,15,.54) 59%,rgba(2,4,8,.08) 100%),
+    radial-gradient(circle at 79% 48%,rgba(56,130,246,.31),transparent 31%),
+    radial-gradient(circle at 79% 48%,transparent 0 17%,rgba(99,168,255,.09) 17.3% 17.7%,transparent 18% 29%,rgba(99,168,255,.07) 29.3% 29.7%,transparent 30%),
+    repeating-linear-gradient(0deg,transparent 0 48px,rgba(124,169,225,.03) 49px,transparent 50px),
+    linear-gradient(135deg,#010306,#06101a 56%,#020406);
+  --tech-panel:
+    radial-gradient(circle at 50% 50%,transparent 0 16%,rgba(104,176,255,.31) 16.3% 16.8%,transparent 17% 31%,rgba(104,176,255,.19) 31.3% 31.8%,transparent 32% 45%,rgba(104,176,255,.10) 45.3% 45.8%,transparent 46%),
+    conic-gradient(from 0deg at 50% 50%,rgba(56,130,246,.18) 0 1.5%,transparent 1.6% 24%,rgba(56,130,246,.14) 24.1% 25.4%,transparent 25.5% 49%,rgba(255,255,255,.10) 49.1% 50%,transparent 50.1%),
+    radial-gradient(circle at 50% 50%,#d7e9ff 0 2px,transparent 3px);
+}
+
+/* WEB DEVELOPMENT — CODE GRID / browser architecture */
+.service-web .service-detail-hero{
+  --tech-tilt:-5deg;--tech-right:2%;--tech-top:10%;--tech-w:min(46vw,700px);--tech-h:72%;--tech-opacity:.84;--tech-radius:10px;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 34%,rgba(3,9,16,.50) 60%,rgba(2,4,8,.08)),radial-gradient(circle at 81% 34%,rgba(56,130,246,.28),transparent 28%),repeating-linear-gradient(0deg,transparent 0 27px,rgba(123,172,232,.03) 28px,transparent 29px),linear-gradient(140deg,#010306,#06111d 60%,#020406);
+  --tech-panel:linear-gradient(90deg,rgba(255,255,255,.08) 0 1px,transparent 1px 31%,rgba(56,130,246,.18) 31.2% 31.6%,transparent 32% 100%),repeating-linear-gradient(0deg,transparent 0 12%,rgba(99,165,246,.15) 12.3% 12.6%,transparent 13% 24%),linear-gradient(135deg,transparent 0 74%,rgba(56,130,246,.22) 74.2% 74.6%,transparent 75%);
+}
+
+/* ECOMMERCE & SYSTEMS — TRANSACTION FLOW */
+.service-commerce .service-detail-hero{
+  --tech-tilt:6deg;--tech-right:2%;--tech-top:9%;--tech-w:min(45vw,680px);--tech-h:74%;--tech-opacity:.82;--tech-radius:6px;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 32%,rgba(3,8,15,.54) 59%,rgba(2,4,8,.08)),radial-gradient(ellipse at 80% 67%,rgba(56,130,246,.27),transparent 31%),repeating-linear-gradient(90deg,transparent 0 71px,rgba(124,172,231,.034) 72px,transparent 73px),linear-gradient(135deg,#010306,#07101b 60%,#020406);
+  --tech-panel:repeating-linear-gradient(0deg,transparent 0 8%,rgba(92,156,233,.16) 8.2% 8.5%,transparent 8.8% 16%),linear-gradient(90deg,transparent 0 12%,rgba(56,130,246,.29) 12.2% 12.6%,transparent 13% 56%,rgba(116,184,255,.16) 56.2% 56.6%,transparent 57%),radial-gradient(circle at 12.4% 72%,#3882f6 0 2px,transparent 3px),radial-gradient(circle at 56.4% 38%,#9bcaff 0 1.6px,transparent 2.7px);
+}
+
+/* BRAND IDENTITY — VECTOR GEOMETRY */
+.service-brand .service-detail-hero{
+  --tech-tilt:14deg;--tech-right:5%;--tech-top:8%;--tech-w:min(41vw,620px);--tech-h:76%;--tech-opacity:.78;--tech-radius:0;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 34%,rgba(4,9,15,.48) 59%,rgba(2,4,8,.07)),conic-gradient(from 225deg at 81% 45%,transparent 0 74%,rgba(56,130,246,.10) 74.3% 75%,transparent 75.2%),radial-gradient(circle at 81% 45%,rgba(56,130,246,.22),transparent 28%),linear-gradient(135deg,#010306,#07101b 58%,#020406);
+  --tech-panel:linear-gradient(45deg,transparent 0 24%,rgba(104,174,255,.31) 24.2% 24.6%,transparent 25% 49%,rgba(104,174,255,.16) 49.2% 49.6%,transparent 50%),linear-gradient(135deg,transparent 0 36%,rgba(255,255,255,.11) 36.2% 36.5%,transparent 37%),radial-gradient(circle at 24.4% 24.4%,#fff 0 1.4px,transparent 2.4px),radial-gradient(circle at 49.4% 49.4%,#3882f6 0 2px,transparent 3px);
+}
+
+/* CV & PORTFOLIO — DIGITAL PROFILE / DOCUMENT SCAN */
+.service-cv .service-detail-hero{
+  --tech-tilt:-3deg;--tech-right:5%;--tech-top:10%;--tech-w:min(39vw,590px);--tech-h:72%;--tech-opacity:.82;--tech-radius:12px;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 35%,rgba(4,9,16,.49) 60%,rgba(2,4,8,.07)),radial-gradient(circle at 79% 36%,rgba(56,130,246,.27),transparent 27%),repeating-linear-gradient(0deg,transparent 0 34px,rgba(125,172,232,.027) 35px,transparent 36px),linear-gradient(135deg,#010306,#07111b 60%,#020406);
+  --tech-panel:linear-gradient(90deg,rgba(255,255,255,.11) 0 1px,transparent 1px 29%,rgba(56,130,246,.22) 29.2% 29.6%,transparent 30%),repeating-linear-gradient(0deg,transparent 0 13%,rgba(106,168,244,.15) 13.2% 13.5%,transparent 14% 26%),radial-gradient(circle at 14% 16%,rgba(109,173,255,.25) 0 8%,transparent 8.5%);
+}
+
+/* FLAMINGO — COMMERCE GRID */
+.project-flamingo .project-detail-hero{
+  --tech-tilt:-8deg;--tech-right:2%;--tech-top:10%;--tech-w:min(46vw,700px);--tech-h:72%;--tech-opacity:.84;--tech-radius:6px;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 32%,rgba(4,9,16,.52) 59%,rgba(2,4,8,.07)),radial-gradient(circle at 82% 60%,rgba(56,130,246,.28),transparent 31%),repeating-linear-gradient(90deg,transparent 0 58px,rgba(123,170,230,.032) 59px,transparent 60px),linear-gradient(135deg,#010306,#07101b 58%,#020406);
+  --tech-panel:repeating-linear-gradient(90deg,transparent 0 22%,rgba(90,154,233,.18) 22.3% 22.7%,transparent 23% 44%),repeating-linear-gradient(0deg,transparent 0 27%,rgba(90,154,233,.13) 27.3% 27.7%,transparent 28% 54%),radial-gradient(circle at 22.5% 27.5%,#3882f6 0 1.8px,transparent 2.8px),radial-gradient(circle at 66.5% 55.5%,#9bc8ff 0 1.5px,transparent 2.6px);
+}
+
+/* ETQAN — MARKETPLACE NETWORK */
+.project-etqan .project-detail-hero{
+  --tech-tilt:4deg;--tech-right:3%;--tech-top:9%;--tech-w:min(45vw,680px);--tech-h:74%;--tech-opacity:.85;--tech-radius:50%;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 33%,rgba(4,9,16,.52) 60%,rgba(2,4,8,.07)),radial-gradient(circle at 80% 44%,rgba(56,130,246,.30),transparent 32%),repeating-linear-gradient(0deg,transparent 0 49px,rgba(124,171,231,.03) 50px,transparent 51px),linear-gradient(135deg,#010306,#06111c 58%,#020406);
+  --tech-panel:radial-gradient(circle at 24% 32%,#8ac0ff 0 2px,transparent 3px),radial-gradient(circle at 52% 18%,#fff 0 1.5px,transparent 2.5px),radial-gradient(circle at 77% 39%,#3882f6 0 2px,transparent 3px),radial-gradient(circle at 63% 72%,#8ac0ff 0 1.8px,transparent 2.8px),linear-gradient(28deg,transparent 0 31%,rgba(94,160,240,.23) 31.2% 31.6%,transparent 32% 55%,rgba(94,160,240,.18) 55.2% 55.6%,transparent 56%);
+}
+
+/* LEDGERPRO — FINANCIAL LEDGER / ANALYTICS */
+.project-ledger .project-detail-hero{
+  --tech-tilt:0deg;--tech-right:2%;--tech-top:11%;--tech-w:min(47vw,710px);--tech-h:69%;--tech-opacity:.83;--tech-radius:5px;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 32%,rgba(4,9,16,.51) 58%,rgba(2,4,8,.08)),radial-gradient(ellipse at 82% 73%,rgba(56,130,246,.29),transparent 34%),repeating-linear-gradient(0deg,transparent 0 35px,rgba(127,172,229,.034) 36px,transparent 37px),linear-gradient(135deg,#010306,#07101b 59%,#020406);
+  --tech-panel:repeating-linear-gradient(0deg,transparent 0 10%,rgba(104,168,245,.15) 10.2% 10.5%,transparent 11% 20%),linear-gradient(90deg,transparent 0 16%,rgba(56,130,246,.26) 16.2% 16.6%,transparent 17% 72%,rgba(255,255,255,.10) 72.2% 72.5%,transparent 73%),linear-gradient(155deg,transparent 0 58%,rgba(92,165,255,.28) 58.3% 58.8%,transparent 59%),radial-gradient(circle at 16.4% 70%,#3882f6 0 2px,transparent 3px);
+}
+
+/* FAQ — KNOWLEDGE SIGNAL */
+.page-faq .info-page-hero{
+  --tech-tilt:-5deg;--tech-right:4%;--tech-top:12%;--tech-w:min(42vw,630px);--tech-h:66%;--tech-opacity:.80;--tech-radius:50%;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 36%,rgba(4,9,16,.48) 61%,rgba(2,4,8,.07)),radial-gradient(circle at 80% 47%,rgba(56,130,246,.26),transparent 30%),linear-gradient(135deg,#010306,#07101b 60%,#020406);
+  --tech-panel:radial-gradient(circle at 50% 50%,transparent 0 17%,rgba(100,169,255,.28) 17.3% 17.8%,transparent 18% 31%,rgba(100,169,255,.14) 31.3% 31.8%,transparent 32%),linear-gradient(0deg,transparent 49.5%,rgba(255,255,255,.10) 49.7% 50.3%,transparent 50.5%),linear-gradient(90deg,transparent 49.5%,rgba(56,130,246,.18) 49.7% 50.3%,transparent 50.5%);
+}
+
+/* PRIVACY — CYBER SHIELD / protected perimeter */
+.page-privacy .info-page-hero{
+  --tech-tilt:45deg;--tech-right:8%;--tech-top:14%;--tech-w:min(33vw,500px);--tech-h:56%;--tech-opacity:.84;--tech-radius:18%;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 36%,rgba(4,9,16,.49) 61%,rgba(2,4,8,.07)),radial-gradient(circle at 80% 42%,rgba(56,130,246,.28),transparent 28%),repeating-linear-gradient(90deg,transparent 0 48px,rgba(124,170,229,.03) 49px,transparent 50px),linear-gradient(135deg,#010306,#07101b 59%,#020406);
+  --tech-panel:linear-gradient(0deg,transparent 12%,rgba(97,165,248,.23) 12.3% 12.7%,transparent 13% 87%,rgba(97,165,248,.18) 87.3% 87.7%,transparent 88%),linear-gradient(90deg,transparent 12%,rgba(97,165,248,.23) 12.3% 12.7%,transparent 13% 87%,rgba(97,165,248,.18) 87.3% 87.7%,transparent 88%),radial-gradient(circle at 50% 50%,rgba(56,130,246,.13) 0 22%,transparent 22.5%);
+}
+
+/* TERMS — DIGITAL CONTRACT / rule lines */
+.page-terms .info-page-hero{
+  --tech-tilt:-4deg;--tech-right:4%;--tech-top:11%;--tech-w:min(41vw,620px);--tech-h:66%;--tech-opacity:.80;--tech-radius:8px;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 36%,rgba(4,9,16,.47) 61%,rgba(2,4,8,.07)),radial-gradient(circle at 81% 36%,rgba(56,130,246,.25),transparent 26%),linear-gradient(135deg,#010306,#07101b 60%,#020406);
+  --tech-panel:repeating-linear-gradient(0deg,transparent 0 12%,rgba(111,170,241,.14) 12.3% 12.6%,transparent 13% 24%),linear-gradient(90deg,rgba(56,130,246,.23) 0 .4%,transparent .5% 100%),radial-gradient(circle at 88% 13%,#3882f6 0 2px,transparent 3px);
+}
+
+/* THANK YOU — LAUNCH / forward signal */
+.thank-you-hero{
+  --tech-tilt:-18deg;--tech-right:5%;--tech-top:7%;--tech-w:min(42vw,640px);--tech-h:79%;--tech-opacity:.88;--tech-radius:0;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 34%,rgba(4,9,16,.49) 60%,rgba(2,4,8,.07)),radial-gradient(circle at 79% 56%,rgba(56,130,246,.34),transparent 32%),linear-gradient(145deg,#010306,#07111d 58%,#020406);
+  --tech-panel:linear-gradient(90deg,transparent 49.4%,rgba(136,193,255,.42) 49.6% 50.4%,transparent 50.6%),linear-gradient(0deg,transparent 73%,rgba(56,130,246,.25) 73.2% 73.7%,transparent 74%),radial-gradient(circle at 50% 73.4%,#fff 0 2px,transparent 3px),linear-gradient(145deg,transparent 0 62%,rgba(56,130,246,.22) 62.3% 62.8%,transparent 63%);
+}
+
+/* LOGIN — SECURE AUTH / biometric rings */
+.login-stage{
+  --tech-tilt:0deg;--tech-right:5%;--tech-top:12%;--tech-w:min(40vw,600px);--tech-h:68%;--tech-opacity:.84;--tech-radius:50%;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.95) 36%,rgba(4,9,16,.49) 61%,rgba(2,4,8,.07)),radial-gradient(circle at 80% 43%,rgba(56,130,246,.28),transparent 29%),linear-gradient(135deg,#010306,#07101b 59%,#020406);
+  --tech-panel:repeating-radial-gradient(circle at 50% 50%,transparent 0 12px,rgba(101,171,255,.13) 13px,transparent 14px 26px),radial-gradient(circle at 50% 50%,transparent 0 29%,rgba(56,130,246,.33) 29.3% 29.8%,transparent 30% 41%,rgba(255,255,255,.10) 41.3% 41.7%,transparent 42%),linear-gradient(90deg,transparent 49.6%,rgba(56,130,246,.20) 49.8% 50.2%,transparent 50.4%);
+}
+
+/* 404 — BROKEN SIGNAL / glitch field */
+.not-found-page{
+  --tech-tilt:9deg;--tech-right:6%;--tech-top:10%;--tech-w:min(42vw,630px);--tech-h:70%;--tech-opacity:.72;--tech-radius:2px;
+  --tech-bg:linear-gradient(90deg,rgba(1,3,6,.998),rgba(2,5,10,.94) 36%,rgba(4,9,16,.47) 61%,rgba(2,4,8,.08)),radial-gradient(circle at 79% 47%,rgba(56,130,246,.24),transparent 28%),repeating-linear-gradient(0deg,transparent 0 23px,rgba(121,169,229,.03) 24px,transparent 25px),linear-gradient(135deg,#010306,#07101b 58%,#020406);
+  --tech-panel:linear-gradient(90deg,transparent 0 18%,rgba(56,130,246,.29) 18.3% 18.9%,transparent 19% 43%,rgba(255,255,255,.10) 43.3% 43.8%,transparent 44% 72%,rgba(56,130,246,.19) 72.3% 72.9%,transparent 73%),repeating-linear-gradient(0deg,transparent 0 7%,rgba(102,167,247,.13) 7.2% 7.7%,transparent 8% 16%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* Shared hero engine                                                          */
+/* -------------------------------------------------------------------------- */
 .ref-home .ref-hero,
 .page-services .ref-hero,
 .page-projects .ref-hero,
@@ -25,21 +201,16 @@
 .thank-you-hero,
 .login-stage,
 .not-found-page{
-  position:relative;
+  position:relative!important;
   isolation:isolate;
-  background-color:#020406!important;
-  background-image:
-    linear-gradient(90deg,rgba(2,4,7,.995) 0%,rgba(2,4,7,.95) 31%,rgba(2,4,7,.66) 52%,rgba(2,4,7,.20) 79%,rgba(2,4,7,.06) 100%),
-    radial-gradient(circle at var(--tech-x) var(--tech-y),rgba(56,130,246,.22) 0,rgba(56,130,246,.10) 12%,rgba(56,130,246,.025) 28%,transparent 46%),
-    repeating-linear-gradient(0deg,transparent 0 43px,rgba(125,160,204,.035) 44px,transparent 45px),
-    repeating-linear-gradient(90deg,transparent 0 43px,rgba(125,160,204,.035) 44px,transparent 45px),
-    linear-gradient(135deg,#020406 0%,#050a10 54%,#020305 100%)!important;
+  overflow:hidden!important;
+  background-color:#010306!important;
+  background-image:var(--tech-bg)!important;
   background-repeat:no-repeat!important;
   background-size:cover!important;
   background-position:center!important;
 }
 
-/* Technical data panel on the right side of every hero. */
 .ref-home .ref-hero::after,
 .page-services .ref-hero::after,
 .page-projects .ref-hero::after,
@@ -54,36 +225,36 @@
   content:""!important;
   position:absolute!important;
   z-index:1!important;
-  right:3%!important;
-  top:10%!important;
-  width:min(43vw,650px)!important;
-  height:72%!important;
+  right:var(--tech-right)!important;
+  top:var(--tech-top)!important;
+  width:var(--tech-w)!important;
+  height:var(--tech-h)!important;
   pointer-events:none!important;
-  opacity:.62!important;
+  opacity:var(--tech-opacity)!important;
   transform:rotate(var(--tech-tilt));
   transform-origin:center;
-  border:1px solid rgba(120,166,225,.11)!important;
-  border-radius:2px;
-  background:
-    radial-gradient(circle at 18% 21%,rgba(120,182,255,.95) 0 1.5px,transparent 2.5px),
-    radial-gradient(circle at 64% 18%,rgba(255,255,255,.9) 0 1px,transparent 2px),
-    radial-gradient(circle at 82% 42%,rgba(56,130,246,.95) 0 1.5px,transparent 2.5px),
-    radial-gradient(circle at 46% 72%,rgba(120,182,255,.8) 0 1.5px,transparent 2.5px),
-    radial-gradient(circle at 74% 84%,rgba(255,255,255,.75) 0 1px,transparent 2px),
-    linear-gradient(90deg,transparent 17.8%,rgba(95,148,214,.22) 18%,transparent 18.25%),
-    linear-gradient(90deg,transparent 63.8%,rgba(95,148,214,.18) 64%,transparent 64.25%),
-    linear-gradient(0deg,transparent 20.8%,rgba(95,148,214,.22) 21%,transparent 21.25%),
-    linear-gradient(0deg,transparent 41.8%,rgba(95,148,214,.16) 42%,transparent 42.25%),
-    linear-gradient(0deg,transparent 71.8%,rgba(95,148,214,.18) 72%,transparent 72.25%),
-    repeating-linear-gradient(0deg,transparent 0 54px,rgba(255,255,255,.025) 55px,transparent 56px),
-    repeating-linear-gradient(90deg,transparent 0 54px,rgba(255,255,255,.025) 55px,transparent 56px),
-    linear-gradient(135deg,rgba(56,130,246,.035),transparent 55%);
-  box-shadow:0 0 70px rgba(56,130,246,.075),inset 0 0 45px rgba(56,130,246,.025)!important;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 88%,transparent 100%);
-  mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 88%,transparent 100%);
+  border:1px solid rgba(120,176,246,.16)!important;
+  border-radius:var(--tech-radius)!important;
+  background:var(--tech-panel)!important;
+  box-shadow:0 0 100px rgba(56,130,246,.10),inset 0 0 70px rgba(56,130,246,.035)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 12%,#000 91%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 12%,#000 91%,transparent 100%);
 }
 
-/* Main route heroes no longer need the old architectural/photo decoration. */
+/* Keep all text/content above the visual engine. */
+.ref-home .ref-hero>.ref-shell,
+.page-services .ref-hero>.ref-shell,
+.page-projects .ref-hero>.ref-shell,
+.page-about .ref-hero>.ref-shell,
+.page-contact .ref-hero>.ref-shell,
+.service-detail-hero-grid,
+.project-detail-hero-grid,
+.info-page-hero>.ref-shell,
+.thank-you-inner,
+.login-shell,
+.not-found-inner{position:relative;z-index:3!important}
+
+/* Kill the former photographic/architectural decorative blocks. */
 .ref-home .ref-hero-art,
 .page-services .ref-visual,
 .page-projects .ref-visual,
@@ -91,38 +262,23 @@
 .page-contact .ref-visual,
 .service-detail-visual,
 .project-detail-visual,
-.legal-hero-visual{
-  position:relative;
-  z-index:2;
-  background:transparent!important;
-}
+.legal-hero-visual{background:transparent!important}
+.ref-home .ref-building,.ref-home .ref-light-line,.ref-home .ref-diagonal,
+.page-services .ref-block,.page-projects .ref-block,.page-about .ref-block,.page-contact .ref-block,
+.page-services .ref-glow,.page-projects .ref-glow,.page-about .ref-glow,.page-contact .ref-glow{display:none!important}
 
-/* Let the right column read as a technical system rather than a photo caption. */
-.ref-home .ref-art-words,
-.page-services .ref-visual-label,
-.page-projects .ref-visual-label,
-.page-about .ref-visual-label,
-.page-contact .ref-visual-label,
-.service-detail-visual,
-.project-detail-visual,
-.legal-hero-visual{
-  text-shadow:0 0 20px rgba(56,130,246,.16)!important;
-}
-
-/* Supporting-page overlays: keep text contrast without restoring photo-like treatment. */
+/* Detail/info overlay: strong readability, without flattening the route-specific visual. */
 .service-detail-hero::before,
 .project-detail-hero::before,
 .info-page-hero::before,
 .thank-you-hero::before,
 .not-found-page::before{
-  background:linear-gradient(90deg,rgba(2,4,7,.98) 0%,rgba(2,4,7,.88) 36%,rgba(2,4,7,.42) 62%,rgba(2,4,7,.10) 100%),linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.22))!important;
+  background:linear-gradient(90deg,rgba(1,3,6,.99) 0%,rgba(1,4,8,.88) 35%,rgba(2,6,12,.35) 62%,rgba(1,3,6,.05) 100%)!important;
 }
 
-/* Login uses the same technical system; remove the former photographic split. */
-.login-stage{
-  background-position:center!important;
-}
-
+/* -------------------------------------------------------------------------- */
+/* Responsive                                                                  */
+/* -------------------------------------------------------------------------- */
 @media(max-width:900px){
   .ref-home .ref-hero,
   .page-services .ref-hero,
@@ -135,12 +291,7 @@
   .thank-you-hero,
   .login-stage,
   .not-found-page{
-    background-image:
-      linear-gradient(90deg,rgba(2,4,7,.99) 0%,rgba(2,4,7,.92) 58%,rgba(2,4,7,.50) 100%),
-      radial-gradient(circle at 78% 42%,rgba(56,130,246,.18) 0,rgba(56,130,246,.06) 22%,transparent 45%),
-      repeating-linear-gradient(0deg,transparent 0 35px,rgba(125,160,204,.032) 36px,transparent 37px),
-      repeating-linear-gradient(90deg,transparent 0 35px,rgba(125,160,204,.032) 36px,transparent 37px),
-      linear-gradient(135deg,#020406,#05090e 55%,#020305)!important;
+    background-position:center!important;
   }
   .ref-home .ref-hero::after,
   .page-services .ref-hero::after,
@@ -153,11 +304,11 @@
   .thank-you-hero::after,
   .login-stage::after,
   .not-found-page::after{
-    right:-18%!important;
-    top:17%!important;
+    right:-15%!important;
+    top:18%!important;
     width:72vw!important;
     height:58%!important;
-    opacity:.34!important;
+    opacity:calc(var(--tech-opacity) * .52)!important;
   }
 }
 
@@ -173,10 +324,10 @@
   .thank-you-hero::after,
   .login-stage::after,
   .not-found-page::after{
-    right:-30%!important;
+    right:-31%!important;
     top:21%!important;
-    width:92vw!important;
-    height:50%!important;
-    opacity:.26!important;
+    width:94vw!important;
+    height:51%!important;
+    opacity:calc(var(--tech-opacity) * .38)!important;
   }
 }
