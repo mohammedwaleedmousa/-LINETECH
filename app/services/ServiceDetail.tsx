@@ -28,7 +28,7 @@ export default function ServiceDetail({
   const startHref = `/start?service=${encodeURIComponent(serviceParam)}`;
 
   return (
-    <main className={`ref-page service-detail ${className}`}>
+    <main className={`ref-page service-detail-page ${className}`}>
       <section className="service-detail-hero">
         <div className="ref-shell service-detail-hero-grid">
           <div className="service-detail-hero-copy">
