@@ -3,8 +3,6 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
-const EASE = "cubic-bezier(.22,.61,.36,1)";
-
 export default function ServicesMotion() {
   const pathname = usePathname();
 
