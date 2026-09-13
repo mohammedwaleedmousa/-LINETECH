@@ -27,25 +27,33 @@ export default function SiteNav() {
           <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
-          {items.map(([href, label]) => (
-            <Link key={href} href={href} prefetch className={isActive(href) ? "active" : ""}>{label}</Link>
-          ))}
+          {items.map(([href, label]) => {
+            const active = isActive(href);
+            return (
+              <Link key={href} href={href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>
+                {label}
+              </Link>
+            );
+          })}
         </nav>
         <div className="ref-nav-end">
           <span className="ref-search" aria-hidden="true">⌕</span>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
-          <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} onClick={() => setOpen(v => !v)}>
+          <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => setOpen(v => !v)}>
             <i/><i/>
           </button>
         </div>
       </header>
-      <div className={`mobile-menu-panel ${open ? "open" : ""}`} aria-hidden={!open}>
+      <div id="mobile-navigation" className={`mobile-menu-panel ${open ? "open" : ""}`} aria-hidden={!open}>
         <nav aria-label="Mobile navigation">
-          {items.map(([href, label], index) => (
-            <Link key={href} href={href} prefetch className={isActive(href) ? "active" : ""} onClick={() => setOpen(false)}>
-              <span>0{index + 1}</span>{label}<b>→</b>
-            </Link>
-          ))}
+          {items.map(([href, label], index) => {
+            const active = isActive(href);
+            return (
+              <Link key={href} href={href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}>
+                <span>0{index + 1}</span>{label}<b>→</b>
+              </Link>
+            );
+          })}
         </nav>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>Start Your Line <span>→</span></Link>
       </div>
