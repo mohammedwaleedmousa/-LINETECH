@@ -22,6 +22,7 @@ import "./project-detail.css";
 import "./info-pages.css";
 import "./search.css";
 import "./v1-frontend-lock.css";
+import "./viewport-qa.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
