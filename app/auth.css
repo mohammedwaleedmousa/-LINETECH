@@ -1,4 +1,4 @@
-/* LINETECH login UI — frontend only until authentication backend is connected. */
+/* LINETECH account access UI — frontend only until authentication backend is connected. */
 .global-site-nav .nav-login{
   height:42px;
   padding:0 16px;
@@ -12,6 +12,7 @@
   color:#e5e9ed;
   font-size:12px;
   font-weight:600;
+  white-space:nowrap;
   transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease;
 }
 .global-site-nav .nav-login:hover{
@@ -81,7 +82,7 @@
 .login-card{
   position:relative;
   width:100%;
-  max-width:460px;
+  max-width:470px;
   justify-self:end;
   padding:30px;
   border:1px solid rgba(255,255,255,.13);
@@ -91,13 +92,48 @@
   -webkit-backdrop-filter:blur(18px);
   backdrop-filter:blur(18px);
 }
+.account-switch{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:4px;
+  margin-bottom:24px;
+  padding:4px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:10px;
+  background:#05080b;
+}
+.account-switch button{
+  min-height:42px;
+  padding:0 12px;
+  border:0;
+  border-radius:7px;
+  background:transparent;
+  color:#7f8a95;
+  font:inherit;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:background .2s ease,color .2s ease,box-shadow .2s ease;
+}
+.account-switch button:hover{color:#fff}
+.account-switch button.active{
+  background:rgba(56,130,246,.12);
+  color:#fff;
+  box-shadow:inset 0 0 0 1px rgba(56,130,246,.42);
+}
+.account-mode-head{padding-bottom:20px;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,.09)}
+.account-mode-head>span{display:block;margin-bottom:9px;color:#3882f6;font-size:9px;letter-spacing:.18em}
+.account-mode-head h2{margin:0 0 8px;font-size:30px;letter-spacing:-.04em}
+.account-mode-head p{margin:0;color:#7f8b96;font-size:12px;line-height:1.6}
 .login-card-head{padding-bottom:22px;margin-bottom:22px;border-bottom:1px solid rgba(255,255,255,.09)}
 .login-card-head span{display:block;margin-bottom:9px;color:#3882f6;font-size:9px;letter-spacing:.18em}
 .login-card-head h2{margin:0 0 8px;font-size:30px;letter-spacing:-.04em}
 .login-card-head p{margin:0;color:#7f8b96;font-size:12px;line-height:1.6}
 .login-form label{display:block;margin-bottom:17px}
 .login-form label>span{display:block;margin-bottom:9px;color:#9aa5af;font-size:10px;letter-spacing:.1em;text-transform:uppercase}
-.login-form input[type="email"],.login-form input[type="password"]{
+.login-form input[type="text"],
+.login-form input[type="email"],
+.login-form input[type="password"]{
   width:100%;
   min-height:48px;
   padding:0 14px;
@@ -112,7 +148,12 @@
 .login-options{display:flex;align-items:center;justify-content:space-between;gap:16px;margin:2px 0 22px}
 .login-remember{display:flex!important;align-items:center;gap:8px;margin:0!important;color:#8c97a2;font-size:11px;text-transform:none!important;letter-spacing:0!important}
 .login-remember input{accent-color:#3882f6}
+.login-remember span{margin:0!important;font-size:11px!important;letter-spacing:0!important;text-transform:none!important}
 .login-forgot{appearance:none;border:0;background:none;color:#9eb8dc;font:inherit;font-size:11px;cursor:pointer;padding:0}
+.signup-terms{display:flex!important;align-items:flex-start;gap:9px;margin:2px 0 22px!important;color:#8d98a3;font-size:11px;line-height:1.55}
+.signup-terms input{margin-top:3px;accent-color:#3882f6}
+.signup-terms span{margin:0!important;font-size:11px!important;letter-spacing:0!important;text-transform:none!important;color:#8d98a3!important}
+.signup-terms a{color:#b8d2f5;text-decoration:underline;text-decoration-color:rgba(184,210,245,.35);text-underline-offset:3px}
 .login-submit{width:100%;min-height:48px;border:0;border-radius:8px;background:#f4f4f2;color:#070a0d;font:inherit;font-size:12px;font-weight:700;cursor:pointer}
 .login-submit:hover{transform:translateY(-1px)}
 .login-ui-note{margin:16px 0 0;padding:12px 13px;border:1px solid rgba(56,130,246,.2);background:rgba(56,130,246,.045);color:#77838e;font-size:10px;line-height:1.6}
@@ -147,6 +188,8 @@
   .login-signals{grid-template-columns:1fr;margin-top:24px}
   .login-signals div,.login-signals div+div{padding:10px 0;border-right:0;border-bottom:1px solid rgba(255,255,255,.07)}
   .login-card{padding:20px;border-radius:12px}
+  .account-switch{margin-bottom:20px}
+  .account-switch button{font-size:11px;padding:0 8px}
   .login-options{align-items:flex-start;flex-direction:column}
   .login-card-foot{align-items:flex-start;flex-direction:column}
 }
