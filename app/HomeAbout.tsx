@@ -40,14 +40,14 @@ export default function HomeAbout() {
   return (
     <section className={`${styles.section} ref-line-section`} id="about" aria-labelledby="home-about-title">
       <div className={`${styles.shell} ref-shell`}>
-        <div className={`${styles.copy} ref-about-copy`}>
+        <div className={`${styles.copy} home-about-copy`}>
           <p className={styles.kicker}>{content.kicker}</p>
           <h2 id="home-about-title"><span>{content.titleA}</span><strong>{content.titleB}</strong></h2>
           <p className={styles.body}>{content.body}</p>
           <Link className={styles.link} href="/about" prefetch>{content.link}<span aria-hidden="true">→</span></Link>
         </div>
 
-        <div className={`${styles.visual} ref-about-art`} aria-hidden="true">
+        <div className={`${styles.visual} home-about-art`} aria-hidden="true">
           <div className={styles.glow}/>
           <div className={styles.orbitA}/>
           <div className={styles.orbitB}/>
@@ -55,7 +55,7 @@ export default function HomeAbout() {
           <p>{content.statement}</p>
         </div>
 
-        <div className={`${styles.path} ref-about-lockup`}>
+        <div className={`${styles.path} home-about-path`}>
           {content.path.map(([number, title, text]) => (
             <div className={styles.step} key={number}>
               <span>{number}</span>
