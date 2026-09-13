@@ -1,0 +1,72 @@
+/* Projects page motion — same calm rhythm as Home and Services. */
+.page-projects .projects-motion-hero,
+.page-projects .projects-motion-reveal{
+  opacity:0;
+  transform:translate3d(0,14px,0);
+}
+
+.page-projects.projects-motion-mounted .projects-motion-hero{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .62s cubic-bezier(.22,.61,.36,1) var(--projects-hero-delay,0ms),
+    transform .62s cubic-bezier(.22,.61,.36,1) var(--projects-hero-delay,0ms);
+}
+
+.page-projects .projects-motion-reveal.is-visible{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .6s cubic-bezier(.22,.61,.36,1) var(--projects-motion-delay,0ms),
+    transform .6s cubic-bezier(.22,.61,.36,1) var(--projects-motion-delay,0ms);
+}
+
+.page-projects [data-project-field]{
+  --project-field-x:0px;
+  --project-field-y:0px;
+  transform:translate3d(var(--project-field-x),var(--project-field-y),0);
+  transition:transform .44s cubic-bezier(.22,.61,.36,1);
+  will-change:transform;
+}
+
+.page-projects [data-project-field] svg{
+  opacity:0;
+  transform:scale(.995);
+  transform-origin:center;
+}
+
+.page-projects.projects-motion-mounted [data-project-field] svg{
+  opacity:1;
+  transform:scale(1);
+  transition:opacity .9s ease .12s,transform .7s cubic-bezier(.22,.61,.36,1);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"]{
+  transform:translate3d(0,18px,0);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible{
+  transform:none;
+}
+
+@media(max-width:760px){
+  .page-projects .projects-motion-hero,
+  .page-projects .projects-motion-reveal,
+  .page-projects .projects-motion-reveal[data-project-motion="card"]{
+    transform:translate3d(0,10px,0);
+  }
+
+  .page-projects [data-project-field]{transform:none!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page-projects .projects-motion-hero,
+  .page-projects .projects-motion-reveal,
+  .page-projects [data-project-field],
+  .page-projects [data-project-field] svg{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
