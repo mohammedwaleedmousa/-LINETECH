@@ -24,6 +24,9 @@ const searchItems = [
   { title: "Etqan", meta: "Project", href: "/projects/etqan", keywords: "etqan marketplace services" },
   { title: "LedgerPro", meta: "Project", href: "/projects/ledgerpro", keywords: "ledgerpro business system finance" },
   { title: "About LINETECH", meta: "Page", href: "/about", keywords: "about company founder Mohammed Waleed" },
+  { title: "FAQ", meta: "Page", href: "/faq", keywords: "faq questions payments revisions support timeline" },
+  { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief" },
+  { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website" },
   { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea" },
 ] as const;
 
