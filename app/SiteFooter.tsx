@@ -11,10 +11,20 @@ export default function SiteFooter() {
 
   return (
     <Localized><footer className="ref-footer site-footer-global">
-      <div className="footer-abstract" aria-hidden="true">
-        <i className="footer-abstract-orbit"/>
-        <i className="footer-abstract-wave"/>
-        <i className="footer-abstract-thread"/>
+      <div className="footer-tech-signal" aria-hidden="true">
+        <svg viewBox="0 0 1600 320" fill="none" preserveAspectRatio="none" focusable="false">
+          <path className="footer-signal-line footer-signal-a" d="M-40 244C170 156 310 238 500 176S845 80 1034 142s310 24 610-78"/>
+          <path className="footer-signal-line footer-signal-b" d="M-30 282C210 214 382 286 584 214S900 118 1122 190s326 36 520-16"/>
+          <path className="footer-signal-line footer-signal-c" d="M170 36C306 98 370 92 486 60s240-18 342 26 222 74 346 30 210-72 346-38"/>
+          <g className="footer-signal-nodes">
+            <circle cx="248" cy="194" r="3"/><circle cx="500" cy="176" r="3.5"/><circle cx="742" cy="116" r="2.7"/>
+            <circle cx="1034" cy="142" r="3.5"/><circle cx="1280" cy="126" r="2.8"/><circle cx="584" cy="214" r="2.8"/>
+            <circle cx="1122" cy="190" r="3"/><circle cx="486" cy="60" r="2.6"/><circle cx="828" cy="86" r="2.7"/>
+          </g>
+          <g className="footer-signal-pulses">
+            <circle cx="500" cy="176" r="12"/><circle cx="1034" cy="142" r="14"/><circle cx="1122" cy="190" r="11"/>
+          </g>
+        </svg>
       </div>
 
       <div className="ref-shell ref-footer-grid">
