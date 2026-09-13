@@ -2,6 +2,7 @@
 
 import Localized from "./Localized";
 import HomeHeroArt from "./HomeHeroArt";
+import HomeWhy from "./HomeWhy";
 import Link from "next/link";
 import "./home-content.css";
 
@@ -125,6 +126,8 @@ export default function Home() {
           <div className="ref-about-lockup"><span className="ref-mark big"><i/><b/></span><strong>LINETECH</strong><p>IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER<br/>TOMORROW</p><i className="lock-line"/></div>
         </div>
       </section>
+
+      <HomeWhy/>
 
       <section className="process-center ref-line-section">
         <div className="process-center-shell">
