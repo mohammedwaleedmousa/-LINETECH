@@ -1,17 +1,30 @@
-/* Homepage breathing room and cleaner section surfaces. */
-.ref-home > section:not(:first-child){
-  margin-top:clamp(32px,4.5vw,64px);
+/* Homepage: one continuous surface instead of separate dark bands. */
+.ref-home{
+  --home-surface:#05080c;
+  background:var(--home-surface)!important;
 }
 
-/* Keep special homepage sections clean: no blueprint/grid background lines. */
-.ref-home > .home-why-section::before,
-.ref-home > .home-proof-section::before{
-  display:none!important;
-  background:none!important;
+.ref-home > section{
+  margin-top:0!important;
+  background-color:var(--home-surface)!important;
+  background-image:none!important;
+  border-color:rgba(255,255,255,.055)!important;
+}
+
+/* Keep breathing room inside sections, not as a differently colored gap between them. */
+.ref-home > section:not(.home-line-hero){
+  position:relative;
+}
+
+/* Module sections may define decorative gradients; keep the section surface itself uniform. */
+.ref-home > .home-why-section,
+.ref-home > .process-center,
+.ref-home > .home-commitments,
+.ref-home > .home-faq,
+.ref-home > .home-start{
+  background:var(--home-surface)!important;
 }
 
 @media(max-width:760px){
-  .ref-home > section:not(:first-child){
-    margin-top:26px;
-  }
+  .ref-home > section{margin-top:0!important}
 }
