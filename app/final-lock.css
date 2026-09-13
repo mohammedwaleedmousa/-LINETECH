@@ -31,6 +31,19 @@ body{
   overflow-y:visible!important;
 }
 
+/* Navbar hover follows the LINETECH accent blue. */
+.global-site-nav .ref-nav-links a:hover,
+.global-site-nav .ref-nav-links a:focus-visible{
+  color:#3882f6!important;
+}
+.global-site-nav .ref-nav-links a.active{
+  color:#fff!important;
+}
+.mobile-menu-panel nav a:hover,
+.mobile-menu-panel nav a:focus-visible{
+  color:#3882f6!important;
+}
+
 /* Shared footer follows the Home reference on every route. */
 .site-footer-global{
   width:100%!important;
