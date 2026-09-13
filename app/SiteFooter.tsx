@@ -16,19 +16,22 @@ export default function SiteFooter() {
           <Link href="/services" prefetch>Services</Link>
           <Link href="/projects" prefetch>Projects</Link>
           <Link href="/about" prefetch>About</Link>
+          <Link href="/faq" prefetch>FAQ</Link>
           <Link href="/start" prefetch>Contact</Link>
         </div>
         <div>
           <h4>Services</h4>
-          <Link href="/services" prefetch>Web Development</Link>
-          <Link href="/services" prefetch>Brand Identity</Link>
-          <Link href="/services" prefetch>CV & Portfolio</Link>
+          <Link href="/services/web-development" prefetch>Web Development</Link>
+          <Link href="/services/ecommerce-systems" prefetch>E-commerce & Systems</Link>
+          <Link href="/services/brand-identity" prefetch>Brand Identity</Link>
+          <Link href="/services/cv-portfolio" prefetch>CV & Portfolio</Link>
         </div>
         <div>
           <h4>Company</h4>
           <span>Aden, Yemen</span>
           <Link href="/start" prefetch>Start Your Line</Link>
-          <span>Founder-led</span>
+          <Link href="/privacy" prefetch>Privacy</Link>
+          <Link href="/terms" prefetch>Terms</Link>
         </div>
         <div className="ref-footer-words">IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER TOMORROW<i/></div>
       </div>
