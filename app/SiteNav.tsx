@@ -1,5 +1,7 @@
 "use client";
 
+import Localized, { useLanguage, setLanguage } from "./Localized";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -34,8 +36,6 @@ const searchItems = [
 ] as const;
 
 type SiteLanguage = "ar" | "en";
-const LANGUAGE_STORAGE_KEY = "linetech-language-v1";
-const LANGUAGE_EVENT = "linetech:languagechange";
 
 function GlobeIcon(){
   return <svg className="language-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 4 5.5 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.5-4-9s1.4-6.5 4-9z"/></svg>;
@@ -46,7 +46,7 @@ export default function SiteNav() {
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
-  const [language,setLanguage] = useState<SiteLanguage>("ar");
+  const language = useLanguage();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -55,16 +55,6 @@ export default function SiteNav() {
     setQuery("");
   }, [pathname]);
 
-  useEffect(()=>{
-    const saved:SiteLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY) === "en" ? "en" : "ar";
-    setLanguage(saved);
-    const sync = (event:Event)=>{
-      const detail = (event as CustomEvent<{language?:SiteLanguage}>).detail;
-      setLanguage(detail?.language === "en" ? "en" : "ar");
-    };
-    window.addEventListener(LANGUAGE_EVENT,sync as EventListener);
-    return ()=>window.removeEventListener(LANGUAGE_EVENT,sync as EventListener);
-  },[]);
 
   useEffect(() => {
     if (!searchOpen) return;
@@ -97,12 +87,11 @@ export default function SiteNav() {
 
   function toggleLanguage(){
     const next:SiteLanguage = language === "ar" ? "en" : "ar";
-    window.localStorage.setItem(LANGUAGE_STORAGE_KEY,next);
-    window.location.reload();
+    setLanguage(next);
   }
 
   return (
-    <>
+    <Localized><>
       <header className="ref-nav ref-shell site-nav global-site-nav">
         <Link className="ref-brand" href="/" prefetch aria-label="LINETECH home">
           <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
@@ -118,7 +107,7 @@ export default function SiteNav() {
           })}
         </nav>
         <div className="ref-nav-end">
-          <button data-no-translate className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "التبديل إلى العربية"} title={language === "ar" ? "English" : "العربية"}><GlobeIcon/>{language === "ar" ? "EN" : "AR"}</button>
+          <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "الإنجليزية" : "العربية"}</button>
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
           <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
@@ -139,7 +128,7 @@ export default function SiteNav() {
             );
           })}
         </nav>
-        <button data-no-translate className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "English" : "العربية"}</span><strong>{language === "ar" ? "EN" : "AR"}</strong></button>
+        <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "English" : "Arabic"}</span><strong>{language === "ar" ? "الإنجليزية" : "العربية"}</strong></button>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>Start Your Line <span>→</span></Link>
         <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>Login / Create Account <span>↗</span></Link>
       </div>
@@ -175,6 +164,6 @@ export default function SiteNav() {
           </div>
         </div>
       )}
-    </>
+    </></Localized>
   );
 }

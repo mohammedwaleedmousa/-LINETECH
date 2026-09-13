@@ -1,8 +1,11 @@
+"use client";
+
+import Localized from "./Localized";
 import Link from "next/link";
 
 export default function SiteFooter() {
   return (
-    <footer className="ref-footer site-footer-global">
+    <Localized><footer className="ref-footer site-footer-global">
       <div className="ref-shell ref-footer-grid">
         <div className="ref-footer-brand">
           <Link className="ref-brand" href="/" prefetch>
@@ -39,6 +42,6 @@ export default function SiteFooter() {
         <span>© 2026 LINETECH. All rights reserved.</span>
         <span>Every idea starts with a line.</span>
       </div>
-    </footer>
+    </footer></Localized>
   );
 }

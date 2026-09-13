@@ -1,3 +1,6 @@
+"use client";
+
+import Localized from "../Localized";
 import Link from "next/link";
 
 type Item = [string, string];
@@ -28,7 +31,7 @@ export default function ServiceDetail({
   const startHref = `/start?service=${encodeURIComponent(serviceParam)}`;
 
   return (
-    <main className={`ref-page service-detail-page ${className}`}>
+    <Localized><main className={`ref-page service-detail-page ${className}`}>
       <section className="service-detail-hero">
         <div className="ref-shell service-detail-hero-grid">
           <div className="service-detail-hero-copy">
@@ -110,6 +113,6 @@ export default function ServiceDetail({
           <Link className="ref-btn primary" href={startHref} prefetch>Start this service ↗</Link>
         </div>
       </section>
-    </main>
+    </main></Localized>
   );
 }

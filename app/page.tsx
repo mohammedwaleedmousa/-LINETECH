@@ -1,3 +1,6 @@
+"use client";
+
+import Localized from "./Localized";
 import Link from "next/link";
 
 const services = [
@@ -22,7 +25,7 @@ const process = [
 
 export default function Home() {
   return (
-    <main className="ref-home" id="top">
+    <Localized><main className="ref-home" id="top">
       <section className="ref-hero ref-line-section">
         <div className="ref-shell ref-hero-grid">
           <div className="ref-hero-copy">
@@ -100,6 +103,6 @@ export default function Home() {
       </section>
 
       <section className="ref-cta ref-line-section" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Ready to turn your idea into reality?</h2><p>Start with the idea. We&apos;ll help define the first line.</p></div><Link className="ref-button light" href="/start" prefetch>Start Your Line <span>→</span></Link></div></section>
-    </main>
+    </main></Localized>
   );
 }
