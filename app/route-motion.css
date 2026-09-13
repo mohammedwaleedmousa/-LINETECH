@@ -1,10 +1,10 @@
-html{scroll-behavior:smooth}
-.route-motion{animation:routeIn .34s cubic-bezier(.22,.61,.36,1) both;will-change:opacity,transform}
-@keyframes routeIn{0%{opacity:.35;transform:translateY(6px)}100%{opacity:1;transform:none}}
-.site-nav .ref-nav-links a{transition:color .22s ease,opacity .22s ease}
-.site-nav .ref-nav-links a:after{transition:transform .28s cubic-bezier(.22,.61,.36,1),opacity .22s ease;transform-origin:center}
+html{scroll-behavior:auto}
+.route-motion{animation:routeIn .12s ease-out both}
+@keyframes routeIn{0%{opacity:.72;transform:translateY(2px)}100%{opacity:1;transform:none}}
+.site-nav .ref-nav-links a{transition:color .14s ease,opacity .14s ease}
+.site-nav .ref-nav-links a:after{transition:transform .16s ease,opacity .14s ease;transform-origin:center}
 .site-nav .ref-nav-links a:not(.active):after{transform:scaleX(0);opacity:0}
 .site-nav .ref-nav-links a.active:after{transform:scaleX(1);opacity:1}
-.site-nav .ref-button{transition:transform .22s ease,background-color .22s ease,border-color .22s ease}
+.site-nav .ref-button{transition:transform .14s ease,background-color .14s ease,border-color .14s ease}
 .site-nav .ref-button:hover{transform:translateY(-1px)}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.route-motion{animation:none}.site-nav .ref-nav-links a,.site-nav .ref-nav-links a:after,.site-nav .ref-button{transition:none}}
+@media(prefers-reduced-motion:reduce){.route-motion{animation:none}.site-nav .ref-nav-links a,.site-nav .ref-nav-links a:after,.site-nav .ref-button{transition:none}}
