@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://linetech.aiengineer77.workers.dev/sitemap.xml
+Host: https://linetech.aiengineer77.workers.dev
