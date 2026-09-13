@@ -16,7 +16,7 @@
 
 /* Prevent long headings/content from forcing horizontal overflow. */
 .service-detail-page,
-.project-detail,
+.project-detail-page,
 .info-page,
 .project-brief-form,
 .service-detail-hero-grid,
@@ -28,15 +28,15 @@
   min-width:0;
 }
 .service-detail-page h1,
-.project-detail h1,
+.project-detail-page h1,
 .info-page h1,
 .service-detail-page h2,
-.project-detail h2,
+.project-detail-page h2,
 .info-page h2{
   text-wrap:balance;
 }
 .service-detail-page p,
-.project-detail p,
+.project-detail-page p,
 .info-page p,
 .project-brief-form input,
 .project-brief-form textarea,
@@ -47,12 +47,12 @@
 
 /* Detail sections use the same restrained separation as the reference UI. */
 .service-detail-page .ref-section,
-.project-detail .ref-section,
+.project-detail-page .ref-section,
 .info-content{
   border-bottom:1px solid rgba(255,255,255,.07);
 }
 .service-detail-page .ref-section:last-of-type,
-.project-detail .ref-section:last-of-type{
+.project-detail-page .ref-section:last-of-type{
   border-bottom:0;
 }
 
@@ -103,7 +103,7 @@
 
 /* CTAs wrap instead of compressing or overflowing on narrower desktop widths. */
 .service-detail-page .ref-cta-inner,
-.project-detail .ref-cta-inner,
+.project-detail-page .ref-cta-inner,
 .info-page .ref-cta-inner{
   gap:28px;
 }
@@ -130,11 +130,11 @@
     min-height:calc(100svh - 82px)!important;
   }
   .service-detail-page .ref-head,
-  .project-detail .ref-head{
+  .project-detail-page .ref-head{
     gap:26px!important;
   }
   .service-detail-page .ref-cta-inner,
-  .project-detail .ref-cta-inner,
+  .project-detail-page .ref-cta-inner,
   .info-page .ref-cta-inner{
     align-items:flex-start!important;
     flex-direction:column!important;
@@ -153,7 +153,7 @@
     padding-right:0!important;
   }
   .service-detail-page h1,
-  .project-detail h1,
+  .project-detail-page h1,
   .info-page h1{
     hyphens:none;
     overflow-wrap:normal;
