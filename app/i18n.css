@@ -1,4 +1,5 @@
-/* LINETECH bilingual presentation — Arabic is the default experience. */
+/* LINETECH bilingual presentation — Arabic is the default experience.
+   Arabic keeps the same visual hierarchy, spacing and premium rhythm as English. */
 .language-toggle{
   min-width:44px;
   height:42px;
@@ -23,12 +24,82 @@
 html[dir="rtl"] body{
   direction:rtl;
   font-family:"Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+  font-kerning:normal;
+  text-rendering:optimizeLegibility;
 }
+
+/* Preserve LINETECH's original dimensions; only tune Arabic rhythm, not scale. */
+html[dir="rtl"] h1,
+html[dir="rtl"] h2,
+html[dir="rtl"] h3,
+html[dir="rtl"] .ref-hero-copy h1,
+html[dir="rtl"] .service-detail-hero-copy h1,
+html[dir="rtl"] .project-detail-hero-copy h1,
+html[dir="rtl"] .info-page-hero h1,
+html[dir="rtl"] .login-copy h1,
+html[dir="rtl"] .thank-you-hero h1,
+html[dir="rtl"] .not-found-page h1{
+  font-family:"Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+  letter-spacing:0!important;
+  line-height:1.08!important;
+  font-weight:700;
+  text-wrap:balance;
+  word-break:normal;
+  overflow-wrap:normal;
+}
+
+html[dir="rtl"] p,
+html[dir="rtl"] li,
+html[dir="rtl"] label,
+html[dir="rtl"] input,
+html[dir="rtl"] textarea,
+html[dir="rtl"] select,
+html[dir="rtl"] button,
+html[dir="rtl"] a{
+  font-family:"Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+}
+
+/* English uses tracking on small technical labels; Arabic should feel equally premium without artificial spacing. */
+html[dir="rtl"] .ref-kicker,
+html[dir="rtl"] .ref-meta,
+html[dir="rtl"] .service-detail-back,
+html[dir="rtl"] .project-detail-back,
+html[dir="rtl"] .legal-hero-index,
+html[dir="rtl"] .thank-you-index,
+html[dir="rtl"] .login-kicker,
+html[dir="rtl"] .chat-eyebrow,
+html[dir="rtl"] .frontend-only-note,
+html[dir="rtl"] .intake-step-head>span,
+html[dir="rtl"] .site-search-topline,
+html[dir="rtl"] .site-search-caption{
+  letter-spacing:0!important;
+  font-weight:700;
+  line-height:1.45;
+}
+
+html[dir="rtl"] .ref-lead,
+html[dir="rtl"] .service-detail-lead,
+html[dir="rtl"] .project-detail-lead,
+html[dir="rtl"] .thank-you-lead,
+html[dir="rtl"] .ref-hero-copy>p:not(.ref-kicker),
+html[dir="rtl"] .info-prose p,
+html[dir="rtl"] .ref-card p,
+html[dir="rtl"] .ref-service-card p,
+html[dir="rtl"] .ref-project-body p{
+  line-height:1.78;
+}
+
 html[dir="rtl"] .ref-brand,
 html[dir="rtl"] .ref-mark,
 html[dir="rtl"] .login-signals,
 html[dir="rtl"] .chat-message-meta,
 html[dir="rtl"] .ref-footer-bottom{direction:ltr}
+
+html[dir="rtl"] .ref-brand strong,
+html[dir="rtl"] .project-detail-stack span,
+html[dir="rtl"] .chat-document-message small{
+  font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
 
 html[dir="rtl"] .ref-hero-copy,
 html[dir="rtl"] .ref-section-heading,
@@ -64,10 +135,11 @@ html[dir="rtl"] .ref-list,
 html[dir="rtl"] .info-prose,
 html[dir="rtl"] .faq-list{text-align:right}
 html[dir="rtl"] .info-prose ul{padding-left:0;padding-right:18px}
-html[dir="rtl"] .faq-list summary{padding-right:0;padding-left:46px}
+html[dir="rtl"] .faq-list summary{padding-right:0;padding-left:46px;line-height:1.65}
 html[dir="rtl"] .faq-list summary::after{right:auto;left:2px}
-html[dir="rtl"] .faq-list details p{padding-right:0;padding-left:44px}
+html[dir="rtl"] .faq-list details p{padding-right:0;padding-left:44px;line-height:1.8}
 
+/* Keep the original button geometry while making arrows point with the reading direction. */
 html[dir="rtl"] .service-detail-back span,
 html[dir="rtl"] .project-detail-back span,
 html[dir="rtl"] .ref-btn span,
@@ -78,6 +150,23 @@ html[dir="rtl"] .brief-share span,
 html[dir="rtl"] .login-card-foot a,
 html[dir="rtl"] .mobile-start-line span,
 html[dir="rtl"] .mobile-login span{display:inline-block;transform:scaleX(-1)}
+
+html[dir="rtl"] .ref-btn,
+html[dir="rtl"] .ref-button,
+html[dir="rtl"] .nav-login,
+html[dir="rtl"] .login-submit,
+html[dir="rtl"] .brief-share,
+html[dir="rtl"] .button{
+  letter-spacing:0!important;
+  font-weight:700;
+  white-space:nowrap;
+}
+
+html[dir="rtl"] .ref-nav-links a,
+html[dir="rtl"] .site-footer-global a,
+html[dir="rtl"] .mobile-menu-panel a{
+  letter-spacing:0!important;
+}
 
 html[dir="rtl"] .site-search-field input,
 html[dir="rtl"] .login-form input,
@@ -99,6 +188,8 @@ html[dir="rtl"] .brief-summary{direction:rtl}
 html[dir="rtl"] .intake-nav{flex-direction:row-reverse}
 html[dir="rtl"] .intake-nav-end{flex-direction:row}
 html[dir="rtl"] .brief-actions{align-items:flex-start}
+html[dir="rtl"] .intake-step-head h3,
+html[dir="rtl"] .account-mode-head h2{line-height:1.22!important}
 
 html[dir="rtl"] .chat-sidebar,
 html[dir="rtl"] .chat-main{direction:rtl}
@@ -110,10 +201,20 @@ html[dir="rtl"] .chat-conversation{text-align:right}
 html[dir="rtl"] .chat-message-meta{right:auto;left:9px}
 html[dir="rtl"] .chat-message-actions{right:auto;left:5px}
 html[dir="rtl"] .chat-message-menu{right:auto;left:0}
+html[dir="rtl"] .chat-bubble p{line-height:1.65}
 
 html[dir="rtl"] .legal-hero-visual,
 html[dir="rtl"] .service-detail-visual,
 html[dir="rtl"] .project-detail-visual{align-items:flex-start;text-align:left}
+
+/* Prevent Arabic copy from becoming visually wider than the English composition. */
+html[dir="rtl"] .ref-hero-copy>p,
+html[dir="rtl"] .service-detail-lead,
+html[dir="rtl"] .project-detail-lead,
+html[dir="rtl"] .thank-you-lead,
+html[dir="rtl"] .login-copy>p{
+  max-width:inherit;
+}
 
 @media(max-width:1100px){.language-toggle{padding:0 10px;min-width:40px}}
 @media(max-width:900px){
@@ -132,7 +233,12 @@ html[dir="rtl"] .project-detail-visual{align-items:flex-start;text-align:left}
     color:#e5e9ed;
     font:inherit;
     font-size:13px;
+    font-weight:700;
+    letter-spacing:0;
     cursor:pointer;
   }
+  html[dir="rtl"] h1,
+  html[dir="rtl"] h2,
+  html[dir="rtl"] h3{line-height:1.12!important}
 }
 @media(min-width:901px){.mobile-language-toggle{display:none!important}}
