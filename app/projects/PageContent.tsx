@@ -15,10 +15,13 @@ const copy = {
     },
     work: {
       kicker: "SELECTED WORK",
-      title: "Three products. Three different operating problems.",
-      lead: "Each case study shows how LINETECH turns a practical need into a structured digital product with a clear user journey and a maintainable foundation.",
-      caseStudy: "View case study",
-      stack: "TECHNOLOGY",
+      title: "Selected products. Built around real work.",
+      lead: "Three case studies showing how different business needs became focused digital products — each with a clear structure, a practical workflow and room to evolve.",
+      builtLabel: "WHAT WE BUILT",
+      stackLabel: "CORE STACK",
+      caseStudy: "Open case study",
+      closingTitle: "Different products. One standard.",
+      closingItems: ["Clear user journeys", "Operational thinking", "Foundations built to evolve"],
     },
     projects: [
       {
@@ -49,14 +52,6 @@ const copy = {
         href: "/projects/ledgerpro",
       },
     ],
-    map: {
-      kicker: "PROJECT MAP",
-      title: "Selected systems",
-      typesLabel: "PRODUCT TYPES",
-      types: ["Commerce", "Marketplace", "Business system"],
-      stackLabel: "STACKS ACROSS SELECTED WORK",
-      stack: ["React + Vite", "Tailwind", "Supabase", "Node.js", "PostgreSQL", "Cloudflare"],
-    },
     cta: {
       kicker: "LET'S BUILD TOGETHER",
       title: "Your project can be the next line.",
@@ -74,10 +69,13 @@ const copy = {
     },
     work: {
       kicker: "أعمال مختارة",
-      title: "ثلاثة منتجات. ثلاث مشكلات تشغيلية مختلفة.",
-      lead: "توضح كل دراسة حالة كيف تحوّل LINETECH احتياجًا عمليًا إلى منتج رقمي منظم برحلة مستخدم واضحة وأساس قابل للصيانة والتطوير.",
-      caseStudy: "استكشف دراسة الحالة",
-      stack: "التقنيات",
+      title: "منتجات مختارة. مبنية حول عمل حقيقي.",
+      lead: "ثلاث دراسات حالة توضّح كيف تحولت احتياجات أعمال مختلفة إلى منتجات رقمية مركزة، بهيكل واضح وسير عمل عملي وأساس قابل للتطور.",
+      builtLabel: "ما الذي بنيناه",
+      stackLabel: "التقنيات الأساسية",
+      caseStudy: "افتح دراسة الحالة",
+      closingTitle: "منتجات مختلفة. معيار واحد.",
+      closingItems: ["رحلات مستخدم واضحة", "تفكير تشغيلي عملي", "أساس قابل للتطور"],
     },
     projects: [
       {
@@ -108,14 +106,6 @@ const copy = {
         href: "/projects/ledgerpro",
       },
     ],
-    map: {
-      kicker: "خريطة المشاريع",
-      title: "أنظمة مختارة",
-      typesLabel: "أنواع المنتجات",
-      types: ["تجارة إلكترونية", "منصة خدمات", "نظام أعمال"],
-      stackLabel: "تقنيات مستخدمة عبر الأعمال المختارة",
-      stack: ["React + Vite", "Tailwind", "Supabase", "Node.js", "PostgreSQL", "Cloudflare"],
-    },
     cta: {
       kicker: "لنبنِ معًا",
       title: "مشروعك يمكن أن يكون الخط التالي.",
@@ -184,48 +174,52 @@ export default function ProjectsPage() {
             <p>{t.work.lead}</p>
           </div>
 
-          <div className={styles.projectsList}>
+          <div className={styles.caseStudies}>
             {t.projects.map((project) => (
-              <article className={styles.projectCard} key={project.n} data-project-motion="card">
-                <div className={styles.projectIdentity}>
-                  <span className={styles.projectNumber}>{project.n}</span>
-                  <span className={styles.projectType}>{project.tag}</span>
+              <article className={styles.caseStudy} key={project.n} data-project-motion="card">
+                <div className={styles.caseTop}>
+                  <div className={styles.caseIdentity}>
+                    <span className={styles.caseNumber}>{project.n}</span>
+                    <span className={styles.caseType}>{project.tag}</span>
+                  </div>
+                  <Link className={styles.caseOpen} href={project.href} prefetch>
+                    {t.work.caseStudy}<span aria-hidden="true">→</span>
+                  </Link>
                 </div>
 
-                <div className={styles.projectMain}>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className={styles.projectBuild}>
-                    {project.built.map(item => <span key={item}>{item}</span>)}
+                <div className={styles.caseBody}>
+                  <div className={styles.caseStory}>
+                    <h3>{project.title}</h3>
+                    <p>{project.description}</p>
+                  </div>
+
+                  <div className={styles.caseBuilt}>
+                    <p>{t.work.builtLabel}</p>
+                    <div>
+                      {project.built.map((item, index) => (
+                        <span key={item}><b>{String(index + 1).padStart(2, "0")}</b>{item}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                <div className={styles.projectMeta}>
-                  <div>
-                    <p className={styles.stackLabel}>{t.work.stack}</p>
-                    <div className={styles.stack}>{project.stack.map(item => <span key={item}>{item}</span>)}</div>
+                <div className={styles.caseFooter}>
+                  <span className={styles.stackLabel}>{t.work.stackLabel}</span>
+                  <div className={styles.stackLine}>
+                    {project.stack.map((item) => <span key={item}>{item}</span>)}
                   </div>
-                  <Link className={styles.caseLink} href={project.href} prefetch>{t.work.caseStudy}<span aria-hidden="true">→</span></Link>
                 </div>
               </article>
             ))}
           </div>
-        </div>
-      </section>
 
-      <section className={styles.mapSection} data-project-motion="reveal">
-        <div className={styles.mapInner}>
-          <div className={styles.mapLabel}>
-            <span>{t.map.kicker}</span>
-            <strong>{t.map.title}</strong>
-          </div>
-          <div className={styles.mapTypes}>
-            <p>{t.map.typesLabel}</p>
-            <div>{t.map.types.map(item => <span key={item}>{item}</span>)}</div>
-          </div>
-          <div className={styles.mapStack}>
-            <p>{t.map.stackLabel}</p>
-            <div>{t.map.stack.map(item => <span key={item}>{item}</span>)}</div>
+          <div className={styles.workClose} data-project-motion="reveal">
+            <h3>{t.work.closingTitle}</h3>
+            <div>
+              {t.work.closingItems.map((item, index) => (
+                <span key={item}><b>{String(index + 1).padStart(2, "0")}</b>{item}</span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
