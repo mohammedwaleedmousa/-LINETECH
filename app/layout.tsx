@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import SiteNav from "./SiteNav";
+import SiteFooter from "./SiteFooter";
+import InternalNavigation from "./InternalNavigation";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -14,15 +16,28 @@ import "./final-qa.css";
 import "./hero-screen.css";
 import "./scroll-fix.css";
 
+const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
+
 export const metadata: Metadata = {
   title: {
     default: "LINETECH — Every idea starts with a line.",
     template: "%s — LINETECH",
   },
-  description: "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.",
+  description: siteDescription,
   applicationName: "LINETECH",
   keywords: ["LINETECH", "web development", "brand identity", "digital products", "Aden", "Yemen"],
   robots: { index: true, follow: true },
+  openGraph: {
+    title: "LINETECH — Every idea starts with a line.",
+    description: siteDescription,
+    siteName: "LINETECH",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "LINETECH — Every idea starts with a line.",
+    description: siteDescription,
+  },
 };
 
 export const viewport: Viewport = {
@@ -57,8 +72,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
+        <InternalNavigation />
         <SiteNav />
         {children}
+        <SiteFooter />
       </body>
     </html>
   );
