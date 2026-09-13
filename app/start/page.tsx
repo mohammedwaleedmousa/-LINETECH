@@ -1,6 +1,7 @@
 import Link from "next/link";
 import ProjectIntake from "./ProjectIntake";
 import "./start.css";
+import "./intake.css";
 
 export const metadata={title:"Contact",description:"Start a project with LINETECH and turn your idea into a clear digital product brief."};
 
