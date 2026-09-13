@@ -8,6 +8,7 @@ const stages = ["New idea", "Existing project", "Redesign / rebuild", "Improve a
 const goals = ["Sell / generate leads", "Bookings / requests", "Internal operations", "Build credibility", "Career / portfolio", "Other"];
 const budgets = ["Need guidance", "Small focused project", "Medium project", "Large project"];
 const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
+const progressSteps = [{ n: 1, label: "About you" }, { n: 2, label: "Project" }, { n: 3, label: "Scope" }];
 
 export default function ProjectIntake() {
   const [step, setStep] = useState(1);
@@ -92,7 +93,7 @@ export default function ProjectIntake() {
     <p className="frontend-only-note">This brief stays on your device. Nothing is sent or stored by this form.</p>
 
     <div className="intake-progress" aria-label={`Step ${step} of 3`}>
-      {[[1,"About you"],[2,"Project"],[3,"Scope"]].map(([n,label]) => <div key={n} className={`intake-progress-item ${step===n?"active":""} ${step>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>)}
+      {progressSteps.map(({n,label}) => <div key={n} className={`intake-progress-item ${step===n?"active":""} ${step>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>)}
     </div>
 
     {step===1 && <section className="intake-step">
