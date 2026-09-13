@@ -16,27 +16,27 @@ export default function SiteFooter() {
         <div>
           <h4>Navigation</h4>
           <Link href="/" prefetch>Home</Link>
-          <Link href="/services" prefetch>Services</Link>
-          <Link href="/projects" prefetch>Projects</Link>
-          <Link href="/about" prefetch>About</Link>
+          <Link href="/services" prefetch>Solutions</Link>
+          <Link href="/projects" prefetch>Case Studies</Link>
+          <Link href="/about" prefetch>Company</Link>
+          <Link href="/chat" prefetch>Chat</Link>
           <Link href="/faq" prefetch>FAQ</Link>
-          <Link href="/start" prefetch>Contact</Link>
         </div>
         <div className="footer-quick-links">
-          <h4>Quick Links</h4>
+          <h4>Technology</h4>
           <Link href="/services/web-development" prefetch>Web Development</Link>
           <Link href="/services/ecommerce-systems" prefetch>E-commerce & Systems</Link>
-          <Link href="/services/brand-identity" prefetch>Brand Identity</Link>
-          <Link href="/services/cv-portfolio" prefetch>CV & Portfolio</Link>
+          <Link href="/projects/ledgerpro" prefetch>Business Systems</Link>
+          <Link href="/projects" prefetch>Case Studies</Link>
         </div>
         <div>
           <h4>Company</h4>
           <span>Aden, Yemen</span>
-          <Link href="/start" prefetch>Start Your Line</Link>
+          <Link href="/start" prefetch>Start Project</Link>
           <Link href="/privacy" prefetch>Privacy</Link>
           <Link href="/terms" prefetch>Terms</Link>
         </div>
-        <div className="ref-footer-words">IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER TOMORROW<i/></div>
+        <div className="ref-footer-words">PLATFORMS<br/>SYSTEMS<br/>SOFTWARE<br/>OPERATIONS<i/></div>
       </div>
       <div className="ref-shell ref-footer-bottom">
         <span>© 2026 LINETECH. All rights reserved.</span>
