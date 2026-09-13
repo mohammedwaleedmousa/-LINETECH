@@ -1,10 +1,10 @@
 import Link from "next/link";
 
 const services = [
-  { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use." },
-  { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works." },
-  { icon: "✦", title: "Brand Identity", text: "Clear visual systems that make a business feel consistent, modern and credible." },
-  { icon: "◎", title: "CV & Portfolio", text: "Professional personal presentation for careers, portfolios and stronger opportunities." },
+  { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services/web-development" },
+  { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works.", href: "/services/ecommerce-systems" },
+  { icon: "✦", title: "Brand Identity", text: "Clear visual systems that make a business feel consistent, modern and credible.", href: "/services/brand-identity" },
+  { icon: "◎", title: "CV & Portfolio", text: "Professional personal presentation for careers, portfolios and stronger opportunities.", href: "/services/cv-portfolio" },
 ];
 
 const projects = [
@@ -32,7 +32,7 @@ export default function Home() {
             <div className="ref-actions"><Link className="ref-button light" href="/start" prefetch>Let&apos;s Build <span>→</span></Link><Link className="ref-button ghost" href="/projects" prefetch>View Our Work</Link></div>
             <div className="ref-stats">
               <div><strong>01</strong><span>Founder-led</span></div>
-              <div><strong>03</strong><span>Core Services</span></div>
+              <div><strong>04</strong><span>Core Services</span></div>
               <div><strong>06</strong><span>Clear Steps</span></div>
               <div><strong>∞</strong><span>Bigger Possibilities</span></div>
             </div>
@@ -52,7 +52,7 @@ export default function Home() {
             <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><Link className="ref-button ghost small" href="/services" prefetch>View All Services <span>→</span></Link></div>
           </div>
           <div className="ref-service-grid">
-            {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><Link href="/services" prefetch>Learn more <span>→</span></Link></article>)}
+            {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><Link href={service.href} prefetch>Learn more <span>→</span></Link></article>)}
           </div>
         </div>
       </section>
