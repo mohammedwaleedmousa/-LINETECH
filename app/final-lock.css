@@ -46,9 +46,33 @@ body{
   margin-right:auto!important;
 }
 .site-footer-global a{
-  transition:color .2s ease,opacity .2s ease;
+  transition:color .22s ease,opacity .22s ease;
 }
-.site-footer-global a:hover{color:#fff!important}
+.site-footer-global a:not(.ref-brand){
+  position:relative;
+  width:max-content;
+  max-width:100%;
+}
+.site-footer-global a:not(.ref-brand)::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:-4px;
+  height:1px;
+  background:#3882f6;
+  transform:scaleX(0);
+  transform-origin:left center;
+  transition:transform .22s cubic-bezier(.22,.61,.36,1);
+}
+.site-footer-global a:not(.ref-brand):hover,
+.site-footer-global a:not(.ref-brand):focus-visible{
+  color:#3882f6!important;
+}
+.site-footer-global a:not(.ref-brand):hover::after,
+.site-footer-global a:not(.ref-brand):focus-visible::after{
+  transform:scaleX(1);
+}
 
 /* Keep page transitions subtle and prevent layout shifts around the persistent navbar/footer. */
 .route-motion{
@@ -99,4 +123,5 @@ body{
 @media(prefers-reduced-motion:reduce){
   .global-site-nav,
   .site-footer-global{transform:none}
+  .site-footer-global a:not(.ref-brand)::after{transition:none}
 }
