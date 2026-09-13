@@ -25,6 +25,27 @@
   max-width:none!important;
 }
 
+/* Services / Projects / Contact heroes are hard-forced to true viewport width */
+.page-services .ref-hero,
+.page-projects .ref-hero,
+.page-contact .ref-hero{
+  width:100vw!important;
+  max-width:none!important;
+  margin-left:calc(50% - 50vw)!important;
+  margin-right:calc(50% - 50vw)!important;
+  box-sizing:border-box!important;
+}
+.page-services .ref-hero>.ref-shell,
+.page-projects .ref-hero>.ref-shell,
+.page-contact .ref-hero>.ref-shell{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  box-sizing:border-box!important;
+  padding-left:clamp(28px,4vw,72px)!important;
+  padding-right:clamp(28px,4vw,72px)!important;
+}
+
 /* Let the visual banner grid use the full page width, while keeping readable internal padding */
 .ref-home .ref-hero > .ref-shell,
 .ref-page .ref-hero > .ref-shell{
@@ -54,6 +75,12 @@
   .ref-page .ref-hero > .ref-shell,
   .ref-home .ref-cta > .ref-shell,
   .ref-page .ref-cta > .ref-shell{
+    padding-left:18px!important;
+    padding-right:18px!important;
+  }
+  .page-services .ref-hero>.ref-shell,
+  .page-projects .ref-hero>.ref-shell,
+  .page-contact .ref-hero>.ref-shell{
     padding-left:18px!important;
     padding-right:18px!important;
   }
