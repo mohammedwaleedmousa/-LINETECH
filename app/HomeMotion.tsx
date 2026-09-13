@@ -5,10 +5,10 @@ import { usePathname } from "next/navigation";
 
 const REVEAL_SELECTORS = [
   ".ref-section-heading",
+  ".home-projects-heading",
   ".ref-about-copy",
   ".ref-about-art",
   ".ref-about-lockup",
-  ".home-proof-intro",
   ".home-why-intro",
   ".process-center-head",
   ".home-faq-intro",
@@ -17,8 +17,7 @@ const REVEAL_SELECTORS = [
 
 const STAGGER_GROUPS = [
   ".ref-service-grid .ref-service-card",
-  ".ref-project-grid .home-project-card",
-  ".home-proof-list > article",
+  ".home-project-compact-grid > article",
   ".home-why-grid > article",
   ".process-center-grid .process-center-card",
   ".home-commitment-grid > article",
