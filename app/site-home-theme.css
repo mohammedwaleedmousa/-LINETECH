@@ -1,0 +1,341 @@
+/* Global LINETECH visual system — keep all public pages aligned with the homepage. */
+:root{
+  --lt-bg:#05080c;
+  --lt-panel:#080d13;
+  --lt-panel-2:#0a1017;
+  --lt-line:#18222d;
+  --lt-line-soft:#131b24;
+  --lt-text:#f4f7fb;
+  --lt-muted:#95a2b1;
+  --lt-blue:#3882f6;
+}
+
+body{background:var(--lt-bg);color:var(--lt-text)}
+
+.ref-page,
+.service-detail-page,
+.project-detail-page,
+.info-page,
+.thank-you-page,
+.not-found-page{
+  background:var(--lt-bg)!important;
+  color:var(--lt-text)!important;
+}
+
+/* One continuous page surface: spacing lives inside sections, not between different colors. */
+.ref-page>section,
+.service-detail-page>section,
+.project-detail-page>section,
+.info-page>section,
+.thank-you-page>section{
+  background-color:var(--lt-bg)!important;
+  border-color:var(--lt-line)!important;
+}
+
+.ref-page .ref-section,
+.service-detail-page .ref-section,
+.project-detail-page .ref-section{
+  padding:clamp(68px,7vw,96px) 0!important;
+  background:var(--lt-bg)!important;
+  border-bottom:1px solid var(--lt-line)!important;
+}
+
+/* Primary inner-page heroes: same calm, dark technical language as Home. */
+.ref-page>.ref-hero,
+.service-detail-hero,
+.project-detail-hero,
+.info-page-hero,
+.legal-hero,
+.thank-you-hero,
+.not-found-page{
+  background-color:var(--lt-bg)!important;
+  background-image:
+    radial-gradient(circle at 78% 30%,rgba(56,130,246,.095),transparent 28%),
+    radial-gradient(circle at 22% 85%,rgba(40,78,126,.055),transparent 34%),
+    linear-gradient(180deg,#05080c,#05080c)!important;
+  border-color:var(--lt-line)!important;
+}
+
+.ref-page>.ref-hero{
+  min-height:500px!important;
+}
+.ref-page>.ref-hero .ref-hero-grid{min-height:500px!important}
+.ref-page>.ref-hero .ref-hero-copy{padding-top:82px!important;padding-bottom:72px!important}
+
+.ref-page .ref-hero h1,
+.service-detail-hero h1,
+.project-detail-hero h1,
+.info-page-hero h1,
+.legal-hero-copy h1,
+.thank-you-inner h1{
+  color:var(--lt-text)!important;
+  letter-spacing:-.05em!important;
+}
+
+.ref-page .ref-hero p,
+.service-detail-lead,
+.project-detail-lead,
+.info-page-hero p:last-child,
+.legal-hero-copy>p:last-child,
+.thank-you-lead{
+  color:#a4afbc!important;
+}
+
+/* Remove the older large geometric/photo treatments from inner heroes. */
+.ref-page .ref-visual{
+  border-color:var(--lt-line)!important;
+  background:
+    radial-gradient(circle at 62% 42%,rgba(56,130,246,.12),transparent 15%),
+    radial-gradient(circle at 42% 65%,rgba(94,151,226,.07),transparent 12%),
+    radial-gradient(circle at 78% 72%,rgba(56,130,246,.055),transparent 17%),
+    var(--lt-bg)!important;
+}
+.ref-page .ref-visual::before{
+  background:none!important;
+}
+.ref-page .ref-block,
+.ref-page .ref-glow{
+  display:none!important;
+}
+
+.service-detail-hero::before,
+.project-detail-hero::before,
+.info-page-hero::before,
+.legal-hero::before,
+.thank-you-hero::before,
+.not-found-page::before{
+  background:linear-gradient(90deg,rgba(5,8,12,.98),rgba(5,8,12,.82) 56%,rgba(5,8,12,.36))!important;
+}
+
+.service-detail-hero::after,
+.project-detail-hero::after,
+.info-page-hero::after,
+.legal-hero-visual::after,
+.thank-you-beam,
+.thank-you-grid{
+  display:none!important;
+}
+
+/* Heading system. */
+.ref-page .ref-kicker,
+.service-detail-page .ref-kicker,
+.project-detail-page .ref-kicker,
+.info-page .ref-kicker{
+  color:#8294a8!important;
+}
+.ref-page .ref-head{
+  gap:clamp(36px,5vw,68px)!important;
+  margin-bottom:36px!important;
+}
+.ref-page .ref-head h2,
+.service-detail-page h2,
+.project-detail-page h2,
+.info-page h2{
+  color:var(--lt-text)!important;
+}
+.ref-page .ref-head>p,
+.ref-page .ref-head>div+ p,
+.service-detail-muted,
+.project-detail-overview-grid>p,
+.info-content-aside p,
+.info-prose p,
+.info-prose li{
+  color:var(--lt-muted)!important;
+}
+
+/* Home-like cards: quiet, compact, no jump on hover. */
+.ref-page .ref-card,
+.ref-page .ref-project,
+.ref-founder-card,
+.service-detail-card,
+.service-detail-fit-list article,
+.project-detail-story-grid article,
+.project-detail-built-grid article,
+.ref-page .project-brief-form,
+.ref-page .brief-preview{
+  border-color:var(--lt-line)!important;
+  background:linear-gradient(155deg,rgba(10,16,23,.94),rgba(6,10,15,.98) 74%)!important;
+  box-shadow:none!important;
+}
+
+.ref-page .ref-card,
+.service-detail-card,
+.project-detail-built-grid article{
+  transition:border-color .2s ease,background-color .2s ease!important;
+}
+.ref-page .ref-card:hover,
+.service-detail-card:hover,
+.project-detail-built-grid article:hover{
+  transform:none!important;
+  border-color:#29405b!important;
+  background:linear-gradient(155deg,rgba(12,21,31,.96),rgba(7,12,18,.98) 74%)!important;
+}
+
+.ref-page .ref-card p,
+.ref-page .ref-project-body p,
+.ref-page .ref-split-copy p,
+.ref-page .ref-founder-card p,
+.ref-page .ref-process p,
+.service-detail-card p,
+.service-detail-fit-list p,
+.service-detail-process-grid p,
+.project-detail-story-grid article>p:last-child,
+.project-detail-built-grid p,
+.project-detail-stack-grid>div:first-child p:last-child{
+  color:var(--lt-muted)!important;
+}
+
+.ref-page .ref-card a,
+.ref-page .ref-project a,
+.service-detail-back span,
+.project-detail-back span{
+  color:#77adf7!important;
+}
+
+/* Keep split/about visuals subtle and technical instead of large geometric blocks. */
+.ref-page .ref-split-visual{
+  border-color:var(--lt-line)!important;
+  background:
+    radial-gradient(circle at 58% 42%,rgba(56,130,246,.10),transparent 18%),
+    radial-gradient(circle at 38% 67%,rgba(56,130,246,.055),transparent 13%),
+    var(--lt-bg)!important;
+}
+.ref-page .ref-split-visual::before,
+.ref-page .ref-split-visual::after{
+  width:220px!important;
+  height:90px!important;
+  border-radius:50%!important;
+  background:transparent!important;
+  border:1px solid rgba(93,151,225,.10)!important;
+  transform:rotate(-18deg)!important;
+  box-shadow:none!important;
+}
+.ref-page .ref-split-visual::before{left:22%!important;top:31%!important}
+.ref-page .ref-split-visual::after{right:15%!important;bottom:27%!important;opacity:.55}
+
+/* Process and lists share the same thin-line rhythm as the Home process. */
+.ref-page .ref-process,
+.service-detail-process-grid,
+.project-detail-stack-grid>div:last-child,
+.faq-list{
+  border-color:var(--lt-line)!important;
+}
+.ref-page .ref-process>div,
+.service-detail-process-grid article,
+.project-detail-stack-grid>div:last-child span,
+.faq-list details,
+.ref-row,
+.service-detail-fit-list article{
+  border-color:var(--lt-line)!important;
+}
+.ref-page .ref-process>div{
+  background:transparent!important;
+}
+
+/* Buttons match Home: strong white primary, quiet outlined secondary. */
+.ref-btn,
+.ref-page .ref-btn,
+.service-detail-page .ref-btn,
+.project-detail-page .ref-btn,
+.info-page .ref-btn{
+  border-radius:9px!important;
+  min-height:42px;
+}
+.ref-btn.primary,
+.ref-page .ref-btn.primary,
+.service-detail-page .ref-btn.primary,
+.project-detail-page .ref-btn.primary,
+.info-page .ref-btn.primary{
+  background:#f4f5f3!important;
+  border-color:#f4f5f3!important;
+  color:#090d12!important;
+}
+.ref-btn.ghost,
+.ref-page .ref-btn.ghost,
+.service-detail-page .ref-btn.ghost,
+.project-detail-page .ref-btn.ghost,
+.info-page .ref-btn.ghost{
+  background:rgba(255,255,255,.01)!important;
+  border-color:#28333f!important;
+  color:#dbe4ee!important;
+}
+
+/* Project/service detail pages: remove page-specific photo backgrounds. */
+.service-web .service-detail-hero,
+.service-commerce .service-detail-hero,
+.service-brand .service-detail-hero,
+.service-cv .service-detail-hero,
+.project-flamingo .project-detail-hero,
+.project-etqan .project-detail-hero,
+.project-ledger .project-detail-hero,
+.page-faq .info-page-hero,
+.page-privacy .info-page-hero,
+.page-terms .info-page-hero,
+.thank-you-hero,
+.not-found-page{
+  background-image:
+    radial-gradient(circle at 76% 32%,rgba(56,130,246,.10),transparent 27%),
+    radial-gradient(circle at 28% 82%,rgba(52,98,157,.055),transparent 32%),
+    linear-gradient(180deg,#05080c,#05080c)!important;
+}
+
+.service-detail-fit,
+.project-detail-overview,
+.project-detail-stack,
+.service-detail-cta,
+.ref-page .ref-cta,
+.info-content{
+  background:var(--lt-bg)!important;
+}
+
+/* CTA is one continuous surface, with only a soft blue atmosphere. */
+.ref-page .ref-cta,
+.service-detail-cta,
+.project-detail-page .ref-cta{
+  background:
+    radial-gradient(circle at 18% 50%,rgba(56,130,246,.07),transparent 24%),
+    var(--lt-bg)!important;
+  border-color:var(--lt-line)!important;
+}
+.ref-page .ref-cta::before,
+.ref-page .ref-cta::after{
+  opacity:.28!important;
+}
+
+/* Forms and controls. */
+.ref-page .project-brief-form input,
+.ref-page .project-brief-form textarea,
+.ref-page .project-brief-form select,
+.ref-page .choice{
+  background:#070c12!important;
+  border-color:#1d2935!important;
+}
+.ref-page .choice.selected{
+  border-color:#3f84df!important;
+  background:rgba(56,130,246,.075)!important;
+}
+
+/* FAQ/legal/support pages. */
+.info-content{padding:clamp(68px,7vw,96px) 0!important}
+.info-prose section{border-color:var(--lt-line)!important}
+.faq-list summary{color:#e6ebf1!important}
+.faq-list details p{color:var(--lt-muted)!important}
+
+/* Mobile consistency. */
+@media(max-width:900px){
+  .ref-page>.ref-hero{min-height:auto!important}
+  .ref-page>.ref-hero .ref-hero-grid{min-height:auto!important}
+  .ref-page>.ref-hero .ref-hero-copy{padding:64px 0 42px!important}
+  .ref-page .ref-visual{min-height:180px!important}
+  .ref-page .ref-section,
+  .service-detail-page .ref-section,
+  .project-detail-page .ref-section{padding:58px 0!important}
+}
+
+@media(max-width:620px){
+  .ref-page .ref-section,
+  .service-detail-page .ref-section,
+  .project-detail-page .ref-section,
+  .info-content{padding:50px 0!important}
+  .ref-page .ref-visual{min-height:130px!important}
+}
