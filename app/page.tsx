@@ -85,8 +85,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ref-process ref-line-section">
-        <div className="ref-shell ref-process-grid"><div className="ref-process-title"><p className="ref-kicker with-line">OUR PROCESS</p><h2>From idea<br/>to impact.</h2></div><div className="ref-process-list">{process.map(([n,t,d], index) => <article key={n}><span className={index === 1 || index === 2 ? "blue" : ""}>{n}</span><h3>{t}</h3><p>{d}</p>{index < process.length - 1 && <b>—</b>}</article>)}</div></div>
+      <section className="process-center ref-line-section">
+        <div className="process-center-shell">
+          <div className="process-center-head">
+            <p>OUR PROCESS <span/></p>
+            <h2>From idea to impact.</h2>
+          </div>
+          <div className="process-center-grid">
+            {process.map(([n,t,d], index) => (
+              <article key={n} className="process-center-card">
+                <div className={`process-center-num ${index===1||index===2?"accent":""}`}>{n}<i/></div>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section className="ref-standard ref-line-section">
