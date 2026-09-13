@@ -33,6 +33,7 @@ import "./tech-hero.css";
 import "./i18n.css";
 import "./home-motion.css";
 import "./services-motion.css";
+import "./projects-motion.css";
 import "./home-spacing.css";
 import "./language-startup.css";
 import "./home-neurons.css";
