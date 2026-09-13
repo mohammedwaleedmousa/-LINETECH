@@ -15,13 +15,11 @@ const copy = {
     },
     work: {
       kicker: "SELECTED WORK",
-      title: "Selected products. Built around real work.",
-      lead: "Three case studies showing how different business needs became focused digital products — each with a clear structure, a practical workflow and room to evolve.",
-      builtLabel: "WHAT WE BUILT",
+      title: "Selected products. Built with purpose.",
+      lead: "Three focused case studies showing how different business needs became practical digital products.",
+      builtLabel: "FOCUS",
       stackLabel: "CORE STACK",
-      caseStudy: "Open case study",
-      closingTitle: "Different products. One standard.",
-      closingItems: ["Clear user journeys", "Operational thinking", "Foundations built to evolve"],
+      caseStudy: "View case study",
     },
     projects: [
       {
@@ -69,13 +67,11 @@ const copy = {
     },
     work: {
       kicker: "أعمال مختارة",
-      title: "منتجات مختارة. مبنية حول عمل حقيقي.",
-      lead: "ثلاث دراسات حالة توضّح كيف تحولت احتياجات أعمال مختلفة إلى منتجات رقمية مركزة، بهيكل واضح وسير عمل عملي وأساس قابل للتطور.",
-      builtLabel: "ما الذي بنيناه",
+      title: "منتجات مختارة. مبنية لهدف واضح.",
+      lead: "ثلاث دراسات حالة مركزة توضّح كيف تحولت احتياجات أعمال مختلفة إلى منتجات رقمية عملية.",
+      builtLabel: "التركيز",
       stackLabel: "التقنيات الأساسية",
-      caseStudy: "افتح دراسة الحالة",
-      closingTitle: "منتجات مختلفة. معيار واحد.",
-      closingItems: ["رحلات مستخدم واضحة", "تفكير تشغيلي عملي", "أساس قابل للتطور"],
+      caseStudy: "عرض دراسة الحالة",
     },
     projects: [
       {
@@ -182,9 +178,6 @@ export default function ProjectsPage() {
                     <span className={styles.caseNumber}>{project.n}</span>
                     <span className={styles.caseType}>{project.tag}</span>
                   </div>
-                  <Link className={styles.caseOpen} href={project.href} prefetch>
-                    {t.work.caseStudy}<span aria-hidden="true">→</span>
-                  </Link>
                 </div>
 
                 <div className={styles.caseBody}>
@@ -196,30 +189,22 @@ export default function ProjectsPage() {
                   <div className={styles.caseBuilt}>
                     <p>{t.work.builtLabel}</p>
                     <div>
-                      {project.built.map((item, index) => (
-                        <span key={item}><b>{String(index + 1).padStart(2, "0")}</b>{item}</span>
-                      ))}
+                      {project.built.map((item) => <span key={item}>{item}</span>)}
                     </div>
                   </div>
                 </div>
 
                 <div className={styles.caseFooter}>
-                  <span className={styles.stackLabel}>{t.work.stackLabel}</span>
-                  <div className={styles.stackLine}>
-                    {project.stack.map((item) => <span key={item}>{item}</span>)}
+                  <div>
+                    <span className={styles.stackLabel}>{t.work.stackLabel}</span>
+                    <div className={styles.stackLine}>{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
                   </div>
+                  <Link className={styles.caseOpen} href={project.href} prefetch>
+                    {t.work.caseStudy}<span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               </article>
             ))}
-          </div>
-
-          <div className={styles.workClose} data-project-motion="reveal">
-            <h3>{t.work.closingTitle}</h3>
-            <div>
-              {t.work.closingItems.map((item, index) => (
-                <span key={item}><b>{String(index + 1).padStart(2, "0")}</b>{item}</span>
-              ))}
-            </div>
           </div>
         </div>
       </section>
