@@ -1,0 +1,4 @@
+/* Prevent a wrong-language flash while restoring an explicitly saved Arabic preference. */
+html.language-hydrating body{
+  visibility:hidden;
+}
