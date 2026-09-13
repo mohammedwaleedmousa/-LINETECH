@@ -1,0 +1,102 @@
+/* LINETECH final lock layer — shared chrome and stable page behavior */
+
+/* Shared SiteNav + SiteFooter are the only global chrome rendered visually. */
+.ref-home>header.ref-nav,
+.ref-page>header.ref-nav,
+.ref-home>footer.ref-footer,
+.ref-page>footer.ref-footer{
+  display:none!important;
+}
+
+/* One document scrollbar only. */
+html{
+  width:100%!important;
+  min-height:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+}
+body{
+  width:100%!important;
+  min-height:100%!important;
+  overflow-x:hidden!important;
+  overflow-y:visible!important;
+}
+.route-motion,
+.ref-home,
+.ref-page{
+  width:100%!important;
+  max-width:100%!important;
+  height:auto!important;
+  overflow-x:hidden!important;
+  overflow-y:visible!important;
+}
+
+/* Shared footer follows the Home reference on every route. */
+.site-footer-global{
+  width:100%!important;
+  max-width:none!important;
+  margin:0!important;
+  border-top:1px solid rgba(255,255,255,.08);
+  background:#050708;
+}
+.site-footer-global>.ref-shell{
+  width:min(1180px,calc(100% - 48px))!important;
+  max-width:1180px!important;
+  margin-left:auto!important;
+  margin-right:auto!important;
+}
+.site-footer-global a{
+  transition:color .2s ease,opacity .2s ease;
+}
+.site-footer-global a:hover{color:#fff!important}
+
+/* Keep page transitions subtle and prevent layout shifts around the persistent navbar/footer. */
+.route-motion{
+  min-height:0!important;
+  contain:layout style;
+}
+.global-site-nav,
+.site-footer-global{
+  transform:translateZ(0);
+}
+
+/* Final responsive lock for the current five pages. */
+@media(min-width:901px){
+  .ref-page .ref-hero-copy{padding-left:0!important}
+  .page-services .ref-hero,
+  .page-projects .ref-hero,
+  .page-contact .ref-hero{
+    min-height:calc(100svh - 96px)!important;
+  }
+}
+
+@media(max-width:900px){
+  .site-footer-global>.ref-shell{
+    width:calc(100% - 32px)!important;
+  }
+  .site-footer-global .ref-footer-grid{
+    gap:28px!important;
+  }
+}
+
+@media(max-width:620px){
+  .site-footer-global>.ref-shell{
+    width:calc(100% - 24px)!important;
+  }
+  .site-footer-global .ref-footer-grid{
+    grid-template-columns:1fr 1fr!important;
+  }
+  .site-footer-global .ref-footer-brand,
+  .site-footer-global .ref-footer-words{
+    grid-column:1 / -1!important;
+  }
+  .site-footer-global .ref-footer-bottom{
+    flex-direction:column!important;
+    align-items:flex-start!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .global-site-nav,
+  .site-footer-global{transform:none}
+}
