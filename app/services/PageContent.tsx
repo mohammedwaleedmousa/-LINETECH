@@ -4,6 +4,7 @@ import Link from "next/link";
 import HomeHeroArt from "../HomeHeroArt";
 import { useLanguage } from "../Localized";
 import styles from "./services-page.module.css";
+import outcomeStyles from "./services-outcome.module.css";
 
 const copy = {
   en: {
@@ -53,12 +54,17 @@ const copy = {
     },
     decision: {
       kicker: "START WITH THE OUTCOME",
-      title: "Not sure what service you need?",
+      title: "Start with the result. We’ll map the right service.",
+      lead: "You do not need to know the technical solution first. Choose the outcome closest to what you want to achieve, and we’ll point you to the right starting line.",
+      panel: "OUTCOME ROUTER",
+      status: "SELECT A DIRECTION",
+      helper: "Still not sure? Start with the problem and we’ll define the path with you.",
+      helperLink: "Describe what you need",
       choices: [
-        ["I need a stronger company website", "/services/web-development"],
-        ["I need to sell or manage operations online", "/services/ecommerce-systems"],
-        ["I need a clearer brand identity", "/services/brand-identity"],
-        ["I need a stronger professional presence", "/services/cv-portfolio"],
+        { n: "01", title: "Build a stronger digital presence for my company", target: "WEB DEVELOPMENT", href: "/services/web-development" },
+        { n: "02", title: "Sell online or make business operations easier", target: "E-COMMERCE & SYSTEMS", href: "/services/ecommerce-systems" },
+        { n: "03", title: "Make my brand feel clearer, stronger and more credible", target: "BRAND IDENTITY", href: "/services/brand-identity" },
+        { n: "04", title: "Present my experience and work more professionally", target: "CV & PORTFOLIO", href: "/services/cv-portfolio" },
       ],
     },
     process: {
@@ -125,12 +131,17 @@ const copy = {
     },
     decision: {
       kicker: "ابدأ بالنتيجة",
-      title: "لست متأكدًا أي خدمة تحتاج؟",
+      title: "ابدأ بالنتيجة، ونحن نحدد لك الخدمة المناسبة.",
+      lead: "لا تحتاج أن تعرف الحل التقني أولًا. اختر النتيجة الأقرب لما تريد تحقيقه، وسنوجهك إلى نقطة البداية الصحيحة.",
+      panel: "موجّه النتائج",
+      status: "اختر الاتجاه",
+      helper: "ما زلت غير متأكد؟ ابدأ بالمشكلة فقط، وسنحدد المسار معك.",
+      helperLink: "اشرح لنا ما تحتاجه",
       choices: [
-        ["أحتاج موقعًا أقوى لشركتي", "/services/web-development"],
-        ["أحتاج البيع أو إدارة العمليات أونلاين", "/services/ecommerce-systems"],
-        ["أحتاج هوية بصرية أوضح", "/services/brand-identity"],
-        ["أحتاج حضورًا مهنيًا أقوى", "/services/cv-portfolio"],
+        { n: "01", title: "أريد حضورًا رقميًا أقوى لشركتي", target: "تطوير المواقع", href: "/services/web-development" },
+        { n: "02", title: "أريد البيع أونلاين أو تسهيل عمليات العمل", target: "التجارة الإلكترونية والأنظمة", href: "/services/ecommerce-systems" },
+        { n: "03", title: "أريد هوية أوضح وأقوى وأكثر موثوقية", target: "الهوية البصرية", href: "/services/brand-identity" },
+        { n: "04", title: "أريد تقديم خبرتي وأعمالي بصورة أكثر احترافية", target: "السيرة الذاتية والملف المهني", href: "/services/cv-portfolio" },
       ],
     },
     process: {
@@ -206,16 +217,42 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className={styles.decision}>
-        <div className={styles.decisionInner}>
-          <div className={styles.decisionCopy}>
-            <p>{t.decision.kicker}</p>
-            <h2>{t.decision.title}</h2>
+      <section className={outcomeStyles.section}>
+        <div className={outcomeStyles.shell}>
+          <div className={outcomeStyles.header}>
+            <div>
+              <p className={outcomeStyles.kicker}>{t.decision.kicker}</p>
+              <h2>{t.decision.title}</h2>
+            </div>
+            <p className={outcomeStyles.lead}>{t.decision.lead}</p>
           </div>
-          <div className={styles.choices}>
-            {t.decision.choices.map(([label, href]) => (
-              <Link className={styles.choice} href={href} prefetch key={label}>{label}<span aria-hidden="true">→</span></Link>
-            ))}
+
+          <div className={outcomeStyles.panel}>
+            <div className={outcomeStyles.panelTop}>
+              <span><i aria-hidden="true" />{t.decision.panel}</span>
+              <span>{t.decision.status}</span>
+            </div>
+
+            <div className={outcomeStyles.choices}>
+              {t.decision.choices.map((choice) => (
+                <Link className={outcomeStyles.choice} href={choice.href} prefetch key={choice.n}>
+                  <div className={outcomeStyles.choiceTop}>
+                    <span className={outcomeStyles.number}>{choice.n}</span>
+                    <span className={outcomeStyles.target}>{choice.target}</span>
+                  </div>
+                  <h3>{choice.title}</h3>
+                  <div className={outcomeStyles.choiceFooter}>
+                    <span>{t.services.explore}</span>
+                    <strong aria-hidden="true">→</strong>
+                  </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className={outcomeStyles.helper}>
+              <p>{t.decision.helper}</p>
+              <Link href="/start" prefetch>{t.decision.helperLink}<span aria-hidden="true">→</span></Link>
+            </div>
           </div>
         </div>
       </section>
