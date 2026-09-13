@@ -1,0 +1,195 @@
+.section{
+  padding:96px 0;
+  background:
+    radial-gradient(circle at 72% 42%,rgba(56,130,246,.08),transparent 24%),
+    linear-gradient(180deg,#05080c,#070b10 52%,#05080c);
+}
+.shell{
+  display:grid;
+  grid-template-columns:minmax(0,1.1fr) minmax(280px,.8fr) minmax(240px,.65fr);
+  gap:28px;
+  align-items:stretch;
+}
+.copy{
+  padding:18px 18px 18px 0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.kicker{
+  margin:0 0 18px;
+  color:#7da9df;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+}
+.copy h2{
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  color:#f4f7fb;
+  font-size:clamp(34px,4.5vw,58px);
+  line-height:1.02;
+  font-weight:520;
+  letter-spacing:-.04em;
+}
+.copy h2 strong{
+  color:#8ebcf8;
+  font-weight:520;
+}
+.body{
+  max-width:58ch;
+  margin:24px 0 26px;
+  color:#9daab7;
+  font-size:14px;
+  line-height:1.9;
+}
+.link{
+  width:max-content;
+  min-height:42px;
+  display:inline-flex;
+  align-items:center;
+  gap:14px;
+  padding:0 15px;
+  border:1px solid #2a3949;
+  border-radius:8px;
+  color:#dce8f6;
+  font-size:12px;
+  text-decoration:none;
+}
+.link span{color:#75adf8}
+.visual{
+  position:relative;
+  min-height:360px;
+  overflow:hidden;
+  border:1px solid #1f2b38;
+  border-radius:14px;
+  background:radial-gradient(circle at 50% 50%,rgba(56,130,246,.14),rgba(5,9,14,.96) 58%);
+}
+.glow{
+  position:absolute;
+  width:150px;
+  height:150px;
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(106,171,255,.22),rgba(56,130,246,.04) 45%,transparent 72%);
+  filter:blur(2px);
+}
+.orbitA,
+.orbitB{
+  position:absolute;
+  left:50%;
+  top:50%;
+  border:1px solid rgba(105,169,248,.18);
+  border-radius:50%;
+  transform:translate(-50%,-50%) rotate(-19deg);
+}
+.orbitA{width:250px;height:126px}
+.orbitB{width:160px;height:270px;transform:translate(-50%,-50%) rotate(31deg)}
+.core{
+  position:absolute;
+  left:50%;
+  top:50%;
+  width:86px;
+  height:86px;
+  transform:translate(-50%,-50%);
+  border:1px solid rgba(122,181,255,.28);
+  border-radius:50%;
+  background:rgba(7,14,23,.82);
+  box-shadow:0 0 48px rgba(56,130,246,.12),inset 0 0 24px rgba(56,130,246,.06);
+}
+.core i,.core b{
+  position:absolute;
+  display:block;
+  border-radius:50%;
+  background:#79b2ff;
+  box-shadow:0 0 14px rgba(87,158,255,.42);
+}
+.core i{width:8px;height:8px;left:20px;top:26px}
+.core b{width:5px;height:5px;right:18px;bottom:22px}
+.visual>p{
+  position:absolute;
+  left:24px;
+  right:24px;
+  bottom:22px;
+  margin:0;
+  color:#7f95ad;
+  font-size:9px;
+  letter-spacing:.16em;
+  text-align:center;
+}
+.path{
+  padding:8px 0 8px 24px;
+  border-left:1px solid #1f2b38;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.step{
+  position:relative;
+  display:grid;
+  grid-template-columns:38px 1fr;
+  gap:14px;
+  padding:18px 0;
+}
+.step::before{
+  content:"";
+  position:absolute;
+  left:-28px;
+  top:26px;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#6ea9f8;
+  box-shadow:0 0 12px rgba(56,130,246,.32);
+}
+.step span{
+  color:#526a84;
+  font-size:11px;
+}
+.step strong{
+  display:block;
+  margin-bottom:6px;
+  color:#e5edf6;
+  font-size:12px;
+  letter-spacing:.08em;
+}
+.step p{
+  margin:0;
+  color:#8999a9;
+  font-size:12px;
+  line-height:1.65;
+}
+:global(html[dir="rtl"]) .copy{padding:18px 0 18px 18px}
+:global(html[dir="rtl"]) .kicker,
+:global(html[dir="rtl"]) .step strong,
+:global(html[dir="rtl"]) .visual>p{letter-spacing:0}
+:global(html[dir="rtl"]) .path{
+  padding:8px 24px 8px 0;
+  border-left:0;
+  border-right:1px solid #1f2b38;
+}
+:global(html[dir="rtl"]) .step::before{
+  left:auto;
+  right:-28px;
+}
+@media(max-width:980px){
+  .section{padding:78px 0}
+  .shell{grid-template-columns:1fr 1fr}
+  .path{grid-column:1/-1;display:grid;grid-template-columns:repeat(3,1fr);padding:20px 0 0;border-left:0;border-top:1px solid #1f2b38}
+  .step{padding:18px}
+  .step::before{display:none}
+  :global(html[dir="rtl"]) .path{padding:20px 0 0;border-right:0;border-top:1px solid #1f2b38}
+}
+@media(max-width:700px){
+  .section{padding:64px 0}
+  .shell{grid-template-columns:1fr}
+  .copy{padding:0!important}
+  .visual{min-height:280px}
+  .path{grid-template-columns:1fr}
+  .step{padding:14px 0}
+}
