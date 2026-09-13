@@ -1,40 +1,14 @@
-const projects = [
-  { tag:"E-COMMERCE", title:"Flamingo Park", text:"A mobile-first commerce platform focused on product discovery, customer journeys and operational order flow.", type:"Commerce / Web Product", cls:"showcase-commerce" },
-  { tag:"SERVICES MARKETPLACE", title:"Etqan", text:"A service marketplace concept structured around discovery, trust, service categories and scalable operations.", type:"Marketplace / Web Product", cls:"showcase-ledger" },
-  { tag:"BUSINESS SYSTEM", title:"LedgerPro", text:"A business platform focused on financial records, workflows and clearer operational visibility.", type:"Business System / Web Product", cls:"showcase-industrial" },
+const projects=[
+  {tag:"E-COMMERCE",title:"Flamingo Park",text:"A mobile-first commerce platform focused on product discovery, customer journeys and operational order flow."},
+  {tag:"SERVICES MARKETPLACE",title:"Etqan",text:"A service marketplace concept structured around discovery, trust, categories and scalable operations."},
+  {tag:"BUSINESS SYSTEM",title:"LedgerPro",text:"A business platform focused on financial records, workflows and clearer operational visibility."},
 ];
 
-export default function ProjectsPage() {
-  return (
-    <main>
-      <header className="nav shell">
-        <a className="brand" href="/"><span className="mark"><i /><b /></span><span>LINETECH</span></a>
-        <nav className="desktop-nav"><a href="/">Home</a><a href="/services">Services</a><a className="active" href="/projects">Projects</a><a href="/about">About</a><a href="/start">Contact</a></nav>
-        <div className="nav-actions"><a className="button button-light nav-cta" href="/start">Start Your Line <span>↗</span></a><details className="mobile-menu"><summary aria-label="Open navigation"><span></span><span></span></summary><div className="mobile-menu-panel"><a href="/">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Start Your Line</a></div></details></div>
-      </header>
-
-      <section className="inner-hero premium-inner section-border">
-        <div className="shell inner-hero-grid">
-          <div className="inner-title"><p className="eyebrow">SELECTED WORK</p><h1>Real products. Built around real problems.</h1><div className="inner-actions"><a className="button button-light" href="/start">Build with us ↗</a><span className="project-note">SELECTED WORK / 2026</span></div></div>
-          <div className="inner-visual projects-visual" aria-hidden="true"><div className="project-plane plane-a"/><div className="project-plane plane-b"/><div className="project-plane plane-c"/><div className="hero-beam project-beam"/><div className="visual-core">WORK<small>PRODUCTS / SYSTEMS / BRANDS</small></div></div>
-        </div>
-      </section>
-
-      <section className="shell section page-intro-row"><p className="eyebrow">OUR APPROACH</p><p>We present work as products, not decoration. Each project starts with a real problem, a clear user and a result worth building toward.</p></section>
-
-      <section className="shell section showcase-list">
-        {projects.map((project, index) => (
-          <article className="showcase" key={project.title}>
-            <div className={`showcase-art ${project.cls}`}><span className="showcase-index">0{index + 1}</span><div className="showcase-device"><i/><i/><i/></div><div className="showcase-glow"/></div>
-            <div className="showcase-copy"><span className="pill">{project.tag}</span><h2>{project.title}</h2><p>{project.text}</p><div className="showcase-meta"><span>{project.type}</span><span>LINETECH / SELECTED WORK</span></div></div>
-          </article>
-        ))}
-      </section>
-
-      <section className="section-border capability-strip"><div className="shell"><span>CHALLENGE</span><i/> <span>APPROACH</span><i/> <span>PRODUCT</span><i/> <span>TECHNOLOGY</span><i/> <span>IMPACT</span></div></section>
-
-      <section className="cta section-border"><div className="cta-beam beam-a"/><div className="cta-beam beam-b"/><div className="shell cta-inner"><div><p className="eyebrow">BUILD WITH LINETECH</p><h2>Your project can be the next line.</h2><p>Start with the idea. We will help shape the product.</p></div><a className="button button-light" href="/start">Start Your Line <span>↗</span></a></div></section>
-      <footer className="footer shell"><div className="footer-bottom"><span>© 2026 LINETECH</span><span>BUILT FOR REAL USE.</span></div></footer>
-    </main>
-  );
-}
+export default function ProjectsPage(){return <main className="ref-page">
+<header className="nav shell"><a className="brand" href="/"><span className="mark"><i/><b/></span><span>LINETECH</span></a><nav className="desktop-nav"><a href="/">Home</a><a href="/services">Services</a><a className="active" href="/projects">Projects</a><a href="/about">About</a><a href="/start">Contact</a></nav><div className="nav-actions"><a className="button button-light nav-cta" href="/start">Contact Us <span>↗</span></a></div></header>
+<section className="ref-hero"><div className="ref-shell ref-hero-grid"><div className="ref-hero-copy"><p className="ref-kicker">FEATURED PROJECTS</p><h1>Real solutions. Real impact.</h1><p>Selected work that represents LINETECH&apos;s direction: practical products, clear systems and experiences built for real use.</p><div className="ref-hero-actions"><a className="ref-btn primary" href="/start">Build with us ↗</a><a className="ref-btn ghost" href="/services">View services</a></div></div><div className="ref-visual" aria-hidden="true"><div className="ref-block a"/><div className="ref-block b"/><div className="ref-block c"/><div className="ref-glow"/><div className="ref-visual-label">PRODUCTS<br/>SYSTEMS<br/>EXPERIENCES<br/>IMPACT</div></div></div></section>
+<section className="ref-section"><div className="ref-shell"><div className="ref-head"><div><p className="ref-kicker">SELECTED WORK</p><h2>Built to work. Built to grow.</h2></div><p>Each project begins with a real problem, a clear user and a result worth building toward.</p></div><div className="ref-projects">{projects.map((p,i)=><article className="ref-project" key={p.title}><div className="ref-project-art"><span className="ref-meta" style={{position:"absolute",left:18,top:16}}>0{i+1}</span></div><div className="ref-project-body"><span className="ref-meta">{p.tag}</span><h3>{p.title}</h3><p>{p.text}</p><a className="ref-btn ghost" href="/start">Start a similar project ↗</a></div></article>)}</div></div></section>
+<section className="ref-section"><div className="ref-shell"><div className="ref-head"><div><p className="ref-kicker">HOW WE THINK</p><h2>Products, not decoration.</h2></div><p>Our work is evaluated by clarity, usability, performance and how well it supports the business behind it.</p></div><div className="ref-grid">{[["01","Challenge","Understand what needs to change."],["02","Approach","Define the simplest strong solution."],["03","Product","Design and build for real use."],["04","Impact","Launch with a foundation for growth."]].map(([n,t,d])=><article className="ref-card" key={n}><span className="num">{n}</span><div><h3>{t}</h3><p>{d}</p></div></article>)}</div></div></section>
+<section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Your project can be the next line.</h2><p>Start with the idea. We will help shape the product.</p></div><a className="ref-btn primary" href="/start">Contact Us ↗</a></div></section>
+<footer className="ref-footer ref-shell"><div className="ref-footer-grid"><div><a className="brand" href="/"><span className="mark"><i/><b/></span><span>LINETECH</span></a><p>Every idea starts with a line.</p></div><div><h4>Company</h4><a href="/about">About</a><a href="/services">Services</a></div><div><h4>Projects</h4><span>Flamingo Park</span><span>Etqan</span><span>LedgerPro</span></div><div><h4>Location</h4><span>Aden, Yemen</span></div></div><div className="ref-footer-bottom"><span>© 2026 LINETECH</span><span>REAL PRODUCTS / REAL USE</span></div></footer>
+</main>}
