@@ -79,6 +79,7 @@ const copy = {
       ],
     },
     cta: {
+      kicker: "START YOUR LINE",
       title: "Tell us what you need. We’ll define the right first line.",
       lead: "You do not need to know the technical answer before you contact us. Start with the outcome you want to achieve.",
       button: "Start Your Line",
@@ -156,6 +157,7 @@ const copy = {
       ],
     },
     cta: {
+      kicker: "ابدأ خطك",
       title: "قل لنا ماذا تريد أن تحقق، وسنحدد لك الخط الأول الصحيح.",
       lead: "لا تحتاج أن تعرف الحل التقني قبل التواصل معنا. ابدأ فقط بالنتيجة التي تريد الوصول إليها.",
       button: "ابدأ خطك",
@@ -278,13 +280,14 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      <section className={styles.cta}>
-        <div className={styles.ctaInner}>
+      <section className="ref-cta">
+        <div className="ref-shell ref-cta-inner">
           <div>
+            <p className="ref-kicker">{t.cta.kicker}</p>
             <h2>{t.cta.title}</h2>
             <p>{t.cta.lead}</p>
           </div>
-          <Link className={styles.primary} href="/start" prefetch>{t.cta.button}<span aria-hidden="true">→</span></Link>
+          <Link className="ref-btn primary" href="/start" prefetch>{t.cta.button} <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
     </main>
