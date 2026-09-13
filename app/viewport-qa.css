@@ -1,0 +1,140 @@
+/* Final viewport QA — keep every hero to one screen without nested hero scrolling. */
+
+/* Short laptop screens: preserve full-screen heroes while pulling content safely upward. */
+@media (min-width:901px) and (max-height:780px){
+  .ref-home .ref-hero-copy,
+  .ref-page>.ref-hero .ref-hero-copy,
+  .service-detail-page .service-detail-hero-copy,
+  .project-detail-page .project-detail-hero-copy{
+    padding-top:28px!important;
+    padding-bottom:28px!important;
+  }
+  .service-detail-page .service-detail-back,
+  .project-detail-page .project-detail-back{margin-bottom:14px!important}
+  .service-detail-page .ref-kicker,
+  .project-detail-page .ref-kicker{margin-bottom:10px!important}
+  .service-detail-page .service-detail-hero h1,
+  .project-detail-page .project-detail-hero h1{font-size:clamp(46px,5.1vw,70px)!important;margin-bottom:14px!important}
+  .service-detail-page .service-detail-lead,
+  .project-detail-page .project-detail-lead{font-size:15px!important;line-height:1.5!important}
+  .service-detail-page .ref-hero-actions,
+  .project-detail-page .ref-hero-actions{margin-top:16px!important}
+  .ref-home .ref-actions{margin-bottom:24px!important}
+  .ref-home .ref-stats div{padding-top:12px!important;min-height:54px!important}
+  .info-page .legal-hero-copy{padding-top:38px!important;padding-bottom:38px!important}
+  .info-page .legal-hero-index{margin-bottom:18px!important}
+  .info-page .legal-hero-copy h1{font-size:clamp(48px,5.6vw,72px)!important;margin-bottom:16px!important}
+}
+
+/* Tablet/mobile: the photo already fills the hero, so decorative right columns are removed.
+   This prevents content from being clipped inside the fixed one-screen hero. */
+@media (max-width:900px){
+  .ref-home .ref-hero-grid,
+  .ref-page>.ref-hero .ref-hero-grid,
+  .service-detail-page .service-detail-hero-grid,
+  .project-detail-page .project-detail-hero-grid,
+  .info-page .legal-hero-grid{
+    grid-template-columns:1fr!important;
+    grid-template-rows:1fr!important;
+  }
+
+  .ref-home .ref-hero-art,
+  .page-services .ref-visual,
+  .page-projects .ref-visual,
+  .page-about .ref-visual,
+  .page-contact .ref-visual,
+  .service-detail-page .service-detail-visual,
+  .project-detail-page .project-detail-visual,
+  .info-page .legal-hero-visual{
+    display:none!important;
+  }
+
+  .ref-home .ref-hero-copy,
+  .ref-page>.ref-hero .ref-hero-copy,
+  .service-detail-page .service-detail-hero-copy,
+  .project-detail-page .project-detail-hero-copy,
+  .info-page .legal-hero-copy{
+    min-height:100%!important;
+    height:100%!important;
+    justify-content:center!important;
+    padding-top:34px!important;
+    padding-bottom:34px!important;
+    overflow:visible!important;
+  }
+
+  .ref-page>.ref-hero .ref-shell,
+  .ref-home .ref-hero .ref-shell,
+  .service-detail-page .service-detail-hero .ref-shell,
+  .project-detail-page .project-detail-hero .ref-shell,
+  .info-page .legal-hero>.ref-shell{
+    height:100%!important;
+    min-height:0!important;
+  }
+
+  .ref-page>.ref-hero .ref-hero-actions,
+  .service-detail-page .ref-hero-actions,
+  .project-detail-page .ref-hero-actions{margin-top:18px!important}
+}
+
+@media (max-width:620px){
+  .ref-home .ref-hero-copy,
+  .ref-page>.ref-hero .ref-hero-copy,
+  .service-detail-page .service-detail-hero-copy,
+  .project-detail-page .project-detail-hero-copy{
+    overflow:visible!important;
+    overscroll-behavior:auto!important;
+  }
+
+  .ref-home .ref-hero h1{font-size:clamp(42px,12vw,56px)!important;line-height:.95!important;margin-bottom:14px!important}
+  .ref-page>.ref-hero h1{font-size:clamp(38px,10.8vw,50px)!important;line-height:.96!important;margin-bottom:14px!important}
+  .service-detail-page .service-detail-hero h1,
+  .project-detail-page .project-detail-hero h1{font-size:clamp(38px,10.6vw,48px)!important;line-height:.95!important;margin-bottom:13px!important}
+
+  .ref-home .ref-kicker,
+  .ref-page>.ref-hero .ref-kicker,
+  .service-detail-page .ref-kicker,
+  .project-detail-page .ref-kicker{margin-bottom:10px!important}
+
+  .ref-home .ref-lead,
+  .ref-page>.ref-hero p,
+  .service-detail-page .service-detail-lead,
+  .project-detail-page .project-detail-lead{font-size:14px!important;line-height:1.5!important}
+
+  .ref-home .ref-actions{margin-bottom:20px!important}
+  .ref-home .ref-stats{grid-template-columns:repeat(2,minmax(0,1fr))!important;max-width:430px!important}
+  .ref-home .ref-stats div{min-height:46px!important;padding-top:10px!important}
+  .ref-home .ref-stats strong{font-size:16px!important;margin-bottom:3px!important}
+  .ref-home .ref-stats span{font-size:9px!important}
+
+  .service-detail-page .service-detail-back,
+  .project-detail-page .project-detail-back{margin-bottom:12px!important}
+  .service-detail-page .ref-hero-actions,
+  .project-detail-page .ref-hero-actions{margin-top:14px!important}
+
+  .info-page .info-page-hero>.ref-shell,
+  .info-page .legal-hero-copy{padding-top:24px!important;padding-bottom:24px!important}
+  .info-page .legal-hero-index{margin-bottom:14px!important}
+  .info-page .legal-hero-copy h1{font-size:clamp(40px,11vw,50px)!important;line-height:.96!important;margin:8px 0 14px!important}
+  .info-page .legal-hero-copy>p:last-child{font-size:14px!important;line-height:1.55!important}
+}
+
+/* Very short mobile landscape / compact browser chrome. */
+@media (max-width:900px) and (max-height:650px){
+  .ref-home .ref-hero-copy,
+  .ref-page>.ref-hero .ref-hero-copy,
+  .service-detail-page .service-detail-hero-copy,
+  .project-detail-page .project-detail-hero-copy,
+  .info-page .legal-hero-copy{padding-top:16px!important;padding-bottom:16px!important}
+
+  .ref-home .ref-hero h1,
+  .ref-page>.ref-hero h1,
+  .service-detail-page .service-detail-hero h1,
+  .project-detail-page .project-detail-hero h1,
+  .info-page .legal-hero-copy h1{font-size:clamp(34px,8vh,46px)!important}
+
+  .ref-home .ref-stats{display:none!important}
+  .ref-home .ref-actions,
+  .ref-page>.ref-hero .ref-hero-actions,
+  .service-detail-page .ref-hero-actions,
+  .project-detail-page .ref-hero-actions{margin-top:12px!important;margin-bottom:0!important}
+}
