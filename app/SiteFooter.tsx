@@ -19,8 +19,8 @@ export default function SiteFooter() {
           <Link href="/faq" prefetch>FAQ</Link>
           <Link href="/start" prefetch>Contact</Link>
         </div>
-        <div>
-          <h4>Services</h4>
+        <div className="footer-quick-links">
+          <h4>Quick Links</h4>
           <Link href="/services/web-development" prefetch>Web Development</Link>
           <Link href="/services/ecommerce-systems" prefetch>E-commerce & Systems</Link>
           <Link href="/services/brand-identity" prefetch>Brand Identity</Link>
