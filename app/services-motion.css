@@ -1,0 +1,118 @@
+/* LINETECH services motion — same rhythm as Home, no hover movement. */
+.page-services .services-motion-hero,
+.page-services .services-motion-reveal{
+  opacity:0;
+  transform:translate3d(0,14px,0);
+}
+
+.page-services.services-motion-mounted .services-motion-hero{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .62s cubic-bezier(.22,.61,.36,1) var(--services-hero-delay,0ms),
+    transform .62s cubic-bezier(.22,.61,.36,1) var(--services-hero-delay,0ms);
+}
+
+.page-services .services-motion-reveal.is-visible{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .58s cubic-bezier(.22,.61,.36,1) var(--services-motion-delay,0ms),
+    transform .58s cubic-bezier(.22,.61,.36,1) var(--services-motion-delay,0ms);
+}
+
+.page-services .services-motion-side{
+  transform:translate3d(12px,0,0);
+}
+html[dir="rtl"] .page-services .services-motion-side{
+  transform:translate3d(-12px,0,0);
+}
+.page-services .services-motion-side.is-visible,
+html[dir="rtl"] .page-services .services-motion-side.is-visible{
+  transform:none;
+}
+
+/* Hero neural artwork enters softly, then follows the pointer by only a few pixels. */
+.page-services .home-line-art{
+  --services-art-x:0px;
+  --services-art-y:0px;
+}
+.page-services .home-line-art svg{
+  opacity:0;
+  transform:translate3d(8px,5px,0) scale(.997);
+  transform-origin:center;
+  will-change:transform;
+}
+.page-services.services-motion-mounted .home-line-art svg{
+  opacity:1;
+  transform:translate3d(var(--services-art-x),var(--services-art-y),0) scale(1);
+  transition:
+    opacity .95s ease .14s,
+    transform .44s cubic-bezier(.22,.61,.36,1);
+}
+
+/* Service capability chips settle after their parent card appears. */
+.page-services .services-motion-reveal.is-visible [class*="capabilities"] > span{
+  animation:servicesChipIn .38s cubic-bezier(.22,.61,.36,1) both;
+}
+.page-services .services-motion-reveal.is-visible [class*="capabilities"] > span:nth-child(1){animation-delay:.10s}
+.page-services .services-motion-reveal.is-visible [class*="capabilities"] > span:nth-child(2){animation-delay:.16s}
+.page-services .services-motion-reveal.is-visible [class*="capabilities"] > span:nth-child(3){animation-delay:.22s}
+
+/* Outcome rows get a small light sweep once, not a persistent animation. */
+.page-services .services-motion-reveal.is-visible[href]{
+  position:relative;
+}
+.page-services .services-motion-reveal.is-visible[href]::after{
+  animation:servicesLinkSettle .55s ease both;
+}
+
+/* Process numbers become readable in sequence without moving the cards. */
+.page-services .services-motion-reveal.is-visible > span:first-child{
+  animation:servicesNumberIn .42s cubic-bezier(.22,.61,.36,1) both;
+}
+
+@keyframes servicesChipIn{
+  from{opacity:0;transform:translateY(5px)}
+  to{opacity:1;transform:none}
+}
+
+@keyframes servicesLinkSettle{
+  from{opacity:.15}
+  to{opacity:1}
+}
+
+@keyframes servicesNumberIn{
+  from{opacity:.25}
+  to{opacity:1}
+}
+
+@media(max-width:760px){
+  .page-services .services-motion-hero,
+  .page-services .services-motion-reveal,
+  .page-services .services-motion-side,
+  html[dir="rtl"] .page-services .services-motion-side{
+    transform:translate3d(0,10px,0);
+  }
+  .page-services .services-motion-reveal.is-visible,
+  .page-services .services-motion-side.is-visible,
+  html[dir="rtl"] .page-services .services-motion-side.is-visible{
+    transform:none;
+  }
+  .page-services.services-motion-mounted .home-line-art svg{
+    transform:none;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page-services .services-motion-hero,
+  .page-services .services-motion-reveal,
+  .page-services .home-line-art svg,
+  .page-services .services-motion-reveal [class*="capabilities"] > span,
+  .page-services .services-motion-reveal > span:first-child{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+}
