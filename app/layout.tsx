@@ -29,22 +29,23 @@ import "./chat.css";
 import "./chat-enhancements.css";
 import "./tech-hero.css";
 import "./i18n.css";
+import "./company-tech.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
-const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
+const siteDescription = "LINETECH designs and builds web platforms, commerce systems and business software for real operational needs.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "LINETECH — Every idea starts with a line.",
+    default: "LINETECH — Technology platforms and systems.",
     template: "%s — LINETECH",
   },
   description: siteDescription,
   applicationName: "LINETECH",
-  keywords: ["LINETECH", "web development", "brand identity", "digital products", "Aden", "Yemen"],
+  keywords: ["LINETECH", "web platforms", "commerce systems", "business software", "digital products", "Aden", "Yemen"],
   robots: { index: true, follow: true },
   openGraph: {
-    title: "LINETECH — Every idea starts with a line.",
+    title: "LINETECH — Technology platforms and systems.",
     description: siteDescription,
     siteName: "LINETECH",
     type: "website",
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LINETECH — Every idea starts with a line.",
+    title: "LINETECH — Technology platforms and systems.",
     description: siteDescription,
     images: ["/hero/home.webp"],
   },
