@@ -68,7 +68,7 @@ export default function HomeProjects() {
   return (
     <section className={`${styles.section} ref-line-section`} id="projects" aria-labelledby="home-projects-title">
       <div className="ref-shell">
-        <div className={styles.heading}>
+        <div className={`${styles.heading} home-projects-heading`}>
           <div>
             <p className={styles.kicker}>{content.kicker}</p>
             <h2 id="home-projects-title">{content.title}</h2>
@@ -79,9 +79,9 @@ export default function HomeProjects() {
           </div>
         </div>
 
-        <div className={`${styles.grid} ref-project-grid home-project-compact-grid`}>
+        <div className={`${styles.grid} home-project-compact-grid`}>
           {content.projects.map((project, index) => (
-            <article className={`${styles.card} home-project-card`} key={project.title}>
+            <article className={`${styles.card} home-project-mini-card`} key={project.title}>
               <div className={styles.top}>
                 <span className={styles.tag}>{project.tag}</span>
                 <span className={styles.number}>{String(index + 1).padStart(2, "0")}</span>
