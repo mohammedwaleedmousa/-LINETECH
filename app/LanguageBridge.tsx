@@ -11,6 +11,8 @@ export default function LanguageBridge() {
     document.documentElement.dir = language === "ar" ? "rtl" : "ltr";
     document.documentElement.dataset.language = language;
     document.body.dataset.language = language;
+    document.documentElement.classList.remove("language-hydrating");
+
     // Next updates route metadata separately from the page's React content.
     const originals = new Map<Element, { source: string; rendered: string }>();
     const applyMetadata = () => {
