@@ -31,6 +31,7 @@ export default function HomeMotion() {
     if (!root) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
     const revealNodes = new Set<HTMLElement>();
 
     REVEAL_SELECTORS.forEach((selector) => {
@@ -57,24 +58,55 @@ export default function HomeMotion() {
       node.style.setProperty("--home-hero-delay", `${80 + index * 85}ms`);
     });
 
+    const hero = root.querySelector<HTMLElement>(".ref-hero");
+    const heroArt = root.querySelector<HTMLElement>(".home-line-art");
+    let pointerFrame = 0;
+
+    const resetHeroArt = () => {
+      if (!heroArt) return;
+      heroArt.style.setProperty("--home-art-x", "0px");
+      heroArt.style.setProperty("--home-art-y", "0px");
+    };
+
+    const moveHeroArt = (event: PointerEvent) => {
+      if (!hero || !heroArt) return;
+      const rect = hero.getBoundingClientRect();
+      if (!rect.width || !rect.height) return;
+
+      const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - 0.5) * 2));
+      const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - 0.5) * 2));
+
+      window.cancelAnimationFrame(pointerFrame);
+      pointerFrame = window.requestAnimationFrame(() => {
+        heroArt.style.setProperty("--home-art-x", `${(x * 6).toFixed(2)}px`);
+        heroArt.style.setProperty("--home-art-y", `${(y * 4).toFixed(2)}px`);
+      });
+    };
+
     if (reduceMotion) {
       root.classList.add("home-motion-mounted", "home-motion-reduced");
       revealNodes.forEach((node) => node.classList.add("is-visible"));
-      return;
     }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          (entry.target as HTMLElement).classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.12, rootMargin: "0px 0px -7% 0px" }
-    );
+    const observer = reduceMotion
+      ? null
+      : new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              (entry.target as HTMLElement).classList.add("is-visible");
+              observer?.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -7% 0px" }
+        );
 
-    revealNodes.forEach((node) => observer.observe(node));
+    observer && revealNodes.forEach((node) => observer.observe(node));
+
+    if (!reduceMotion && finePointer && hero && heroArt) {
+      hero.addEventListener("pointermove", moveHeroArt, { passive: true });
+      hero.addEventListener("pointerleave", resetHeroArt);
+    }
 
     const frame = window.requestAnimationFrame(() => {
       root.classList.add("home-motion-mounted");
@@ -82,7 +114,11 @@ export default function HomeMotion() {
 
     return () => {
       window.cancelAnimationFrame(frame);
-      observer.disconnect();
+      window.cancelAnimationFrame(pointerFrame);
+      observer?.disconnect();
+      hero?.removeEventListener("pointermove", moveHeroArt);
+      hero?.removeEventListener("pointerleave", resetHeroArt);
+      resetHeroArt();
       root.classList.remove("home-motion-mounted", "home-motion-reduced");
       heroItems.forEach((node) => {
         node.classList.remove("home-motion-hero");
