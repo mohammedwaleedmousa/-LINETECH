@@ -108,8 +108,14 @@ const companyArabic: Record<string, string> = {
   "Deploy, hand over and prepare the product for the next version.": "ننشر المنتج ونسلمه ونجهزه للنسخة التالية.",
   "Have a business problem that should become a product?": "لديك مشكلة عمل يجب أن تتحول إلى منتج؟",
   "Bring the workflow and the goal. We will help define the system.": "أحضر سير العمل والهدف، وسنساعدك على تحديد النظام.",
+  "Technology": "التقنية",
+  "PLATFORMS": "منصات",
+  "SOFTWARE": "برمجيات",
   "LINETECH designs and builds web platforms, commerce systems and business software for real operational needs.": "تصمم LINETECH وتبني منصات ويب وأنظمة تجارة وبرمجيات أعمال لاحتياجات تشغيلية حقيقية.",
-  "LINETECH — Technology platforms and systems.": "LINETECH — منصات وأنظمة تقنية."
+  "LINETECH — Technology platforms and systems.": "LINETECH — منصات وأنظمة تقنية.",
+  "Explore LINETECH technology solutions for web platforms, commerce systems, business software and supporting digital services.": "استكشف حلول LINETECH التقنية لمنصات الويب وأنظمة التجارة وبرمجيات الأعمال والخدمات الرقمية المساندة.",
+  "Selected LINETECH case studies showing commerce platforms, marketplaces and business systems built around real workflows.": "دراسات حالة مختارة من LINETECH لمنصات التجارة والأسواق وأنظمة الأعمال المبنية حول سير عمل حقيقي.",
+  "Learn how LINETECH approaches product thinking, engineering, operations and long-term digital systems.": "تعرّف على منهج LINETECH في التفكير بالمنتج والهندسة والعمليات وبناء الأنظمة الرقمية طويلة المدى."
 };
 
 function keepBrandLatin(value: string): string {
