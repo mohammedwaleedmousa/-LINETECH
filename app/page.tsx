@@ -26,14 +26,26 @@ export default function Home() {
         <a className="brand" href="#top" aria-label="LINETECH home">
           <span className="mark"><i /><b /></span><span>LINETECH</span>
         </a>
-        <nav>
+        <nav className="desktop-nav">
           <a className="active" href="#top">Home</a>
           <a href="#services">Services</a>
           <a href="#projects">Projects</a>
           <a href="#about">About</a>
           <a href="#contact">Contact</a>
         </nav>
-        <a className="button button-light nav-cta" href="#contact">Start Your Line <span>↗</span></a>
+        <div className="nav-actions">
+          <a className="button button-light nav-cta" href="#contact">Start Your Line <span>↗</span></a>
+          <details className="mobile-menu">
+            <summary aria-label="Open navigation"><span></span><span></span></summary>
+            <div className="mobile-menu-panel">
+              <a href="#top">Home</a>
+              <a href="#services">Services</a>
+              <a href="#projects">Projects</a>
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+            </div>
+          </details>
+        </div>
       </header>
 
       <section id="top" className="hero section-border">
