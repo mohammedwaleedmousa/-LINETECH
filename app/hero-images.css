@@ -1,4 +1,10 @@
 /* LINETECH route-specific photographic hero backgrounds */
+.ref-home .ref-hero{--hero-image:url("/hero/home.webp")}
+.page-services .ref-hero{--hero-image:url("/hero/services.webp")}
+.page-projects .ref-hero{--hero-image:url("/hero/projects.webp")}
+.page-about .ref-hero{--hero-image:url("/hero/about.webp")}
+.page-contact .ref-hero{--hero-image:url("/hero/contact.webp")}
+
 .ref-home .ref-hero,
 .page-services .ref-hero,
 .page-projects .ref-hero,
