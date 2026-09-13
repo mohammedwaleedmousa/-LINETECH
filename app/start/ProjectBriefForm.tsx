@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
 const serviceOptions = [
@@ -96,7 +97,11 @@ export default function ProjectBriefForm() {
 
       <div className="brief-preview">
         <div><p className="eyebrow">READY BRIEF</p><h3>Your first line is ready.</h3><p>Copy or share this brief when you are ready to continue the conversation with LINETECH.</p></div>
-        <div className="brief-actions"><button className="button button-light" type="submit">{copied ? "Copied ✓" : "Copy project brief"} <span>↗</span></button><button className="brief-share" type="button" onClick={shareBrief}>Share brief <span>→</span></button></div>
+        <div className="brief-actions">
+          <button className="button button-light" type="submit">{copied ? "Copied ✓" : "Copy project brief"} <span>↗</span></button>
+          <button className="brief-share" type="button" onClick={shareBrief}>Share brief <span>→</span></button>
+          <Link className="brief-share" href="/thank-you" prefetch>Preview next step <span>→</span></Link>
+        </div>
       </div>
     </form>
   );
