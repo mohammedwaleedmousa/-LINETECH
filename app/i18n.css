@@ -1,0 +1,138 @@
+/* LINETECH bilingual presentation — Arabic is the default experience. */
+.language-toggle{
+  min-width:44px;
+  height:42px;
+  padding:0 12px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:10px;
+  background:rgba(255,255,255,.025);
+  color:#dfe5ea;
+  font:inherit;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:.08em;
+  cursor:pointer;
+  transition:background .2s ease,border-color .2s ease,color .2s ease,transform .2s ease;
+}
+.language-toggle:hover{border-color:rgba(56,130,246,.55);background:rgba(56,130,246,.08);color:#fff;transform:translateY(-1px)}
+.language-toggle .language-globe{width:15px;height:15px;margin-inline-end:7px;opacity:.8}
+
+html[dir="rtl"] body{
+  direction:rtl;
+  font-family:"Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+}
+html[dir="rtl"] .ref-brand,
+html[dir="rtl"] .ref-mark,
+html[dir="rtl"] .login-signals,
+html[dir="rtl"] .chat-message-meta,
+html[dir="rtl"] .ref-footer-bottom{direction:ltr}
+
+html[dir="rtl"] .ref-hero-copy,
+html[dir="rtl"] .ref-section-heading,
+html[dir="rtl"] .ref-head,
+html[dir="rtl"] .ref-about-copy,
+html[dir="rtl"] .ref-card,
+html[dir="rtl"] .ref-project-body,
+html[dir="rtl"] .ref-cta-inner,
+html[dir="rtl"] .service-detail-hero-copy,
+html[dir="rtl"] .service-detail-card,
+html[dir="rtl"] .service-detail-fit,
+html[dir="rtl"] .service-detail-process,
+html[dir="rtl"] .project-detail-hero-copy,
+html[dir="rtl"] .project-detail-overview,
+html[dir="rtl"] .project-detail-story-grid,
+html[dir="rtl"] .project-detail-built-grid,
+html[dir="rtl"] .project-detail-stack,
+html[dir="rtl"] .info-page,
+html[dir="rtl"] .login-page,
+html[dir="rtl"] .project-intake,
+html[dir="rtl"] .site-search-panel{
+  text-align:right;
+}
+
+html[dir="rtl"] .ref-hero-actions,
+html[dir="rtl"] .ref-actions,
+html[dir="rtl"] .thank-you-actions{justify-content:flex-start}
+html[dir="rtl"] .ref-heading-side{align-items:flex-start;text-align:right}
+html[dir="rtl"] .ref-service-card,
+html[dir="rtl"] .ref-project-card,
+html[dir="rtl"] .ref-quote-card{text-align:right}
+html[dir="rtl"] .ref-list,
+html[dir="rtl"] .info-prose,
+html[dir="rtl"] .faq-list{text-align:right}
+html[dir="rtl"] .info-prose ul{padding-left:0;padding-right:18px}
+html[dir="rtl"] .faq-list summary{padding-right:0;padding-left:46px}
+html[dir="rtl"] .faq-list summary::after{right:auto;left:2px}
+html[dir="rtl"] .faq-list details p{padding-right:0;padding-left:44px}
+
+html[dir="rtl"] .service-detail-back span,
+html[dir="rtl"] .project-detail-back span,
+html[dir="rtl"] .ref-btn span,
+html[dir="rtl"] .ref-button span,
+html[dir="rtl"] .ref-service-card>a span,
+html[dir="rtl"] .ref-project-copy>a span,
+html[dir="rtl"] .brief-share span,
+html[dir="rtl"] .login-card-foot a,
+html[dir="rtl"] .mobile-start-line span,
+html[dir="rtl"] .mobile-login span{display:inline-block;transform:scaleX(-1)}
+
+html[dir="rtl"] .site-search-field input,
+html[dir="rtl"] .login-form input,
+html[dir="rtl"] .project-intake input,
+html[dir="rtl"] .project-intake textarea,
+html[dir="rtl"] .project-intake select,
+html[dir="rtl"] .chat-composer textarea{direction:rtl;text-align:right}
+html[dir="ltr"] .site-search-field input,
+html[dir="ltr"] .login-form input,
+html[dir="ltr"] .project-intake input,
+html[dir="ltr"] .project-intake textarea,
+html[dir="ltr"] .project-intake select,
+html[dir="ltr"] .chat-composer textarea{direction:ltr;text-align:left}
+
+html[dir="rtl"] .intake-progress,
+html[dir="rtl"] .form-row,
+html[dir="rtl"] .choice-grid,
+html[dir="rtl"] .brief-summary{direction:rtl}
+html[dir="rtl"] .intake-nav{flex-direction:row-reverse}
+html[dir="rtl"] .intake-nav-end{flex-direction:row}
+html[dir="rtl"] .brief-actions{align-items:flex-start}
+
+html[dir="rtl"] .chat-sidebar,
+html[dir="rtl"] .chat-main{direction:rtl}
+html[dir="rtl"] .chat-message-row.company{justify-content:flex-start}
+html[dir="rtl"] .chat-message-row.client{justify-content:flex-end}
+html[dir="rtl"] .chat-message-row.company .chat-bubble{text-align:right}
+html[dir="rtl"] .chat-message-row.client .chat-bubble{text-align:right}
+html[dir="rtl"] .chat-conversation{text-align:right}
+html[dir="rtl"] .chat-message-meta{right:auto;left:9px}
+html[dir="rtl"] .chat-message-actions{right:auto;left:5px}
+html[dir="rtl"] .chat-message-menu{right:auto;left:0}
+
+html[dir="rtl"] .legal-hero-visual,
+html[dir="rtl"] .service-detail-visual,
+html[dir="rtl"] .project-detail-visual{align-items:flex-start;text-align:left}
+
+@media(max-width:1100px){.language-toggle{padding:0 10px;min-width:40px}}
+@media(max-width:900px){
+  .global-site-nav .desktop-language{display:none!important}
+  .mobile-language-toggle{
+    width:100%;
+    min-height:46px;
+    margin-top:10px;
+    display:flex!important;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 15px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:10px;
+    background:rgba(255,255,255,.025);
+    color:#e5e9ed;
+    font:inherit;
+    font-size:13px;
+    cursor:pointer;
+  }
+}
+@media(min-width:901px){.mobile-language-toggle{display:none!important}}
