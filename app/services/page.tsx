@@ -1,46 +1,15 @@
 const services = [
-  ["01", "Web Development", "High-performance websites and web products designed around clear goals, fast loading and long-term scalability.", "Landing pages / Business websites / Custom web apps"],
-  ["02", "E-commerce & Systems", "Commerce experiences and operational systems built around real customer journeys and business workflows.", "E-commerce / Dashboards / Booking / Custom systems"],
-  ["03", "Brand Identity", "A focused visual system that gives the business a distinctive, consistent and credible presence across every digital touchpoint.", "Logo direction / Visual system / Brand guidelines"],
-  ["04", "CV & Portfolio", "Professional personal presentation designed to communicate experience, work and value with clarity.", "CV / Portfolio / Personal presence"],
+  ["01","Web Development","High-performance websites and web products built around clear goals, fast loading and long-term scalability.","Landing pages / Business websites / Custom web apps"],
+  ["02","E-commerce & Systems","Commerce experiences and operational systems structured around real customer journeys and business workflows.","E-commerce / Dashboards / Booking / Custom systems"],
+  ["03","Brand Identity","A focused visual system that gives a business a distinctive, consistent and credible presence.","Logo direction / Visual system / Brand guidelines"],
+  ["04","CV & Portfolio","Professional presentation designed to communicate experience, work and value with clarity.","CV / Portfolio / Personal presence"],
 ];
 
-export default function ServicesPage() {
-  return (
-    <main>
-      <header className="nav shell">
-        <a className="brand" href="/"><span className="mark"><i /><b /></span><span>LINETECH</span></a>
-        <nav className="desktop-nav"><a href="/">Home</a><a className="active" href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Contact</a></nav>
-        <div className="nav-actions">
-          <a className="button button-light nav-cta" href="/start">Start Your Line <span>↗</span></a>
-          <details className="mobile-menu"><summary aria-label="Open navigation"><span></span><span></span></summary><div className="mobile-menu-panel"><a href="/">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Start Your Line</a></div></details>
-        </div>
-      </header>
-
-      <section className="inner-hero premium-inner section-border">
-        <div className="shell inner-hero-grid">
-          <div className="inner-title"><p className="eyebrow">OUR SERVICES</p><h1>We build the digital layer your idea needs.</h1><div className="inner-actions"><a className="button button-light" href="/start">Start a project ↗</a><a className="text-link" href="/projects">See our work →</a></div></div>
-          <div className="inner-visual services-visual" aria-hidden="true"><div className="visual-grid-lines"/><div className="visual-orbit orbit-a"/><div className="visual-orbit orbit-b"/><div className="visual-core">LINETECH<small>DESIGN / BUILD / GROW</small></div></div>
-        </div>
-      </section>
-
-      <section className="shell section page-intro-row"><p className="eyebrow">WHAT WE BUILD</p><p>We start with the outcome you need, then choose the right mix of strategy, design and engineering. No unnecessary complexity. No template-first thinking.</p></section>
-
-      <section className="shell section service-detail-list premium-list">
-        {services.map(([n,title,text,scope], index) => (
-          <article className="service-detail" key={n}>
-            <div className="service-number">{n}</div>
-            <div className="service-detail-copy"><span className="service-kicker">{index < 2 ? "BUILD YOUR BUSINESS" : "BUILD YOUR PRESENCE"}</span><h2>{title}</h2><p>{text}</p></div>
-            <small>{scope}</small>
-            <a className="circle-link" href={`/start?service=${encodeURIComponent(title)}`} aria-label={`Start ${title}`}>↗</a>
-          </article>
-        ))}
-      </section>
-
-      <section className="section-border capability-strip"><div className="shell"><span>CLARITY</span><i/> <span>PERFORMANCE</span><i/> <span>RESPONSIVE</span><i/> <span>SCALABILITY</span><i/> <span>REAL USE</span></div></section>
-
-      <section className="cta section-border"><div className="cta-beam beam-a"/><div className="cta-beam beam-b"/><div className="shell cta-inner"><div><p className="eyebrow">START YOUR LINE</p><h2>Not sure which service fits?</h2><p>Tell us the outcome you need. We will help define the right first line.</p></div><a className="button button-light" href="/start">Start Your Line <span>↗</span></a></div></section>
-      <footer className="footer shell"><div className="footer-bottom"><span>© 2026 LINETECH</span><span>EVERY IDEA STARTS WITH A LINE.</span></div></footer>
-    </main>
-  );
-}
+export default function ServicesPage(){return <main className="ref-page">
+<header className="nav shell"><a className="brand" href="/"><span className="mark"><i/><b/></span><span>LINETECH</span></a><nav className="desktop-nav"><a href="/">Home</a><a className="active" href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Contact</a></nav><div className="nav-actions"><a className="button button-light nav-cta" href="/start">Contact Us <span>↗</span></a></div></header>
+<section className="ref-hero"><div className="ref-shell ref-hero-grid"><div className="ref-hero-copy"><p className="ref-kicker">OUR SERVICES</p><h1>Solutions for a smarter tomorrow.</h1><p>We combine clear product thinking, design and engineering to turn ideas into useful digital products.</p><div className="ref-hero-actions"><a className="ref-btn primary" href="/start">Start your line ↗</a><a className="ref-btn ghost" href="/projects">View our work</a></div></div><div className="ref-visual" aria-hidden="true"><div className="ref-block a"/><div className="ref-block b"/><div className="ref-block c"/><div className="ref-glow"/><div className="ref-visual-label">CLEAN<br/>MINIMAL<br/>TECHNICAL<br/>IMPACTFUL</div></div></div></section>
+<section className="ref-section"><div className="ref-shell"><div className="ref-head"><div><p className="ref-kicker">WHAT WE BUILD</p><h2>Four focused services.</h2></div><p>We start with the outcome you need, then choose the right mix of strategy, design and engineering. No unnecessary complexity.</p></div><div className="ref-grid">{services.map(([n,t,d,s])=><article className="ref-card" key={n}><div><span className="num">{n}</span><h3>{t}</h3><p>{d}</p></div><div><p className="ref-meta">{s}</p><a href={`/start?service=${encodeURIComponent(t)}`}>Start this service →</a></div></article>)}</div></div></section>
+<section className="ref-section"><div className="ref-shell"><div className="ref-head"><div><p className="ref-kicker">OUR PROCESS</p><h2>From idea to launch.</h2></div><p>Every engagement follows one clear line so scope, expectations and execution stay aligned.</p></div><div className="ref-process"><div><p className="ref-kicker">PROCESS</p><h3>One clear line.</h3></div>{[["01","Understand"],["02","Define"],["03","Design"],["04","Build & Launch"]].map(([n,t])=><div key={n}><span className="ref-meta">{n}</span><h3>{t}</h3><p>{n==="01"?"We understand the business, idea and real need.":n==="02"?"We define scope, priorities and the right solution.":n==="03"?"We shape the experience before development begins.":"We develop, test, launch and prepare the next step."}</p></div>)}</div></div></section>
+<section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">START YOUR LINE</p><h2>Not sure which service fits?</h2><p>Tell us the outcome you need. We will help define the right first line.</p></div><a className="ref-btn primary" href="/start">Contact Us ↗</a></div></section>
+<footer className="ref-footer ref-shell"><div className="ref-footer-grid"><div><a className="brand" href="/"><span className="mark"><i/><b/></span><span>LINETECH</span></a><p>Every idea starts with a line.</p></div><div><h4>Company</h4><a href="/about">About</a><a href="/projects">Projects</a></div><div><h4>Services</h4><a href="/services">Web Development</a><a href="/services">Brand Identity</a><a href="/services">CV & Portfolio</a></div><div><h4>Location</h4><span>Aden, Yemen</span></div></div><div className="ref-footer-bottom"><span>© 2026 LINETECH</span><span>IDEA → DESIGN → BUILD → IMPACT</span></div></footer>
+</main>}
