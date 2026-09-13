@@ -7,6 +7,7 @@ import "./home-fix.css";
 import "./inner-reference.css";
 import "./process-fix.css";
 import "./nav-float.css";
+import "./full-width.css";
 
 export const metadata: Metadata = {
   title: {
