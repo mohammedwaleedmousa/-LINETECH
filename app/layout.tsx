@@ -30,6 +30,7 @@ import "./chat-enhancements.css";
 import "./tech-hero.css";
 import "./i18n.css";
 import "./company-tech.css";
+import "./visual-catalog.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
 const siteDescription = "LINETECH designs and builds web platforms, commerce systems and business software for real operational needs.";
