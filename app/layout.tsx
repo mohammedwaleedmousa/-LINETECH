@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
+import LanguageBridge from "./LanguageBridge";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -27,6 +28,7 @@ import "./auth.css";
 import "./chat.css";
 import "./chat-enhancements.css";
 import "./tech-hero.css";
+import "./i18n.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
@@ -85,9 +87,10 @@ const scrollRestorationScript = `
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en">
+    <html lang="ar" dir="rtl">
       <body>
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
+        <LanguageBridge />
         <SiteNav />
         {children}
         <SiteFooter />
