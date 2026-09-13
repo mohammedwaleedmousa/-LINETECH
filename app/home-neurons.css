@@ -1,0 +1,104 @@
+/* Homepage hero: calm neural network motion, no raster images. */
+.ref-home .ref-hero.home-line-hero{
+  --home-light-x:72%;
+  background:
+    radial-gradient(circle at var(--home-light-x) 44%,rgba(38,88,154,.20),transparent 31%),
+    radial-gradient(circle at 50% 120%,rgba(20,43,72,.18),transparent 34%),
+    linear-gradient(180deg,#020407 0%,#05080d 60%,#04070b 100%)!important;
+}
+
+.ref-home .home-line-hero .home-neuron-art{
+  width:min(58vw,900px);
+  max-width:none;
+  inset-inline-end:-2%;
+  opacity:.96;
+  filter:drop-shadow(0 0 34px rgba(56,130,246,.08));
+  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 94%,transparent);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 94%,transparent);
+}
+
+.ref-home .home-neuron-art svg{overflow:visible}
+
+.ref-home .neuron-network-base{
+  opacity:.78;
+  stroke-dasharray:2 8;
+  animation:neuronLineFlow 15s linear infinite;
+}
+
+.ref-home .neuron-cluster{
+  transform-box:view-box;
+  transform-origin:center;
+  will-change:transform,opacity;
+}
+.ref-home .neuron-cluster-a{animation:neuronFloatA 8.5s ease-in-out infinite alternate}
+.ref-home .neuron-cluster-b{animation:neuronFloatB 10s ease-in-out infinite alternate}
+.ref-home .neuron-cluster-c{animation:neuronFloatC 9.2s ease-in-out infinite alternate}
+
+.ref-home .neuron-cluster circle,
+.ref-home .neuron-satellites circle{
+  filter:drop-shadow(0 0 7px rgba(104,170,255,.42));
+}
+
+.ref-home .neuron-satellites circle:nth-child(1),
+.ref-home .neuron-satellites circle:nth-child(4){animation:neuronTwinkle 3.6s ease-in-out infinite}
+.ref-home .neuron-satellites circle:nth-child(2),
+.ref-home .neuron-satellites circle:nth-child(5){animation:neuronTwinkle 4.4s ease-in-out .8s infinite}
+.ref-home .neuron-satellites circle:nth-child(3),
+.ref-home .neuron-satellites circle:nth-child(6){animation:neuronTwinkle 5s ease-in-out 1.4s infinite}
+
+.ref-home .neuron-pulses circle{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:neuronPulse 3.8s ease-out infinite;
+}
+.ref-home .neuron-pulses circle:nth-child(2){animation-delay:1.15s}
+.ref-home .neuron-pulses circle:nth-child(3){animation-delay:2.15s}
+
+@keyframes neuronLineFlow{
+  to{stroke-dashoffset:-80}
+}
+@keyframes neuronFloatA{
+  from{transform:translate3d(-3px,3px,0) rotate(-.2deg)}
+  to{transform:translate3d(7px,-6px,0) rotate(.35deg)}
+}
+@keyframes neuronFloatB{
+  from{transform:translate3d(4px,-4px,0) rotate(.2deg)}
+  to{transform:translate3d(-7px,7px,0) rotate(-.3deg)}
+}
+@keyframes neuronFloatC{
+  from{transform:translate3d(-2px,-3px,0)}
+  to{transform:translate3d(8px,5px,0)}
+}
+@keyframes neuronTwinkle{
+  0%,100%{opacity:.48}
+  50%{opacity:1}
+}
+@keyframes neuronPulse{
+  0%{transform:scale(.62);opacity:.46}
+  78%,100%{transform:scale(1.55);opacity:0}
+}
+
+@media(max-width:900px){
+  .ref-home .home-line-hero .home-neuron-art{
+    width:92%;
+    inset-inline-end:-26%;
+    bottom:-4%;
+    opacity:.32;
+  }
+}
+
+@media(max-width:620px){
+  .ref-home .home-line-hero .home-neuron-art{
+    width:118%;
+    inset-inline-end:-42%;
+    bottom:1%;
+    opacity:.23;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ref-home .neuron-network-base,
+  .ref-home .neuron-cluster,
+  .ref-home .neuron-satellites circle,
+  .ref-home .neuron-pulses circle{animation:none!important}
+}
