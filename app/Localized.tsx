@@ -5,10 +5,10 @@ import { translate, type Language } from "./translations";
 
 export const LANGUAGE_STORAGE_KEY = "linetech-language-v1";
 export const LANGUAGE_EVENT = "linetech:languagechange";
-let fallbackLanguage: Language = "ar";
+let fallbackLanguage: Language = "en";
 
 function readLanguage(): Language {
-  try { const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY); return saved === "en" ? "en" : saved === "ar" ? "ar" : fallbackLanguage; }
+  try { const saved = localStorage.getItem(LANGUAGE_STORAGE_KEY); return saved === "ar" ? "ar" : saved === "en" ? "en" : fallbackLanguage; }
   catch { return fallbackLanguage; }
 }
 function subscribe(callback: () => void) {
@@ -20,7 +20,7 @@ function subscribe(callback: () => void) {
   };
 }
 export function useLanguage() {
-  return useSyncExternalStore(subscribe, readLanguage, () => "ar" as Language);
+  return useSyncExternalStore(subscribe, readLanguage, () => "en" as Language);
 }
 export function useTranslation() {
   const language = useLanguage();
@@ -28,7 +28,10 @@ export function useTranslation() {
 }
 export function setLanguage(language: Language) {
   fallbackLanguage = language;
-  try { localStorage.setItem(LANGUAGE_STORAGE_KEY, language); } catch {}
+  try {
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, language);
+    document.cookie = `${LANGUAGE_STORAGE_KEY}=${language}; Path=/; Max-Age=31536000; SameSite=Lax`;
+  } catch {}
   window.dispatchEvent(new CustomEvent(LANGUAGE_EVENT, { detail: { language } }));
 }
 
