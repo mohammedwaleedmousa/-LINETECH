@@ -1,0 +1,17 @@
+/* Homepage breathing room and cleaner section surfaces. */
+.ref-home > section:not(:first-child){
+  margin-top:clamp(32px,4.5vw,64px);
+}
+
+/* Keep special homepage sections clean: no blueprint/grid background lines. */
+.ref-home > .home-why-section::before,
+.ref-home > .home-proof-section::before{
+  display:none!important;
+  background:none!important;
+}
+
+@media(max-width:760px){
+  .ref-home > section:not(:first-child){
+    margin-top:26px;
+  }
+}
