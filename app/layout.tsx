@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import ScrollRestoration from "./scroll-restoration";
+import "./inner.css";
+import ScrollRestorer from "./scroll-restorer";
 
 export const metadata: Metadata = {
   title: "LINETECH — Every idea starts with a line.",
@@ -11,7 +12,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <body>
-        <ScrollRestoration />
+        <ScrollRestorer />
         {children}
       </body>
     </html>
