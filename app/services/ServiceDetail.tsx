@@ -106,7 +106,7 @@ export default function ServiceDetail({
 
       <section className="ref-cta service-detail-cta">
         <div className="ref-shell ref-cta-inner">
-          <div><p className="ref-kicker">START YOUR LINE</p><h2>Ready to move from idea to execution?</h2><p>Send the brief and we will define the right first step.</p></div>
+          <div><p className="ref-kicker">START YOUR LINE</p><h2>Ready to move from idea to execution?</h2><p>Prepare a clear project brief, then continue through the contact channel you choose.</p></div>
           <Link className="ref-btn primary" href={startHref} prefetch>Start this service ↗</Link>
         </div>
       </section>
