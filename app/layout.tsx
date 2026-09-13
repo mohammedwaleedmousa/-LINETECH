@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
-import InternalNavigation from "./InternalNavigation";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -73,7 +72,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     <html lang="en">
       <body>
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
-        <InternalNavigation />
         <SiteNav />
         {children}
         <SiteFooter />
