@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://linetech.aiengineer77.workers.dev/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/services</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/services/web-development</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/services/ecommerce-systems</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/services/brand-identity</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/services/cv-portfolio</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/projects</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/projects/flamingo-park</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/projects/etqan</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/projects/ledgerpro</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/about</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/faq</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/start</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/privacy</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/terms</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
+</urlset>
