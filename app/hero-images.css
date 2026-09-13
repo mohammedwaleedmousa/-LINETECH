@@ -1,0 +1,23 @@
+/* LINETECH photographic hero backgrounds — each route uses a distinct image inspired by the approved reference */
+
+.ref-home .ref-hero,
+.page-services .ref-hero,
+.page-projects .ref-hero,
+.page-about .ref-hero,
+.page-contact .ref-hero{
+  position:relative!important;
+  isolation:isolate;
+  overflow:hidden!important;
+  background-color:#030507!important;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+  background-position:center center!important;
+}
+
+/* Home — architectural light line */
+.ref-home .ref-hero{
+  background-image:
+    linear-gradient(90deg,rgba(2,4,7,.98) 0%,rgba(2,4,7,.92) 27%,rgba(2,4,7,.56) 48%,rgba(2,4,7,.15) 74%,rgba(2,4,7,.08) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.34)),
+    url("data:image/webp;base64,UklGRlRVAA...TRUNCATED_FOR_BREVITY...")!important;
+}
