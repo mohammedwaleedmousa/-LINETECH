@@ -20,9 +20,9 @@ const searchItems = [
   { title: "Brand Identity", meta: "Service", href: "/services/brand-identity", keywords: "brand branding logo visual identity guidelines" },
   { title: "CV & Portfolio", meta: "Service", href: "/services/cv-portfolio", keywords: "cv portfolio career personal presence" },
   { title: "Projects", meta: "Page", href: "/projects", keywords: "projects work portfolio products" },
-  { title: "Flamingo Park", meta: "Project", href: "/projects", keywords: "flamingo park ecommerce retail" },
-  { title: "Etqan", meta: "Project", href: "/projects", keywords: "etqan marketplace services" },
-  { title: "LedgerPro", meta: "Project", href: "/projects", keywords: "ledgerpro business system finance" },
+  { title: "Flamingo Park", meta: "Project", href: "/projects/flamingo-park", keywords: "flamingo park ecommerce retail" },
+  { title: "Etqan", meta: "Project", href: "/projects/etqan", keywords: "etqan marketplace services" },
+  { title: "LedgerPro", meta: "Project", href: "/projects/ledgerpro", keywords: "ledgerpro business system finance" },
   { title: "About LINETECH", meta: "Page", href: "/about", keywords: "about company founder Mohammed Waleed" },
   { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea" },
 ] as const;
