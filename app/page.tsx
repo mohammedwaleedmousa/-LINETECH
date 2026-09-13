@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const services = [
   { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use." },
   { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works." },
@@ -27,7 +29,7 @@ export default function Home() {
             <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
             <h1>Every idea<br/>starts with a line.</h1>
             <p className="ref-lead">We turn ideas into real digital products through clear design, reliable technology and disciplined execution.</p>
-            <div className="ref-actions"><a className="ref-button light" href="/start">Let&apos;s Build <span>→</span></a><a className="ref-button ghost" href="/projects">View Our Work</a></div>
+            <div className="ref-actions"><Link className="ref-button light" href="/start" prefetch>Let&apos;s Build <span>→</span></Link><Link className="ref-button ghost" href="/projects" prefetch>View Our Work</Link></div>
             <div className="ref-stats">
               <div><strong>01</strong><span>Founder-led</span></div>
               <div><strong>03</strong><span>Core Services</span></div>
@@ -47,10 +49,10 @@ export default function Home() {
         <div className="ref-shell">
           <div className="ref-section-heading">
             <div><p className="ref-kicker with-line">OUR SERVICES</p><h2>Solutions for<br/>a smarter tomorrow.</h2></div>
-            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><a className="ref-button ghost small" href="/services">View All Services <span>→</span></a></div>
+            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><Link className="ref-button ghost small" href="/services" prefetch>View All Services <span>→</span></Link></div>
           </div>
           <div className="ref-service-grid">
-            {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><a href="/services">Learn more <span>→</span></a></article>)}
+            {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><Link href="/services" prefetch>Learn more <span>→</span></Link></article>)}
           </div>
         </div>
       </section>
@@ -59,17 +61,17 @@ export default function Home() {
         <div className="ref-shell">
           <div className="ref-section-heading project-head">
             <div><p className="ref-kicker with-line">FEATURED PROJECTS</p><h2>Real solutions.<br/>Real impact.</h2></div>
-            <div className="ref-heading-side"><p>A selection of products and systems that reflect LINETECH&apos;s practical direction.</p><a className="ref-button ghost small" href="/projects">View All Projects <span>→</span></a></div>
+            <div className="ref-heading-side"><p>A selection of products and systems that reflect LINETECH&apos;s practical direction.</p><Link className="ref-button ghost small" href="/projects" prefetch>View All Projects <span>→</span></Link></div>
           </div>
           <div className="ref-project-grid">
-            {projects.map((project) => <article className={`ref-project-card ${project.cls}`} key={project.title}><div className="ref-project-visual"><div className="ref-project-device"><i/><i/><i/></div><div className="ref-project-shine"/></div><div className="ref-project-copy"><span className="ref-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p><a href="/projects">View Project <span>→</span></a></div></article>)}
+            {projects.map((project) => <article className={`ref-project-card ${project.cls}`} key={project.title}><div className="ref-project-visual"><div className="ref-project-device"><i/><i/><i/></div><div className="ref-project-shine"/></div><div className="ref-project-copy"><span className="ref-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p><Link href="/projects" prefetch>View Project <span>→</span></Link></div></article>)}
           </div>
         </div>
       </section>
 
       <section className="ref-about ref-line-section" id="about">
         <div className="ref-shell ref-about-grid">
-          <div className="ref-about-copy"><p className="ref-kicker with-line">ABOUT LINETECH</p><h2>More than technology.<br/>A smarter tomorrow.</h2><p>LINETECH is a technology company that turns ideas into real digital products. We begin with clarity, shape the right solution and build for real-world use.</p><a className="ref-button ghost small" href="/about">Learn more <span>→</span></a></div>
+          <div className="ref-about-copy"><p className="ref-kicker with-line">ABOUT LINETECH</p><h2>More than technology.<br/>A smarter tomorrow.</h2><p>LINETECH is a technology company that turns ideas into real digital products. We begin with clarity, shape the right solution and build for real-world use.</p><Link className="ref-button ghost small" href="/about" prefetch>Learn more <span>→</span></Link></div>
           <div className="ref-about-art" aria-hidden="true"><div className="about-block a1"/><div className="about-block a2"/><div className="about-block a3"/><div className="about-light"/></div>
           <div className="ref-about-lockup"><span className="ref-mark big"><i/><b/></span><strong>LINETECH</strong><p>IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER<br/>TOMORROW</p><i className="lock-line"/></div>
         </div>
@@ -97,7 +99,7 @@ export default function Home() {
         <div className="ref-shell ref-standard-grid"><div><p className="ref-kicker">OUR STANDARD</p><h2>What every<br/>client should feel.</h2></div><article className="ref-quote-card"><p>“Clear communication, a focused scope and work that feels intentional from the first line to launch.”</p><div><span>A</span><small>Alignment<br/>before execution</small></div></article><article className="ref-quote-card"><p>“A reliable process, careful decisions and a final product built for real use — not just presentation.”</p><div><span>Q</span><small>Quality<br/>in every step</small></div></article><div className="ref-round-arrows"><button aria-label="Previous">←</button><button aria-label="Next">→</button></div></div>
       </section>
 
-      <section className="ref-cta ref-line-section" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Ready to turn your idea into reality?</h2><p>Start with the idea. We&apos;ll help define the first line.</p></div><a className="ref-button light" href="/start">Start Your Line <span>→</span></a></div></section>
+      <section className="ref-cta ref-line-section" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Ready to turn your idea into reality?</h2><p>Start with the idea. We&apos;ll help define the first line.</p></div><Link className="ref-button light" href="/start" prefetch>Start Your Line <span>→</span></Link></div></section>
     </main>
   );
 }
