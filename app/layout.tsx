@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
 import LanguageBridge from "./LanguageBridge";
+import ArabicSupplement from "./ArabicSupplement";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -102,6 +103,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: languageBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
         <LanguageBridge />
+        <ArabicSupplement />
         <SiteNav />
         {children}
         <SiteFooter />
