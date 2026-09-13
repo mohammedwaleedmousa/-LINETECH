@@ -1,8 +1,10 @@
 /* One navbar system for the entire LINETECH site — homepage is the only visual reference */
 .ref-home,.ref-page{padding-top:96px}
 
-.ref-home .ref-nav,
-.ref-page .ref-nav{
+/* hide legacy page-local navbars; the shared SiteNav is rendered from layout */
+.ref-home>header.ref-nav,.ref-page>header.ref-nav{display:none!important}
+
+.global-site-nav{
   position:fixed!important;
   top:18px!important;
   left:14px!important;
@@ -26,7 +28,7 @@
   box-shadow:0 12px 40px rgba(0,0,0,.38),inset 0 1px 0 rgba(255,255,255,.03)!important;
 }
 
-.ref-home .ref-brand,.ref-page .ref-brand{
+.global-site-nav .ref-brand{
   display:inline-flex!important;
   align-items:center!important;
   gap:12px!important;
@@ -35,7 +37,7 @@
   justify-self:start!important;
 }
 
-.ref-home .ref-nav-links,.ref-page .ref-nav-links{
+.global-site-nav .ref-nav-links{
   display:flex!important;
   gap:34px!important;
   height:100%!important;
@@ -45,7 +47,7 @@
   color:#c1c7ce!important;
 }
 
-.ref-home .ref-nav-links a,.ref-page .ref-nav-links a{
+.global-site-nav .ref-nav-links a{
   height:100%!important;
   display:flex!important;
   align-items:center!important;
@@ -53,10 +55,8 @@
   color:#c1c7ce!important;
 }
 
-.ref-home .ref-nav-links a:hover,.ref-page .ref-nav-links a:hover,
-.ref-home .ref-nav-links a.active,.ref-page .ref-nav-links a.active{color:#fff!important}
-
-.ref-home .ref-nav-links a.active:after,.ref-page .ref-nav-links a.active:after{
+.global-site-nav .ref-nav-links a:hover,.global-site-nav .ref-nav-links a.active{color:#fff!important}
+.global-site-nav .ref-nav-links a.active:after{
   content:""!important;
   position:absolute!important;
   left:0!important;
@@ -67,7 +67,7 @@
   border-radius:2px!important;
 }
 
-.ref-home .ref-nav-end,.ref-page .ref-nav-end{
+.global-site-nav .ref-nav-end{
   display:flex!important;
   justify-content:flex-end!important;
   align-items:center!important;
@@ -75,13 +75,13 @@
   justify-self:end!important;
 }
 
-.ref-home .ref-search,.ref-page .ref-search{
+.global-site-nav .ref-search{
   font-size:22px!important;
   line-height:1!important;
   color:#d9dee4!important;
 }
 
-.ref-home .ref-nav .ref-button.light,.ref-page .ref-nav .ref-button.light{
+.global-site-nav .ref-button.light{
   height:42px!important;
   padding:0 18px!important;
   border-radius:10px!important;
@@ -94,7 +94,7 @@
 
 @media(max-width:900px){
   .ref-home,.ref-page{padding-top:82px}
-  .ref-home .ref-nav,.ref-page .ref-nav{
+  .global-site-nav{
     top:12px!important;
     left:12px!important;
     right:12px!important;
@@ -103,17 +103,17 @@
     border-radius:14px!important;
     grid-template-columns:1fr auto!important;
   }
-  .ref-home .ref-nav-links,.ref-page .ref-nav-links{display:none!important}
-  .ref-home .ref-search,.ref-page .ref-search{display:none!important}
+  .global-site-nav .ref-nav-links{display:none!important}
+  .global-site-nav .ref-search{display:none!important}
 }
 
 @media(max-width:520px){
-  .ref-home .ref-nav,.ref-page .ref-nav{
+  .global-site-nav{
     top:9px!important;
     left:9px!important;
     right:9px!important;
   }
-  .ref-home .ref-nav .ref-button.light,.ref-page .ref-nav .ref-button.light{
+  .global-site-nav .ref-button.light{
     height:38px!important;
     padding:0 13px!important;
     font-size:11px!important;
