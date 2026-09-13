@@ -1,0 +1,69 @@
+/* Full-width navigation + hero/banner treatment across all pages */
+
+/* Floating navbar spans the viewport while keeping a small breathing edge */
+.ref-home .ref-nav,
+.ref-page .nav{
+  width:calc(100% - 24px)!important;
+  max-width:none!important;
+  left:12px!important;
+  right:12px!important;
+  transform:none!important;
+}
+
+/* Homepage hero/banner spans full viewport width */
+.ref-home .ref-hero,
+.ref-home .ref-about,
+.ref-home .ref-cta{
+  width:100%!important;
+  max-width:none!important;
+}
+
+/* Inner-page hero/banner spans full viewport width */
+.ref-page .ref-hero,
+.ref-page .ref-cta{
+  width:100%!important;
+  max-width:none!important;
+}
+
+/* Let the visual banner grid use the full page width, while keeping readable internal padding */
+.ref-home .ref-hero > .ref-shell,
+.ref-page .ref-hero > .ref-shell{
+  width:100%!important;
+  max-width:none!important;
+  padding-left:clamp(24px,4vw,72px)!important;
+  padding-right:clamp(24px,4vw,72px)!important;
+}
+
+/* CTA content follows the same full-width banner alignment */
+.ref-home .ref-cta > .ref-shell,
+.ref-page .ref-cta > .ref-shell{
+  width:100%!important;
+  max-width:none!important;
+  padding-left:clamp(24px,4vw,72px)!important;
+  padding-right:clamp(24px,4vw,72px)!important;
+}
+
+@media(max-width:900px){
+  .ref-home .ref-nav,
+  .ref-page .nav{
+    width:calc(100% - 16px)!important;
+    left:8px!important;
+    right:8px!important;
+  }
+  .ref-home .ref-hero > .ref-shell,
+  .ref-page .ref-hero > .ref-shell,
+  .ref-home .ref-cta > .ref-shell,
+  .ref-page .ref-cta > .ref-shell{
+    padding-left:18px!important;
+    padding-right:18px!important;
+  }
+}
+
+@media(max-width:520px){
+  .ref-home .ref-nav,
+  .ref-page .nav{
+    width:calc(100% - 12px)!important;
+    left:6px!important;
+    right:6px!important;
+  }
+}
