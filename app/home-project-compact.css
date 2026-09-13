@@ -1,0 +1,317 @@
+/* Compact homepage project cards — keep the showcase visual without letting it dominate the page. */
+.ref-home .home-project-showcase-grid{
+  display:grid!important;
+  grid-template-columns:repeat(3,minmax(0,1fr))!important;
+  gap:16px!important;
+}
+
+.ref-home .home-project-card{
+  display:flex!important;
+  flex-direction:column!important;
+  min-width:0!important;
+  border-radius:9px!important;
+  overflow:hidden!important;
+  background:linear-gradient(155deg,#0b121b,#070b10 72%)!important;
+}
+
+.ref-home .home-project-heading{
+  min-height:54px!important;
+  padding:14px 16px!important;
+}
+
+.ref-home .home-project-heading .ref-tag{
+  font-size:10px!important;
+  line-height:1.35!important;
+}
+
+.ref-home .home-project-number{
+  font-size:22px!important;
+}
+
+.ref-home .home-project-visual{
+  min-height:0!important;
+  height:168px!important;
+  padding:14px!important;
+  border-inline-end:0!important;
+  border-bottom:1px solid #202a35!important;
+  background:radial-gradient(circle at 72% 20%,rgba(56,130,246,.11),transparent 30%),linear-gradient(145deg,#08111a,#05090e 74%)!important;
+}
+
+.ref-home .home-project-visual::after{
+  width:150px!important;
+  height:150px!important;
+  right:-72px!important;
+  bottom:-92px!important;
+  opacity:.55!important;
+}
+
+.ref-home .home-project-orbit{
+  display:none!important;
+}
+
+.ref-home .home-project-window{
+  width:100%!important;
+  min-height:0!important;
+  height:136px!important;
+  border-radius:7px!important;
+  box-shadow:0 14px 34px rgba(0,0,0,.25)!important;
+}
+
+.ref-home .home-project-window-bar{
+  height:28px!important;
+  padding:0 9px!important;
+  gap:5px!important;
+}
+
+.ref-home .home-project-window-bar>span{
+  width:4px!important;
+  height:4px!important;
+}
+
+.ref-home .home-project-window-bar>b{
+  max-width:55%!important;
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+  font-size:8px!important;
+}
+
+.ref-home .home-project-ui{
+  grid-template-columns:30px 1fr!important;
+  min-height:108px!important;
+}
+
+.ref-home .home-project-ui-rail{
+  gap:8px!important;
+  padding:10px 0!important;
+}
+
+.ref-home .home-project-ui-rail i{
+  width:12px!important;
+  height:3px!important;
+}
+
+.ref-home .home-project-ui-rail i:first-child{
+  width:15px!important;
+  height:15px!important;
+  border-radius:4px!important;
+}
+
+.ref-home .home-project-ui-main{
+  padding:9px!important;
+}
+
+.ref-home .home-project-ui-top{
+  margin-bottom:8px!important;
+}
+
+.ref-home .home-project-ui-top span{
+  height:4px!important;
+}
+
+.ref-home .home-project-ui-focus,
+.ref-home .project-market .home-project-ui-focus,
+.ref-home .project-ledger .home-project-ui-focus{
+  height:46px!important;
+  border-radius:5px!important;
+}
+
+.ref-home .home-project-ui-focus i{
+  left:8px!important;
+  top:9px!important;
+  height:4px!important;
+}
+
+.ref-home .home-project-ui-focus b{
+  left:8px!important;
+  top:20px!important;
+  height:3px!important;
+}
+
+.ref-home .home-project-ui-focus em{
+  right:8px!important;
+  bottom:0!important;
+  width:28%!important;
+  height:64%!important;
+  border-radius:4px 4px 0 0!important;
+}
+
+.ref-home .project-market .home-project-ui-focus em{
+  width:28px!important;
+  height:28px!important;
+  right:9px!important;
+  bottom:8px!important;
+  border-radius:50%!important;
+}
+
+.ref-home .home-project-ui-grid{
+  gap:5px!important;
+  margin-top:6px!important;
+}
+
+.ref-home .home-project-ui-grid i,
+.ref-home .project-market .home-project-ui-grid i,
+.ref-home .project-ledger .home-project-ui-grid i{
+  height:28px!important;
+  border-radius:4px!important;
+}
+
+.ref-home .home-project-ui-grid i::before{
+  left:5px!important;
+  right:5px!important;
+  top:5px!important;
+  height:12px!important;
+  border-radius:3px!important;
+}
+
+.ref-home .home-project-ui-grid i::after{
+  left:5px!important;
+  bottom:5px!important;
+  height:2px!important;
+}
+
+.ref-home .home-project-ui-side{
+  display:none!important;
+}
+
+.ref-home .home-project-card .ref-project-copy{
+  padding:18px 16px 16px!important;
+}
+
+.ref-home .home-project-card h3{
+  margin:0 0 8px!important;
+  font-size:21px!important;
+  line-height:1.2!important;
+}
+
+.ref-home .home-project-card .ref-project-copy>p{
+  margin:0 0 14px!important;
+  font-size:12.5px!important;
+  line-height:1.7!important;
+}
+
+.ref-home .home-project-card .ref-project-copy>.home-feature-label{
+  margin:0 0 8px!important;
+  font-size:9px!important;
+}
+
+.ref-home .home-project-features{
+  margin:0 0 14px!important;
+}
+
+.ref-home .home-project-features li{
+  gap:7px!important;
+  margin:0 0 6px!important;
+  font-size:11.5px!important;
+  line-height:1.5!important;
+}
+
+.ref-home .home-project-features li::before{
+  width:4px!important;
+  height:4px!important;
+}
+
+.ref-home .home-project-card .ref-project-copy>a{
+  min-height:34px!important;
+  padding-top:11px!important;
+  font-size:11.5px!important;
+}
+
+.ref-home .home-project-showcase-grid .home-project-card:hover{
+  transform:none!important;
+}
+
+@media(max-width:1050px){
+  .ref-home .home-project-showcase-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+}
+
+@media(max-width:720px){
+  .ref-home .home-project-showcase-grid{
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+  }
+
+  .ref-home .home-project-card{
+    display:grid!important;
+    grid-template-columns:116px 1fr!important;
+    grid-template-areas:"head head" "visual copy"!important;
+  }
+
+  .ref-home .home-project-heading{
+    grid-area:head!important;
+  }
+
+  .ref-home .home-project-visual{
+    grid-area:visual!important;
+    height:auto!important;
+    min-height:168px!important;
+    padding:10px!important;
+    border-bottom:0!important;
+    border-inline-end:1px solid #202a35!important;
+  }
+
+  .ref-home .home-project-window{
+    width:96px!important;
+    height:132px!important;
+  }
+
+  .ref-home .home-project-window-bar>b,
+  .ref-home .home-project-ui-rail,
+  .ref-home .home-project-ui-grid{
+    display:none!important;
+  }
+
+  .ref-home .home-project-ui{
+    display:block!important;
+    min-height:104px!important;
+  }
+
+  .ref-home .home-project-ui-main{
+    padding:10px!important;
+  }
+
+  .ref-home .home-project-ui-focus,
+  .ref-home .project-market .home-project-ui-focus,
+  .ref-home .project-ledger .home-project-ui-focus{
+    height:74px!important;
+    margin-top:8px!important;
+  }
+
+  .ref-home .home-project-card .ref-project-copy{
+    grid-area:copy!important;
+    padding:16px 14px!important;
+  }
+
+  .ref-home .home-project-card h3{
+    font-size:19px!important;
+  }
+
+  .ref-home .home-project-features{
+    display:none!important;
+  }
+
+  .ref-home .home-project-card .ref-project-copy>.home-feature-label{
+    display:none!important;
+  }
+}
+
+@media(max-width:440px){
+  .ref-home .home-project-card{
+    grid-template-columns:96px 1fr!important;
+  }
+
+  .ref-home .home-project-visual{
+    min-height:154px!important;
+  }
+
+  .ref-home .home-project-window{
+    width:78px!important;
+    height:118px!important;
+  }
+
+  .ref-home .home-project-card .ref-project-copy>p{
+    font-size:12px!important;
+  }
+}
