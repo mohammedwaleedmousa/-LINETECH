@@ -21,16 +21,25 @@
     transform .58s cubic-bezier(.22,.61,.36,1) var(--home-motion-delay,0ms);
 }
 
-/* Hero art arrives gently instead of jumping onto the screen. */
+/* Hero artwork enters once, then follows the pointer by only a few pixels. */
+.ref-home .home-line-art{
+  --home-art-x:0px;
+  --home-art-y:0px;
+}
+
 .ref-home .home-line-art svg{
   opacity:0;
   transform:translate3d(10px,6px,0) scale(.995);
   transform-origin:center;
+  will-change:transform;
 }
+
 .ref-home.home-motion-mounted .home-line-art svg{
   opacity:1;
-  transform:none;
-  transition:opacity .9s ease .12s,transform .9s cubic-bezier(.22,.61,.36,1) .12s;
+  transform:translate3d(var(--home-art-x),var(--home-art-y),0) scale(1);
+  transition:
+    opacity .9s ease .12s,
+    transform .42s cubic-bezier(.22,.61,.36,1);
 }
 
 /* Draw the primary line once on entry. */
@@ -47,6 +56,15 @@
   animation:homeOriginPulse 5.5s ease-in-out 1.45s infinite alternate;
 }
 
+/* Hero stats settle in one after another. */
+.ref-home.home-motion-mounted .ref-stats > div{
+  animation:homeStatIn .48s cubic-bezier(.22,.61,.36,1) both;
+}
+.ref-home.home-motion-mounted .ref-stats > div:nth-child(1){animation-delay:.48s}
+.ref-home.home-motion-mounted .ref-stats > div:nth-child(2){animation-delay:.55s}
+.ref-home.home-motion-mounted .ref-stats > div:nth-child(3){animation-delay:.62s}
+.ref-home.home-motion-mounted .ref-stats > div:nth-child(4){animation-delay:.69s}
+
 /* Cards feel responsive without floating around continuously. */
 .ref-home .ref-service-card,
 .ref-home .home-project-card,
@@ -59,11 +77,30 @@
     box-shadow .2s ease;
 }
 
+.ref-home .ref-service-icon,
+.ref-home .home-project-number,
+.ref-home .home-faq-list summary > span{
+  transition:transform .24s cubic-bezier(.22,.61,.36,1),opacity .24s ease;
+}
+
+.ref-home .home-faq-list details[open] summary > span{
+  transform:rotate(45deg);
+}
+
 @media (hover:hover) and (pointer:fine){
   .ref-home .ref-service-card:hover,
   .ref-home .home-project-card:hover,
   .ref-home .home-commitment-grid > article:hover{
     transform:translateY(-2px);
+  }
+
+  .ref-home .ref-service-card:hover .ref-service-icon{
+    transform:translateY(-2px) rotate(-3deg);
+  }
+
+  .ref-home .home-project-card:hover .home-project-number{
+    transform:translateY(-2px);
+    opacity:1;
   }
 
   .ref-home .ref-button span,
@@ -124,6 +161,11 @@ html[dir="rtl"] .ref-home .ref-about-art.home-motion-reveal.is-visible{
   to{opacity:1;transform:scale(1.035)}
 }
 
+@keyframes homeStatIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+
 @media(max-width:760px){
   .ref-home .home-motion-hero,
   .ref-home .home-motion-reveal{
@@ -133,6 +175,10 @@ html[dir="rtl"] .ref-home .ref-about-art.home-motion-reveal.is-visible{
   .ref-home .ref-about-art.home-motion-reveal,
   html[dir="rtl"] .ref-home .ref-about-art.home-motion-reveal{
     transform:translate3d(0,10px,0) scale(.995);
+  }
+
+  .ref-home.home-motion-mounted .home-line-art svg{
+    transform:none;
   }
 }
 
@@ -148,10 +194,14 @@ html[dir="rtl"] .ref-home .ref-about-art.home-motion-reveal.is-visible{
 
   .ref-home .home-line-art path[stroke-width="1.6"],
   .ref-home .home-line-art circle[fill="url(#home-line-origin)"],
+  .ref-home .ref-stats > div,
   .ref-home .ref-service-card,
   .ref-home .home-project-card,
   .ref-home .home-commitment-grid > article,
   .ref-home .home-faq-list > details,
+  .ref-home .ref-service-icon,
+  .ref-home .home-project-number,
+  .ref-home .home-faq-list summary > span,
   .ref-home .ref-button span,
   .ref-home .ref-project-copy a span,
   .ref-home .home-start-help span,
