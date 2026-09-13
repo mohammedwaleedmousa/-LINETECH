@@ -3,6 +3,7 @@ import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
 import LanguageBridge from "./LanguageBridge";
 import HomeMotion from "./HomeMotion";
+import ServicesMotion from "./ServicesMotion";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -31,6 +32,7 @@ import "./chat-enhancements.css";
 import "./tech-hero.css";
 import "./i18n.css";
 import "./home-motion.css";
+import "./services-motion.css";
 import "./home-spacing.css";
 import "./language-startup.css";
 import "./home-neurons.css";
@@ -114,6 +116,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
         <LanguageBridge />
         <HomeMotion />
+        <ServicesMotion />
         <SiteNav />
         {children}
         <SiteFooter />
