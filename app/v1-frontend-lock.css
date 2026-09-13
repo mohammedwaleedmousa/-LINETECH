@@ -1,0 +1,178 @@
+/* LINETECH V1 frontend-only lock — responsive, accessible, no backend behavior */
+
+/* Supporting pages sit below the floating global nav just like .ref-page. */
+.info-page{
+  width:100%;
+  max-width:100%;
+  padding-top:96px;
+  overflow-x:hidden;
+}
+
+/* Keep the 404 experience clear of the fixed navbar. */
+.not-found-page{
+  min-height:calc(100svh - 96px)!important;
+  margin-top:96px;
+}
+
+/* Prevent long headings/content from forcing horizontal overflow. */
+.service-detail-page,
+.project-detail,
+.info-page,
+.project-brief-form,
+.service-detail-hero-grid,
+.project-detail-hero-grid,
+.service-detail-fit-grid,
+.project-detail-overview-grid,
+.project-detail-stack-grid,
+.info-content-grid{
+  min-width:0;
+}
+.service-detail-page h1,
+.project-detail h1,
+.info-page h1,
+.service-detail-page h2,
+.project-detail h2,
+.info-page h2{
+  text-wrap:balance;
+}
+.service-detail-page p,
+.project-detail p,
+.info-page p,
+.project-brief-form input,
+.project-brief-form textarea,
+.project-brief-form select{
+  min-width:0;
+  overflow-wrap:anywhere;
+}
+
+/* Detail sections use the same restrained separation as the reference UI. */
+.service-detail-page .ref-section,
+.project-detail .ref-section,
+.info-content{
+  border-bottom:1px solid rgba(255,255,255,.07);
+}
+.service-detail-page .ref-section:last-of-type,
+.project-detail .ref-section:last-of-type{
+  border-bottom:0;
+}
+
+/* Forms remain frontend-only and visually predictable. */
+#brief{scroll-margin-top:108px}
+.project-brief-form input,
+.project-brief-form textarea,
+.project-brief-form select{
+  max-width:100%;
+}
+.project-brief-form textarea{
+  field-sizing:content;
+}
+.frontend-only-note{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0 0 20px;
+  padding:11px 13px;
+  border:1px solid rgba(56,130,246,.24);
+  background:rgba(56,130,246,.045);
+  color:#8e9aa6;
+  font-size:11px;
+  line-height:1.55;
+}
+.frontend-only-note::before{
+  content:"";
+  flex:0 0 auto;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#3882f6;
+  box-shadow:0 0 12px rgba(56,130,246,.65);
+}
+
+/* Comfortable interactive targets without changing the visual language. */
+.ref-btn,
+.ref-button,
+.brief-share,
+.search-trigger,
+.mobile-menu-button{
+  min-height:42px;
+}
+:where(a,button,input,textarea,select,summary):focus-visible{
+  outline:1px solid #3882f6;
+  outline-offset:3px;
+}
+
+/* CTAs wrap instead of compressing or overflowing on narrower desktop widths. */
+.service-detail-page .ref-cta-inner,
+.project-detail .ref-cta-inner,
+.info-page .ref-cta-inner{
+  gap:28px;
+}
+
+@media(max-width:1100px){
+  .service-detail-hero-grid,
+  .project-detail-hero-grid{
+    grid-template-columns:minmax(0,1.12fr) minmax(250px,.88fr);
+  }
+  .service-detail-hero-copy,
+  .project-detail-hero-copy{
+    padding-right:36px;
+  }
+  .service-detail-grid,
+  .project-detail-built-grid{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
+
+@media(max-width:900px){
+  .info-page{padding-top:82px}
+  .not-found-page{
+    margin-top:82px;
+    min-height:calc(100svh - 82px)!important;
+  }
+  .service-detail-page .ref-head,
+  .project-detail .ref-head{
+    gap:26px!important;
+  }
+  .service-detail-page .ref-cta-inner,
+  .project-detail .ref-cta-inner,
+  .info-page .ref-cta-inner{
+    align-items:flex-start!important;
+    flex-direction:column!important;
+  }
+}
+
+@media(max-width:620px){
+  .info-page{padding-top:70px}
+  .not-found-page{
+    margin-top:70px;
+    min-height:calc(100svh - 70px)!important;
+  }
+  .service-detail-hero-copy,
+  .project-detail-hero-copy{
+    padding-left:0!important;
+    padding-right:0!important;
+  }
+  .service-detail-page h1,
+  .project-detail h1,
+  .info-page h1{
+    hyphens:none;
+    overflow-wrap:normal;
+  }
+  .service-detail-grid,
+  .project-detail-built-grid{
+    grid-template-columns:1fr;
+  }
+  .service-detail-card,
+  .project-detail-built-grid article{
+    min-height:auto!important;
+  }
+  .frontend-only-note{
+    align-items:flex-start;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+  }
+}
