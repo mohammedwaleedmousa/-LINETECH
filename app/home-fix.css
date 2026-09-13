@@ -1,0 +1,46 @@
+.ref-home .ref-process{padding:0;background:linear-gradient(180deg,#070b0f 0%,#06090c 100%)}
+.ref-home .ref-process-grid{min-height:220px;display:grid;grid-template-columns:23% 77%;align-items:stretch}
+.ref-home .ref-process-title{padding:44px 34px 38px 0;border-right:1px solid #1b232c;display:flex;flex-direction:column;justify-content:center}
+.ref-home .ref-process-title .ref-kicker{margin-bottom:22px}
+.ref-home .ref-process-title h2{font-size:35px;line-height:1.04;letter-spacing:-.04em;max-width:180px}
+.ref-home .ref-process-list{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));align-items:stretch}
+.ref-home .ref-process-list article{min-height:220px;padding:47px 28px 34px;position:relative;border-right:1px solid #1b232c;display:flex;flex-direction:column;justify-content:flex-start}
+.ref-home .ref-process-list article:last-child{border-right:0}
+.ref-home .ref-process-list article:before{content:"";position:absolute;left:28px;top:36px;width:28px;height:1px;background:#35414d}
+.ref-home .ref-process-list article span{font-size:13px;margin:0 0 15px;color:#f1f4f7;position:relative;z-index:1}
+.ref-home .ref-process-list article span.blue{color:#58a0ff}
+.ref-home .ref-process-list article h3{font-size:15px;line-height:1.2;margin:0 0 13px;font-weight:560}
+.ref-home .ref-process-list article p{font-size:11px;line-height:1.6;color:#8f99a4;margin:0;max-width:155px}
+.ref-home .ref-process-list article b{position:absolute;right:-7px;top:50%;transform:translateY(-50%);width:14px;height:14px;background:#070b0f;color:#7e8994;display:grid;place-items:center;font-weight:400;font-size:11px;z-index:2}
+
+.ref-home .ref-standard{padding:0;background:#070b0f}
+.ref-home .ref-standard-grid{min-height:215px;display:grid;grid-template-columns:23% 1fr 1fr 64px;gap:0;align-items:stretch}
+.ref-home .ref-standard-grid>div:first-child{padding:42px 30px 34px 0;border-right:1px solid #1b232c;display:flex;flex-direction:column;justify-content:center}
+.ref-home .ref-standard .ref-kicker{margin-bottom:20px}
+.ref-home .ref-standard h2{font-size:32px;line-height:1.05;letter-spacing:-.04em;max-width:220px}
+.ref-home .ref-quote-card{margin:26px 14px;min-height:160px;border:1px solid #202a34;border-radius:7px;background:linear-gradient(145deg,rgba(14,20,26,.95),rgba(7,11,15,.96));padding:24px 24px 20px;display:flex;flex-direction:column;justify-content:space-between}
+.ref-home .ref-quote-card+ .ref-quote-card{margin-left:0}
+.ref-home .ref-quote-card>p{font-size:12px;line-height:1.65;color:#c2c9d0;margin:0 0 22px;max-width:430px}
+.ref-home .ref-quote-card>div>span{width:36px;height:36px;background:linear-gradient(145deg,#1b3858,#10253e);border:1px solid #24476e}
+.ref-home .ref-round-arrows{border-left:1px solid #1b232c;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
+.ref-home .ref-round-arrows button{width:38px;height:38px;border-radius:50%;border:1px solid #29343f;background:#080c10;color:#dce3e9;transition:.2s}
+.ref-home .ref-round-arrows button:hover{border-color:#4a5a69;color:#fff;transform:translateX(2px)}
+
+@media(max-width:900px){
+  .ref-home .ref-process-grid,.ref-home .ref-standard-grid{grid-template-columns:1fr;min-height:0}
+  .ref-home .ref-process-title,.ref-home .ref-standard-grid>div:first-child{border-right:0;border-bottom:1px solid #1b232c;padding:34px 0 28px}
+  .ref-home .ref-process-title h2,.ref-home .ref-standard h2{max-width:none}
+  .ref-home .ref-process-list{grid-template-columns:1fr 1fr}
+  .ref-home .ref-process-list article{min-height:180px;border-bottom:1px solid #1b232c;padding:38px 22px 28px}
+  .ref-home .ref-process-list article:nth-child(2){border-right:0}
+  .ref-home .ref-process-list article b{display:none}
+  .ref-home .ref-quote-card,.ref-home .ref-quote-card+ .ref-quote-card{margin:14px 0 0}
+  .ref-home .ref-round-arrows{border-left:0;flex-direction:row;justify-content:flex-end;padding:16px 0 4px}
+}
+
+@media(max-width:560px){
+  .ref-home .ref-process-list{grid-template-columns:1fr}
+  .ref-home .ref-process-list article{min-height:150px;border-right:0}
+  .ref-home .ref-standard-grid{display:block}
+  .ref-home .ref-quote-card{min-height:145px}
+}
