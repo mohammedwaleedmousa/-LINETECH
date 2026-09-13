@@ -2,7 +2,6 @@
 
 import Localized from "../Localized";
 
-
 export default function PrivacyPage(){return <Localized><main className="info-page page-privacy">
   <section className="info-page-hero legal-hero">
     <div className="ref-shell legal-hero-grid">
@@ -12,11 +11,7 @@ export default function PrivacyPage(){return <Localized><main className="info-pa
         <h1>Your information should stay clear and controlled.</h1>
         <p>This page explains how information is handled when you use the LINETECH website and project brief.</p>
       </div>
-      <div className="legal-hero-visual" aria-hidden="true">
-        <span>LINETECH / POLICY</span>
-        <div><strong>BROWSER-FIRST</strong><strong>CLEAR CONTROL</strong><strong>NO FORM STORAGE</strong></div>
-        <i/>
-      </div>
+      <div className="legal-hero-visual" aria-hidden="true"><i/></div>
     </div>
   </section>
   <section className="info-content"><div className="ref-shell info-content-grid"><aside className="info-content-aside"><p className="ref-kicker">LAST UPDATED</p><h2>September 2026</h2><p>The current project brief is designed to keep your typed content in the browser until you choose to copy or share it.</p></aside><div className="info-prose">
