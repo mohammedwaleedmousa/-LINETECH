@@ -42,14 +42,22 @@ export default function SiteNav() {
 
   useEffect(() => {
     if (!searchOpen) return;
+
+    document.documentElement.classList.add("search-scroll-lock");
+    document.body.classList.add("search-scroll-lock");
+
     const timer = window.setTimeout(() => inputRef.current?.focus(), 360);
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") setSearchOpen(false);
     };
+
     window.addEventListener("keydown", onKeyDown);
+
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener("keydown", onKeyDown);
+      document.documentElement.classList.remove("search-scroll-lock");
+      document.body.classList.remove("search-scroll-lock");
     };
   }, [searchOpen]);
 
