@@ -22,9 +22,11 @@ import "./project-detail.css";
 import "./info-pages.css";
 import "./search.css";
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
   title: {
     default: "LINETECH — Every idea starts with a line.",
     template: "%s — LINETECH",
@@ -38,11 +40,13 @@ export const metadata: Metadata = {
     description: siteDescription,
     siteName: "LINETECH",
     type: "website",
+    images: [{ url: "/hero/home.webp", width: 1536, height: 1024, alt: "LINETECH" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "LINETECH — Every idea starts with a line.",
     description: siteDescription,
+    images: ["/hero/home.webp"],
   },
 };
 
