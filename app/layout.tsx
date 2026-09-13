@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
 import LanguageBridge from "./LanguageBridge";
+import HomeMotion from "./HomeMotion";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -29,6 +30,7 @@ import "./chat.css";
 import "./chat-enhancements.css";
 import "./tech-hero.css";
 import "./i18n.css";
+import "./home-motion.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
@@ -102,6 +104,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: languageBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
         <LanguageBridge />
+        <HomeMotion />
         <SiteNav />
         {children}
         <SiteFooter />
