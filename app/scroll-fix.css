@@ -1,0 +1,23 @@
+/* Keep a single document scrollbar during client-side route transitions */
+html{
+  overflow-x:hidden!important;
+  overflow-y:auto!important;
+  height:auto!important;
+  min-height:100%!important;
+}
+body{
+  overflow-x:hidden!important;
+  overflow-y:visible!important;
+  height:auto!important;
+  min-height:100%!important;
+}
+.route-motion{
+  min-height:0!important;
+  height:auto!important;
+  overflow:visible!important;
+}
+.ref-home,.ref-page{
+  height:auto!important;
+  overflow-x:hidden!important;
+  overflow-y:visible!important;
+}
