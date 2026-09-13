@@ -2,8 +2,9 @@
 
 import Localized from "./Localized";
 import HomeHeroArt from "./HomeHeroArt";
+import HomeProjects from "./HomeProjects";
+import HomeAbout from "./HomeAbout";
 import HomeWhy from "./HomeWhy";
-import HomeProof from "./HomeProof";
 import Link from "next/link";
 import "./home-content.css";
 
@@ -12,12 +13,6 @@ const services = [
   { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works.", href: "/services/ecommerce-systems" },
   { icon: "✦", title: "Brand Identity", text: "Clear visual systems that make a business feel consistent, modern and credible.", href: "/services/brand-identity" },
   { icon: "◎", title: "CV & Portfolio", text: "Professional personal presentation for careers, portfolios and stronger opportunities.", href: "/services/cv-portfolio" },
-];
-
-const projects = [
-  { tag: "E-COMMERCE", title: "Flamingo Park", text: "A mobile-first retail experience for product discovery, orders and customer conversion.", cls: "project-commerce", features: ["Catalog, categories and brand filters", "Product sizes, colors and ordering", "Store and order management"], href: "/projects/flamingo-park" },
-  { tag: "MARKETPLACE", title: "Etqan", text: "A services marketplace designed to organize discovery, providers and customer journeys.", cls: "project-market", features: ["Service categories and discovery", "Provider profiles and customer journeys", "Marketplace administration"], href: "/projects/etqan" },
-  { tag: "BUSINESS SYSTEM", title: "LedgerPro", text: "A business system for financial records, workflows and clearer operational visibility.", cls: "project-ledger", features: ["Structured financial records", "Daily business workflows", "Dashboards and operational visibility"], href: "/projects/ledgerpro" },
 ];
 
 const process = [
@@ -41,29 +36,6 @@ const faqs = [
   ["What happens after launch?", "The handover includes the agreed project assets and launch state. Ongoing maintenance or support can be scoped separately when needed."],
 ];
 
-function ProjectVisual({ project }: { project: (typeof projects)[number] }) {
-  return (
-    <div className="home-project-visual" aria-hidden="true">
-      <div className="home-project-window">
-        <div className="home-project-window-bar">
-          <span/><span/><span/>
-          <b>{project.title}</b>
-        </div>
-        <div className="home-project-ui">
-          <aside className="home-project-ui-rail"><i/><i/><i/><i/></aside>
-          <div className="home-project-ui-main">
-            <div className="home-project-ui-top"><span/><span/></div>
-            <div className="home-project-ui-focus"><i/><b/><em/></div>
-            <div className="home-project-ui-grid"><i/><i/><i/></div>
-          </div>
-          <div className="home-project-ui-side"><span/><i/><i/><i/></div>
-        </div>
-      </div>
-      <div className="home-project-orbit"><i/><i/><i/></div>
-    </div>
-  );
-}
-
 export default function Home() {
   return (
     <Localized><main className="ref-home" id="top">
@@ -79,7 +51,7 @@ export default function Home() {
               <div><strong>01</strong><span>Founder-led</span></div>
               <div><strong>{String(services.length).padStart(2, "0")}</strong><span>Core Services</span></div>
               <div><strong>{String(process.length).padStart(2, "0")}</strong><span>Clear Steps</span></div>
-              <div><strong>{String(projects.length).padStart(2, "0")}</strong><span>Selected Projects</span></div>
+              <div><strong>03</strong><span>Selected Projects</span></div>
             </div>
           </div>
         </div>
@@ -97,38 +69,9 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ref-section ref-line-section" id="projects">
-        <div className="ref-shell">
-          <div className="ref-section-heading project-head">
-            <div><p className="ref-kicker with-line">FEATURED PROJECTS</p><h2>Real solutions.<br/>Real impact.</h2></div>
-            <div className="ref-heading-side"><p>Explore the product, the problem it addresses and the capabilities built into each project.</p><Link className="ref-button ghost small" href="/projects" prefetch>View All Projects <span>→</span></Link></div>
-          </div>
-          <div className="ref-project-grid home-project-showcase-grid">
-            {projects.map((project, index) => (
-              <article className={`ref-project-card home-project-card ${project.cls}`} key={project.title}>
-                <div className="home-project-heading"><span className="ref-tag">{project.tag}</span><span className="home-project-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span></div>
-                <ProjectVisual project={project}/>
-                <div className="ref-project-copy">
-                  <h3>{project.title}</h3><p>{project.text}</p>
-                  <p className="home-feature-label">WHAT WE BUILT</p>
-                  <ul className="home-project-features">{project.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
-                  <Link href={project.href} prefetch>Explore the case study <span aria-hidden="true">→</span></Link>
-                </div>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <HomeProjects/>
 
-      <HomeProof/>
-
-      <section className="ref-about ref-line-section" id="about">
-        <div className="ref-shell ref-about-grid">
-          <div className="ref-about-copy"><p className="ref-kicker with-line">ABOUT LINETECH</p><h2>More than technology.<br/>A smarter tomorrow.</h2><p>LINETECH is a technology company that turns ideas into real digital products. We begin with clarity, shape the right solution and build for real-world use.</p><Link className="ref-button ghost small" href="/about" prefetch>Learn more <span>→</span></Link></div>
-          <div className="ref-about-art" aria-hidden="true"><div className="about-block a1"/><div className="about-block a2"/><div className="about-block a3"/><div className="about-light"/></div>
-          <div className="ref-about-lockup"><span className="ref-mark big"><i/><b/></span><strong>LINETECH</strong><p>IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER<br/>TOMORROW</p><i className="lock-line"/></div>
-        </div>
-      </section>
+      <HomeAbout/>
 
       <HomeWhy/>
 
