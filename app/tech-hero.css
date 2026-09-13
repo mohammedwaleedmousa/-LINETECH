@@ -1,0 +1,182 @@
+/* LINETECH technology-first hero system.
+   No photographic hero art: all hero surfaces now use one technical visual language
+   built from grids, data lines, nodes and controlled blue light. */
+
+.ref-home .ref-hero{--tech-x:78%;--tech-y:36%;--tech-tilt:-8deg}
+.page-services .ref-hero{--tech-x:74%;--tech-y:48%;--tech-tilt:8deg}
+.page-projects .ref-hero{--tech-x:80%;--tech-y:58%;--tech-tilt:-12deg}
+.page-about .ref-hero{--tech-x:72%;--tech-y:34%;--tech-tilt:11deg}
+.page-contact .ref-hero{--tech-x:81%;--tech-y:42%;--tech-tilt:-6deg}
+.service-detail-hero{--tech-x:79%;--tech-y:44%;--tech-tilt:-9deg}
+.project-detail-hero{--tech-x:76%;--tech-y:51%;--tech-tilt:9deg}
+.info-page-hero{--tech-x:80%;--tech-y:38%;--tech-tilt:-7deg}
+.thank-you-hero{--tech-x:78%;--tech-y:46%;--tech-tilt:7deg}
+.login-stage{--tech-x:79%;--tech-y:42%;--tech-tilt:-7deg}
+.not-found-page{--tech-x:74%;--tech-y:45%;--tech-tilt:8deg}
+
+.ref-home .ref-hero,
+.page-services .ref-hero,
+.page-projects .ref-hero,
+.page-about .ref-hero,
+.page-contact .ref-hero,
+.service-detail-hero,
+.project-detail-hero,
+.info-page-hero,
+.thank-you-hero,
+.login-stage,
+.not-found-page{
+  position:relative;
+  isolation:isolate;
+  background-color:#020406!important;
+  background-image:
+    linear-gradient(90deg,rgba(2,4,7,.995) 0%,rgba(2,4,7,.95) 31%,rgba(2,4,7,.66) 52%,rgba(2,4,7,.20) 79%,rgba(2,4,7,.06) 100%),
+    radial-gradient(circle at var(--tech-x) var(--tech-y),rgba(56,130,246,.22) 0,rgba(56,130,246,.10) 12%,rgba(56,130,246,.025) 28%,transparent 46%),
+    repeating-linear-gradient(0deg,transparent 0 43px,rgba(125,160,204,.035) 44px,transparent 45px),
+    repeating-linear-gradient(90deg,transparent 0 43px,rgba(125,160,204,.035) 44px,transparent 45px),
+    linear-gradient(135deg,#020406 0%,#050a10 54%,#020305 100%)!important;
+  background-repeat:no-repeat!important;
+  background-size:cover!important;
+  background-position:center!important;
+}
+
+/* Technical data panel on the right side of every hero. */
+.ref-home .ref-hero::after,
+.page-services .ref-hero::after,
+.page-projects .ref-hero::after,
+.page-about .ref-hero::after,
+.page-contact .ref-hero::after,
+.service-detail-hero::after,
+.project-detail-hero::after,
+.info-page-hero::after,
+.thank-you-hero::after,
+.login-stage::after,
+.not-found-page::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:1!important;
+  right:3%!important;
+  top:10%!important;
+  width:min(43vw,650px)!important;
+  height:72%!important;
+  pointer-events:none!important;
+  opacity:.62!important;
+  transform:rotate(var(--tech-tilt));
+  transform-origin:center;
+  border:1px solid rgba(120,166,225,.11)!important;
+  border-radius:2px;
+  background:
+    radial-gradient(circle at 18% 21%,rgba(120,182,255,.95) 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 64% 18%,rgba(255,255,255,.9) 0 1px,transparent 2px),
+    radial-gradient(circle at 82% 42%,rgba(56,130,246,.95) 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 46% 72%,rgba(120,182,255,.8) 0 1.5px,transparent 2.5px),
+    radial-gradient(circle at 74% 84%,rgba(255,255,255,.75) 0 1px,transparent 2px),
+    linear-gradient(90deg,transparent 17.8%,rgba(95,148,214,.22) 18%,transparent 18.25%),
+    linear-gradient(90deg,transparent 63.8%,rgba(95,148,214,.18) 64%,transparent 64.25%),
+    linear-gradient(0deg,transparent 20.8%,rgba(95,148,214,.22) 21%,transparent 21.25%),
+    linear-gradient(0deg,transparent 41.8%,rgba(95,148,214,.16) 42%,transparent 42.25%),
+    linear-gradient(0deg,transparent 71.8%,rgba(95,148,214,.18) 72%,transparent 72.25%),
+    repeating-linear-gradient(0deg,transparent 0 54px,rgba(255,255,255,.025) 55px,transparent 56px),
+    repeating-linear-gradient(90deg,transparent 0 54px,rgba(255,255,255,.025) 55px,transparent 56px),
+    linear-gradient(135deg,rgba(56,130,246,.035),transparent 55%);
+  box-shadow:0 0 70px rgba(56,130,246,.075),inset 0 0 45px rgba(56,130,246,.025)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 88%,transparent 100%);
+  mask-image:linear-gradient(90deg,transparent 0%,#000 18%,#000 88%,transparent 100%);
+}
+
+/* Main route heroes no longer need the old architectural/photo decoration. */
+.ref-home .ref-hero-art,
+.page-services .ref-visual,
+.page-projects .ref-visual,
+.page-about .ref-visual,
+.page-contact .ref-visual,
+.service-detail-visual,
+.project-detail-visual,
+.legal-hero-visual{
+  position:relative;
+  z-index:2;
+  background:transparent!important;
+}
+
+/* Let the right column read as a technical system rather than a photo caption. */
+.ref-home .ref-art-words,
+.page-services .ref-visual-label,
+.page-projects .ref-visual-label,
+.page-about .ref-visual-label,
+.page-contact .ref-visual-label,
+.service-detail-visual,
+.project-detail-visual,
+.legal-hero-visual{
+  text-shadow:0 0 20px rgba(56,130,246,.16)!important;
+}
+
+/* Supporting-page overlays: keep text contrast without restoring photo-like treatment. */
+.service-detail-hero::before,
+.project-detail-hero::before,
+.info-page-hero::before,
+.thank-you-hero::before,
+.not-found-page::before{
+  background:linear-gradient(90deg,rgba(2,4,7,.98) 0%,rgba(2,4,7,.88) 36%,rgba(2,4,7,.42) 62%,rgba(2,4,7,.10) 100%),linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.22))!important;
+}
+
+/* Login uses the same technical system; remove the former photographic split. */
+.login-stage{
+  background-position:center!important;
+}
+
+@media(max-width:900px){
+  .ref-home .ref-hero,
+  .page-services .ref-hero,
+  .page-projects .ref-hero,
+  .page-about .ref-hero,
+  .page-contact .ref-hero,
+  .service-detail-hero,
+  .project-detail-hero,
+  .info-page-hero,
+  .thank-you-hero,
+  .login-stage,
+  .not-found-page{
+    background-image:
+      linear-gradient(90deg,rgba(2,4,7,.99) 0%,rgba(2,4,7,.92) 58%,rgba(2,4,7,.50) 100%),
+      radial-gradient(circle at 78% 42%,rgba(56,130,246,.18) 0,rgba(56,130,246,.06) 22%,transparent 45%),
+      repeating-linear-gradient(0deg,transparent 0 35px,rgba(125,160,204,.032) 36px,transparent 37px),
+      repeating-linear-gradient(90deg,transparent 0 35px,rgba(125,160,204,.032) 36px,transparent 37px),
+      linear-gradient(135deg,#020406,#05090e 55%,#020305)!important;
+  }
+  .ref-home .ref-hero::after,
+  .page-services .ref-hero::after,
+  .page-projects .ref-hero::after,
+  .page-about .ref-hero::after,
+  .page-contact .ref-hero::after,
+  .service-detail-hero::after,
+  .project-detail-hero::after,
+  .info-page-hero::after,
+  .thank-you-hero::after,
+  .login-stage::after,
+  .not-found-page::after{
+    right:-18%!important;
+    top:17%!important;
+    width:72vw!important;
+    height:58%!important;
+    opacity:.34!important;
+  }
+}
+
+@media(max-width:620px){
+  .ref-home .ref-hero::after,
+  .page-services .ref-hero::after,
+  .page-projects .ref-hero::after,
+  .page-about .ref-hero::after,
+  .page-contact .ref-hero::after,
+  .service-detail-hero::after,
+  .project-detail-hero::after,
+  .info-page-hero::after,
+  .thank-you-hero::after,
+  .login-stage::after,
+  .not-found-page::after{
+    right:-30%!important;
+    top:21%!important;
+    width:92vw!important;
+    height:50%!important;
+    opacity:.26!important;
+  }
+}
