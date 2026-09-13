@@ -16,11 +16,21 @@
   text-shadow:0 0 14px rgba(56,130,246,.35);
 }
 
+/* When search is open, only the search results may scroll. */
+html.search-scroll-lock,
+html.search-scroll-lock body,
+body.search-scroll-lock{
+  overflow:hidden!important;
+  overscroll-behavior:none!important;
+}
+
 .site-search-overlay{
   position:fixed;
   inset:0;
   z-index:10040;
   background:transparent;
+  overflow:hidden;
+  overscroll-behavior:none;
 }
 .site-search-panel{
   position:absolute;
@@ -145,6 +155,9 @@
   padding:4px 8px 8px;
   scrollbar-width:thin;
   scrollbar-color:#293341 transparent;
+  overscroll-behavior:contain;
+  -webkit-overflow-scrolling:touch;
+  touch-action:pan-y;
   animation:searchResultsIn .24s .31s ease both;
 }
 .site-search-results a{
