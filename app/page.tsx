@@ -22,11 +22,11 @@ export default function Home() {
   return (
     <main className="ref-home" id="top">
       <header className="ref-nav ref-shell">
-        <a className="ref-brand" href="#top" aria-label="LINETECH home">
+        <a className="ref-brand" href="/" aria-label="LINETECH home">
           <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
         </a>
         <nav className="ref-nav-links" aria-label="Primary navigation">
-          <a className="active" href="#top">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a>
+          <a className="active" href="/">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Contact</a>
         </nav>
         <div className="ref-nav-end"><span className="ref-search" aria-hidden="true">⌕</span><a className="ref-button light" href="/start">Start Your Line <span>→</span></a></div>
       </header>
@@ -37,7 +37,7 @@ export default function Home() {
             <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
             <h1>Every idea<br/>starts with a line.</h1>
             <p className="ref-lead">We turn ideas into real digital products through clear design, reliable technology and disciplined execution.</p>
-            <div className="ref-actions"><a className="ref-button light" href="/start">Let&apos;s Build <span>→</span></a><a className="ref-button ghost" href="#projects">View Our Work</a></div>
+            <div className="ref-actions"><a className="ref-button light" href="/start">Let&apos;s Build <span>→</span></a><a className="ref-button ghost" href="/projects">View Our Work</a></div>
             <div className="ref-stats">
               <div><strong>01</strong><span>Founder-led</span></div>
               <div><strong>03</strong><span>Core Services</span></div>
@@ -109,7 +109,7 @@ export default function Home() {
 
       <section className="ref-cta ref-line-section" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Ready to turn your idea into reality?</h2><p>Start with the idea. We&apos;ll help define the first line.</p></div><a className="ref-button light" href="/start">Start Your Line <span>→</span></a></div></section>
 
-      <footer className="ref-footer"><div className="ref-shell ref-footer-grid"><div className="ref-footer-brand"><a className="ref-brand" href="#top"><span className="ref-mark"><i/><b/></span><strong>LINETECH</strong></a><p>Technology for a brighter tomorrow.</p></div><div><h4>Quick Links</h4><a href="#top">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#about">About</a></div><div><h4>Services</h4><a href="/services">Web Development</a><a href="/services">Brand Identity</a><a href="/services">CV & Portfolio</a></div><div><h4>Company</h4><span>Aden, Yemen</span><a href="/start">Start Your Line</a><span>Founder-led</span></div><div className="ref-footer-words">IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER TOMORROW<i/></div></div><div className="ref-shell ref-footer-bottom"><span>© 2026 LINETECH. All rights reserved.</span><span>Every idea starts with a line.</span></div></footer>
+      <footer className="ref-footer"><div className="ref-shell ref-footer-grid"><div className="ref-footer-brand"><a className="ref-brand" href="/"><span className="ref-mark"><i/><b/></span><strong>LINETECH</strong></a><p>Technology for a brighter tomorrow.</p></div><div><h4>Navigation</h4><a href="/">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Contact</a></div><div><h4>Services</h4><a href="/services">Web Development</a><a href="/services">Brand Identity</a><a href="/services">CV & Portfolio</a></div><div><h4>Company</h4><span>Aden, Yemen</span><a href="/start">Start Your Line</a><span>Founder-led</span></div><div className="ref-footer-words">IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER TOMORROW<i/></div></div><div className="ref-shell ref-footer-bottom"><span>© 2026 LINETECH. All rights reserved.</span><span>Every idea starts with a line.</span></div></footer>
     </main>
   );
 }
