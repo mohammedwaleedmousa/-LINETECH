@@ -39,6 +39,29 @@ const faqs = [
   ["What happens after launch?", "The handover includes the agreed project assets and launch state. Ongoing maintenance or support can be scoped separately when needed."],
 ];
 
+function ProjectVisual({ project }: { project: (typeof projects)[number] }) {
+  return (
+    <div className="home-project-visual" aria-hidden="true">
+      <div className="home-project-window">
+        <div className="home-project-window-bar">
+          <span/><span/><span/>
+          <b>{project.title}</b>
+        </div>
+        <div className="home-project-ui">
+          <aside className="home-project-ui-rail"><i/><i/><i/><i/></aside>
+          <div className="home-project-ui-main">
+            <div className="home-project-ui-top"><span/><span/></div>
+            <div className="home-project-ui-focus"><i/><b/><em/></div>
+            <div className="home-project-ui-grid"><i/><i/><i/></div>
+          </div>
+          <div className="home-project-ui-side"><span/><i/><i/><i/></div>
+        </div>
+      </div>
+      <div className="home-project-orbit"><i/><i/><i/></div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <Localized><main className="ref-home" id="top">
@@ -78,10 +101,11 @@ export default function Home() {
             <div><p className="ref-kicker with-line">FEATURED PROJECTS</p><h2>Real solutions.<br/>Real impact.</h2></div>
             <div className="ref-heading-side"><p>Explore the product, the problem it addresses and the capabilities built into each project.</p><Link className="ref-button ghost small" href="/projects" prefetch>View All Projects <span>→</span></Link></div>
           </div>
-          <div className="ref-project-grid">
+          <div className="ref-project-grid home-project-showcase-grid">
             {projects.map((project, index) => (
               <article className={`ref-project-card home-project-card ${project.cls}`} key={project.title}>
                 <div className="home-project-heading"><span className="ref-tag">{project.tag}</span><span className="home-project-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span></div>
+                <ProjectVisual project={project}/>
                 <div className="ref-project-copy">
                   <h3>{project.title}</h3><p>{project.text}</p>
                   <p className="home-feature-label">WHAT WE BUILT</p>
