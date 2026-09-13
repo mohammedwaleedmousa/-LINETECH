@@ -68,16 +68,9 @@ export default function SiteFooter() {
 
   return (
     <footer className="site-footer-global footer-v2">
-      <div className="footer-v2-decor" aria-hidden="true">
-        <svg viewBox="0 0 1600 520" preserveAspectRatio="none" fill="none" focusable="false">
-          <path className="footer-v2-path path-a" d="M930 80C1110 46 1220 86 1335 178s172 102 318 50"/>
-          <path className="footer-v2-path path-b" d="M810 156c176-12 282 62 382 148s226 100 430 28"/>
-          <path className="footer-v2-path path-c" d="M1005 18c58 92 130 126 220 122 118-5 172 58 220 146"/>
-          <g className="footer-v2-nodes">
-            <circle cx="1078" cy="68" r="3"/><circle cx="1215" cy="109" r="4"/><circle cx="1335" cy="178" r="3"/>
-            <circle cx="1005" cy="165" r="3"/><circle cx="1192" cy="304" r="4"/><circle cx="1455" cy="286" r="3"/>
-          </g>
-        </svg>
+      <div className="footer-v2-lightfield" aria-hidden="true">
+        <i className="footer-v2-horizon" />
+        <i className="footer-v2-beacon" />
       </div>
 
       <div className="footer-v2-watermark" aria-hidden="true">LINETECH</div>
