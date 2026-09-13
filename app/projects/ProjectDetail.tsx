@@ -16,7 +16,7 @@ type ProjectDetailProps = {
 };
 
 export default function ProjectDetail({ className, tag, title, lead, summary, challenge, approach, built, stack, visualWords }: ProjectDetailProps){
-  return <main className={`ref-page project-detail ${className}`}>
+  return <main className={`ref-page project-detail-page ${className}`}>
     <section className="project-detail-hero">
       <div className="ref-shell project-detail-hero-grid">
         <div className="project-detail-hero-copy">
