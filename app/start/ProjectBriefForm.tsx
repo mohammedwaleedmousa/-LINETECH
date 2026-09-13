@@ -74,6 +74,8 @@ export default function ProjectBriefForm() {
 
   return (
     <form className="project-brief-form" onSubmit={copyBrief}>
+      <p className="frontend-only-note">This brief stays on your device. Nothing is sent or stored by this form; you choose when to copy or share it.</p>
+
       <div className="form-row two-col">
         <label><span>Your name *</span><input value={name} onChange={(e) => setName(e.target.value)} placeholder="Your full name" required /></label>
         <label><span>Company / Brand</span><input value={company} onChange={(e) => setCompany(e.target.value)} placeholder="Optional" /></label>
