@@ -14,30 +14,39 @@ const items = [
 ] as const;
 
 const searchItems = [
-  { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology" },
-  { title: "Services", meta: "Page", href: "/services", keywords: "services solutions" },
-  { title: "Web Development", meta: "Service", href: "/services/web-development", keywords: "website web development landing business custom apps" },
-  { title: "E-commerce & Systems", meta: "Service", href: "/services/ecommerce-systems", keywords: "ecommerce commerce systems dashboard booking" },
-  { title: "Brand Identity", meta: "Service", href: "/services/brand-identity", keywords: "brand branding logo visual identity guidelines" },
-  { title: "CV & Portfolio", meta: "Service", href: "/services/cv-portfolio", keywords: "cv portfolio career personal presence" },
-  { title: "Projects", meta: "Page", href: "/projects", keywords: "projects work portfolio products" },
-  { title: "Flamingo Park", meta: "Project", href: "/projects/flamingo-park", keywords: "flamingo park ecommerce retail" },
-  { title: "Etqan", meta: "Project", href: "/projects/etqan", keywords: "etqan marketplace services" },
-  { title: "LedgerPro", meta: "Project", href: "/projects/ledgerpro", keywords: "ledgerpro business system finance" },
-  { title: "About LINETECH", meta: "Page", href: "/about", keywords: "about company founder Mohammed Waleed" },
-  { title: "FAQ", meta: "Page", href: "/faq", keywords: "faq questions payments revisions support timeline" },
-  { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief" },
-  { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website" },
-  { title: "Chat", meta: "Client", href: "/chat", keywords: "chat messages conversation support client company project" },
-  { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace" },
-  { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea" },
+  { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology الرئيسية لينتك تقنية" },
+  { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },
+  { title: "Web Development", meta: "Service", href: "/services/web-development", keywords: "website web development landing business custom apps تطوير ويب مواقع تطبيقات" },
+  { title: "E-commerce & Systems", meta: "Service", href: "/services/ecommerce-systems", keywords: "ecommerce commerce systems dashboard booking تجارة الكترونية أنظمة لوحات تحكم حجوزات" },
+  { title: "Brand Identity", meta: "Service", href: "/services/brand-identity", keywords: "brand branding logo visual identity guidelines هوية بصرية شعار علامة" },
+  { title: "CV & Portfolio", meta: "Service", href: "/services/cv-portfolio", keywords: "cv portfolio career personal presence سيرة ذاتية معرض اعمال مهنة" },
+  { title: "Projects", meta: "Page", href: "/projects", keywords: "projects work portfolio products مشاريع اعمال منتجات" },
+  { title: "Flamingo Park", meta: "Project", href: "/projects/flamingo-park", keywords: "flamingo park ecommerce retail فلامنجو بارك متجر" },
+  { title: "Etqan", meta: "Project", href: "/projects/etqan", keywords: "etqan marketplace services اتقان سوق خدمات" },
+  { title: "LedgerPro", meta: "Project", href: "/projects/ledgerpro", keywords: "ledgerpro business system finance ليدجر برو نظام مالي" },
+  { title: "About LINETECH", meta: "Page", href: "/about", keywords: "about company founder Mohammed Waleed عن الشركة المؤسس محمد وليد" },
+  { title: "FAQ", meta: "Page", href: "/faq", keywords: "faq questions payments revisions support timeline اسئلة شائعة دفعات تعديلات دعم" },
+  { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief خصوصية بيانات معلومات" },
+  { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website شروط نطاق دفعات اتفاق" },
+  { title: "Chat", meta: "Client", href: "/chat", keywords: "chat messages conversation support client company project محادثة رسائل دعم عميل شركة" },
+  { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace تسجيل دخول إنشاء حساب" },
+  { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea تواصل ابدأ مشروع ملخص فكرة" },
 ] as const;
+
+type SiteLanguage = "ar" | "en";
+const LANGUAGE_STORAGE_KEY = "linetech-language-v1";
+const LANGUAGE_EVENT = "linetech:languagechange";
+
+function GlobeIcon(){
+  return <svg className="language-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 4 5.5 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.5-4-9s1.4-6.5 4-9z"/></svg>;
+}
 
 export default function SiteNav() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [language,setLanguage] = useState<SiteLanguage>("ar");
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -45,6 +54,17 @@ export default function SiteNav() {
     setSearchOpen(false);
     setQuery("");
   }, [pathname]);
+
+  useEffect(()=>{
+    const saved:SiteLanguage = window.localStorage.getItem(LANGUAGE_STORAGE_KEY) === "en" ? "en" : "ar";
+    setLanguage(saved);
+    const sync = (event:Event)=>{
+      const detail = (event as CustomEvent<{language?:SiteLanguage}>).detail;
+      setLanguage(detail?.language === "en" ? "en" : "ar");
+    };
+    window.addEventListener(LANGUAGE_EVENT,sync as EventListener);
+    return ()=>window.removeEventListener(LANGUAGE_EVENT,sync as EventListener);
+  },[]);
 
   useEffect(() => {
     if (!searchOpen) return;
@@ -75,6 +95,13 @@ export default function SiteNav() {
 
   const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
 
+  function toggleLanguage(){
+    const next:SiteLanguage = language === "ar" ? "en" : "ar";
+    setLanguage(next);
+    window.localStorage.setItem(LANGUAGE_STORAGE_KEY,next);
+    window.dispatchEvent(new CustomEvent(LANGUAGE_EVENT,{detail:{language:next}}));
+  }
+
   return (
     <>
       <header className="ref-nav ref-shell site-nav global-site-nav">
@@ -92,6 +119,7 @@ export default function SiteNav() {
           })}
         </nav>
         <div className="ref-nav-end">
+          <button data-no-translate className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "التبديل إلى العربية"} title={language === "ar" ? "English" : "العربية"}><GlobeIcon/>{language === "ar" ? "EN" : "AR"}</button>
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
           <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
@@ -112,6 +140,7 @@ export default function SiteNav() {
             );
           })}
         </nav>
+        <button data-no-translate className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "English" : "العربية"}</span><strong>{language === "ar" ? "EN" : "AR"}</strong></button>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>Start Your Line <span>→</span></Link>
         <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>Login / Create Account <span>↗</span></Link>
       </div>
