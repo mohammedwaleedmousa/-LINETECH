@@ -1,45 +1,13 @@
 import ProjectBriefForm from "./ProjectBriefForm";
 import "./start.css";
 
-export const metadata = {
-  title: "Start Your Line",
-  description: "Start a project with LINETECH and turn your idea into a clear digital product brief.",
-};
+export const metadata={title:"Start Your Line",description:"Start a project with LINETECH and turn your idea into a clear digital product brief."};
 
-export default function StartPage() {
-  return (
-    <main>
-      <header className="nav shell">
-        <a className="brand" href="/"><span className="mark"><i /><b /></span><span>LINETECH</span></a>
-        <nav className="desktop-nav"><a href="/">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a className="active" href="/start">Contact</a></nav>
-        <div className="nav-actions"><a className="button button-light nav-cta" href="#brief">Start Your Line <span>↘</span></a><details className="mobile-menu"><summary aria-label="Open navigation"><span></span><span></span></summary><div className="mobile-menu-panel"><a href="/">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="#brief">Project brief</a></div></details></div>
-      </header>
-
-      <section className="start-hero section-border">
-        <div className="shell start-hero-grid">
-          <div className="start-copy">
-            <p className="eyebrow">START YOUR LINE</p>
-            <h1>Tell us what you want to build.</h1>
-            <p>Start with the idea — even if it is still rough. This brief helps turn it into a clear first line: what the product is, who it is for, and what needs to happen next.</p>
-            <div className="start-steps" aria-label="Project intake steps"><span>01 IDEA</span><i>→</i><span>02 DEFINE</span><i>→</i><span>03 NEXT STEP</span></div>
-          </div>
-          <div className="start-visual" aria-hidden="true"><div className="start-line line-a"/><div className="start-line line-b"/><div className="start-line line-c"/><div className="start-node node-a"/><div className="start-node node-b"/><div className="start-node node-c"/><span>LINETECH / PROJECT INTAKE</span></div>
-        </div>
-      </section>
-
-      <section id="brief" className="shell start-workspace section-border">
-        <div className="brief-intro">
-          <p className="eyebrow">PROJECT BRIEF</p>
-          <h2>One clear line before we build.</h2>
-          <p>Fill in what you know. You do not need to have every answer yet.</p>
-          <div className="brief-notes"><div><span>01</span><p>No technical knowledge required.</p></div><div><span>02</span><p>Your answers stay in your browser until you choose to copy or share them.</p></div><div><span>03</span><p>We use the brief to clarify scope before execution.</p></div></div>
-        </div>
-        <ProjectBriefForm />
-      </section>
-
-      <section className="section-border start-principles"><div className="shell"><div><span>CLARITY</span><p>Define the real need.</p></div><div><span>DESIGN</span><p>Shape the right experience.</p></div><div><span>BUILD</span><p>Execute with discipline.</p></div><div><span>IMPACT</span><p>Launch something useful.</p></div></div></section>
-
-      <footer className="footer shell"><div className="footer-main"><div className="footer-brand"><a className="brand" href="/"><span className="mark"><i /><b /></span><span>LINETECH</span></a><p>Every idea starts with a line.</p></div><div><h4>Company</h4><a href="/about">About</a><a href="/projects">Work</a><a href="/services">Services</a></div><div><h4>Start</h4><a href="#brief">Project brief</a><a href="/services">Choose a service</a></div><div><h4>Location</h4><span>Aden, Yemen</span><span>Founder-led technology company</span></div></div><div className="footer-bottom"><span>© 2026 LINETECH</span><span>IDEA → DEFINE → BUILD → IMPACT</span></div></footer>
-    </main>
-  );
-}
+export default function StartPage(){return <main className="ref-page">
+<header className="nav shell"><a className="brand" href="/"><span className="mark"><i/><b/></span><span>LINETECH</span></a><nav className="desktop-nav"><a href="/">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a className="active" href="/start">Contact</a></nav><div className="nav-actions"><a className="button button-light nav-cta" href="#brief">Start Your Line <span>↘</span></a></div></header>
+<section className="ref-hero"><div className="ref-shell ref-hero-grid"><div className="ref-hero-copy"><p className="ref-kicker">START YOUR LINE</p><h1>Tell us what you want to build.</h1><p>Start with the idea — even if it is still rough. We will use the brief to turn it into a clear first line.</p><div className="ref-hero-actions"><a className="ref-btn primary" href="#brief">Start the brief ↘</a><a className="ref-btn ghost" href="/services">View services</a></div></div><div className="ref-visual" aria-hidden="true"><div className="ref-block a"/><div className="ref-block b"/><div className="ref-block c"/><div className="ref-glow"/><div className="ref-visual-label">IDEA<br/>DEFINE<br/>NEXT STEP<br/>BUILD</div></div></div></section>
+<section id="brief" className="ref-section"><div className="ref-shell ref-form-wrap"><div className="ref-form-side"><p className="ref-kicker">PROJECT BRIEF</p><h2>One clear line before we build.</h2><p>Fill in what you know. You do not need technical knowledge or every answer yet.</p><div className="ref-list" style={{marginTop:32}}>{[["01","Your idea stays in your browser until you choose to copy or share it."],["02","The brief helps clarify scope before execution."],["03","You can start even if budget or timing are not defined yet."]].map(([n,t])=><div className="ref-row" style={{gridTemplateColumns:"50px 1fr",padding:"18px 0"}} key={n}><span className="ref-meta">{n}</span><p>{t}</p></div>)}</div></div><ProjectBriefForm/></div></section>
+<section className="ref-section"><div className="ref-shell"><div className="ref-head"><div><p className="ref-kicker">WHAT HAPPENS NEXT</p><h2>A simple path forward.</h2></div><p>Once the brief is clear, the next step is defining the project and preparing the right execution plan.</p></div><div className="ref-grid">{[["01","Idea","You explain what you want to achieve."],["02","Define","We clarify scope, priorities and the right direction."],["03","Plan","The product structure and next actions become clear."],["04","Build","Execution begins once scope is agreed."]].map(([n,t,d])=><article className="ref-card" key={n}><span className="num">{n}</span><div><h3>{t}</h3><p>{d}</p></div></article>)}</div></div></section>
+<section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LINETECH</p><h2>Every idea starts with a line.</h2><p>Make the first line clear, then build from there.</p></div><a className="ref-btn primary" href="#brief">Start now ↗</a></div></section>
+<footer className="ref-footer ref-shell"><div className="ref-footer-grid"><div><a className="brand" href="/"><span className="mark"><i/><b/></span><span>LINETECH</span></a><p>Every idea starts with a line.</p></div><div><h4>Company</h4><a href="/about">About</a><a href="/projects">Projects</a></div><div><h4>Services</h4><a href="/services">Web Development</a><a href="/services">Brand Identity</a><a href="/services">CV & Portfolio</a></div><div><h4>Location</h4><span>Aden, Yemen</span></div></div><div className="ref-footer-bottom"><span>© 2026 LINETECH</span><span>IDEA → DEFINE → BUILD → IMPACT</span></div></footer>
+</main>}
