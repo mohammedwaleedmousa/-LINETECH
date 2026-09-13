@@ -39,11 +39,6 @@
   animation:navItemIn .52s cubic-bezier(.22,.61,.36,1) .08s both;
 }
 
-.global-site-nav .ref-mark,
-.global-site-nav .ref-brand strong{
-  transition:transform .24s cubic-bezier(.22,.61,.36,1),opacity .24s ease;
-}
-
 .global-site-nav .ref-nav-links{
   display:flex!important;
   gap:34px!important;
@@ -60,7 +55,7 @@
   align-items:center!important;
   position:relative!important;
   color:#c1c7ce!important;
-  transition:color .2s ease,transform .2s cubic-bezier(.22,.61,.36,1);
+  transition:color .2s ease;
   animation:navLinkIn .46s cubic-bezier(.22,.61,.36,1) both;
 }
 
@@ -70,19 +65,6 @@
 .global-site-nav .ref-nav-links a:nth-child(4){animation-delay:.24s}
 .global-site-nav .ref-nav-links a:nth-child(5){animation-delay:.28s}
 .global-site-nav .ref-nav-links a:nth-child(6){animation-delay:.32s}
-
-.global-site-nav .ref-nav-links a:before{
-  content:"";
-  position:absolute;
-  left:50%;
-  right:50%;
-  bottom:8px;
-  height:1px;
-  border-radius:2px;
-  background:rgba(112,176,255,.76);
-  opacity:0;
-  transition:left .24s cubic-bezier(.22,.61,.36,1),right .24s cubic-bezier(.22,.61,.36,1),opacity .2s ease;
-}
 
 .global-site-nav .ref-nav-links a:hover,.global-site-nav .ref-nav-links a.active{color:#fff!important}
 .global-site-nav .ref-nav-links a.active:after{
@@ -109,13 +91,12 @@
   font-size:22px!important;
   line-height:1!important;
   color:#d9dee4!important;
-  transition:transform .22s cubic-bezier(.22,.61,.36,1),color .2s ease,opacity .2s ease;
+  transition:color .2s ease,opacity .2s ease;
 }
 
 .global-site-nav .language-toggle,
-.global-site-nav .nav-login,
-.global-site-nav .mobile-menu-button{
-  transition:transform .22s cubic-bezier(.22,.61,.36,1),color .2s ease,background-color .2s ease,border-color .2s ease,opacity .2s ease;
+.global-site-nav .nav-login{
+  transition:color .2s ease,background-color .2s ease,border-color .2s ease,opacity .2s ease;
 }
 
 .global-site-nav .ref-button.light{
@@ -127,13 +108,7 @@
   border:1px solid #f5f5f3!important;
   font-size:12px!important;
   font-weight:650!important;
-  transition:transform .22s cubic-bezier(.22,.61,.36,1),box-shadow .22s ease,background-color .2s ease!important;
-}
-
-.global-site-nav .ref-button.light span,
-.global-site-nav .nav-login span{
-  display:inline-block;
-  transition:transform .2s cubic-bezier(.22,.61,.36,1);
+  transition:background-color .2s ease,color .2s ease,border-color .2s ease!important;
 }
 
 .global-site-nav .mobile-menu-button i{
@@ -160,26 +135,7 @@
 .mobile-menu-panel.open .mobile-login{animation-delay:.35s}
 
 @media (hover:hover) and (pointer:fine){
-  .global-site-nav .ref-brand:hover .ref-mark{transform:translateY(-1px) scale(1.04)}
-  .global-site-nav .ref-brand:hover strong{transform:translateX(2px)}
-  html[dir="rtl"] .global-site-nav .ref-brand:hover strong{transform:translateX(-2px)}
-
-  .global-site-nav .ref-nav-links a:hover{transform:translateY(-1px)}
-  .global-site-nav .ref-nav-links a:hover:before{left:12%;right:12%;opacity:1}
-  .global-site-nav .ref-nav-links a.active:hover:before{opacity:0}
-
-  .global-site-nav .ref-search:hover{transform:scale(1.08) rotate(-6deg);color:#fff!important}
-  .global-site-nav .language-toggle:hover,
-  .global-site-nav .nav-login:hover{transform:translateY(-1px)}
-
-  .global-site-nav .ref-button.light:hover{
-    transform:translateY(-2px);
-    box-shadow:0 8px 22px rgba(0,0,0,.2);
-  }
-  .global-site-nav .ref-button.light:hover span{transform:translateX(3px)}
-  .global-site-nav .nav-login:hover span{transform:translate(2px,-2px)}
-  html[dir="rtl"] .global-site-nav .ref-button.light:hover span{transform:translateX(-3px)}
-  html[dir="rtl"] .global-site-nav .nav-login:hover span{transform:translate(-2px,-2px)}
+  .global-site-nav .ref-search:hover{color:#fff!important}
 }
 
 @keyframes navShellIn{
