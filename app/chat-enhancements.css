@@ -1,0 +1,143 @@
+/* LINETECH chat media + message controls. Keeps the original chat UI as the sole visual reference. */
+
+.chat-icon-button svg,
+.chat-attach svg,.chat-send svg,.chat-mic svg,.recording-cancel svg,.recording-send svg,
+.chat-message-more svg,.chat-message-menu svg,.chat-document-message svg,.chat-editing-bar svg,.chat-attachment-menu svg{display:block}
+
+/* Real attachment button: keep the first LINETECH UI, remove the old rotated plus treatment. */
+.chat-attach{transform:none!important;display:grid!important;place-items:center}
+.chat-attach.active{color:#8ebcff!important;background:rgba(56,130,246,.1)!important}
+.chat-send,.chat-mic,.recording-cancel,.recording-send{display:grid;place-items:center}
+
+/* Attachment picker rises above the composer, like a fast messaging app. */
+.chat-composer-wrap{isolation:isolate}
+.chat-attachment-menu{
+  position:absolute;
+  z-index:20;
+  left:14px;
+  bottom:78px;
+  width:260px;
+  padding:8px;
+  border:1px solid rgba(255,255,255,.11);
+  border-radius:13px;
+  background:linear-gradient(180deg,rgba(11,16,21,.98),rgba(7,10,13,.98));
+  box-shadow:0 22px 60px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.025);
+  backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);
+  transform-origin:bottom left;
+  animation:chatAttachmentRise .16s ease-out both;
+}
+.chat-attachment-menu button{
+  width:100%;
+  min-height:58px;
+  padding:8px 9px;
+  display:grid;
+  grid-template-columns:40px minmax(0,1fr);
+  gap:10px;
+  align-items:center;
+  border:0;
+  border-radius:9px;
+  background:transparent;
+  color:#dfe5ea;
+  text-align:left;
+  cursor:pointer;
+}
+.chat-attachment-menu button:hover{background:rgba(255,255,255,.035)}
+.chat-attachment-menu button+button{margin-top:2px}
+.attachment-icon{
+  width:38px;height:38px;display:grid;place-items:center;border-radius:10px;
+  border:1px solid rgba(56,130,246,.24);background:rgba(56,130,246,.09);color:#83b7ff
+}
+.attachment-icon.document{border-color:rgba(255,255,255,.13);background:rgba(255,255,255,.035);color:#c7d0d8}
+.chat-attachment-menu strong,.chat-attachment-menu small{display:block}
+.chat-attachment-menu strong{font-size:11px;margin-bottom:4px}.chat-attachment-menu small{color:#65717d;font-size:9px}
+@keyframes chatAttachmentRise{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+
+/* Message action trigger and menu. */
+.chat-message-actions{position:absolute;z-index:12;right:6px;top:5px}
+.chat-message-more{
+  width:27px;height:27px;display:grid;place-items:center;border:1px solid transparent;border-radius:7px;
+  background:rgba(5,8,11,.78);color:#89949e;cursor:pointer;opacity:0;transform:translateY(-2px);
+  transition:opacity .15s ease,transform .15s ease,border-color .15s ease,background .15s ease
+}
+.chat-bubble:hover .chat-message-more,.chat-message-actions.open .chat-message-more,.chat-message-more:focus-visible{opacity:1;transform:none}
+.chat-message-more:hover{color:#fff;border-color:rgba(255,255,255,.1);background:#0a1016}
+.chat-message-menu{
+  position:absolute;right:0;top:31px;width:188px;padding:6px;border:1px solid rgba(255,255,255,.11);border-radius:10px;
+  background:#080c10;box-shadow:0 16px 42px rgba(0,0,0,.5);animation:chatMenuIn .12s ease-out both
+}
+.chat-message-menu button{
+  width:100%;min-height:38px;padding:0 10px;display:flex;align-items:center;gap:9px;border:0;border-radius:7px;
+  background:transparent;color:#cbd3da;font:inherit;font-size:10px;text-align:left;cursor:pointer
+}
+.chat-message-menu button:hover{background:rgba(255,255,255,.04);color:#fff}
+.chat-message-menu button.danger{color:#ef8794}.chat-message-menu button.danger:hover{background:rgba(239,75,95,.07)}
+@keyframes chatMenuIn{from{opacity:0;transform:translateY(-5px) scale(.98)}to{opacity:1;transform:none}}
+
+/* Edited/deleted states. */
+.chat-message-meta em{font-style:normal;color:#718091;font-size:7px;margin-right:2px}
+.chat-bubble.deleted{min-width:220px;padding:12px 13px 25px;background:#090d11;border-style:dashed}
+.chat-message-row.client .chat-bubble.deleted{background:linear-gradient(145deg,#0e1925,#0b141e)}
+.chat-deleted-message{display:flex;align-items:center;gap:8px;color:#75818c;font-size:11px;font-style:italic}
+.chat-deleted-message svg{flex:0 0 auto;color:#64717c}
+
+/* Inline editing indicator above the composer. */
+.chat-editing-bar{
+  min-height:52px;margin:0 0 7px;padding:8px 9px;display:grid;grid-template-columns:34px minmax(0,1fr) 32px;gap:9px;align-items:center;
+  border:1px solid rgba(56,130,246,.18);border-radius:10px;background:rgba(56,130,246,.045)
+}
+.chat-editing-bar>span{width:32px;height:32px;display:grid;place-items:center;border-radius:8px;background:rgba(56,130,246,.1);color:#79adf8}
+.chat-editing-bar div{min-width:0}.chat-editing-bar strong,.chat-editing-bar small{display:block}
+.chat-editing-bar strong{margin-bottom:3px;color:#9fc6ff;font-size:9px;letter-spacing:.05em}.chat-editing-bar small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#7b8792;font-size:9px}
+.chat-editing-bar>button{width:32px;height:32px;display:grid;place-items:center;border:0;border-radius:8px;background:transparent;color:#7d8994;cursor:pointer}
+.chat-editing-bar>button:hover{background:rgba(255,255,255,.04);color:#fff}
+
+/* Real voice-note UI: actual MediaRecorder audio, custom play button, waveform and microphone icon. */
+.chat-bubble.audio{padding:10px 12px 22px;min-width:330px}
+.chat-voice-message{min-width:0;display:grid;grid-template-columns:42px minmax(130px,1fr) auto;gap:11px;align-items:center}
+.chat-voice-message audio{display:none}
+.voice-play{
+  width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(56,130,246,.32);border-radius:50%;
+  background:rgba(56,130,246,.12);color:#88baff;cursor:pointer
+}
+.voice-play:hover{background:rgba(56,130,246,.2);color:#fff}
+.voice-track{position:relative;height:28px;display:flex;align-items:center;overflow:hidden}
+.voice-wave{width:100%;height:24px;display:flex;align-items:center;gap:2px;opacity:.55}
+.voice-wave i{width:2px;flex:1;max-width:3px;border-radius:2px;background:#748290}
+.voice-progress{position:absolute;left:0;bottom:0;height:2px;border-radius:2px;background:#3882f6;box-shadow:0 0 8px rgba(56,130,246,.4);pointer-events:none}
+.voice-duration{min-width:45px;display:flex;align-items:center;justify-content:flex-end;gap:5px;color:#7e8b97;font-size:9px}
+.voice-duration svg{color:#6fa9fa}
+
+/* Image label now uses a real image icon. */
+.chat-image-message figcaption{display:flex;align-items:center;gap:6px}
+.chat-image-message figcaption svg{flex:0 0 auto;color:#79adf8}
+.chat-image-message figcaption span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+
+/* Documents. */
+.chat-bubble.document{min-width:330px;padding:8px 9px 22px}
+.chat-document-message{
+  display:grid;grid-template-columns:44px minmax(0,1fr) 36px;gap:10px;align-items:center;min-height:58px;padding:7px;
+  border:1px solid rgba(255,255,255,.07);border-radius:9px;background:rgba(0,0,0,.14)
+}
+.chat-document-icon{width:42px;height:42px;display:grid;place-items:center;border-radius:9px;background:rgba(56,130,246,.1);border:1px solid rgba(56,130,246,.2);color:#7fb4ff}
+.chat-document-message>div{min-width:0}.chat-document-message strong,.chat-document-message small{display:block}
+.chat-document-message strong{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#dbe2e8;font-size:11px;margin-bottom:5px}
+.chat-document-message small{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#6f7c87;font-size:8px}
+.chat-document-message>a{width:34px;height:34px;display:grid;place-items:center;border-radius:8px;color:#87939e;border:1px solid rgba(255,255,255,.08);background:#090d11}
+.chat-document-message>a:hover{color:#fff;border-color:rgba(56,130,246,.36);background:rgba(56,130,246,.07)}
+
+.recording-state span{display:flex;align-items:center;gap:6px}
+.recording-state span svg{color:#80b5ff}
+
+@media(max-width:620px){
+  .chat-attachment-menu{left:8px;bottom:70px;width:min(258px,calc(100vw - 16px))}
+  .chat-message-more{opacity:1;background:rgba(5,8,11,.7)}
+  .chat-message-menu{width:176px}
+  .chat-bubble.audio,.chat-bubble.document{min-width:min(280px,82vw);max-width:92%}
+  .chat-voice-message{grid-template-columns:38px minmax(100px,1fr) auto;gap:8px}
+  .voice-play{width:36px;height:36px}
+  .voice-duration{min-width:40px;font-size:8px}
+  .chat-document-message{grid-template-columns:40px minmax(0,1fr) 34px}
+  .chat-document-icon{width:38px;height:38px}
+  .chat-editing-bar{grid-template-columns:32px minmax(0,1fr) 30px}
+}
