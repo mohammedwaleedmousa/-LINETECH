@@ -1,0 +1,87 @@
+/* Final LINETECH QA layer — homepage screenshot remains the single visual reference */
+html,body{max-width:100%;overflow-x:hidden;background:#050708}
+body{min-width:320px}
+*{box-sizing:border-box}
+main{isolation:isolate}
+
+/* Legacy page-local navbars are kept out of layout; SiteNav is the only visible navbar. */
+.ref-home>header.ref-nav,.ref-page>header.ref-nav{display:none!important}
+
+/* Consistent focus and interaction treatment */
+a,button{outline:none}
+a:focus-visible,button:focus-visible{outline:2px solid #3882f6!important;outline-offset:4px!important}
+.ref-button,.ref-btn,.ref-card,.ref-service-card,.ref-project-card,.ref-project,.ref-founder-card{transition:transform .25s cubic-bezier(.22,.61,.36,1),border-color .25s ease,background-color .25s ease,box-shadow .25s ease}
+.ref-button:hover,.ref-btn:hover{transform:translateY(-2px)}
+.ref-card:hover,.ref-service-card:hover,.ref-project-card:hover,.ref-project:hover,.ref-founder-card:hover{transform:translateY(-3px);border-color:rgba(56,130,246,.42)!important}
+
+/* Shared desktop/laptop rhythm */
+.ref-home .ref-shell,.ref-page .ref-shell{margin-left:auto!important;margin-right:auto!important}
+.ref-page .ref-section>.ref-shell{width:min(1240px,calc(100% - 72px))!important}
+.ref-page .ref-hero>.ref-shell,.ref-home .ref-hero>.ref-shell{min-height:inherit}
+.ref-page .ref-hero-copy,.ref-home .ref-hero-copy{min-width:0}
+.ref-page .ref-hero h1,.ref-home .ref-hero h1{overflow-wrap:normal;word-break:normal}
+
+/* Keep inner pages aligned to the Home visual language */
+.ref-page .ref-hero{background:linear-gradient(180deg,#06090b 0%,#050708 100%)!important}
+.ref-page .ref-card,.ref-page .ref-project,.ref-page .ref-founder-card,.ref-page .project-brief-form{background:linear-gradient(180deg,rgba(255,255,255,.025),rgba(255,255,255,.01))!important}
+.ref-page .ref-kicker{color:#9da7b1!important;letter-spacing:.22em!important}
+.ref-page .ref-hero h1,.ref-page .ref-head h2,.ref-page .ref-split-copy h2{letter-spacing:-.045em!important}
+
+/* Shared navbar desktop reference */
+.global-site-nav{transition:background-color .25s ease,border-color .25s ease,box-shadow .25s ease}
+.global-site-nav:hover{border-color:rgba(255,255,255,.17)!important}
+.mobile-menu-button{display:none;width:38px;height:38px;border:1px solid rgba(255,255,255,.14);border-radius:10px;background:rgba(255,255,255,.025);position:relative;padding:0}
+.mobile-menu-button i{position:absolute;left:10px;right:10px;height:1px;background:#f4f6f8;transition:transform .25s ease,top .25s ease}
+.mobile-menu-button i:first-child{top:14px}.mobile-menu-button i:last-child{top:22px}
+.mobile-menu-button.open i:first-child{top:18px;transform:rotate(45deg)}.mobile-menu-button.open i:last-child{top:18px;transform:rotate(-45deg)}
+.mobile-menu-panel{display:none}
+
+/* Route motion remains subtle so navigation feels app-like, not theatrical. */
+.route-motion{min-height:calc(100vh - 1px)}
+
+@media(min-width:901px) and (max-width:1440px){
+  .global-site-nav{left:12px!important;right:12px!important;padding:0 18px!important}
+  .global-site-nav .ref-nav-links{gap:28px!important}
+  .ref-home .ref-hero h1{font-size:clamp(58px,5vw,76px)!important}
+  .ref-page .ref-hero h1{font-size:clamp(48px,4.6vw,68px)!important}
+  .ref-page .ref-section>.ref-shell{width:min(1160px,calc(100% - 56px))!important}
+  .ref-page .ref-grid{gap:10px!important}
+}
+
+@media(max-width:900px){
+  .global-site-nav{grid-template-columns:1fr auto!important}
+  .global-site-nav .desktop-cta{display:none!important}
+  .global-site-nav .mobile-menu-button{display:block}
+  .global-site-nav .ref-nav-end{gap:8px!important}
+  .mobile-menu-panel{display:block;position:fixed;z-index:9998;top:74px;left:12px;right:12px;padding:14px;border:1px solid rgba(255,255,255,.12);border-radius:14px;background:rgba(7,10,13,.94);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 20px 60px rgba(0,0,0,.5);opacity:0;visibility:hidden;transform:translateY(-8px) scale(.99);transition:opacity .22s ease,transform .22s ease,visibility .22s;pointer-events:none}
+  .mobile-menu-panel.open{opacity:1;visibility:visible;transform:none;pointer-events:auto}
+  .mobile-menu-panel nav{display:grid}
+  .mobile-menu-panel nav a{display:grid;grid-template-columns:34px 1fr auto;align-items:center;min-height:52px;padding:0 8px;border-bottom:1px solid rgba(255,255,255,.08);color:#d1d7dd;text-decoration:none;font-size:15px}
+  .mobile-menu-panel nav a span{font-size:10px;letter-spacing:.15em;color:#6f7a85}.mobile-menu-panel nav a b{font-weight:400;color:#7e8994}
+  .mobile-menu-panel nav a.active{color:#fff}.mobile-menu-panel nav a.active span,.mobile-menu-panel nav a.active b{color:#3882f6}
+  .mobile-start-line{display:flex;justify-content:space-between;align-items:center;margin-top:12px;min-height:46px;padding:0 15px;border-radius:10px;background:#f4f4f2;color:#090c10!important;text-decoration:none;font-weight:650;font-size:13px}
+  .ref-home,.ref-page{padding-top:78px!important}
+  .ref-page .ref-section>.ref-shell{width:calc(100% - 28px)!important}
+  .ref-page .ref-hero-grid,.ref-home .ref-hero-grid{grid-template-columns:1fr!important}
+  .ref-page .ref-hero-copy,.ref-home .ref-hero-copy{padding-top:58px!important;padding-bottom:44px!important}
+  .ref-page .ref-visual,.ref-home .ref-hero-art{min-height:320px!important}
+  .ref-page .ref-head{gap:24px!important}
+}
+
+@media(max-width:620px){
+  .global-site-nav{left:8px!important;right:8px!important;top:8px!important}
+  .global-site-nav .ref-brand strong{font-size:12px!important}
+  .mobile-menu-panel{top:70px;left:8px;right:8px}
+  .ref-home,.ref-page{padding-top:70px!important}
+  .ref-home .ref-hero>.ref-shell,.ref-page .ref-hero>.ref-shell,.ref-home .ref-cta>.ref-shell,.ref-page .ref-cta>.ref-shell{padding-left:18px!important;padding-right:18px!important}
+  .ref-home .ref-hero h1{font-size:clamp(46px,14vw,64px)!important;line-height:.96!important}
+  .ref-page .ref-hero h1{font-size:clamp(42px,12vw,58px)!important;line-height:.98!important}
+  .ref-page .ref-section{padding:52px 0!important}
+  .ref-page .ref-grid,.ref-page .ref-projects{grid-template-columns:1fr!important}
+  .ref-page .ref-card{min-height:220px!important}
+  .ref-footer-bottom{gap:12px!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
