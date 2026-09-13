@@ -1,28 +1,56 @@
-/* Homepage hero: calm neural network motion, no raster images. */
+/* Homepage hero: one calm neural field across the entire hero. */
 .ref-home .ref-hero.home-line-hero{
-  --home-light-x:72%;
+  --home-light-x:50%;
+  position:relative;
+  isolation:isolate;
+  background:#05080c!important;
+}
+
+.ref-home .ref-hero.home-line-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
   background:
-    radial-gradient(circle at var(--home-light-x) 44%,rgba(38,88,154,.20),transparent 31%),
-    radial-gradient(circle at 50% 120%,rgba(20,43,72,.18),transparent 34%),
-    linear-gradient(180deg,#020407 0%,#05080d 60%,#04070b 100%)!important;
+    radial-gradient(circle at 78% 40%,rgba(56,130,246,.075),transparent 30%),
+    radial-gradient(circle at 28% 56%,rgba(78,132,205,.045),transparent 34%);
 }
 
 .ref-home .home-line-hero .home-neuron-art{
-  width:min(58vw,900px);
-  max-width:none;
-  inset-inline-end:-2%;
-  opacity:.96;
-  filter:drop-shadow(0 0 34px rgba(56,130,246,.08));
-  mask-image:linear-gradient(90deg,transparent,#000 9%,#000 94%,transparent);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 94%,transparent);
+  position:absolute!important;
+  inset:0!important;
+  top:0!important;
+  bottom:auto!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  opacity:.74;
+  pointer-events:none;
+  transform:translate3d(var(--home-art-x,0),var(--home-art-y,0),0)!important;
+  filter:drop-shadow(0 0 26px rgba(56,130,246,.035));
+  mask-image:linear-gradient(90deg,rgba(0,0,0,.58),#000 20%,#000 88%,rgba(0,0,0,.72));
+  -webkit-mask-image:linear-gradient(90deg,rgba(0,0,0,.58),#000 20%,#000 88%,rgba(0,0,0,.72));
 }
 
-.ref-home .home-neuron-art svg{overflow:visible}
+.ref-home .home-neuron-art svg{
+  display:block;
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+.ref-home .home-line-hero .ref-shell,
+.ref-home .home-line-hero .ref-hero-grid,
+.ref-home .home-line-hero .ref-hero-copy{
+  position:relative;
+  z-index:2;
+}
 
 .ref-home .neuron-network-base{
-  opacity:.78;
-  stroke-dasharray:2 8;
-  animation:neuronLineFlow 15s linear infinite;
+  opacity:.68;
+  stroke-dasharray:2 11;
+  animation:neuronLineFlow 24s linear infinite;
 }
 
 .ref-home .neuron-cluster{
@@ -30,70 +58,69 @@
   transform-origin:center;
   will-change:transform,opacity;
 }
-.ref-home .neuron-cluster-a{animation:neuronFloatA 8.5s ease-in-out infinite alternate}
-.ref-home .neuron-cluster-b{animation:neuronFloatB 10s ease-in-out infinite alternate}
-.ref-home .neuron-cluster-c{animation:neuronFloatC 9.2s ease-in-out infinite alternate}
+.ref-home .neuron-cluster-a{animation:neuronFloatA 13s ease-in-out infinite alternate}
+.ref-home .neuron-cluster-b{animation:neuronFloatB 15s ease-in-out infinite alternate}
+.ref-home .neuron-cluster-c{animation:neuronFloatC 17s ease-in-out infinite alternate}
 
 .ref-home .neuron-cluster circle,
 .ref-home .neuron-satellites circle{
-  filter:drop-shadow(0 0 7px rgba(104,170,255,.42));
+  filter:drop-shadow(0 0 5px rgba(104,170,255,.25));
 }
 
 .ref-home .neuron-satellites circle:nth-child(1),
-.ref-home .neuron-satellites circle:nth-child(4){animation:neuronTwinkle 3.6s ease-in-out infinite}
+.ref-home .neuron-satellites circle:nth-child(4){animation:neuronTwinkle 5.8s ease-in-out infinite}
 .ref-home .neuron-satellites circle:nth-child(2),
-.ref-home .neuron-satellites circle:nth-child(5){animation:neuronTwinkle 4.4s ease-in-out .8s infinite}
+.ref-home .neuron-satellites circle:nth-child(5){animation:neuronTwinkle 7.2s ease-in-out 1.1s infinite}
 .ref-home .neuron-satellites circle:nth-child(3),
-.ref-home .neuron-satellites circle:nth-child(6){animation:neuronTwinkle 5s ease-in-out 1.4s infinite}
+.ref-home .neuron-satellites circle:nth-child(6){animation:neuronTwinkle 8.4s ease-in-out 2s infinite}
 
 .ref-home .neuron-pulses circle{
   transform-box:fill-box;
   transform-origin:center;
-  animation:neuronPulse 3.8s ease-out infinite;
+  animation:neuronPulse 6.2s ease-out infinite;
 }
-.ref-home .neuron-pulses circle:nth-child(2){animation-delay:1.15s}
-.ref-home .neuron-pulses circle:nth-child(3){animation-delay:2.15s}
+.ref-home .neuron-pulses circle:nth-child(2){animation-delay:1.35s}
+.ref-home .neuron-pulses circle:nth-child(3){animation-delay:2.8s}
+.ref-home .neuron-pulses circle:nth-child(4){animation-delay:4.1s}
 
 @keyframes neuronLineFlow{
-  to{stroke-dashoffset:-80}
+  to{stroke-dashoffset:-110}
 }
 @keyframes neuronFloatA{
-  from{transform:translate3d(-3px,3px,0) rotate(-.2deg)}
-  to{transform:translate3d(7px,-6px,0) rotate(.35deg)}
+  from{transform:translate3d(-2px,2px,0)}
+  to{transform:translate3d(5px,-4px,0)}
 }
 @keyframes neuronFloatB{
-  from{transform:translate3d(4px,-4px,0) rotate(.2deg)}
-  to{transform:translate3d(-7px,7px,0) rotate(-.3deg)}
+  from{transform:translate3d(3px,-2px,0)}
+  to{transform:translate3d(-5px,4px,0)}
 }
 @keyframes neuronFloatC{
-  from{transform:translate3d(-2px,-3px,0)}
-  to{transform:translate3d(8px,5px,0)}
+  from{transform:translate3d(-2px,-2px,0)}
+  to{transform:translate3d(5px,3px,0)}
 }
 @keyframes neuronTwinkle{
-  0%,100%{opacity:.48}
-  50%{opacity:1}
+  0%,100%{opacity:.32}
+  50%{opacity:.78}
 }
 @keyframes neuronPulse{
-  0%{transform:scale(.62);opacity:.46}
-  78%,100%{transform:scale(1.55);opacity:0}
+  0%{transform:scale(.78);opacity:.28}
+  75%,100%{transform:scale(1.42);opacity:0}
 }
 
 @media(max-width:900px){
   .ref-home .home-line-hero .home-neuron-art{
-    width:92%;
-    inset-inline-end:-26%;
-    bottom:-4%;
-    opacity:.32;
+    opacity:.46;
+    transform:translate3d(var(--home-art-x,0),var(--home-art-y,0),0) scale(1.08)!important;
+    transform-origin:center;
   }
 }
 
 @media(max-width:620px){
   .ref-home .home-line-hero .home-neuron-art{
-    width:118%;
-    inset-inline-end:-42%;
-    bottom:1%;
-    opacity:.23;
+    opacity:.34;
+    transform:translate3d(var(--home-art-x,0),var(--home-art-y,0),0) scale(1.22)!important;
   }
+  .ref-home .neuron-network-base{opacity:.5}
 }
 
 @media(prefers-reduced-motion:reduce){
