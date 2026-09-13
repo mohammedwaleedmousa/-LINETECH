@@ -1,70 +1,101 @@
 const services = [
-  { n: "01", title: "Web Development", text: "High-performance company websites, landing pages and custom digital experiences built around real goals." },
-  { n: "02", title: "E-commerce & Systems", text: "Commerce experiences and custom systems designed around customer journeys and business workflows." },
-  { n: "03", title: "Brand Identity", text: "Minimal, consistent visual systems that make brands look clear, modern and credible." },
-  { n: "04", title: "CV & Portfolio", text: "Professional CV and portfolio experiences that present people, skills and work with confidence." },
+  { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use." },
+  { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works." },
+  { icon: "✦", title: "Brand Identity", text: "Clear visual systems that make a business feel consistent, modern and credible." },
+  { icon: "◎", title: "CV & Portfolio", text: "Professional personal presentation for careers, portfolios and stronger opportunities." },
 ];
 
 const projects = [
-  { tag: "E-COMMERCE", title: "Flamingo Park", text: "A mobile-first commerce platform built around product discovery, orders and real customer conversion.", cls: "commerce" },
-  { tag: "SERVICES MARKETPLACE", title: "Etqan", text: "A digital marketplace concept connecting customers with services through a structured, scalable product experience.", cls: "ledger" },
-  { tag: "BUSINESS SYSTEM", title: "LedgerPro", text: "A clean operational platform for financial records, workflows and day-to-day business visibility.", cls: "industrial" },
+  { tag: "E-COMMERCE", title: "Flamingo Park", text: "A mobile-first retail experience for product discovery, orders and customer conversion.", cls: "project-commerce" },
+  { tag: "MARKETPLACE", title: "Etqan", text: "A services marketplace designed to organize discovery, providers and customer journeys.", cls: "project-market" },
+  { tag: "BUSINESS SYSTEM", title: "LedgerPro", text: "A business system for financial records, workflows and clearer operational visibility.", cls: "project-ledger" },
 ];
 
 const process = [
-  ["01", "Understand", "We understand the idea, the business, the user and the real problem."],
-  ["02", "Define", "We shape the scope, priorities and the right digital solution."],
-  ["03", "Design", "We create a clear product experience before development begins."],
-  ["04", "Build", "We develop, test and prepare the product for real use."],
-  ["05", "Launch", "We deploy, hand over and prepare the next stage of growth."],
+  ["01", "Understand", "We define the idea, goals and the real challenge."],
+  ["02", "Plan", "We shape the right structure, scope and direction."],
+  ["03", "Build", "We design, develop and test with precision."],
+  ["04", "Launch", "We deploy, hand over and support the next step."],
 ];
 
 export default function Home() {
   return (
-    <main>
-      <header className="nav shell">
-        <a className="brand" href="#top" aria-label="LINETECH home"><span className="mark"><i /><b /></span><span>LINETECH</span></a>
-        <nav className="desktop-nav"><a className="active" href="#top">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Contact</a></nav>
-        <div className="nav-actions">
-          <a className="button button-light nav-cta" href="/start">Start Your Line <span>↗</span></a>
-          <details className="mobile-menu"><summary aria-label="Open navigation"><span></span><span></span></summary><div className="mobile-menu-panel"><a href="#top">Home</a><a href="/services">Services</a><a href="/projects">Projects</a><a href="/about">About</a><a href="/start">Start Your Line</a></div></details>
-        </div>
+    <main className="ref-home" id="top">
+      <header className="ref-nav ref-shell">
+        <a className="ref-brand" href="#top" aria-label="LINETECH home">
+          <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
+        </a>
+        <nav className="ref-nav-links" aria-label="Primary navigation">
+          <a className="active" href="#top">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#about">About</a><a href="#contact">Contact</a>
+        </nav>
+        <div className="ref-nav-end"><span className="ref-search" aria-hidden="true">⌕</span><a className="ref-button light" href="/start">Start Your Line <span>→</span></a></div>
       </header>
 
-      <section id="top" className="hero section-border">
-        <div className="shell hero-grid">
-          <div className="hero-copy">
-            <p className="eyebrow">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
-            <h1>Every idea<br />starts with<br />a line.</h1>
-            <p className="lead">We turn ideas into real digital products through precise design, modern technology and disciplined execution.</p>
-            <div className="actions"><a className="button button-light" href="/start">Start your line <span>↗</span></a><a className="text-link" href="/projects">Explore our work <span>→</span></a></div>
-            <div className="micro-grid"><div><span>01</span><p>IDEA</p></div><div><span>02</span><p>DESIGN</p></div><div><span>03</span><p>BUILD</p></div><div><span>04</span><p>IMPACT</p></div></div>
+      <section className="ref-hero ref-line-section">
+        <div className="ref-shell ref-hero-grid">
+          <div className="ref-hero-copy">
+            <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
+            <h1>Every idea<br/>starts with a line.</h1>
+            <p className="ref-lead">We turn ideas into real digital products through clear design, reliable technology and disciplined execution.</p>
+            <div className="ref-actions"><a className="ref-button light" href="/start">Let&apos;s Build <span>→</span></a><a className="ref-button ghost" href="#projects">View Our Work</a></div>
+            <div className="ref-stats">
+              <div><strong>01</strong><span>Founder-led</span></div>
+              <div><strong>03</strong><span>Core Services</span></div>
+              <div><strong>06</strong><span>Clear Steps</span></div>
+              <div><strong>∞</strong><span>Bigger Possibilities</span></div>
+            </div>
           </div>
-          <div className="hero-visual" aria-hidden="true"><div className="architecture architecture-a" /><div className="architecture architecture-b" /><div className="architecture architecture-c" /><div className="architecture architecture-d" /><div className="hero-beam" /><div className="visual-caption">LINETECH<br /><small>IDEAS / SYSTEMS / PRODUCTS</small></div></div>
+          <div className="ref-hero-art" aria-hidden="true">
+            <div className="ref-building b1"/><div className="ref-building b2"/><div className="ref-building b3"/><div className="ref-building b4"/>
+            <div className="ref-light-line"/><div className="ref-diagonal"/>
+            <p className="ref-art-words">CLEAN<br/>MINIMAL<br/>TECHNICAL<br/>IMPACTFUL<i/></p>
+          </div>
         </div>
       </section>
 
-      <section id="services" className="section shell section-border">
-        <div className="section-head reference-head"><div><p className="eyebrow">OUR SERVICES</p><h2>Solutions for<br />a smarter tomorrow.</h2></div><p className="section-intro">We combine product thinking, design and engineering to turn business needs into useful digital products.</p></div>
-        <div className="service-grid">{services.map((service) => <article className="service-card" key={service.title}><div className="service-top"><span>{service.n}</span><span className="plus">+</span></div><div><h3>{service.title}</h3><p>{service.text}</p></div><a href="/services">Explore service <span>↗</span></a></article>)}</div>
+      <section className="ref-section ref-line-section" id="services">
+        <div className="ref-shell">
+          <div className="ref-section-heading">
+            <div><p className="ref-kicker with-line">OUR SERVICES</p><h2>Solutions for<br/>a smarter tomorrow.</h2></div>
+            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><a className="ref-button ghost small" href="/services">View All Services <span>→</span></a></div>
+          </div>
+          <div className="ref-service-grid">
+            {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><a href="/services">Learn more <span>→</span></a></article>)}
+          </div>
+        </div>
       </section>
 
-      <section id="projects" className="section shell section-border">
-        <div className="section-head reference-head"><div><p className="eyebrow">SELECTED WORK</p><h2>Built to work.<br />Built to grow.</h2></div><p className="section-intro">Selected products that represent LINETECH&apos;s direction: practical, clean and made for real use.</p></div>
-        <div className="project-grid">{projects.map((project) => <article className={`project-card ${project.cls}`} key={project.title}><div className="project-art"><span className="screen-line line-1"/><span className="screen-line line-2"/><span className="screen-line line-3"/></div><div className="project-bottom"><span className="pill">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p><a href="/projects">View project <span>↗</span></a></div></article>)}</div>
+      <section className="ref-section ref-line-section" id="projects">
+        <div className="ref-shell">
+          <div className="ref-section-heading project-head">
+            <div><p className="ref-kicker with-line">FEATURED PROJECTS</p><h2>Real solutions.<br/>Real impact.</h2></div>
+            <div className="ref-heading-side"><p>A selection of products and systems that reflect LINETECH&apos;s practical direction.</p><a className="ref-button ghost small" href="/projects">View All Projects <span>→</span></a></div>
+          </div>
+          <div className="ref-project-grid">
+            {projects.map((project) => <article className={`ref-project-card ${project.cls}`} key={project.title}><div className="ref-project-visual"><div className="ref-project-device"><i/><i/><i/></div><div className="ref-project-shine"/></div><div className="ref-project-copy"><span className="ref-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p><a href="/projects">View Project <span>→</span></a></div></article>)}
+          </div>
+        </div>
       </section>
 
-      <section id="about" className="about section-border">
-        <div className="shell about-grid"><div className="about-copy"><p className="eyebrow">ABOUT LINETECH</p><h2>From the first line<br />to the final product.</h2><p>LINETECH is a technology company built around one simple idea: understand what needs to be built, then build it properly. We start with focused digital products and grow through strong systems, disciplined execution and long-term thinking.</p><a className="button button-light" href="/about">About LINETECH <span>↗</span></a></div><div className="about-visual" aria-hidden="true"><div className="a-slab s1"/><div className="a-slab s2"/><div className="a-slab s3"/><div className="about-lockup"><span className="mark large"><i /><b /></span><strong>LINETECH</strong><small>EVERY IDEA STARTS WITH A LINE.</small></div></div></div>
+      <section className="ref-about ref-line-section" id="about">
+        <div className="ref-shell ref-about-grid">
+          <div className="ref-about-copy"><p className="ref-kicker with-line">ABOUT LINETECH</p><h2>More than technology.<br/>A smarter tomorrow.</h2><p>LINETECH is a technology company that turns ideas into real digital products. We begin with clarity, shape the right solution and build for real-world use.</p><a className="ref-button ghost small" href="/about">Learn more <span>→</span></a></div>
+          <div className="ref-about-art" aria-hidden="true"><div className="about-block a1"/><div className="about-block a2"/><div className="about-block a3"/><div className="about-light"/></div>
+          <div className="ref-about-lockup"><span className="ref-mark big"><i/><b/></span><strong>LINETECH</strong><p>IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER<br/>TOMORROW</p><i className="lock-line"/></div>
+        </div>
       </section>
 
-      <section className="section shell section-border process-section"><div className="process-intro"><p className="eyebrow">OUR PROCESS</p><h2>One clear line.<br />From idea to impact.</h2></div><div className="process-list">{process.map(([n,t,d]) => <div className="process-row" key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p><b>↗</b></div>)}</div></section>
+      <section className="ref-process ref-line-section">
+        <div className="ref-shell ref-process-grid"><div className="ref-process-title"><p className="ref-kicker with-line">OUR PROCESS</p><h2>From idea<br/>to impact.</h2></div><div className="ref-process-list">{process.map(([n,t,d], index) => <article key={n}><span className={index === 1 || index === 2 ? "blue" : ""}>{n}</span><h3>{t}</h3><p>{d}</p>{index < process.length - 1 && <b>—</b>}</article>)}</div></div>
+      </section>
 
-      <section className="manifesto section-border"><div className="shell manifesto-grid"><div><p className="eyebrow">WHY LINETECH</p><h2>Not concepts.<br />Real products.</h2></div><div className="manifesto-copy"><p>We do not begin with a template. We begin with the problem, the user and the outcome.</p><p>That is how a line becomes a product — and a product becomes impact.</p></div></div></section>
+      <section className="ref-standard ref-line-section">
+        <div className="ref-shell ref-standard-grid"><div><p className="ref-kicker">OUR STANDARD</p><h2>What every<br/>client should feel.</h2></div><article className="ref-quote-card"><p>“Clear communication, a focused scope and work that feels intentional from the first line to launch.”</p><div><span>A</span><small>Alignment<br/>before execution</small></div></article><article className="ref-quote-card"><p>“A reliable process, careful decisions and a final product built for real use — not just presentation.”</p><div><span>Q</span><small>Quality<br/>in every step</small></div></article><div className="ref-round-arrows"><button aria-label="Previous">←</button><button aria-label="Next">→</button></div></div>
+      </section>
 
-      <section id="contact" className="cta section-border"><div className="cta-beam beam-a"/><div className="cta-beam beam-b"/><div className="shell cta-inner"><div><p className="eyebrow">START YOUR LINE</p><h2>Have an idea worth building?</h2><p>Tell us what you want to build. We&apos;ll help define the first line.</p></div><a className="button button-light" href="/start">Start Your Line <span>↗</span></a></div></section>
+      <section className="ref-cta ref-line-section" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Ready to turn your idea into reality?</h2><p>Start with the idea. We&apos;ll help define the first line.</p></div><a className="ref-button light" href="/start">Start Your Line <span>→</span></a></div></section>
 
-      <footer className="footer shell"><div className="footer-main"><div className="footer-brand"><a className="brand" href="#top"><span className="mark"><i /><b /></span><span>LINETECH</span></a><p>Every idea starts with a line.</p></div><div><h4>Company</h4><a href="/about">About</a><a href="/projects">Work</a><a href="/start">Contact</a></div><div><h4>Services</h4><a href="/services">Web Development</a><a href="/services">Brand Identity</a><a href="/services">CV & Portfolio</a></div><div><h4>Location</h4><span>Aden, Yemen</span><span>Founder-led technology company</span></div></div><div className="footer-bottom"><span>© 2026 LINETECH</span><span>IDEA → DESIGN → BUILD → IMPACT</span></div></footer>
+      <footer className="ref-footer"><div className="ref-shell ref-footer-grid"><div className="ref-footer-brand"><a className="ref-brand" href="#top"><span className="ref-mark"><i/><b/></span><strong>LINETECH</strong></a><p>Technology for a brighter tomorrow.</p></div><div><h4>Quick Links</h4><a href="#top">Home</a><a href="#services">Services</a><a href="#projects">Projects</a><a href="#about">About</a></div><div><h4>Services</h4><a href="/services">Web Development</a><a href="/services">Brand Identity</a><a href="/services">CV & Portfolio</a></div><div><h4>Company</h4><span>Aden, Yemen</span><a href="/start">Start Your Line</a><span>Founder-led</span></div><div className="ref-footer-words">IDEAS<br/>SYSTEMS<br/>PEOPLE<br/>A BETTER TOMORROW<i/></div></div><div className="ref-shell ref-footer-bottom"><span>© 2026 LINETECH. All rights reserved.</span><span>Every idea starts with a line.</span></div></footer>
     </main>
   );
 }
