@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "./inner.css";
+import "./polish.css";
 import ScrollRestorer from "./scroll-restorer";
 
 export const metadata: Metadata = {
