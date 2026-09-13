@@ -8,6 +8,7 @@ import "./inner-reference.css";
 import "./process-fix.css";
 import "./nav-float.css";
 import "./full-width.css";
+import "./route-motion.css";
 
 export const metadata: Metadata = {
   title: {
