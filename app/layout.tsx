@@ -11,6 +11,7 @@ import "./nav-float.css";
 import "./full-width.css";
 import "./route-motion.css";
 import "./final-qa.css";
+import "./hero-screen.css";
 
 export const metadata: Metadata = {
   title: {
