@@ -2,8 +2,8 @@ import Link from "next/link";
 import LoginForm from "./LoginForm";
 
 export const metadata={
-  title:"Login",
-  description:"Sign in to the LINETECH workspace.",
+  title:"Login or Create Account",
+  description:"Sign in to LINETECH or create a new client account.",
   robots:{index:false,follow:false},
 };
 
@@ -13,7 +13,7 @@ export default function LoginPage(){return <main className="login-page">
       <div className="login-copy">
         <p className="login-kicker">LINETECH / ACCESS</p>
         <h1>Your work. One clear line.</h1>
-        <p>Sign in to access your LINETECH workspace, project activity and future client tools from one focused place.</p>
+        <p>Sign in if you already have an account, or create one to prepare your LINETECH client workspace.</p>
         <div className="login-signals" aria-hidden="true">
           <div><span>01</span><strong>PROJECT ACCESS</strong></div>
           <div><span>02</span><strong>CLEAR STATUS</strong></div>
@@ -21,9 +21,8 @@ export default function LoginPage(){return <main className="login-page">
         </div>
       </div>
       <div className="login-card">
-        <div className="login-card-head"><span>CLIENT ACCESS</span><h2>Welcome back.</h2><p>Enter your account details to continue.</p></div>
         <LoginForm/>
-        <div className="login-card-foot"><span>Need to start a project?</span><Link href="/start" prefetch>Start Your Line →</Link></div>
+        <div className="login-card-foot"><span>Need to start a project first?</span><Link href="/start" prefetch>Start Your Line →</Link></div>
       </div>
     </div>
   </section>
