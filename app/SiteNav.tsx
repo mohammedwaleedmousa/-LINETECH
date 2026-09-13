@@ -15,7 +15,7 @@ export default function SiteNav() {
   const pathname = usePathname();
 
   return (
-    <header className="ref-nav ref-shell site-nav">
+    <header className="ref-nav ref-shell site-nav global-site-nav">
       <Link className="ref-brand" href="/" prefetch aria-label="LINETECH home">
         <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
       </Link>
