@@ -65,6 +65,16 @@ export const viewport: Viewport = {
   colorScheme: "dark",
 };
 
+const languageBootstrapScript = `
+(() => {
+  try {
+    const language = localStorage.getItem('linetech-language-v1') === 'en' ? 'en' : 'ar';
+    document.documentElement.lang = language;
+    document.documentElement.dir = language === 'ar' ? 'rtl' : 'ltr';
+    document.documentElement.dataset.language = language;
+  } catch (_) {}
+})();`;
+
 const scrollRestorationScript = `
 (() => {
   try {
@@ -89,6 +99,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="ar" dir="rtl">
       <body>
+        <script dangerouslySetInnerHTML={{ __html: languageBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
         <LanguageBridge />
         <SiteNav />
