@@ -2,6 +2,7 @@
 
 import Localized from "./Localized";
 import Link from "next/link";
+import "./home-content.css";
 
 const services = [
   { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services/web-development" },
@@ -11,9 +12,9 @@ const services = [
 ];
 
 const projects = [
-  { tag: "E-COMMERCE", title: "Flamingo Park", text: "A mobile-first retail experience for product discovery, orders and customer conversion.", cls: "project-commerce", href: "/projects/flamingo-park" },
-  { tag: "MARKETPLACE", title: "Etqan", text: "A services marketplace designed to organize discovery, providers and customer journeys.", cls: "project-market", href: "/projects/etqan" },
-  { tag: "BUSINESS SYSTEM", title: "LedgerPro", text: "A business system for financial records, workflows and clearer operational visibility.", cls: "project-ledger", href: "/projects/ledgerpro" },
+  { tag: "E-COMMERCE", title: "Flamingo Park", text: "A mobile-first retail experience for product discovery, orders and customer conversion.", cls: "project-commerce", features: ["Catalog, categories and brand filters", "Product sizes, colors and ordering", "Store and order management"], href: "/projects/flamingo-park" },
+  { tag: "MARKETPLACE", title: "Etqan", text: "A services marketplace designed to organize discovery, providers and customer journeys.", cls: "project-market", features: ["Service categories and discovery", "Provider profiles and customer journeys", "Marketplace administration"], href: "/projects/etqan" },
+  { tag: "BUSINESS SYSTEM", title: "LedgerPro", text: "A business system for financial records, workflows and clearer operational visibility.", cls: "project-ledger", features: ["Structured financial records", "Daily business workflows", "Dashboards and operational visibility"], href: "/projects/ledgerpro" },
 ];
 
 const process = [
@@ -21,6 +22,20 @@ const process = [
   ["02", "Plan", "We shape the right structure, scope and direction."],
   ["03", "Build", "We design, develop and test with precision."],
   ["04", "Launch", "We deploy, hand over and support the next step."],
+];
+
+const commitments = [
+  ["An agreed scope", "Pages, features, deliverables and priorities are defined before work begins."],
+  ["Planned reviews", "Review stages and included revisions are agreed as part of the project scope."],
+  ["A clear handover", "Source files, assets and access are handed over according to the project agreement."],
+  ["Support arrangements", "Hosting, maintenance and any support after launch are defined during planning."],
+];
+
+const faqs = [
+  ["How is the project price determined?", "Pricing depends on the service, scope, required features and deliverables. These details are clarified before a proposal is agreed."],
+  ["How long does a project take?", "Timing depends on the type of work, scope, content readiness and feedback speed. The schedule is defined after the project is understood rather than promising one fixed duration for every project."],
+  ["What do I need to prepare?", "Start with your idea, the people it serves and the result you want. If you have content, a current website or references, include them in your brief."],
+  ["What happens after launch?", "The handover includes the agreed project assets and launch state. Ongoing maintenance or support can be scoped separately when needed."],
 ];
 
 export default function Home() {
@@ -31,13 +46,13 @@ export default function Home() {
           <div className="ref-hero-copy">
             <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
             <h1>Every idea<br/>starts with a line.</h1>
-            <p className="ref-lead">We turn ideas into real digital products through clear design, reliable technology and disciplined execution.</p>
-            <div className="ref-actions"><Link className="ref-button light" href="/start" prefetch>Let&apos;s Build <span>→</span></Link><Link className="ref-button ghost" href="/projects" prefetch>View Our Work</Link></div>
+            <p className="ref-lead">We build websites, online stores and business systems for companies and founders, with a clear identity and an experience designed around their customers.</p>
+            <div className="ref-actions"><Link className="ref-button light" href="/start" prefetch>Start Your Line <span>→</span></Link><a className="ref-button ghost" href="#projects">View Our Work <span>↓</span></a></div>
             <div className="ref-stats">
               <div><strong>01</strong><span>Founder-led</span></div>
-              <div><strong>04</strong><span>Core Services</span></div>
-              <div><strong>06</strong><span>Clear Steps</span></div>
-              <div><strong>∞</strong><span>Bigger Possibilities</span></div>
+              <div><strong>{String(services.length).padStart(2, "0")}</strong><span>Core Services</span></div>
+              <div><strong>{String(process.length).padStart(2, "0")}</strong><span>Clear Steps</span></div>
+              <div><strong>{String(projects.length).padStart(2, "0")}</strong><span>Selected Projects</span></div>
             </div>
           </div>
           <div className="ref-hero-art" aria-hidden="true">
@@ -63,10 +78,20 @@ export default function Home() {
         <div className="ref-shell">
           <div className="ref-section-heading project-head">
             <div><p className="ref-kicker with-line">FEATURED PROJECTS</p><h2>Real solutions.<br/>Real impact.</h2></div>
-            <div className="ref-heading-side"><p>A selection of products and systems that reflect LINETECH&apos;s practical direction.</p><Link className="ref-button ghost small" href="/projects" prefetch>View All Projects <span>→</span></Link></div>
+            <div className="ref-heading-side"><p>Explore the product, the problem it addresses and the capabilities built into each project.</p><Link className="ref-button ghost small" href="/projects" prefetch>View All Projects <span>→</span></Link></div>
           </div>
           <div className="ref-project-grid">
-            {projects.map((project) => <article className={`ref-project-card ${project.cls}`} key={project.title}><div className="ref-project-visual"><div className="ref-project-device"><i/><i/><i/></div><div className="ref-project-shine"/></div><div className="ref-project-copy"><span className="ref-tag">{project.tag}</span><h3>{project.title}</h3><p>{project.text}</p><Link href={project.href} prefetch>View Project <span>→</span></Link></div></article>)}
+            {projects.map((project, index) => (
+              <article className={`ref-project-card home-project-card ${project.cls}`} key={project.title}>
+                <div className="home-project-heading"><span className="ref-tag">{project.tag}</span><span className="home-project-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span></div>
+                <div className="ref-project-copy">
+                  <h3>{project.title}</h3><p>{project.text}</p>
+                  <p className="home-feature-label">WHAT WE BUILT</p>
+                  <ul className="home-project-features">{project.features.map(feature => <li key={feature}>{feature}</li>)}</ul>
+                  <Link href={project.href} prefetch>Explore the case study <span aria-hidden="true">→</span></Link>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
@@ -97,11 +122,26 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ref-standard ref-line-section">
-        <div className="ref-shell ref-standard-grid"><div><p className="ref-kicker">OUR STANDARD</p><h2>What every<br/>client should feel.</h2></div><article className="ref-quote-card"><p>“Clear communication, a focused scope and work that feels intentional from the first line to launch.”</p><div><span>A</span><small>Alignment<br/>before execution</small></div></article><article className="ref-quote-card"><p>“A reliable process, careful decisions and a final product built for real use — not just presentation.”</p><div><span>Q</span><small>Quality<br/>in every step</small></div></article><div className="ref-round-arrows"><button aria-label="Previous">←</button><button aria-label="Next">→</button></div></div>
+      <section className="ref-section ref-line-section home-commitments" aria-labelledby="commitments-title">
+        <div className="ref-shell">
+          <div className="ref-section-heading">
+            <div><p className="ref-kicker with-line">OUR STANDARD</p><h2 id="commitments-title">Clear expectations.<br/>At every step.</h2></div>
+            <div className="ref-heading-side"><p>Agree on the details that matter before execution, and keep decisions clear through delivery.</p></div>
+          </div>
+          <div className="home-commitment-grid">
+            {commitments.map(([title, text], index) => <article key={title}><span className="home-section-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>)}
+          </div>
+        </div>
       </section>
 
-      <section className="ref-cta ref-line-section" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Ready to turn your idea into reality?</h2><p>Start with the idea. We&apos;ll help define the first line.</p></div><Link className="ref-button light" href="/start" prefetch>Start Your Line <span>→</span></Link></div></section>
+      <section className="ref-section ref-line-section home-faq" aria-labelledby="home-faq-title">
+        <div className="ref-shell home-faq-grid">
+          <div className="home-faq-intro"><p className="ref-kicker with-line">BEFORE WE START</p><h2 id="home-faq-title">A few clear answers.</h2><p>The essentials to help you take the first step.</p><Link className="ref-button ghost small" href="/faq" prefetch>View all questions <span>→</span></Link></div>
+          <div className="home-faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
+        </div>
+      </section>
+
+      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and prepare a clear brief you can copy or share.</p><p className="home-start-note">Your brief stays on your device until you choose to share it.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/start" prefetch>Prepare your project brief <span>→</span></Link><Link className="home-start-help" href="/services" prefetch>Find the right service <span>→</span></Link></div></div></section>
     </main></Localized>
   );
 }

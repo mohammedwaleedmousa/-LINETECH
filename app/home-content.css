@@ -1,0 +1,38 @@
+/* Homepage content only; shared navigation and other routes keep their styles. */
+.ref-home .home-project-card{display:flex;flex-direction:column;min-height:0;background:linear-gradient(155deg,#0d1520,#070b10 70%)}
+.ref-home .home-project-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:108px;padding:24px;border-bottom:1px solid #202a35;background:radial-gradient(ellipse at 85% 0,rgba(56,130,246,.13),transparent 70%)}
+.ref-home .home-project-heading .ref-tag{margin:0;max-width:75%;line-height:1.6}
+.ref-home .home-project-number{font-size:34px;font-weight:500;color:#526980;line-height:1;font-variant-numeric:tabular-nums}
+.ref-home .home-project-card .ref-project-copy{display:flex;flex:1;flex-direction:column;padding:26px 24px}
+.ref-home .home-project-card h3{font-size:24px;line-height:1.4;margin:0 0 14px}
+.ref-home .home-project-card .ref-project-copy>p{font-size:14px;line-height:1.85;min-height:0;margin:0 0 24px}
+.ref-home .home-project-card .ref-project-copy>.home-feature-label{font-size:11px;letter-spacing:.06em;color:#c6d0db;margin:0 0 12px;line-height:1.5}
+.ref-home .home-project-features{list-style:none;padding:0;margin:0 0 26px}
+.ref-home .home-project-features li{display:flex;align-items:baseline;gap:10px;margin:0 0 10px;color:#a8b5c4;font-size:13px;line-height:1.7}
+.ref-home .home-project-features li::before{content:"";flex-shrink:0;width:5px;height:5px;background:#3882f6;border-radius:50%}
+.ref-home .home-project-card .ref-project-copy>a{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:auto;min-height:44px;padding-top:16px;border-top:1px solid #23303e;color:#dae7f5;font-size:13px}
+.ref-home .home-commitment-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+.ref-home .home-commitment-grid article{padding:26px 22px;background:#090e15;border:1px solid #202a35;border-radius:8px}
+.ref-home .home-section-number{display:block;margin-bottom:28px;font-size:12px;color:#74adf8}
+.ref-home .home-commitment-grid h3{font-size:18px;line-height:1.5;margin:0 0 12px}
+.ref-home .home-commitment-grid p{color:#a2adba;font-size:14px;line-height:1.85;margin:0}
+.ref-home .home-faq-grid{display:grid;grid-template-columns:1fr 1.6fr;gap:64px;align-items:start}
+.ref-home .home-faq-intro h2{font-size:clamp(28px,3.4vw,42px);line-height:1.3;margin:16px 0}
+.ref-home .home-faq-intro>p:not(.ref-kicker){color:#a2adba;line-height:1.8;margin:0 0 24px}
+.ref-home .home-faq-list{border-top:1px solid #263241}
+.ref-home .home-faq-list details{border-bottom:1px solid #263241}
+.ref-home .home-faq-list summary{display:flex;align-items:center;justify-content:space-between;gap:20px;cursor:pointer;list-style:none;padding:24px 0;min-height:48px;font-size:16px;line-height:1.6;font-weight:500}
+.ref-home .home-faq-list summary::-webkit-details-marker{display:none}
+.ref-home .home-faq-list summary>span{font-size:24px;color:#7caeea;font-weight:400;flex-shrink:0}
+.ref-home .home-faq-list details[open] summary>span{transform:rotate(45deg)}
+.ref-home .home-faq-list details>p{margin:0;padding:0 0 24px;color:#a2adba;font-size:14px;line-height:1.9;max-width:65ch}
+.ref-home .home-start .home-start-note{font-size:12px;line-height:1.8;color:#91a1b4;margin-top:10px}
+.ref-home .home-start-actions{display:flex;flex-direction:column;align-items:flex-start;gap:12px;flex-shrink:0}
+.ref-home .home-start-help{display:inline-flex;align-items:center;gap:12px;min-height:44px;font-size:13px;color:#afc4dd}
+.ref-home .home-faq-list summary:focus-visible,
+.ref-home .home-project-card a:focus-visible,
+.ref-home .home-start a:focus-visible{outline:2px solid #74adf8;outline-offset:5px;border-radius:4px}
+html[dir="rtl"] .ref-home .home-feature-label{letter-spacing:0}
+@media(max-width:1000px){.ref-home .home-commitment-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.ref-home .home-faq-grid{gap:32px}}
+@media(max-width:700px){.ref-home .home-faq-grid{grid-template-columns:1fr;gap:28px}.ref-home .home-start .ref-cta-inner{flex-direction:column;align-items:flex-start;gap:24px}.ref-home .home-project-heading{min-height:90px}.ref-home .home-start-actions{width:100%}.ref-home .home-start-actions .ref-button{max-width:100%;white-space:normal;height:auto;min-height:46px;padding-block:12px}}
+@media(max-width:480px){.ref-home .home-commitment-grid{grid-template-columns:1fr}.ref-home .home-project-card .ref-project-copy{padding:24px 20px}.ref-home .home-commitment-grid article{padding:24px 20px}.ref-home .home-section-number{margin-bottom:18px}}
