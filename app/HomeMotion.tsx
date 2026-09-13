@@ -8,6 +8,7 @@ const REVEAL_SELECTORS = [
   ".ref-about-copy",
   ".ref-about-art",
   ".ref-about-lockup",
+  ".home-why-intro",
   ".process-center-head",
   ".home-faq-intro",
   ".ref-cta-inner",
@@ -16,6 +17,7 @@ const REVEAL_SELECTORS = [
 const STAGGER_GROUPS = [
   ".ref-service-grid .ref-service-card",
   ".ref-project-grid .home-project-card",
+  ".home-why-grid > article",
   ".process-center-grid .process-center-card",
   ".home-commitment-grid > article",
   ".home-faq-list > details",
