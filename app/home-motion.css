@@ -1,0 +1,163 @@
+/* LINETECH home motion — subtle, fast and respectful of reduced-motion preferences */
+.ref-home .home-motion-hero,
+.ref-home .home-motion-reveal{
+  opacity:0;
+  transform:translate3d(0,14px,0);
+}
+
+.ref-home.home-motion-mounted .home-motion-hero{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .62s cubic-bezier(.22,.61,.36,1) var(--home-hero-delay,0ms),
+    transform .62s cubic-bezier(.22,.61,.36,1) var(--home-hero-delay,0ms);
+}
+
+.ref-home .home-motion-reveal.is-visible{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .58s cubic-bezier(.22,.61,.36,1) var(--home-motion-delay,0ms),
+    transform .58s cubic-bezier(.22,.61,.36,1) var(--home-motion-delay,0ms);
+}
+
+/* Hero art arrives gently instead of jumping onto the screen. */
+.ref-home .home-line-art svg{
+  opacity:0;
+  transform:translate3d(10px,6px,0) scale(.995);
+  transform-origin:center;
+}
+.ref-home.home-motion-mounted .home-line-art svg{
+  opacity:1;
+  transform:none;
+  transition:opacity .9s ease .12s,transform .9s cubic-bezier(.22,.61,.36,1) .12s;
+}
+
+/* Draw the primary line once on entry. */
+.ref-home.home-motion-mounted .home-line-art path[stroke-width="1.6"]{
+  stroke-dasharray:980;
+  stroke-dashoffset:980;
+  animation:homeLineDraw 1.35s cubic-bezier(.22,.61,.36,1) .22s forwards;
+}
+
+/* Very quiet breathing glow on the origin point. */
+.ref-home.home-motion-mounted .home-line-art circle[fill="url(#home-line-origin)"]{
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:homeOriginPulse 5.5s ease-in-out 1.45s infinite alternate;
+}
+
+/* Cards feel responsive without floating around continuously. */
+.ref-home .ref-service-card,
+.ref-home .home-project-card,
+.ref-home .home-commitment-grid > article,
+.ref-home .home-faq-list > details{
+  transition:
+    transform .2s ease,
+    border-color .2s ease,
+    background-color .2s ease,
+    box-shadow .2s ease;
+}
+
+@media (hover:hover) and (pointer:fine){
+  .ref-home .ref-service-card:hover,
+  .ref-home .home-project-card:hover,
+  .ref-home .home-commitment-grid > article:hover{
+    transform:translateY(-2px);
+  }
+
+  .ref-home .ref-button span,
+  .ref-home .ref-project-copy a span,
+  .ref-home .home-start-help span{
+    display:inline-block;
+    transition:transform .18s ease;
+  }
+
+  .ref-home .ref-button:hover span,
+  .ref-home .ref-project-copy a:hover span,
+  .ref-home .home-start-help:hover span{
+    transform:translateX(3px);
+  }
+
+  html[dir="rtl"] .ref-home .ref-button:hover span,
+  html[dir="rtl"] .ref-home .ref-project-copy a:hover span,
+  html[dir="rtl"] .ref-home .home-start-help:hover span{
+    transform:translateX(-3px);
+  }
+}
+
+/* About visual gets a small one-time settle when it enters view. */
+.ref-home .ref-about-art.home-motion-reveal{
+  transform:translate3d(12px,0,0) scale(.992);
+}
+.ref-home .ref-about-art.home-motion-reveal.is-visible{
+  transform:none;
+}
+html[dir="rtl"] .ref-home .ref-about-art.home-motion-reveal{
+  transform:translate3d(-12px,0,0) scale(.992);
+}
+html[dir="rtl"] .ref-home .ref-about-art.home-motion-reveal.is-visible{
+  transform:none;
+}
+
+/* CTA blue lines slide into place only once when the CTA is revealed. */
+.ref-home .home-start .cta-blue-line{
+  opacity:.25;
+  transition:opacity .6s ease,transform .7s cubic-bezier(.22,.61,.36,1);
+}
+.ref-home .home-start:has(.ref-cta-inner.is-visible) .cta-blue-line{
+  opacity:1;
+}
+.ref-home .home-start:has(.ref-cta-inner.is-visible) .cta-blue-line.left{
+  transform:rotate(-42deg) translateX(10px);
+}
+.ref-home .home-start:has(.ref-cta-inner.is-visible) .cta-blue-line.right{
+  transform:rotate(-46deg) translateX(-10px);
+}
+
+@keyframes homeLineDraw{
+  to{stroke-dashoffset:0}
+}
+
+@keyframes homeOriginPulse{
+  from{opacity:.78;transform:scale(.98)}
+  to{opacity:1;transform:scale(1.035)}
+}
+
+@media(max-width:760px){
+  .ref-home .home-motion-hero,
+  .ref-home .home-motion-reveal{
+    transform:translate3d(0,10px,0);
+  }
+
+  .ref-home .ref-about-art.home-motion-reveal,
+  html[dir="rtl"] .ref-home .ref-about-art.home-motion-reveal{
+    transform:translate3d(0,10px,0) scale(.995);
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ref-home .home-motion-hero,
+  .ref-home .home-motion-reveal,
+  .ref-home .home-line-art svg{
+    opacity:1!important;
+    transform:none!important;
+    transition:none!important;
+    animation:none!important;
+  }
+
+  .ref-home .home-line-art path[stroke-width="1.6"],
+  .ref-home .home-line-art circle[fill="url(#home-line-origin)"],
+  .ref-home .ref-service-card,
+  .ref-home .home-project-card,
+  .ref-home .home-commitment-grid > article,
+  .ref-home .home-faq-list > details,
+  .ref-home .ref-button span,
+  .ref-home .ref-project-copy a span,
+  .ref-home .home-start-help span,
+  .ref-home .home-start .cta-blue-line{
+    animation:none!important;
+    transition:none!important;
+    transform:none!important;
+  }
+}
