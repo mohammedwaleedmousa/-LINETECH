@@ -1,6 +1,7 @@
 "use client";
 
 import Localized from "./Localized";
+import HomeHeroArt from "./HomeHeroArt";
 import Link from "next/link";
 import "./home-content.css";
 
@@ -41,7 +42,8 @@ const faqs = [
 export default function Home() {
   return (
     <Localized><main className="ref-home" id="top">
-      <section className="ref-hero ref-line-section">
+      <section className="ref-hero ref-line-section home-line-hero">
+        <HomeHeroArt/>
         <div className="ref-shell ref-hero-grid">
           <div className="ref-hero-copy">
             <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
@@ -54,10 +56,6 @@ export default function Home() {
               <div><strong>{String(process.length).padStart(2, "0")}</strong><span>Clear Steps</span></div>
               <div><strong>{String(projects.length).padStart(2, "0")}</strong><span>Selected Projects</span></div>
             </div>
-          </div>
-          <div className="ref-hero-art" aria-hidden="true">
-            <div className="ref-building b1"/><div className="ref-building b2"/><div className="ref-building b3"/><div className="ref-building b4"/>
-            <div className="ref-light-line"/><div className="ref-diagonal"/>
           </div>
         </div>
       </section>
