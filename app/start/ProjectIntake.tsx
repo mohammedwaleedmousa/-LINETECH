@@ -1,5 +1,7 @@
 "use client";
 
+import Localized, { useTranslation } from "../Localized";
+
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
@@ -12,6 +14,7 @@ const progressSteps = [{ n: 1, label: "About you" }, { n: 2, label: "Project" },
 
 export default function ProjectIntake() {
   const [step, setStep] = useState(1);
+  const t = useTranslation();
   const [copied, setCopied] = useState(false);
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -37,36 +40,36 @@ export default function ProjectIntake() {
   const canStep2 = Boolean(stage && goal && idea.trim());
 
   const brief = useMemo(() => [
-    "LINETECH — START YOUR LINE",
+    t("LINETECH — START YOUR LINE"),
     "",
-    "ABOUT",
-    `Name: ${name || "—"}`,
-    `Company / Brand: ${company || "—"}`,
-    `Contact: ${contact || "—"}`,
-    `Preferred contact: ${preferredContact}`,
-    `Project type: ${service || "—"}`,
+    t("ABOUT"),
+    `${t("Name")}：${name || "—"}`,
+    `${t("Company / Brand")}：${company || "—"}`,
+    `${t("Contact")}：${contact || "—"}`,
+    `${t("Preferred contact")}：${t(preferredContact)}`,
+    `${t("Project type")}：${t(service || "—")}`,
     "",
-    "PROJECT",
-    `Stage: ${stage || "—"}`,
-    `Main goal: ${goal || "—"}`,
-    `Audience / user: ${audience || "—"}`,
+    t("PROJECT"),
+    `${t("Stage")}：${t(stage || "—")}`,
+    `${t("Main goal")}：${t(goal || "—")}`,
+    `${t("Audience / user")}：${audience || "—"}`,
     "",
-    "WHAT TO BUILD",
+    t("WHAT TO BUILD"),
     idea || "—",
     "",
-    "MUST-HAVE FEATURES",
+    t("MUST-HAVE FEATURES"),
     features || "—",
     "",
-    "REFERENCES / LINKS",
+    t("REFERENCES / LINKS"),
     references || "—",
     "",
-    "SCOPE",
-    `Budget: ${budget}`,
-    `Timing: ${timing}`,
+    t("SCOPE"),
+    `${t("Budget")}：${t(budget)}`,
+    `${t("Timing")}：${t(timing)}`,
     "",
-    "OTHER NOTES",
+    t("OTHER NOTES"),
     notes || "—",
-  ].join("\n"), [name, company, contact, preferredContact, service, stage, goal, audience, idea, features, references, budget, timing, notes]);
+  ].join("\n"), [t, name, company, contact, preferredContact, service, stage, goal, audience, idea, features, references, budget, timing, notes]);
 
   function changeStep(next: number) {
     setStep(next);
@@ -83,13 +86,13 @@ export default function ProjectIntake() {
 
   async function shareBrief() {
     if (navigator.share) {
-      try { await navigator.share({ title: "LINETECH Project Brief", text: brief }); } catch {}
+      try { await navigator.share({ title: t("LINETECH Project Brief"), text: brief }); } catch {}
       return;
     }
     await copyBrief();
   }
 
-  return <div className="project-brief-form project-intake">
+  return <Localized><div className="project-brief-form project-intake">
     <p className="frontend-only-note">This brief stays on your device. Nothing is sent or stored by this form.</p>
 
     <div className="intake-progress" aria-label={`Step ${step} of 3`}>
@@ -132,5 +135,5 @@ export default function ProjectIntake() {
       <div className="brief-preview"><div><p className="eyebrow">READY BRIEF</p><h3>Your first line is ready.</h3><p>Review, copy or share this brief when you are ready to continue with LINETECH.</p></div><div className="brief-actions"><button className="button button-light" type="button" onClick={copyBrief}>{copied?"Copied ✓":"Copy project brief"} <span>↗</span></button><button className="brief-share" type="button" onClick={shareBrief}>Share brief <span>→</span></button><Link className="brief-share" href="/thank-you" prefetch>Preview next step <span>→</span></Link></div></div>
       <div className="intake-nav intake-nav-bottom"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button></div>
     </section>}
-  </div>;
+  </div></Localized>;
 }

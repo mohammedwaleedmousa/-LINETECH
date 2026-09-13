@@ -1,4 +1,4 @@
-import ChatWorkspace from "./ChatWorkspace";
+import PageContent from "./PageContent";
 
 export const metadata = {
   title: "Chat",
@@ -6,8 +6,6 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function ChatPage(){
-  return <main className="chat-page">
-    <ChatWorkspace />
-  </main>;
+export default function Page() {
+  return <PageContent />;
 }

@@ -1,5 +1,7 @@
 "use client";
 
+import Localized from "../Localized";
+
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 
@@ -20,7 +22,7 @@ export default function LoginForm(){
     );
   }
 
-  return <div className="account-access">
+  return <Localized><div className="account-access">
     <div className="account-switch" role="tablist" aria-label="Choose account action">
       <button type="button" role="tab" aria-selected={mode==="login"} className={mode==="login"?"active":""} onClick={()=>switchMode("login")}>Sign in</button>
       <button type="button" role="tab" aria-selected={mode==="signup"} className={mode==="signup"?"active":""} onClick={()=>switchMode("signup")}>Create account</button>
@@ -52,5 +54,5 @@ export default function LoginForm(){
       <p className="login-ui-note">Frontend preview only — account data and credentials are not sent or stored yet.</p>
       {message&&<p className="login-feedback" role="status">{message}</p>}
     </form>
-  </div>;
+  </div></Localized>;
 }

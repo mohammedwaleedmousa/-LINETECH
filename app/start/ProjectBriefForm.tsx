@@ -1,5 +1,7 @@
 "use client";
 
+import Localized, { useTranslation } from "../Localized";
+
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 
@@ -12,6 +14,7 @@ const serviceOptions = [
 ];
 
 export default function ProjectBriefForm() {
+  const t = useTranslation();
   const [copied, setCopied] = useState(false);
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
@@ -30,23 +33,23 @@ export default function ProjectBriefForm() {
   }, []);
 
   const brief = useMemo(() => [
-    "LINETECH — START YOUR LINE",
+    t("LINETECH — START YOUR LINE"),
     "",
-    `Name: ${name || "—"}`,
-    `Company / Brand: ${company || "—"}`,
-    `Contact: ${contact || "—"}`,
-    `Project type: ${service || "—"}`,
-    `Budget status: ${budget}`,
-    `Target timing: ${timing}`,
+    `${t("Name")}：${name || "—"}`,
+    `${t("Company / Brand")}：${company || "—"}`,
+    `${t("Contact")}：${contact || "—"}`,
+    `${t("Project type")}：${t(service || "—")}`,
+    `${t("Budget status")}：${t(budget)}`,
+    `${t("Target timing")}：${t(timing)}`,
     "",
-    "IDEA",
+    t("IDEA"),
     idea || "—",
     "",
-    "AUDIENCE / USER",
+    t("AUDIENCE / USER"),
     audience || "—",
     "",
-    "Generated from the LINETECH project intake.",
-  ].join("\n"), [name, company, contact, service, idea, audience, budget, timing]);
+    t("Generated from the LINETECH project intake."),
+  ].join("\n"), [t, name, company, contact, service, idea, audience, budget, timing]);
 
   async function copyBrief(event: FormEvent) {
     event.preventDefault();
@@ -69,12 +72,12 @@ export default function ProjectBriefForm() {
       return;
     }
     try {
-      await navigator.share({ title: "LINETECH Project Brief", text: brief });
+      await navigator.share({ title: t("LINETECH Project Brief"), text: brief });
     } catch {}
   }
 
   return (
-    <form className="project-brief-form" onSubmit={copyBrief}>
+    <Localized><form className="project-brief-form" onSubmit={copyBrief}>
       <p className="frontend-only-note">This brief stays on your device. Nothing is sent or stored by this form; you choose when to copy or share it.</p>
 
       <div className="form-row two-col">
@@ -103,6 +106,6 @@ export default function ProjectBriefForm() {
           <Link className="brief-share" href="/thank-you" prefetch>Preview next step <span>→</span></Link>
         </div>
       </div>
-    </form>
+    </form></Localized>
   );
 }

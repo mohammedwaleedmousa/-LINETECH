@@ -92,8 +92,8 @@ html[dir="rtl"] .ref-project-body p{
 html[dir="rtl"] .ref-brand,
 html[dir="rtl"] .ref-mark,
 html[dir="rtl"] .login-signals,
-html[dir="rtl"] .chat-message-meta,
-html[dir="rtl"] .ref-footer-bottom{direction:ltr}
+html[dir="rtl"] .chat-message-meta{direction:ltr}
+html[dir="rtl"] .ref-footer-bottom{direction:rtl}
 
 html[dir="rtl"] .ref-brand strong,
 html[dir="rtl"] .project-detail-stack span,
@@ -149,7 +149,7 @@ html[dir="rtl"] .ref-project-copy>a span,
 html[dir="rtl"] .brief-share span,
 html[dir="rtl"] .login-card-foot a,
 html[dir="rtl"] .mobile-start-line span,
-html[dir="rtl"] .mobile-login span{display:inline-block;transform:scaleX(-1)}
+html[dir="rtl"] .mobile-login span{display:inline-block;transform:none}
 
 html[dir="rtl"] .ref-btn,
 html[dir="rtl"] .ref-button,
@@ -242,3 +242,5 @@ html[dir="rtl"] .login-copy>p{
   html[dir="rtl"] h3{line-height:1.12!important}
 }
 @media(min-width:901px){.mobile-language-toggle{display:none!important}}
+
+html[dir="rtl"] .ref-brand strong{letter-spacing:0;font-family:inherit}

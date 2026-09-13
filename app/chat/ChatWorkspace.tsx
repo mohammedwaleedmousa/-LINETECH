@@ -1,5 +1,7 @@
 "use client";
 
+import Localized from "../Localized";
+
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 
 type ChatMessage = {
@@ -114,7 +116,7 @@ function VoiceMessage({src,duration}:{src:string;duration?:number}){
 
   const progress = total > 0 ? Math.min(100,(current/total)*100) : 0;
 
-  return <div className="chat-voice-message">
+  return <Localized><div className="chat-voice-message">
     <audio
       ref={audioRef}
       src={src}
@@ -133,7 +135,7 @@ function VoiceMessage({src,duration}:{src:string;duration?:number}){
       <span className="voice-progress" style={{width:`${progress}%`}}/>
     </div>
     <div className="voice-duration"><Icon name="mic" size={13}/><span>{formatDuration(playing?current:total || duration)}</span></div>
-  </div>;
+  </div></Localized>;
 }
 
 export default function ChatWorkspace(){
@@ -398,7 +400,7 @@ export default function ChatWorkspace(){
     if(documents.length) void addDocuments(documents);
   }
 
-  return <section className="chat-shell" aria-label="LINETECH client chat">
+  return <Localized><section className="chat-shell" aria-label="LINETECH client chat">
     <aside className="chat-sidebar">
       <div className="chat-sidebar-head">
         <div><span className="chat-eyebrow">LINETECH</span><h1>Chats</h1></div>
@@ -410,7 +412,7 @@ export default function ChatWorkspace(){
       <div className="chat-conversations">
         <button className="chat-conversation active" type="button">
           <span className="chat-avatar"><i/><b/></span>
-          <span className="chat-conversation-copy"><strong>LINETECH Project Team</strong><small>{lastMessage?.sender === "client" ? "You: " : ""}{previewText(lastMessage)}</small></span>
+          <span className="chat-conversation-copy"><strong>LINETECH Project Team</strong><small>{lastMessage?.sender === "client" ? "You: " : ""}<span data-no-translate={Boolean(lastMessage && !lastMessage.deleted && (lastMessage.sender === "client" && lastMessage.kind === "text" || lastMessage.kind === "document" && lastMessage.fileName))}>{previewText(lastMessage)}</span></small></span>
           <span className="chat-conversation-time">{lastMessage?.time || ""}</span>
         </button>
       </div>
@@ -440,12 +442,12 @@ export default function ChatWorkspace(){
             </div>}
 
             {message.deleted ? <div className="chat-deleted-message"><Icon name="trash" size={15}/><span>This message was deleted for everyone.</span></div> : <>
-              {message.kind === "text" && <p>{message.text}</p>}
-              {message.kind === "image" && message.src && <figure className="chat-image-message"><img src={message.src} alt={message.fileName || "Shared image"}/>{message.fileName&&<figcaption><Icon name="image" size={13}/><span>{message.fileName}</span></figcaption>}</figure>}
+              {message.kind === "text" && <p data-no-translate={message.sender === "client"}>{message.text}</p>}
+              {message.kind === "image" && message.src && <figure className="chat-image-message"><img src={message.src} alt="Shared image"/>{message.fileName&&<figcaption><Icon name="image" size={13}/><span data-no-translate>{message.fileName}</span></figcaption>}</figure>}
               {message.kind === "audio" && message.src && <VoiceMessage src={message.src} duration={message.duration}/>} 
               {message.kind === "document" && message.src && <div className="chat-document-message">
                 <span className="chat-document-icon"><Icon name="document" size={22}/></span>
-                <div><strong>{message.fileName || "Document"}</strong><small>{formatBytes(message.fileSize)}{message.fileType?` · ${message.fileType.split("/").pop()?.toUpperCase()}`:""}</small></div>
+                <div><strong data-no-translate={Boolean(message.fileName)}>{message.fileName || "Document"}</strong><small>{formatBytes(message.fileSize)}</small></div>
                 <a href={message.src} download={message.fileName || "document"} aria-label="Download document"><Icon name="download" size={17}/></a>
               </div>}
             </>}
@@ -458,7 +460,7 @@ export default function ChatWorkspace(){
 
       <footer className="chat-composer-wrap">
         {notice && <p className="chat-notice" role="status">{notice}</p>}
-        {editingMessage && <div className="chat-editing-bar"><span><Icon name="edit" size={15}/></span><div><strong>Editing message</strong><small>{editingMessage.text}</small></div><button type="button" onClick={cancelEdit} aria-label="Cancel editing"><Icon name="close" size={17}/></button></div>}
+        {editingMessage && <div className="chat-editing-bar"><span><Icon name="edit" size={15}/></span><div><strong>Editing message</strong><small data-no-translate>{editingMessage.text}</small></div><button type="button" onClick={cancelEdit} aria-label="Cancel editing"><Icon name="close" size={17}/></button></div>}
 
         {attachmentsOpen && !recording && <div className="chat-attachment-menu">
           <button type="button" onClick={()=>imageInputRef.current?.click()}><span className="attachment-icon image"><Icon name="image" size={20}/></span><div><strong>Photos</strong><small>Upload up to 4 images</small></div></button>
@@ -479,5 +481,5 @@ export default function ChatWorkspace(){
         </form>}
       </footer>
     </div>
-  </section>;
+  </section></Localized>;
 }

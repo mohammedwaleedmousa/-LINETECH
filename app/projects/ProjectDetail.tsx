@@ -1,3 +1,6 @@
+"use client";
+
+import Localized from "../Localized";
 import Link from "next/link";
 
 type Item = [string, string];
@@ -16,7 +19,7 @@ type ProjectDetailProps = {
 };
 
 export default function ProjectDetail({ className, tag, title, lead, summary, challenge, approach, built, stack, visualWords }: ProjectDetailProps){
-  return <main className={`ref-page project-detail-page ${className}`}>
+  return <Localized><main className={`ref-page project-detail-page ${className}`}>
     <section className="project-detail-hero">
       <div className="ref-shell project-detail-hero-grid">
         <div className="project-detail-hero-copy">
@@ -61,5 +64,5 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
     </section>
 
     <section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">YOUR NEXT PROJECT</p><h2>Have a product that needs a clearer line?</h2><p>Start with the problem. We will help shape the right product.</p></div><Link className="ref-btn primary" href="/start" prefetch>Start Your Line ↗</Link></div></section>
-  </main>;
+  </main></Localized>;
 }
