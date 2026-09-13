@@ -15,6 +15,7 @@ import "./final-qa.css";
 import "./hero-screen.css";
 import "./scroll-fix.css";
 import "./final-lock.css";
+import "./hero-variants.css";
 
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
 
