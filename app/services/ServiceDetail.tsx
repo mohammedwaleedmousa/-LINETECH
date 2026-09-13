@@ -23,7 +23,7 @@ export default function ServiceDetail({
   title,
   lead,
   serviceParam,
-  visualWords,
+  visualWords: _visualWords,
   deliverables,
   fits,
   process,
@@ -44,11 +44,7 @@ export default function ServiceDetail({
               <Link className="ref-btn ghost" href="/projects" prefetch>View our work</Link>
             </div>
           </div>
-          <div className="service-detail-visual" aria-hidden="true">
-            <span>LINETECH / SERVICE</span>
-            <div>{visualWords.map((word) => <strong key={word}>{word}</strong>)}</div>
-            <i/>
-          </div>
+          <div className="service-detail-visual" aria-hidden="true"><i/></div>
         </div>
       </section>
 
