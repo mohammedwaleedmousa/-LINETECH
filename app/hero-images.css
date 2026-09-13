@@ -1,5 +1,4 @@
-/* LINETECH photographic hero backgrounds — each route uses a distinct image inspired by the approved reference */
-
+/* LINETECH route-specific photographic hero backgrounds */
 .ref-home .ref-hero,
 .page-services .ref-hero,
 .page-projects .ref-hero,
@@ -9,15 +8,65 @@
   isolation:isolate;
   overflow:hidden!important;
   background-color:#030507!important;
+  background-image:
+    linear-gradient(90deg,rgba(2,4,7,.99) 0%,rgba(2,4,7,.94) 27%,rgba(2,4,7,.62) 48%,rgba(2,4,7,.20) 73%,rgba(2,4,7,.08) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.36)),
+    var(--hero-image)!important;
   background-repeat:no-repeat!important;
   background-size:cover!important;
   background-position:center center!important;
 }
-
-/* Home — architectural light line */
-.ref-home .ref-hero{
-  background-image:
-    linear-gradient(90deg,rgba(2,4,7,.98) 0%,rgba(2,4,7,.92) 27%,rgba(2,4,7,.56) 48%,rgba(2,4,7,.15) 74%,rgba(2,4,7,.08) 100%),
-    linear-gradient(180deg,rgba(0,0,0,.06),rgba(0,0,0,.34)),
-    url("data:image/webp;base64,UklGRlRVAA...TRUNCATED_FOR_BREVITY...")!important;
+.ref-home .ref-hero>.ref-shell,
+.page-services .ref-hero>.ref-shell,
+.page-projects .ref-hero>.ref-shell,
+.page-about .ref-hero>.ref-shell,
+.page-contact .ref-hero>.ref-shell{position:relative;z-index:2}
+.page-services .ref-visual,
+.page-projects .ref-visual,
+.page-about .ref-visual,
+.page-contact .ref-visual{background:transparent!important;border-left:0!important}
+.page-services .ref-block,.page-projects .ref-block,.page-about .ref-block,.page-contact .ref-block,
+.page-services .ref-glow,.page-projects .ref-glow,.page-about .ref-glow,.page-contact .ref-glow{display:none!important}
+.page-services .ref-visual::before,.page-projects .ref-visual::before,.page-about .ref-visual::before,.page-contact .ref-visual::before{opacity:.12!important}
+.ref-home .ref-hero-art{background:transparent!important}
+.ref-home .ref-hero-art .ref-building,
+.ref-home .ref-hero-art .ref-light-line,
+.ref-home .ref-hero-art .ref-diagonal{display:none!important}
+.ref-home .ref-hero-copy,
+.page-services .ref-hero-copy,
+.page-projects .ref-hero-copy,
+.page-about .ref-hero-copy,
+.page-contact .ref-hero-copy{position:relative;z-index:3;text-shadow:0 2px 26px rgba(0,0,0,.5)}
+.ref-home .ref-art-words,
+.page-services .ref-visual-label,
+.page-projects .ref-visual-label,
+.page-about .ref-visual-label,
+.page-contact .ref-visual-label{text-shadow:0 2px 18px rgba(0,0,0,.78)}
+.ref-home .ref-hero::after,
+.page-services .ref-hero::after,
+.page-projects .ref-hero::after,
+.page-about .ref-hero::after,
+.page-contact .ref-hero::after{
+  content:"";position:absolute;z-index:1;right:7%;top:8%;width:1px;height:58%;
+  background:linear-gradient(180deg,transparent,rgba(255,255,255,.94) 24%,rgba(56,130,246,.9) 72%,transparent);
+  box-shadow:0 0 20px rgba(56,130,246,.34);opacity:.55;pointer-events:none
+}
+@media(max-width:900px){
+  .ref-home .ref-hero,.page-services .ref-hero,.page-projects .ref-hero,.page-about .ref-hero,.page-contact .ref-hero{
+    background-position:64% center!important;
+    background-image:
+      linear-gradient(90deg,rgba(2,4,7,.99) 0%,rgba(2,4,7,.94) 52%,rgba(2,4,7,.46) 100%),
+      linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.44)),
+      var(--hero-image)!important
+  }
+  .page-services .ref-visual,.page-projects .ref-visual,.page-about .ref-visual,.page-contact .ref-visual{
+    min-height:180px!important;height:26vh!important;border-top:1px solid rgba(255,255,255,.08)!important
+  }
+  .ref-home .ref-hero::after,.page-services .ref-hero::after,.page-projects .ref-hero::after,.page-about .ref-hero::after,.page-contact .ref-hero::after{
+    right:12%;top:46%;height:36%;opacity:.34
+  }
+}
+@media(max-width:620px){
+  .ref-home .ref-hero,.page-services .ref-hero,.page-projects .ref-hero,.page-about .ref-hero,.page-contact .ref-hero{background-position:70% center!important}
+  .ref-home .ref-art-words,.page-services .ref-visual-label,.page-projects .ref-visual-label,.page-about .ref-visual-label,.page-contact .ref-visual-label{opacity:.58;font-size:8px!important}
 }
