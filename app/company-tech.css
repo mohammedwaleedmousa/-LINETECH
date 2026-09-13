@@ -1,0 +1,42 @@
+/* LINETECH — company-first technology presentation */
+.company-home .ref-hero-copy{max-width:760px}
+.company-home .ref-hero-copy h1{max-width:760px;text-wrap:balance}
+.company-home .ref-lead{max-width:680px}
+.company-home .company-system-art{opacity:.96}
+
+.company-solution-card{position:relative;overflow:hidden}
+.company-solution-card:before{content:"";position:absolute;inset:0 auto 0 0;width:1px;background:linear-gradient(180deg,transparent,rgba(56,130,246,.58),transparent);opacity:.5}
+.company-solution-card h3{text-wrap:balance}
+
+.company-process{border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.06)}
+.company-process .process-center-head h2{max-width:860px;text-wrap:balance}
+
+.tech-foundation-section{position:relative;overflow:hidden;background:
+  radial-gradient(circle at 78% 45%,rgba(56,130,246,.12),transparent 34%),
+  linear-gradient(180deg,rgba(255,255,255,.015),transparent 55%)}
+.tech-foundation-section:after{content:"";position:absolute;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(90deg,transparent,#000 30%,#000 100%)}
+.tech-foundation-grid{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(440px,1.1fr);gap:clamp(48px,7vw,110px);align-items:center}
+.tech-foundation-copy h2{font-size:clamp(34px,4.2vw,64px);line-height:1.02;letter-spacing:-.045em;margin:15px 0 22px;max-width:720px;text-wrap:balance}
+.tech-foundation-copy>p:last-child{max-width:520px;color:#98a3ad;line-height:1.8}
+.tech-stack-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.12);border-left:1px solid rgba(255,255,255,.08)}
+.tech-stack-item{min-height:112px;padding:24px;display:flex;flex-direction:column;justify-content:space-between;border-right:1px solid rgba(255,255,255,.08);border-bottom:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.018);transition:background .16s ease,border-color .16s ease}
+.tech-stack-item:hover{background:rgba(56,130,246,.055);border-color:rgba(56,130,246,.22)}
+.tech-stack-item span{font-size:10px;letter-spacing:.18em;color:#5f6a74}
+.tech-stack-item strong{font-size:18px;font-weight:560;letter-spacing:-.015em;color:#eef3f8}
+
+.company-about .ref-about-lockup p{display:none}
+.company-about .ref-about-lockup{justify-content:center}
+
+html[dir="rtl"] .company-solution-card:before{left:auto;right:0}
+html[dir="rtl"] .tech-foundation-copy,html[dir="rtl"] .tech-stack-item{text-align:right}
+html[dir="rtl"] .tech-stack-grid{border-left:0;border-right:1px solid rgba(255,255,255,.08)}
+
+@media(max-width:900px){
+  .tech-foundation-grid{grid-template-columns:1fr;gap:34px}
+  .tech-stack-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .tech-foundation-copy h2{font-size:clamp(32px,8vw,48px)}
+}
+@media(max-width:560px){
+  .tech-stack-grid{grid-template-columns:1fr}
+  .tech-stack-item{min-height:88px;padding:18px 20px}
+}
