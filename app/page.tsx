@@ -43,7 +43,6 @@ export default function Home() {
           <div className="ref-hero-art" aria-hidden="true">
             <div className="ref-building b1"/><div className="ref-building b2"/><div className="ref-building b3"/><div className="ref-building b4"/>
             <div className="ref-light-line"/><div className="ref-diagonal"/>
-            <p className="ref-art-words">CLEAN<br/>MINIMAL<br/>TECHNICAL<br/>IMPACTFUL<i/></p>
           </div>
         </div>
       </section>
