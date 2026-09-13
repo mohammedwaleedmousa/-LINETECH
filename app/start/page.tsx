@@ -3,7 +3,7 @@ import ProjectIntake from "./ProjectIntake";
 import "./start.css";
 import "./intake.css";
 
-export const metadata={title:"Contact",description:"Start a project with LINETECH and turn your idea into a clear digital product brief."};
+export const metadata={title:"Start Your Line",description:"Start a project with LINETECH and turn your idea into a clear digital product brief."};
 
 export default function StartPage(){return <main className="ref-page page-contact">
 <section className="ref-hero"><div className="ref-shell ref-hero-grid"><div className="ref-hero-copy"><p className="ref-kicker">START YOUR LINE</p><h1>Tell us what you want to build.</h1><p>Start with the idea — even if it is still rough. We will use the brief to turn it into a clear first line.</p><div className="ref-hero-actions"><a className="ref-btn primary" href="#brief">Start the brief ↘</a><Link className="ref-btn ghost" href="/services" prefetch>View services</Link></div></div><div className="ref-visual" aria-hidden="true"><div className="ref-block a"/><div className="ref-block b"/><div className="ref-block c"/><div className="ref-glow"/><div className="ref-visual-label">IDEA<br/>DEFINE<br/>NEXT STEP<br/>BUILD</div></div></div></section>
