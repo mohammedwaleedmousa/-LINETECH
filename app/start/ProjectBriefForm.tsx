@@ -1,7 +1,6 @@
 "use client";
 
-import { FormEvent, useMemo, useState } from "react";
-import { useSearchParams } from "next/navigation";
+import { FormEvent, useEffect, useMemo, useState } from "react";
 
 const serviceOptions = [
   "Web Development",
@@ -12,19 +11,22 @@ const serviceOptions = [
 ];
 
 export default function ProjectBriefForm() {
-  const searchParams = useSearchParams();
-  const serviceFromUrl = searchParams.get("service") || "";
-  const initialService = serviceOptions.includes(serviceFromUrl) ? serviceFromUrl : "";
-
   const [copied, setCopied] = useState(false);
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [contact, setContact] = useState("");
-  const [service, setService] = useState(initialService);
+  const [service, setService] = useState("");
   const [idea, setIdea] = useState("");
   const [audience, setAudience] = useState("");
   const [budget, setBudget] = useState("Not sure yet");
   const [timing, setTiming] = useState("Flexible");
+
+  useEffect(() => {
+    try {
+      const value = new URLSearchParams(window.location.search).get("service") || "";
+      if (serviceOptions.includes(value)) setService(value);
+    } catch {}
+  }, []);
 
   const brief = useMemo(() => [
     "LINETECH — START YOUR LINE",
