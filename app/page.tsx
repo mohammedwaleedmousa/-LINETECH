@@ -3,6 +3,7 @@
 import Localized from "./Localized";
 import HomeHeroArt from "./HomeHeroArt";
 import HomeWhy from "./HomeWhy";
+import HomeProof from "./HomeProof";
 import Link from "next/link";
 import "./home-content.css";
 
@@ -118,6 +119,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <HomeProof/>
 
       <section className="ref-about ref-line-section" id="about">
         <div className="ref-shell ref-about-grid">
