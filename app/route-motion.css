@@ -1,6 +1,6 @@
 html{scroll-behavior:smooth}
-.route-motion{animation:routeIn .42s cubic-bezier(.22,.61,.36,1) both;will-change:opacity,transform,filter}
-@keyframes routeIn{0%{opacity:0;transform:translateY(10px) scale(.995);filter:blur(4px)}100%{opacity:1;transform:none;filter:none}}
+.route-motion{animation:routeIn .34s cubic-bezier(.22,.61,.36,1) both;will-change:opacity,transform}
+@keyframes routeIn{0%{opacity:.35;transform:translateY(6px)}100%{opacity:1;transform:none}}
 .site-nav .ref-nav-links a{transition:color .22s ease,opacity .22s ease}
 .site-nav .ref-nav-links a:after{transition:transform .28s cubic-bezier(.22,.61,.36,1),opacity .22s ease;transform-origin:center}
 .site-nav .ref-nav-links a:not(.active):after{transform:scaleX(0);opacity:0}
