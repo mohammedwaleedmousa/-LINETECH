@@ -40,8 +40,9 @@ html[dir="rtl"] .contact-brief-section::after{left:auto;right:41.5%}
 }
 
 .contact-brief-intro{
-  position:sticky;
-  top:104px;
+  position:static!important;
+  top:auto!important;
+  align-self:start;
   padding-top:6px;
 }
 .contact-brief-intro::before{
@@ -293,6 +294,34 @@ html[dir="rtl"] .contact-intake-panel .intake-step-head h3{line-height:1.18!impo
   background:linear-gradient(180deg,#070c12,#060a0f)!important;
   box-shadow:0 1px 0 rgba(255,255,255,.018) inset;
 }
+.contact-intake-panel .project-brief-form select{
+  color-scheme:dark;
+  cursor:pointer;
+  appearance:none;
+  -webkit-appearance:none;
+  padding-inline-end:44px!important;
+  background-color:#070c12!important;
+  background-image:
+    linear-gradient(45deg,transparent 50%,#7f98b2 50%),
+    linear-gradient(135deg,#7f98b2 50%,transparent 50%),
+    linear-gradient(180deg,#070c12,#060a0f)!important;
+  background-position:
+    calc(100% - 20px) 50%,
+    calc(100% - 15px) 50%,
+    0 0!important;
+  background-size:5px 5px,5px 5px,100% 100%!important;
+  background-repeat:no-repeat!important;
+}
+html[dir="rtl"] .contact-intake-panel .project-brief-form select{
+  padding-inline-end:14px!important;
+  padding-inline-start:44px!important;
+  background-position:20px 50%,15px 50%,0 0!important;
+}
+.contact-intake-panel .project-brief-form select option{
+  background:#081019;
+  color:#eef4fa;
+  font-size:14px;
+}
 .contact-intake-panel .project-brief-form textarea{min-height:104px}
 .contact-intake-panel .project-brief-form input:hover,
 .contact-intake-panel .project-brief-form textarea:hover,
@@ -301,7 +330,7 @@ html[dir="rtl"] .contact-intake-panel .intake-step-head h3{line-height:1.18!impo
 .contact-intake-panel .project-brief-form textarea:focus,
 .contact-intake-panel .project-brief-form select:focus{
   border-color:#5689bd!important;
-  background:#081019!important;
+  background-color:#081019!important;
   box-shadow:0 0 0 3px rgba(67,130,205,.08),0 0 24px rgba(55,119,195,.035)!important;
 }
 
@@ -320,7 +349,7 @@ html[dir="rtl"] .contact-intake-panel .intake-step-head h3{line-height:1.18!impo
 @media(max-width:900px){
   .contact-brief-section::after{display:none}
   .contact-brief-grid{gap:42px!important}
-  .contact-brief-intro{position:static}
+  .contact-brief-intro{position:static!important;top:auto!important}
   .contact-brief-notes{grid-template-columns:repeat(3,minmax(0,1fr))}
   .contact-brief-notes>div{grid-template-columns:1fr!important;gap:10px!important;align-content:start}
   .contact-brief-notes span{min-height:24px;border-inline-end:0;border-bottom:1px solid #1c2a38}
