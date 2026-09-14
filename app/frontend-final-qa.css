@@ -33,11 +33,11 @@
 
 /* Home background: the supplied Aden photograph is the sole visual reference.
    Keep hero content, typography, dimensions and positioning unchanged. */
-.ref-home .ref-hero.home-line-hero{
+#top.ref-home .ref-hero.home-line-hero{
   background:url('/hero/home-aden.png') center center/cover no-repeat!important;
 }
-.ref-home .ref-hero.home-line-hero::before,
-.ref-home .ref-hero.home-line-hero::after,
-.ref-home .ref-hero.home-line-hero .home-line-art{
+#top.ref-home .ref-hero.home-line-hero::before,
+#top.ref-home .ref-hero.home-line-hero::after,
+#top.ref-home .ref-hero.home-line-hero .home-line-art{
   display:none!important;
 }
