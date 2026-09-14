@@ -37,7 +37,7 @@ const copy = {
     },
     founder: {
       kicker: "FOUNDER",
-      name: "Mohammed Waleed",
+      name: "Eng/ Mohammed Waleed",
       role: "Founder & CEO — LINETECH",
       statementTitle: "Build useful technology. Keep the standard high. Think beyond the next launch.",
       statement: "LINETECH is being built as a long-term technology company: focused on useful products, strong systems and a clear standard for how work should be designed and delivered.",
@@ -86,7 +86,7 @@ const copy = {
     },
     founder: {
       kicker: "المؤسس",
-      name: "محمد وليد",
+      name: "Eng/ محمد وليد",
       role: "المؤسس والرئيس التنفيذي — LINETECH",
       statementTitle: "ابنِ تقنية مفيدة. حافظ على معيار عالٍ. وفكّر أبعد من الإطلاق القادم.",
       statement: "تُبنى LINETECH كشركة تقنية طويلة المدى، تركّز على المنتجات المفيدة والأنظمة القوية ومعيار واضح لكيفية تصميم العمل وتنفيذه.",
