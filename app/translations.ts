@@ -8,6 +8,11 @@ const qaCopy: Record<string, string> = {
   "Your request stays on your device until you choose to share it with LINETECH.": "يبقى طلبك على جهازك حتى تختار مشاركته مع لاين تك.",
   "Start your project request": "ابدأ طلب مشروعك",
   "Complete your project request, receive a reference number, then share it with LINETECH through your chosen contact channel.": "أكمل طلب مشروعك، واحصل على رقم مرجعي، ثم شاركه مع لاين تك عبر قناة التواصل التي تختارها.",
+  "Find Your Service": "اعثر على خدمتك",
+  "How We Work": "كيف نعمل",
+  "Client Workspace": "مساحة العميل",
+  "Guide": "دليل",
+  "Process": "المراحل",
 };
 
 export function translate(value: string, language: Language): string {
