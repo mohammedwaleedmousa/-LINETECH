@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import HomeHeroArt from "../HomeHeroArt";
 import { useLanguage } from "../Localized";
 import styles from "./services-page.module.css";
 import outcomeStyles from "./services-outcome.module.css";
@@ -171,23 +170,25 @@ export default function ServicesPage() {
 
   return (
     <main className={`${styles.page} ref-page page-services`}>
-      <section className={styles.hero}>
-        <div className={styles.neuronField} aria-hidden="true"><HomeHeroArt /></div>
-        <div className={styles.heroShell}>
-          <div className={styles.heroCopy}>
-            <p className={styles.kicker}>{t.hero.kicker}</p>
+      <section className="ltx-hero-v2 ltx-services-hero">
+        <div className="ltx-hero-v2-shell ltx-services-hero-shell">
+          <div className="ltx-services-hero-copy">
+            <p className="ltx-hero-v2-kicker">{t.hero.kicker}</p>
             <h1>{t.hero.title}</h1>
-            <p className={styles.heroLead}>{t.hero.lead}</p>
-            <div className={styles.heroActions}>
-              <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
-              <Link className={styles.secondary} href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
+            <p className="ltx-services-hero-lead">{t.hero.lead}</p>
+            <div className="ltx-hero-v2-actions">
+              <Link className="ltx-hero-v2-btn primary" href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
+              <Link className="ltx-hero-v2-btn" href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
 
-          <div className={styles.heroIndex} aria-label={t.hero.kicker}>
-            {t.hero.index.map((item, index) => (
-              <div key={item}><span>{String(index + 1).padStart(2, "0")}</span><strong>{item}</strong></div>
-            ))}
+          <div>
+            <div className="ltx-services-index" aria-label={t.hero.kicker}>
+              {t.services.items.map((item) => (
+                <Link href={item.href} prefetch key={item.n}><span>{item.n}</span><strong>{item.title}</strong><b aria-hidden="true">→</b></Link>
+              ))}
+            </div>
+            <div className="ltx-services-index-label"><span>{t.services.kicker}</span><span>01 — 04</span></div>
           </div>
         </div>
       </section>
