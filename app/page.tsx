@@ -112,7 +112,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and prepare a clear brief you can copy or share.</p><p className="home-start-note">Your brief stays on your device until you choose to share it.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/start" prefetch>Prepare your project brief <span>→</span></Link><Link className="home-start-help" href="/services" prefetch>Find the right service <span>→</span></Link></div></div></section>
+      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p><p className="home-start-note">Your request stays on your device until you choose to share it with LINETECH.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/start" prefetch>Start your project request <span>→</span></Link><Link className="home-start-help" href="/services" prefetch>Find the right service <span>→</span></Link></div></div></section>
     </main></Localized>
   );
 }
