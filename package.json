@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:localization": "node tests/localization.cjs"
+    "test:localization": "node tests/localization.cjs",
+    "test:routes": "node tests/routes.cjs",
+    "qa": "npm run build && npm run test:localization && npm run test:routes"
   },
   "dependencies": {
     "next": "15.5.2",
