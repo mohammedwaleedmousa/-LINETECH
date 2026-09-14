@@ -1,5 +1,6 @@
-/* LINETECH — illustrated hero backgrounds V3.
-   Background-only layer. Text, buttons, spacing and content remain unchanged. */
+/* LINETECH — illustrated hero backgrounds V4.
+   Drawings are rendered directly as hero background layers so they cannot disappear behind pseudo-elements.
+   Text, buttons, spacing and foreground layout remain untouched. */
 
 .ref-home .ref-hero.home-line-hero,
 .page-services>section:first-child,
@@ -16,11 +17,13 @@
   isolation:isolate;
   overflow:hidden;
   background-color:#020305!important;
+  background-repeat:no-repeat!important;
 }
 
-/* Retire the old generic background drawings so every page gets one clear story. */
+/* Disable previous decorative layers. The real illustration is now part of the hero background itself. */
 .page-about>section:first-child .home-neuron-art,
 .page-services>section:first-child .home-neuron-art,
+.ref-home .home-line-hero .home-line-art,
 .ref-home .home-line-hero .home-neuron-art,
 .service-detail-page .service-detail-neuron-field,
 .page-projects [data-project-field],
@@ -29,290 +32,256 @@
   visibility:hidden!important;
 }
 
-/* Keep the existing foreground untouched and above the new drawings. */
-.ref-home .home-line-hero .ref-shell,
-.page-services>section:first-child .ref-shell,
-.page-projects [data-project-hero] [class*=heroShell],
-.page-about>section:first-child [class*=heroShell],
-.work-page .work-hero .ref-shell,
-.page-contact .contact-hero-shell,
-.finder-page .finder-hero-shell,
-.service-detail-page .service-detail-hero-grid,
-.info-page-hero>.ref-shell{
-  position:relative;
-  z-index:2;
-}
-
-/* Shared cinematic atmosphere behind the illustration. */
 .ref-home .ref-hero.home-line-hero::before,
-.page-services>section:first-child::before,
-.page-projects [data-project-hero]::before,
-.page-about>section:first-child::before,
-.work-page .work-hero::before,
-.page-contact .contact-hero::before,
-.finder-page .finder-hero::before,
-.service-detail-page .service-detail-hero::before,
-.page-faq .info-page-hero::before,
-.page-privacy .info-page-hero::before,
-.page-terms .info-page-hero::before{
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  z-index:0!important;
-  pointer-events:none!important;
-  background:
-    radial-gradient(ellipse 48% 64% at 82% 48%,rgba(56,130,246,.12),transparent 70%),
-    linear-gradient(112deg,#010203 0%,#04080d 55%,#07121d 100%)!important;
-}
-
-/* Shared illustration placement. */
 .ref-home .ref-hero.home-line-hero::after,
+.page-services>section:first-child::before,
 .page-services>section:first-child::after,
+.page-projects [data-project-hero]::before,
 .page-projects [data-project-hero]::after,
+.page-about>section:first-child::before,
 .page-about>section:first-child::after,
+.work-page .work-hero::before,
 .work-page .work-hero::after,
+.page-contact .contact-hero::before,
 .page-contact .contact-hero::after,
+.finder-page .finder-hero::before,
 .finder-page .finder-hero::after,
+.service-detail-page .service-detail-hero::before,
 .service-detail-page .service-detail-hero::after,
+.page-faq .info-page-hero::before,
 .page-faq .info-page-hero::after,
+.page-privacy .info-page-hero::before,
 .page-privacy .info-page-hero::after,
+.page-terms .info-page-hero::before,
 .page-terms .info-page-hero::after{
-  content:""!important;
-  display:block!important;
-  position:absolute!important;
-  z-index:1!important;
-  pointer-events:none!important;
-  width:min(54vw,760px)!important;
-  aspect-ratio:720/520!important;
-  inset-inline-end:1.5%!important;
-  top:50%!important;
-  transform:translateY(-50%)!important;
-  background-repeat:no-repeat!important;
-  background-size:contain!important;
-  background-position:center!important;
-  opacity:.76!important;
-  filter:drop-shadow(0 0 28px rgba(56,130,246,.12))!important;
-  animation:heroIllustrationFloat 12s ease-in-out infinite alternate;
+  display:none!important;
 }
 
-/* HOME — a line becomes a digital product. */
+/* HOME — one line becomes a digital product. */
 .ref-home .ref-hero.home-line-hero{
-  background:
-    radial-gradient(ellipse 45% 55% at 82% 50%,rgba(91,160,245,.14),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(1,3,5,.97) 34%,rgba(2,5,9,.73) 53%,rgba(3,8,13,.18) 72%,rgba(4,10,17,.02) 100%),
+    url('/hero-art/home.svg'),
+    radial-gradient(ellipse 46% 58% at 83% 50%,rgba(69,145,240,.19),transparent 70%),
     linear-gradient(118deg,#010203 0%,#03070b 52%,#07111c 100%)!important;
-}
-.ref-home .ref-hero.home-line-hero::after{
-  background-image:url('/hero-art/home.svg')!important;
-  width:min(58vw,820px)!important;
-  inset-inline-end:-2%!important;
-  opacity:.84!important;
+  background-position:0 0,96% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(58vw,900px) auto,100% 100%,100% 100%!important;
 }
 
-/* SERVICES — four capabilities connected as one system. */
+/* SERVICES — four capability modules connected into one system. */
 .page-services>section:first-child{
-  background:
-    radial-gradient(ellipse 46% 62% at 83% 48%,rgba(65,139,233,.13),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.96) 33%,rgba(3,8,13,.65) 53%,rgba(4,10,17,.12) 73%,transparent 100%),
+    url('/hero-art/services.svg'),
+    radial-gradient(ellipse 48% 62% at 82% 48%,rgba(63,140,237,.18),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 55%,#07121d 100%)!important;
-}
-.page-services>section:first-child::after{
-  background-image:url('/hero-art/services.svg')!important;
-  width:min(53vw,760px)!important;
-  opacity:.80!important;
+  background-position:0 0,96% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(55vw,820px) auto,100% 100%,100% 100%!important;
 }
 
-/* PROJECTS — layered project frames, like a digital gallery. */
+/* PROJECTS — selected project frames floating like a digital gallery. */
 .page-projects [data-project-hero]{
-  background:
-    radial-gradient(ellipse 46% 60% at 78% 48%,rgba(88,154,239,.12),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.95) 31%,rgba(3,8,13,.61) 51%,rgba(4,10,17,.10) 72%,transparent 100%),
+    url('/hero-art/projects.svg'),
+    radial-gradient(ellipse 49% 64% at 80% 49%,rgba(84,154,241,.17),transparent 72%),
     linear-gradient(180deg,#010203 0%,#05090e 58%,#020406 100%)!important;
-}
-.page-projects [data-project-hero]::after{
-  background-image:url('/hero-art/projects.svg')!important;
-  width:min(58vw,840px)!important;
-  inset-inline-end:-3%!important;
-  opacity:.74!important;
+  background-position:0 0,98% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(59vw,900px) auto,100% 100%,100% 100%!important;
 }
 
-/* ABOUT — company growth from origin to a wider horizon. */
+/* ABOUT — a company path expanding from origin toward a wider horizon. */
 .page-about>section:first-child{
-  background:
-    radial-gradient(ellipse 44% 56% at 80% 50%,rgba(65,139,230,.12),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.96) 34%,rgba(3,8,13,.64) 54%,rgba(4,10,17,.11) 74%,transparent 100%),
+    url('/hero-art/about.svg'),
+    radial-gradient(ellipse 47% 60% at 82% 50%,rgba(66,142,235,.17),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 52%,#07101a 100%)!important;
-}
-.page-about>section:first-child::after{
-  background-image:url('/hero-art/about.svg')!important;
-  width:min(54vw,780px)!important;
-  opacity:.74!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(56vw,840px) auto,100% 100%,100% 100%!important;
 }
 
 /* HOW WE WORK — six connected project phases. */
 .work-page .work-hero{
-  background:
-    radial-gradient(ellipse 48% 58% at 80% 50%,rgba(56,130,246,.11),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.96) 34%,rgba(3,8,13,.64) 54%,rgba(4,10,17,.11) 74%,transparent 100%),
+    url('/hero-art/how-we-work.svg'),
+    radial-gradient(ellipse 48% 60% at 82% 50%,rgba(61,139,237,.17),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 56%,#07111b 100%)!important;
-}
-.work-page .work-hero::after{
-  background-image:url('/hero-art/how-we-work.svg')!important;
-  width:min(55vw,800px)!important;
-  opacity:.78!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(56vw,850px) auto,100% 100%,100% 100%!important;
 }
 
-/* START — a project brief becomes a real project. */
+/* START — a brief enters and becomes a project. */
 .page-contact .contact-hero{
-  background:
-    radial-gradient(circle at 82% 50%,rgba(112,176,253,.13),rgba(56,130,246,.04) 25%,transparent 55%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.97) 34%,rgba(3,8,13,.66) 54%,rgba(4,10,17,.12) 74%,transparent 100%),
+    url('/hero-art/start.svg'),
+    radial-gradient(circle at 82% 50%,rgba(84,157,246,.19),rgba(56,130,246,.035) 30%,transparent 60%),
     linear-gradient(110deg,#010203 0%,#04080d 54%,#07111c 100%)!important;
-}
-.page-contact .contact-hero::after{
-  background-image:url('/hero-art/start.svg')!important;
-  width:min(53vw,760px)!important;
-  opacity:.80!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(55vw,820px) auto,100% 100%,100% 100%!important;
 }
 
-/* SERVICE FINDER — multiple paths converge into one decision. */
+/* SERVICE FINDER — decision paths converge into one recommendation. */
 .finder-page .finder-hero{
-  background:
-    radial-gradient(ellipse 42% 58% at 82% 50%,rgba(56,130,246,.13),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.96) 34%,rgba(3,8,13,.63) 54%,rgba(4,10,17,.10) 74%,transparent 100%),
+    url('/hero-art/service-finder.svg'),
+    radial-gradient(ellipse 46% 60% at 82% 50%,rgba(63,142,240,.18),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 57%,#07111b 100%)!important;
-}
-.finder-page .finder-hero::after{
-  background-image:url('/hero-art/service-finder.svg')!important;
-  width:min(52vw,740px)!important;
-  opacity:.78!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(54vw,800px) auto,100% 100%,100% 100%!important;
 }
 
-/* WEB DEVELOPMENT — browser + product architecture. */
+/* WEB DEVELOPMENT — browser/product architecture. */
 .service-detail-page.service-web .service-detail-hero{
-  background:
-    radial-gradient(ellipse 44% 56% at 83% 48%,rgba(62,141,237,.14),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.97) 34%,rgba(3,8,13,.63) 53%,rgba(4,10,17,.09) 74%,transparent 100%),
+    url('/hero-art/web-development.svg'),
+    radial-gradient(ellipse 47% 60% at 83% 50%,rgba(65,147,245,.19),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 53%,#07121e 100%)!important;
-}
-.service-detail-page.service-web .service-detail-hero::after{
-  background-image:url('/hero-art/web-development.svg')!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(55vw,820px) auto,100% 100%,100% 100%!important;
 }
 
-/* E-COMMERCE & SYSTEMS — cart, order and operational dashboard flow. */
+/* E-COMMERCE & SYSTEMS — customer action flows into operational dashboards. */
 .service-detail-page.service-commerce .service-detail-hero{
-  background:
-    radial-gradient(ellipse 46% 58% at 84% 50%,rgba(56,130,246,.13),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.97) 34%,rgba(3,8,13,.63) 53%,rgba(4,10,17,.09) 74%,transparent 100%),
+    url('/hero-art/ecommerce-systems.svg'),
+    radial-gradient(ellipse 47% 60% at 83% 50%,rgba(61,143,241,.18),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 53%,#07121d 100%)!important;
-}
-.service-detail-page.service-commerce .service-detail-hero::after{
-  background-image:url('/hero-art/ecommerce-systems.svg')!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(55vw,820px) auto,100% 100%,100% 100%!important;
 }
 
-/* BRAND IDENTITY — construction geometry and visual-system proportions. */
+/* BRAND IDENTITY — construction geometry and identity proportions. */
 .service-detail-page.service-brand .service-detail-hero{
-  background:
-    radial-gradient(circle at 82% 50%,rgba(103,169,250,.15),rgba(56,130,246,.04) 25%,transparent 56%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.97) 34%,rgba(3,8,13,.63) 53%,rgba(4,10,17,.09) 74%,transparent 100%),
+    url('/hero-art/brand-identity.svg'),
+    radial-gradient(circle at 82% 50%,rgba(96,170,252,.19),rgba(56,130,246,.035) 31%,transparent 61%),
     linear-gradient(112deg,#010203 0%,#04080d 53%,#07111c 100%)!important;
-}
-.service-detail-page.service-brand .service-detail-hero::after{
-  background-image:url('/hero-art/brand-identity.svg')!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(54vw,800px) auto,100% 100%,100% 100%!important;
 }
 
-/* CV & PORTFOLIO — professional profile document structure. */
+/* CV & PORTFOLIO — professional document/profile architecture. */
 .service-detail-page.service-cv .service-detail-hero{
-  background:
-    radial-gradient(ellipse 40% 58% at 84% 46%,rgba(79,151,240,.12),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.97) 34%,rgba(3,8,13,.63) 53%,rgba(4,10,17,.09) 74%,transparent 100%),
+    url('/hero-art/cv-portfolio.svg'),
+    radial-gradient(ellipse 45% 61% at 83% 49%,rgba(70,150,244,.18),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 54%,#07111b 100%)!important;
-}
-.service-detail-page.service-cv .service-detail-hero::after{
-  background-image:url('/hero-art/cv-portfolio.svg')!important;
-}
-
-.service-detail-page .service-detail-hero::after{
-  width:min(52vw,750px)!important;
-  inset-inline-end:0!important;
-  opacity:.80!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(53vw,790px) auto,100% 100%,100% 100%!important;
 }
 
 /* FAQ — question and answer dialogue. */
 .page-faq .info-page-hero{
-  background-image:none!important;
-  background:
-    radial-gradient(ellipse 44% 56% at 83% 50%,rgba(56,130,246,.12),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.96) 34%,rgba(3,8,13,.62) 54%,rgba(4,10,17,.09) 74%,transparent 100%),
+    url('/hero-art/faq.svg'),
+    radial-gradient(ellipse 45% 60% at 83% 50%,rgba(64,143,238,.17),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 55%,#07111b 100%)!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(50vw,720px) auto,100% 100%,100% 100%!important;
 }
-.page-faq .info-page-hero::after{background-image:url('/hero-art/faq.svg')!important}
 
-/* PRIVACY — protected information. */
+/* PRIVACY — shield and protected data. */
 .page-privacy .info-page-hero{
-  background-image:none!important;
-  background:
-    radial-gradient(circle at 83% 48%,rgba(72,147,240,.13),rgba(56,130,246,.03) 28%,transparent 58%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.96) 34%,rgba(3,8,13,.62) 54%,rgba(4,10,17,.09) 74%,transparent 100%),
+    url('/hero-art/privacy.svg'),
+    radial-gradient(circle at 83% 48%,rgba(75,153,247,.18),rgba(56,130,246,.03) 31%,transparent 61%),
     linear-gradient(112deg,#010203 0%,#04080d 55%,#07111b 100%)!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(49vw,710px) auto,100% 100%,100% 100%!important;
 }
-.page-privacy .info-page-hero::after{background-image:url('/hero-art/privacy.svg')!important}
 
-/* TERMS — structured agreement with approval mark. */
+/* TERMS — agreement document and approval marks. */
 .page-terms .info-page-hero{
-  background-image:none!important;
-  background:
-    radial-gradient(ellipse 42% 58% at 83% 50%,rgba(67,140,233,.12),transparent 72%),
+  background-image:
+    linear-gradient(90deg,rgba(1,3,5,.995) 0%,rgba(2,5,8,.96) 34%,rgba(3,8,13,.62) 54%,rgba(4,10,17,.09) 74%,transparent 100%),
+    url('/hero-art/terms.svg'),
+    radial-gradient(ellipse 45% 60% at 83% 50%,rgba(66,145,239,.17),transparent 72%),
     linear-gradient(112deg,#010203 0%,#04080d 55%,#07111b 100%)!important;
-}
-.page-terms .info-page-hero::after{background-image:url('/hero-art/terms.svg')!important}
-
-.page-faq .info-page-hero::after,
-.page-privacy .info-page-hero::after,
-.page-terms .info-page-hero::after{
-  width:min(48vw,690px)!important;
-  opacity:.72!important;
+  background-position:0 0,97% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(49vw,710px) auto,100% 100%,100% 100%!important;
 }
 
-@keyframes heroIllustrationFloat{
-  from{transform:translateY(-50%) translate3d(0,0,0);opacity:.70}
-  to{transform:translateY(-51.2%) translate3d(0,-3px,0);opacity:.84}
+/* RTL: mirror the visual composition so drawings live opposite the copy. */
+html[dir="rtl"] .ref-home .ref-hero.home-line-hero,
+html[dir="rtl"] .page-services>section:first-child,
+html[dir="rtl"] .page-projects [data-project-hero],
+html[dir="rtl"] .page-about>section:first-child,
+html[dir="rtl"] .work-page .work-hero,
+html[dir="rtl"] .page-contact .contact-hero,
+html[dir="rtl"] .finder-page .finder-hero,
+html[dir="rtl"] .service-detail-page .service-detail-hero,
+html[dir="rtl"] .page-faq .info-page-hero,
+html[dir="rtl"] .page-privacy .info-page-hero,
+html[dir="rtl"] .page-terms .info-page-hero{
+  background-position:0 0,4% 50%,0 0,0 0!important;
 }
 
 @media(max-width:900px){
-  .ref-home .ref-hero.home-line-hero::after,
-  .page-services>section:first-child::after,
-  .page-projects [data-project-hero]::after,
-  .page-about>section:first-child::after,
-  .work-page .work-hero::after,
-  .page-contact .contact-hero::after,
-  .finder-page .finder-hero::after,
-  .service-detail-page .service-detail-hero::after,
-  .page-faq .info-page-hero::after,
-  .page-privacy .info-page-hero::after,
-  .page-terms .info-page-hero::after{
-    width:74vw!important;
-    inset-inline-end:-24vw!important;
-    opacity:.46!important;
+  .ref-home .ref-hero.home-line-hero,
+  .page-services>section:first-child,
+  .page-projects [data-project-hero],
+  .page-about>section:first-child,
+  .work-page .work-hero,
+  .page-contact .contact-hero,
+  .finder-page .finder-hero,
+  .service-detail-page .service-detail-hero,
+  .page-faq .info-page-hero,
+  .page-privacy .info-page-hero,
+  .page-terms .info-page-hero{
+    background-position:0 0,112% 50%,0 0,0 0!important;
+    background-size:100% 100%,72vw auto,100% 100%,100% 100%!important;
+  }
+  html[dir="rtl"] .ref-home .ref-hero.home-line-hero,
+  html[dir="rtl"] .page-services>section:first-child,
+  html[dir="rtl"] .page-projects [data-project-hero],
+  html[dir="rtl"] .page-about>section:first-child,
+  html[dir="rtl"] .work-page .work-hero,
+  html[dir="rtl"] .page-contact .contact-hero,
+  html[dir="rtl"] .finder-page .finder-hero,
+  html[dir="rtl"] .service-detail-page .service-detail-hero,
+  html[dir="rtl"] .page-faq .info-page-hero,
+  html[dir="rtl"] .page-privacy .info-page-hero,
+  html[dir="rtl"] .page-terms .info-page-hero{
+    background-position:0 0,-12% 50%,0 0,0 0!important;
   }
 }
 
 @media(max-width:620px){
-  .ref-home .ref-hero.home-line-hero::after,
-  .page-services>section:first-child::after,
-  .page-projects [data-project-hero]::after,
-  .page-about>section:first-child::after,
-  .work-page .work-hero::after,
-  .page-contact .contact-hero::after,
-  .finder-page .finder-hero::after,
-  .service-detail-page .service-detail-hero::after,
-  .page-faq .info-page-hero::after,
-  .page-privacy .info-page-hero::after,
-  .page-terms .info-page-hero::after{
-    width:112vw!important;
-    inset-inline-end:-52vw!important;
-    top:52%!important;
-    opacity:.28!important;
+  .ref-home .ref-hero.home-line-hero,
+  .page-services>section:first-child,
+  .page-projects [data-project-hero],
+  .page-about>section:first-child,
+  .work-page .work-hero,
+  .page-contact .contact-hero,
+  .finder-page .finder-hero,
+  .service-detail-page .service-detail-hero,
+  .page-faq .info-page-hero,
+  .page-privacy .info-page-hero,
+  .page-terms .info-page-hero{
+    background-position:0 0,145% 58%,0 0,0 0!important;
+    background-size:100% 100%,100vw auto,100% 100%,100% 100%!important;
   }
-}
-
-@media(prefers-reduced-motion:reduce){
-  .ref-home .ref-hero.home-line-hero::after,
-  .page-services>section:first-child::after,
-  .page-projects [data-project-hero]::after,
-  .page-about>section:first-child::after,
-  .work-page .work-hero::after,
-  .page-contact .contact-hero::after,
-  .finder-page .finder-hero::after,
-  .service-detail-page .service-detail-hero::after,
-  .page-faq .info-page-hero::after,
-  .page-privacy .info-page-hero::after,
-  .page-terms .info-page-hero::after{animation:none!important}
+  html[dir="rtl"] .ref-home .ref-hero.home-line-hero,
+  html[dir="rtl"] .page-services>section:first-child,
+  html[dir="rtl"] .page-projects [data-project-hero],
+  html[dir="rtl"] .page-about>section:first-child,
+  html[dir="rtl"] .work-page .work-hero,
+  html[dir="rtl"] .page-contact .contact-hero,
+  html[dir="rtl"] .finder-page .finder-hero,
+  html[dir="rtl"] .service-detail-page .service-detail-hero,
+  html[dir="rtl"] .page-faq .info-page-hero,
+  html[dir="rtl"] .page-privacy .info-page-hero,
+  html[dir="rtl"] .page-terms .info-page-hero{
+    background-position:0 0,-45% 58%,0 0,0 0!important;
+  }
 }
