@@ -1,0 +1,36 @@
+name: Frontend QA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build static frontend
+        run: npm run build
+
+      - name: Test Arabic and client flows
+        run: npm run test:localization
+
+      - name: Check internal routes
+        run: npm run test:routes
