@@ -1,6 +1,7 @@
 "use client";
 
 import Localized from "./Localized";
+import HomeHeroArt from "./HomeHeroArt";
 import HomeProjects from "./HomeProjects";
 import HomeAbout from "./HomeAbout";
 import HomeWhy from "./HomeWhy";
@@ -38,30 +39,20 @@ const faqs = [
 export default function Home() {
   return (
     <Localized><main className="ref-home" id="top">
-      <section className="ltx-hero-v2 ltx-home-hero">
-        <div className="ltx-hero-v2-shell ltx-home-hero-shell">
-          <div className="ltx-home-hero-top">
-            <p className="ltx-hero-v2-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
-            <span className="ltx-home-hero-mark"><i/>LINETECH / ADEN</span>
-          </div>
-
-          <div className="ltx-home-hero-main">
-            <span className="ltx-home-hero-line" aria-hidden="true" />
-            <h1 className="ltx-home-hero-title">Every idea<br/>starts with a line.</h1>
-          </div>
-
-          <div className="ltx-home-hero-bottom">
-            <p className="ltx-home-hero-lead">We build websites, online stores and business systems for companies and founders, with a clear identity and an experience designed around their customers.</p>
-            <div className="ltx-home-hero-side">
-              <div className="ltx-hero-v2-actions">
-                <Link className="ltx-hero-v2-btn primary" href="/start" prefetch>Start Your Line <span>→</span></Link>
-                <a className="ltx-hero-v2-btn" href="#projects">View Our Work <span>↓</span></a>
-              </div>
+      <section className="ref-hero ref-line-section home-line-hero">
+        <HomeHeroArt/>
+        <div className="ref-shell ref-hero-grid">
+          <div className="ref-hero-copy">
+            <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
+            <h1>Every idea<br/>starts with a line.</h1>
+            <p className="ref-lead">We build websites, online stores and business systems for companies and founders, with a clear identity and an experience designed around their customers.</p>
+            <div className="ref-actions"><Link className="ref-button light" href="/start" prefetch>Start Your Line <span>→</span></Link><a className="ref-button ghost" href="#projects">View Our Work <span>↓</span></a></div>
+            <div className="ref-stats">
+              <div><strong>01</strong><span>Founder-led</span></div>
+              <div><strong>{String(services.length).padStart(2, "0")}</strong><span>Core Services</span></div>
+              <div><strong>{String(process.length).padStart(2, "0")}</strong><span>Clear Steps</span></div>
+              <div><strong>03</strong><span>Selected Projects</span></div>
             </div>
-          </div>
-
-          <div className="ltx-home-hero-services" aria-label="Core services">
-            {services.map((service,index)=><Link href={service.href} key={service.title} prefetch><span>{String(index+1).padStart(2,"0")}</span>{service.title}</Link>)}
           </div>
         </div>
       </section>
@@ -79,7 +70,9 @@ export default function Home() {
       </section>
 
       <HomeProjects/>
+
       <HomeAbout/>
+
       <HomeWhy/>
 
       <section className="process-center ref-line-section">
