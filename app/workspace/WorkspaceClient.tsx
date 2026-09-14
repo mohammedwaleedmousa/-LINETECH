@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { useLanguage } from "../Localized";
+import { useLanguage, useTranslation } from "../Localized";
 import "./workspace.css";
 
 type RequestRecord = {
@@ -140,6 +140,7 @@ const copy = {
 
 export default function WorkspaceClient() {
   const language = useLanguage();
+  const translate = useTranslation();
   const t = copy[language];
   const [record, setRecord] = useState<RequestRecord | null>(null);
   const [loaded, setLoaded] = useState(false);
@@ -220,13 +221,13 @@ export default function WorkspaceClient() {
                 </div>
 
                 <div className="workspace-request-meta">
-                  <div><span>{t.service}</span><strong>{serviceLabels[record.project.service]?.[language] || record.project.service}</strong></div>
+                  <div><span>{t.service}</span><strong>{serviceLabels[record.project.service]?.[language] || translate(record.project.service)}</strong></div>
                   <div><span>{t.customer}</span><strong>{record.customer.name || "—"}</strong></div>
                   <div><span>{t.company}</span><strong>{record.customer.company || "—"}</strong></div>
-                  <div><span>{t.contact}</span><strong>{record.customer.preferredContact || "—"}</strong></div>
-                  <div><span>{t.goal}</span><strong>{record.project.goal || "—"}</strong></div>
-                  <div><span>{t.timing}</span><strong>{record.scope.timing || "—"}</strong></div>
-                  <div><span>{t.budget}</span><strong>{record.scope.budget || "—"}</strong></div>
+                  <div><span>{t.contact}</span><strong>{translate(record.customer.preferredContact || "—")}</strong></div>
+                  <div><span>{t.goal}</span><strong>{translate(record.project.goal || "—")}</strong></div>
+                  <div><span>{t.timing}</span><strong>{translate(record.scope.timing || "—")}</strong></div>
+                  <div><span>{t.budget}</span><strong>{translate(record.scope.budget || "—")}</strong></div>
                   <div><span>{t.idea}</span><strong>{record.project.idea || "—"}</strong></div>
                 </div>
 
