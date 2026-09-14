@@ -1,10 +1,15 @@
 "use client";
 
-import Localized from "../Localized";
+import Localized, { useLanguage } from "../Localized";
 import HomeHeroArt from "../HomeHeroArt";
 import Link from "next/link";
 
 type Item = [string, string];
+type EngagementCopy = {
+  need: string[];
+  do: string[];
+  receive: string[];
+};
 
 type ServiceDetailProps = {
   className: string;
@@ -16,7 +21,30 @@ type ServiceDetailProps = {
   deliverables: Item[];
   fits: Item[];
   process: Item[];
+  engagement: {
+    en: EngagementCopy;
+    ar: EngagementCopy;
+  };
 };
+
+const engagementLabels = {
+  en: {
+    kicker: "WORKING TOGETHER",
+    title: "Clear inputs. Clear work. Clear handover.",
+    lead: "Before execution starts, both sides know what is needed, what LINETECH is responsible for and what the final handover includes.",
+    need: "What we need from you",
+    do: "What LINETECH does",
+    receive: "What you receive",
+  },
+  ar: {
+    kicker: "العمل معًا",
+    title: "مدخلات واضحة. تنفيذ واضح. وتسليم واضح.",
+    lead: "قبل بدء التنفيذ يعرف الطرفان ما هو المطلوب، وما الذي تتولى لاين تك مسؤوليته، وما الذي يشمله التسليم النهائي.",
+    need: "ما نحتاجه منك",
+    do: "ما تنفذه لاين تك",
+    receive: "ماذا تستلم",
+  },
+} as const;
 
 export default function ServiceDetail({
   className,
@@ -28,8 +56,12 @@ export default function ServiceDetail({
   deliverables,
   fits,
   process,
+  engagement,
 }: ServiceDetailProps) {
+  const language = useLanguage();
   const startHref = `/start?service=${encodeURIComponent(serviceParam)}`;
+  const e = engagement[language];
+  const labels = engagementLabels[language];
 
   return (
     <Localized>
@@ -84,6 +116,30 @@ export default function ServiceDetail({
                 <article key={title}>
                   <span>0{index + 1}</span>
                   <div><h3>{title}</h3><p>{text}</p></div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="ref-section service-detail-engagement" aria-labelledby={`${className}-engagement`}>
+          <div className="ref-shell">
+            <div className="ref-head service-detail-engagement-head">
+              <div><p className="ref-kicker">{labels.kicker}</p><h2 id={`${className}-engagement`}>{labels.title}</h2></div>
+              <p>{labels.lead}</p>
+            </div>
+            <div className="service-detail-engagement-grid">
+              {[
+                ["01", labels.need, e.need],
+                ["02", labels.do, e.do],
+                ["03", labels.receive, e.receive],
+              ].map(([number, heading, items]) => (
+                <article className="service-detail-engagement-card" key={String(number)}>
+                  <div className="service-detail-engagement-top"><span>{number as string}</span><i aria-hidden="true" /></div>
+                  <h3>{heading as string}</h3>
+                  <ul>
+                    {(items as string[]).map((item) => <li key={item}><i aria-hidden="true" />{item}</li>)}
+                  </ul>
                 </article>
               ))}
             </div>
