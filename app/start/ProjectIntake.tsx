@@ -1,7 +1,6 @@
 "use client";
 
-import Localized, { useTranslation } from "../Localized";
-import Link from "next/link";
+import Localized, { useLanguage, useTranslation } from "../Localized";
 import { useEffect, useMemo, useRef, useState } from "react";
 import "./custom-select.css";
 
@@ -12,6 +11,35 @@ const preferredContacts = ["WhatsApp", "Email", "Call", "Either"] as const;
 const budgets = ["Need guidance", "Small focused project", "Medium project", "Large project"];
 const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
 const progressSteps = [{ n: 1, label: "About you" }, { n: 2, label: "Project" }, { n: 3, label: "Scope" }];
+
+const finishCopy = {
+  en: {
+    localNote: "Your brief stays on this device until you choose Share or Copy.",
+    kicker: "READY TO SHARE",
+    title: "Your project brief is ready.",
+    body: "The brief now contains the information LINETECH needs for the first project conversation.",
+    share: "Share project brief",
+    copy: "Copy project brief",
+    copied: "Copied ✓",
+    note: "Nothing is sent automatically. Use Share to choose WhatsApp, Email or another app, or copy the brief and paste it into your LINETECH conversation.",
+    shareDone: "The brief was shared through the channel you selected.",
+    copyDone: "Brief copied. Paste it into your conversation with LINETECH.",
+    copyError: "Your browser blocked clipboard access. Select Share instead.",
+  },
+  ar: {
+    localNote: "يبقى ملخص مشروعك على هذا الجهاز حتى تختار المشاركة أو النسخ.",
+    kicker: "جاهز للمشاركة",
+    title: "ملخص مشروعك جاهز.",
+    body: "يحتوي الملخص الآن على المعلومات التي تحتاجها LINETECH لبدء محادثة المشروع.",
+    share: "شارك ملخص المشروع",
+    copy: "انسخ ملخص المشروع",
+    copied: "تم النسخ ✓",
+    note: "لن يتم إرسال أي شيء تلقائيًا. استخدم المشاركة لاختيار واتساب أو البريد أو تطبيق آخر، أو انسخ الملخص والصقه في محادثتك مع LINETECH.",
+    shareDone: "تمت مشاركة الملخص عبر القناة التي اخترتها.",
+    copyDone: "تم نسخ الملخص. الصقه في محادثتك مع LINETECH.",
+    copyError: "المتصفح منع الوصول إلى الحافظة. استخدم المشاركة بدلًا من ذلك.",
+  },
+} as const;
 
 type CustomSelectProps = {
   value: string;
@@ -95,8 +123,11 @@ function CustomSelect({ value, onChange, options, placeholder, ariaLabel }: Cust
 
 export default function ProjectIntake() {
   const [step, setStep] = useState(1);
+  const language = useLanguage();
   const t = useTranslation();
+  const handoff = finishCopy[language];
   const [copied, setCopied] = useState(false);
+  const [actionStatus, setActionStatus] = useState("");
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [contact, setContact] = useState("");
@@ -154,6 +185,7 @@ export default function ProjectIntake() {
 
   function changeStep(next: number) {
     setStep(next);
+    setActionStatus("");
     requestAnimationFrame(() => document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   }
 
@@ -161,20 +193,29 @@ export default function ProjectIntake() {
     try {
       await navigator.clipboard.writeText(brief);
       setCopied(true);
+      setActionStatus(handoff.copyDone);
       window.setTimeout(() => setCopied(false), 2200);
-    } catch {}
+    } catch {
+      setActionStatus(handoff.copyError);
+    }
   }
 
   async function shareBrief() {
     if (navigator.share) {
-      try { await navigator.share({ title: t("LINETECH Project Brief"), text: brief }); } catch {}
+      try {
+        await navigator.share({ title: t("LINETECH Project Brief"), text: brief });
+        setActionStatus(handoff.shareDone);
+      } catch (error) {
+        if (error instanceof Error && error.name === "AbortError") return;
+        await copyBrief();
+      }
       return;
     }
     await copyBrief();
   }
 
   return <Localized><div className="project-brief-form project-intake">
-    <p className="frontend-only-note">This brief stays on your device. Nothing is sent or stored by this form.</p>
+    <p className="frontend-only-note">{handoff.localNote}</p>
 
     <div className="intake-progress" aria-label={`Step ${step} of 3`}>
       {progressSteps.map(({n,label}) => <div key={n} className={`intake-progress-item ${step===n?"active":""} ${step>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>)}
@@ -213,7 +254,19 @@ export default function ProjectIntake() {
       <fieldset><legend>Launch timing</legend><div className="choice-grid intake-choice-grid">{timings.map(v=><label key={v} className={`choice ${timing===v?"selected":""}`}><input type="radio" name="timing" checked={timing===v} onChange={()=>setTiming(v)}/><span>{v}</span></label>)}</div></fieldset>
       <label className="form-wide"><span>Anything else we should know?</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Constraints, preferences, deadlines or context." rows={4}/></label>
       <div className="brief-summary"><div><span>Service</span><strong>{service||"—"}</strong></div><div><span>Stage</span><strong>{stage||"—"}</strong></div><div><span>Goal</span><strong>{goal||"—"}</strong></div><div><span>Timing</span><strong>{timing}</strong></div></div>
-      <div className="brief-preview"><div><p className="eyebrow">READY BRIEF</p><h3>Your first line is ready.</h3><p>Review, copy or share this brief when you are ready to continue with LINETECH.</p></div><div className="brief-actions"><button className="button button-light" type="button" onClick={copyBrief}>{copied?"Copied ✓":"Copy project brief"} <span>↗</span></button><button className="brief-share" type="button" onClick={shareBrief}>Share brief <span>→</span></button><Link className="brief-share" href="/thank-you" prefetch>Preview next step <span>→</span></Link></div></div>
+      <div className="brief-preview">
+        <div>
+          <p className="eyebrow">{handoff.kicker}</p>
+          <h3>{handoff.title}</h3>
+          <p>{handoff.body}</p>
+          <p className="brief-send-note">{handoff.note}</p>
+          {actionStatus && <p className="brief-action-status" role="status">{actionStatus}</p>}
+        </div>
+        <div className="brief-actions">
+          <button className="button button-light" type="button" onClick={shareBrief}>{handoff.share} <span>↗</span></button>
+          <button className="brief-share" type="button" onClick={copyBrief}>{copied?handoff.copied:handoff.copy} <span>→</span></button>
+        </div>
+      </div>
       <div className="intake-nav intake-nav-bottom"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button></div>
     </section>}
   </div></Localized>;
