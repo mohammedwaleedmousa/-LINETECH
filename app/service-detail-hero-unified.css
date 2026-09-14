@@ -1,4 +1,4 @@
-/* Distinct premium background-only heroes for LINETECH service pages. */
+/* Neuron hero backgrounds for LINETECH service detail pages. */
 
 .service-detail-page .service-detail-hero{
   position:relative;
@@ -28,115 +28,88 @@
 }
 .service-detail-page .service-detail-visual>i{display:none!important}
 
-/* Keep the copy side quiet while leaving the visual half genuinely visible. */
+/* Keep the text area calm while the neuron field remains clearly visible. */
 .service-detail-page .service-detail-hero::before{
   content:"";
   position:absolute;
   inset:0;
-  z-index:1;
+  z-index:2;
   pointer-events:none;
   background:
-    linear-gradient(90deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.96) 27%,rgba(5,8,12,.70) 47%,rgba(5,8,12,.18) 69%,rgba(5,8,12,0) 86%),
-    linear-gradient(180deg,rgba(5,8,12,.06),transparent 34%,transparent 73%,rgba(5,8,12,.20));
+    linear-gradient(90deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.965) 25%,rgba(5,8,12,.76) 44%,rgba(5,8,12,.30) 67%,rgba(5,8,12,.035) 88%),
+    linear-gradient(180deg,rgba(5,8,12,.10),transparent 28%,transparent 72%,rgba(5,8,12,.28));
 }
 html[dir="rtl"] .service-detail-page .service-detail-hero::before{
   background:
-    linear-gradient(270deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.96) 27%,rgba(5,8,12,.70) 47%,rgba(5,8,12,.18) 69%,rgba(5,8,12,0) 86%),
-    linear-gradient(180deg,rgba(5,8,12,.06),transparent 34%,transparent 73%,rgba(5,8,12,.20));
+    linear-gradient(270deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.965) 25%,rgba(5,8,12,.76) 44%,rgba(5,8,12,.30) 67%,rgba(5,8,12,.035) 88%),
+    linear-gradient(180deg,rgba(5,8,12,.10),transparent 28%,transparent 72%,rgba(5,8,12,.28));
+}
+.service-detail-page .service-detail-hero::after{display:none!important}
+
+.service-detail-neuron-field{
+  position:absolute;
+  inset:-7% -4% -9%;
+  z-index:0;
+  pointer-events:none;
+  overflow:hidden;
+  opacity:.88;
 }
 
-.service-detail-page .service-detail-hero::after{
+.service-detail-neuron-field::after{
   content:"";
   position:absolute;
   inset:0;
-  z-index:0;
   pointer-events:none;
-  transform-origin:center;
-}
-html[dir="rtl"] .service-detail-page .service-detail-hero::after{transform:scaleX(-1)}
-
-/* 01 — WEB DEVELOPMENT: luminous structural planes. */
-.service-detail-page.service-web .service-detail-hero{
   background:
-    radial-gradient(ellipse at 83% 45%,rgba(69,143,236,.20) 0%,rgba(41,91,158,.10) 28%,transparent 58%),
-    radial-gradient(ellipse at 74% 102%,rgba(48,102,176,.10),transparent 42%),
-    linear-gradient(135deg,#05080c 0%,#060a0f 54%,#07111c 100%)!important;
-}
-.service-detail-page.service-web .service-detail-hero::after{
-  opacity:1;
-  background:
-    linear-gradient(119deg,transparent 0 55%,rgba(166,207,255,.32) 55.08% 55.28%,transparent 55.42% 100%),
-    linear-gradient(119deg,transparent 0 64%,rgba(108,171,248,.22) 64.08% 64.24%,transparent 64.38% 100%),
-    linear-gradient(119deg,transparent 0 73%,rgba(83,145,220,.16) 73.08% 73.20%,transparent 73.34% 100%),
-    linear-gradient(90deg,transparent 0 72%,rgba(79,146,226,.10) 72% 84%,transparent 84% 100%),
-    radial-gradient(circle at 82% 44%,rgba(180,218,255,.20) 0 4%,rgba(87,154,238,.10) 15%,transparent 34%);
+    radial-gradient(ellipse at 79% 44%,rgba(75,146,238,.16),transparent 31%),
+    radial-gradient(ellipse at 89% 64%,rgba(42,91,158,.09),transparent 30%);
+  filter:blur(1px);
 }
 
-/* 02 — E-COMMERCE & SYSTEMS: clear orbital flow system. */
-.service-detail-page.service-commerce .service-detail-hero{
-  background:
-    radial-gradient(ellipse at 81% 50%,rgba(53,129,224,.22),transparent 42%),
-    radial-gradient(circle at 71% 17%,rgba(90,160,240,.08),transparent 25%),
-    linear-gradient(155deg,#05080c 0%,#060b11 59%,#08131e 100%)!important;
-}
-.service-detail-page.service-commerce .service-detail-hero::after{
-  opacity:1;
-  background:
-    radial-gradient(ellipse at 80% 51%,
-      transparent 0 14%,
-      rgba(154,202,255,.30) 14.08% 14.34%,
-      transparent 14.48% 25%,
-      rgba(112,174,248,.22) 25.08% 25.30%,
-      transparent 25.44% 37%,
-      rgba(78,143,220,.14) 37.08% 37.24%,
-      transparent 37.38% 50%,
-      rgba(63,119,188,.08) 50.08% 50.20%,
-      transparent 50.34% 100%),
-    linear-gradient(102deg,transparent 0 59%,rgba(137,193,255,.18) 59.08% 59.22%,transparent 59.34% 100%),
-    linear-gradient(78deg,transparent 0 72%,rgba(87,151,226,.12) 72.08% 72.20%,transparent 72.34% 100%),
-    radial-gradient(circle at 80% 51%,rgba(207,231,255,.78) 0 0.8%,rgba(114,181,255,.36) 1.05% 2.1%,transparent 2.35% 100%);
+.service-detail-neuron-field .home-line-art{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  opacity:1!important;
+  transform:scale(1.10)!important;
+  transform-origin:center!important;
+  filter:drop-shadow(0 0 18px rgba(56,130,246,.10))!important;
 }
 
-/* 03 — BRAND IDENTITY: bold construction geometry. */
-.service-detail-page.service-brand .service-detail-hero{
-  background:
-    radial-gradient(circle at 82% 49%,rgba(64,136,224,.18),transparent 37%),
-    radial-gradient(circle at 68% 18%,rgba(255,255,255,.035),transparent 21%),
-    linear-gradient(145deg,#05080c 0%,#070a0e 61%,#0a1118 100%)!important;
-}
-.service-detail-page.service-brand .service-detail-hero::after{
-  opacity:1;
-  background:
-    radial-gradient(circle at 81% 50%,
-      transparent 0 13%,
-      rgba(175,214,255,.30) 13.08% 13.30%,
-      transparent 13.44% 23%,
-      rgba(124,182,250,.20) 23.08% 23.28%,
-      transparent 23.42% 34%,
-      rgba(89,149,220,.12) 34.08% 34.22%,
-      transparent 34.36% 100%),
-    linear-gradient(45deg,transparent 0 68%,rgba(168,208,255,.22) 68.08% 68.22%,transparent 68.34% 100%),
-    linear-gradient(135deg,transparent 0 68%,rgba(105,168,242,.16) 68.08% 68.20%,transparent 68.34% 100%),
-    linear-gradient(90deg,transparent 0 80.8%,rgba(113,176,248,.16) 80.9% 81.04%,transparent 81.16% 100%),
-    radial-gradient(circle at 81% 50%,rgba(221,238,255,.62) 0 .75%,rgba(108,174,249,.28) 1% 2%,transparent 2.3% 100%);
+.service-detail-neuron-field .home-line-art svg{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  overflow:visible!important;
 }
 
-/* 04 — CV & PORTFOLIO: visible editorial layers. */
-.service-detail-page.service-cv .service-detail-hero{
-  background:
-    radial-gradient(ellipse at 82% 44%,rgba(57,128,216,.19),transparent 40%),
-    radial-gradient(ellipse at 72% 90%,rgba(49,99,166,.09),transparent 32%),
-    linear-gradient(160deg,#05080c 0%,#060a0f 56%,#08111b 100%)!important;
+/* Slightly different neuron framing per service so every page keeps its own character. */
+.service-detail-page.service-web .service-detail-neuron-field .home-line-art{
+  transform:translateX(2%) scale(1.08)!important;
 }
-.service-detail-page.service-cv .service-detail-hero::after{
-  opacity:1;
-  background:
-    linear-gradient(104deg,transparent 0 58%,rgba(148,197,255,.16) 58% 68%,transparent 68.25% 100%),
-    linear-gradient(104deg,transparent 0 64%,rgba(113,171,241,.12) 64% 76%,transparent 76.25% 100%),
-    linear-gradient(104deg,transparent 0 70%,rgba(87,146,218,.09) 70% 84%,transparent 84.25% 100%),
-    linear-gradient(90deg,transparent 0 77.6%,rgba(188,220,255,.24) 77.72% 77.88%,transparent 78.02% 100%),
-    linear-gradient(90deg,transparent 0 84%,rgba(100,163,237,.14) 84.08% 84.20%,transparent 84.32% 100%),
-    radial-gradient(ellipse at 80% 45%,rgba(154,204,255,.14),transparent 24%);
+.service-detail-page.service-commerce .service-detail-neuron-field .home-line-art{
+  transform:translateX(5%) translateY(1%) scale(1.16)!important;
+}
+.service-detail-page.service-brand .service-detail-neuron-field .home-line-art{
+  transform:translateX(7%) translateY(-2%) scale(1.22)!important;
+}
+.service-detail-page.service-cv .service-detail-neuron-field .home-line-art{
+  transform:translateX(4%) translateY(4%) scale(1.13)!important;
+}
+
+html[dir="rtl"] .service-detail-page.service-web .service-detail-neuron-field .home-line-art{
+  transform:translateX(-2%) scaleX(-1) scale(1.08)!important;
+}
+html[dir="rtl"] .service-detail-page.service-commerce .service-detail-neuron-field .home-line-art{
+  transform:translateX(-5%) translateY(1%) scaleX(-1) scale(1.16)!important;
+}
+html[dir="rtl"] .service-detail-page.service-brand .service-detail-neuron-field .home-line-art{
+  transform:translateX(-7%) translateY(-2%) scaleX(-1) scale(1.22)!important;
+}
+html[dir="rtl"] .service-detail-page.service-cv .service-detail-neuron-field .home-line-art{
+  transform:translateX(-4%) translateY(4%) scaleX(-1) scale(1.13)!important;
 }
 
 .service-detail-page .service-detail-back{color:#73808c!important}
@@ -148,13 +121,23 @@ html[dir="rtl"] .service-detail-page .service-detail-hero::after{transform:scale
   .service-detail-page .service-detail-hero,
   .service-detail-page .service-detail-hero-grid{min-height:620px!important}
 
-  .service-detail-page .service-detail-hero::after{
-    opacity:.76!important;
-    transform:scale(1.10);
-    transform-origin:72% center;
+  .service-detail-neuron-field{
+    inset:-3% -22% -8%;
+    opacity:.68;
   }
-  html[dir="rtl"] .service-detail-page .service-detail-hero::after{
-    transform:scaleX(-1) scale(1.10);
+  .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-web .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-commerce .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-brand .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-cv .service-detail-neuron-field .home-line-art{
+    transform:translateX(9%) scale(1.24)!important;
+  }
+  html[dir="rtl"] .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-web .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-commerce .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-brand .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-cv .service-detail-neuron-field .home-line-art{
+    transform:translateX(-9%) scaleX(-1) scale(1.24)!important;
   }
 }
 
@@ -164,25 +147,37 @@ html[dir="rtl"] .service-detail-page .service-detail-hero::after{transform:scale
 
   .service-detail-page .service-detail-hero::before{
     background:
-      linear-gradient(90deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.965) 52%,rgba(5,8,12,.62) 76%,rgba(5,8,12,.14) 100%),
-      linear-gradient(180deg,rgba(5,8,12,.04),transparent 46%,rgba(5,8,12,.26));
+      linear-gradient(90deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.965) 51%,rgba(5,8,12,.66) 76%,rgba(5,8,12,.16) 100%),
+      linear-gradient(180deg,rgba(5,8,12,.08),transparent 42%,rgba(5,8,12,.30));
   }
   html[dir="rtl"] .service-detail-page .service-detail-hero::before{
     background:
-      linear-gradient(270deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.965) 52%,rgba(5,8,12,.62) 76%,rgba(5,8,12,.14) 100%),
-      linear-gradient(180deg,rgba(5,8,12,.04),transparent 46%,rgba(5,8,12,.26));
+      linear-gradient(270deg,rgba(5,8,12,.995) 0%,rgba(5,8,12,.965) 51%,rgba(5,8,12,.66) 76%,rgba(5,8,12,.16) 100%),
+      linear-gradient(180deg,rgba(5,8,12,.08),transparent 42%,rgba(5,8,12,.30));
   }
 
-  .service-detail-page .service-detail-hero::after{
-    opacity:.54!important;
-    transform:translateX(15%) scale(1.20);
-    transform-origin:75% center;
+  .service-detail-neuron-field{
+    inset:5% -64% -8% -24%;
+    opacity:.46;
   }
-  html[dir="rtl"] .service-detail-page .service-detail-hero::after{
-    transform:translateX(-15%) scaleX(-1) scale(1.20);
+  html[dir="rtl"] .service-detail-neuron-field{inset:5% -24% -8% -64%}
+
+  .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-web .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-commerce .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-brand .service-detail-neuron-field .home-line-art,
+  .service-detail-page.service-cv .service-detail-neuron-field .home-line-art{
+    transform:translateX(18%) scale(1.34)!important;
+  }
+  html[dir="rtl"] .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-web .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-commerce .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-brand .service-detail-neuron-field .home-line-art,
+  html[dir="rtl"] .service-detail-page.service-cv .service-detail-neuron-field .home-line-art{
+    transform:translateX(-18%) scaleX(-1) scale(1.34)!important;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  .service-detail-page .service-detail-hero::after{animation:none!important}
+  .service-detail-neuron-field *{animation:none!important}
 }
