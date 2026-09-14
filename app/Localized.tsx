@@ -75,5 +75,9 @@ function localize(node: ReactNode, language: Language): ReactNode {
   return cloneElement(node, translated);
 }
 export default function Localized({ children }: { children: ReactNode }) {
-  return localize(children, useLanguage());
+  const language = useLanguage();
+  // English is the source language. Avoid recursively cloning the entire React
+  // tree on every route render when no translation work is needed.
+  if (language === "en") return children;
+  return localize(children, language);
 }
