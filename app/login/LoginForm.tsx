@@ -1,7 +1,6 @@
 "use client";
 
 import Localized from "../Localized";
-
 import Link from "next/link";
 import { FormEvent, useState } from "react";
 
@@ -17,8 +16,8 @@ export default function LoginForm(){
   function handleSubmit(event:FormEvent<HTMLFormElement>){
     event.preventDefault();
     setMessage(mode==="login"
-      ? "Sign-in UI is ready. Secure authentication will be connected when the backend phase begins."
-      : "Account creation UI is ready. Registration will be connected when the backend phase begins."
+      ? "Account access is in preview mode. Your credentials were not submitted."
+      : "Account creation is in preview mode. Your details were not submitted or stored."
     );
   }
 
@@ -47,11 +46,11 @@ export default function LoginForm(){
 
       {mode==="login"?<div className="login-options">
         <label className="login-remember"><input type="checkbox" name="remember"/><span>Remember me</span></label>
-        <button className="login-forgot" type="button" onClick={()=>setMessage("Password recovery will be activated with the authentication backend.")}>Forgot password?</button>
+        <button className="login-forgot" type="button" onClick={()=>setMessage("Password recovery is not active in this preview. No account data has been submitted.")}>Forgot password?</button>
       </div>:<label className="signup-terms"><input type="checkbox" required/><span>I agree to the <Link href="/terms">Terms</Link> and <Link href="/privacy">Privacy Policy</Link>.</span></label>}
 
       <button className="login-submit" type="submit">{mode==="login"?"Sign in":"Create account"} <span>→</span></button>
-      <p className="login-ui-note">Frontend preview only — account data and credentials are not sent or stored yet.</p>
+      <p className="login-ui-note">Account access preview — credentials are not submitted or stored in this version.</p>
       {message&&<p className="login-feedback" role="status">{message}</p>}
     </form>
   </div></Localized>;
