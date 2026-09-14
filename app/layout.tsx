@@ -30,6 +30,7 @@ import "./auth.css";
 import "./chat.css";
 import "./chat-enhancements.css";
 import "./chat-modern.css";
+import "./chat-modern-fix.css";
 import "./tech-hero.css";
 import "./i18n.css";
 import "./home-motion.css";
