@@ -1,10 +1,40 @@
-html{scroll-behavior:smooth}
-.route-motion{animation:routeIn .34s cubic-bezier(.22,.61,.36,1) both;will-change:opacity,transform}
-@keyframes routeIn{0%{opacity:.35;transform:translateY(6px)}100%{opacity:1;transform:none}}
-.site-nav .ref-nav-links a{transition:color .22s ease,opacity .22s ease}
-.site-nav .ref-nav-links a:after{transition:transform .28s cubic-bezier(.22,.61,.36,1),opacity .22s ease;transform-origin:center}
+html{scroll-behavior:auto}
+.route-motion{animation:routeIn .18s ease-out both}
+@keyframes routeIn{0%{opacity:.72}100%{opacity:1}}
+.site-nav .ref-nav-links a{transition:color .16s ease,opacity .16s ease}
+.site-nav .ref-nav-links a:after{transition:transform .18s ease,opacity .16s ease;transform-origin:center}
 .site-nav .ref-nav-links a:not(.active):after{transform:scaleX(0);opacity:0}
 .site-nav .ref-nav-links a.active:after{transform:scaleX(1);opacity:1}
-.site-nav .ref-button{transition:transform .22s ease,background-color .22s ease,border-color .22s ease}
-.site-nav .ref-button:hover{transform:translateY(-1px)}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.route-motion{animation:none}.site-nav .ref-nav-links a,.site-nav .ref-nav-links a:after,.site-nav .ref-button{transition:none}}
+.site-nav .ref-button{transition:background-color .16s ease,border-color .16s ease,color .16s ease}
+.site-nav .ref-button:hover{transform:none}
+
+.route-progress{
+  position:fixed;
+  z-index:99999;
+  inset-inline:0;
+  top:0;
+  height:2px;
+  overflow:hidden;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .12s ease;
+}
+.route-progress i{
+  position:absolute;
+  inset-block:0;
+  inset-inline-start:-38%;
+  width:38%;
+  background:linear-gradient(90deg,transparent,#6ca8f8 38%,#b7d8ff 68%,transparent);
+  box-shadow:0 0 14px rgba(108,168,248,.34);
+}
+html.route-pending .route-progress{opacity:1}
+html.route-pending .route-progress i{animation:routeProgress 1.05s cubic-bezier(.4,0,.2,1) infinite}
+@keyframes routeProgress{0%{transform:translateX(0)}100%{transform:translateX(365%)}}
+html[dir="rtl"].route-pending .route-progress i{animation-name:routeProgressRtl}
+@keyframes routeProgressRtl{0%{transform:translateX(0)}100%{transform:translateX(-365%)}}
+
+@media(prefers-reduced-motion:reduce){
+  .route-motion{animation:none}
+  .site-nav .ref-nav-links a,.site-nav .ref-nav-links a:after,.site-nav .ref-button{transition:none}
+  html.route-pending .route-progress i{animation:none;inset-inline-start:0;width:100%;opacity:.8}
+}
