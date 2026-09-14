@@ -3,6 +3,7 @@
 import Localized, { useTranslation } from "../Localized";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import "./custom-select.css";
 
 const services = ["Web Development", "E-commerce & Systems", "Brand Identity", "CV & Portfolio", "Other"] as const;
 const stages = ["New idea", "Existing project", "Redesign / rebuild", "Improve an existing system"] as const;
