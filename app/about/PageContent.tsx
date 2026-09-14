@@ -150,7 +150,7 @@ export default function AboutPage() {
       <section className={styles.principlesSection}>
         <div className={styles.shell}>
           <div className={styles.sectionHead} data-about-motion="reveal"><div><p className={styles.kicker}>{t.principles.kicker}</p><h2>{t.principles.title}</h2></div><p>{t.principles.lead}</p></div>
-          <div className={styles.principles}>{t.principles.items.map(([n, title, description]) => <article className={styles.principle} key={n} data-about-motion="stagger"><span>{n}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
+          <div className={styles.principles}>{t.principles.items.map(([n, title, description]) => <article className={styles.principle} key={n} data-about-motion="stagger" style={n === "01" ? undefined : { paddingInlineStart: "24px" }}><span>{n}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
         </div>
       </section>
 
