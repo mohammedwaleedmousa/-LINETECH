@@ -20,6 +20,26 @@ export default function EtqanPage(){
       ["Customer journey","Flows for discovering, reviewing and moving toward a service request with less confusion."],
       ["Admin operations","Management areas for marketplace content, providers, customers and platform structure."],
     ]}
+    caseStudy={{
+      en:{
+        decisions:[
+          ["Need-first discovery","The experience starts from what the customer needs, then narrows into categories and relevant providers instead of making users search an unstructured list."],
+          ["Consistent provider profiles","Providers follow one clear information structure so customers can compare services without relearning the interface each time."],
+          ["Admin structure from day one","Provider, category, customer and content management were considered part of the product foundation, not an afterthought."],
+        ],
+        outcome:"Etqan became a structured marketplace concept where service discovery, provider presentation and platform management follow one consistent system.",
+        outcomePoints:["Category-led path from need to provider","Consistent provider and service presentation","Administrative structure ready to support a growing marketplace"],
+      },
+      ar:{
+        decisions:[
+          ["الاكتشاف يبدأ من الاحتياج","تبدأ التجربة بما يحتاجه العميل ثم تضيق النتائج إلى الأقسام ومقدمي الخدمة المناسبين بدل قائمة غير منظمة."],
+          ["ملفات مقدمي الخدمة بشكل موحد","يتبع مقدمو الخدمة هيكل معلومات واحدًا حتى يستطيع العميل المقارنة بدون تعلم واجهة مختلفة في كل مرة."],
+          ["هيكلة الإدارة من البداية","تم اعتبار إدارة مقدمي الخدمة والأقسام والعملاء والمحتوى جزءًا من أساس المنتج وليس إضافة لاحقة."],
+        ],
+        outcome:"أصبح إتقان مفهوم سوق خدمات منظمًا، حيث يسير اكتشاف الخدمة وعرض مقدميها وإدارة المنصة داخل نظام واحد ومتناسق.",
+        outcomePoints:["مسار مبني على الأقسام من الاحتياج إلى مقدم الخدمة","عرض موحد وواضح للخدمات ومقدميها","هيكلة إدارية قابلة لدعم نمو السوق"],
+      },
+    }}
     stack={["React + Vite","Tailwind CSS","Supabase","Cloudflare"]}
     visualWords={["SERVICES","DISCOVERY","TRUST","MARKETPLACE"]}
   />;
