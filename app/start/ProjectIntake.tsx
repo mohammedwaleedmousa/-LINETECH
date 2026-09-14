@@ -11,11 +11,22 @@ const goals = ["Sell / generate leads", "Bookings / requests", "Internal operati
 const preferredContacts = ["WhatsApp", "Email", "Call", "Either"] as const;
 const budgets = ["Need guidance", "Small focused project", "Medium project", "Large project"];
 const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
+const finderStorageKey = "linetech-service-finder-v1";
+
+type FinderAnswerIds = Partial<Record<"outcome" | "priority" | "stage", string>>;
+type StoredFinderState = {
+  answerIds?: FinderAnswerIds;
+  completed?: boolean;
+  serviceParam?: string;
+};
 
 const requestCopy = {
   en: {
     steps: ["About you", "Project", "Scope", "Review"],
     localNote: "Your project information stays on this device during the frontend phase. Completing the request creates a local request record; it is not sent to a server yet.",
+    finderKicker: "SERVICE FINDER SAVED",
+    finderTitle: "Your recommendation is already connected.",
+    finderBody: "We kept the recommended service and used your previous answers to prefill the project stage and main goal where they clearly match. You only need to add the details we do not know yet.",
     reviewKicker: "04 / REVIEW & CONFIRM",
     reviewTitle: "Review your request before completing it.",
     reviewBody: "Check the important details below. You can go back and edit anything before you complete the project request.",
@@ -52,6 +63,9 @@ const requestCopy = {
   ar: {
     steps: ["بياناتك", "المشروع", "النطاق", "المراجعة"],
     localNote: "تبقى معلومات مشروعك على هذا الجهاز خلال مرحلة الواجهة الأمامية. إتمام الطلب ينشئ سجلًا محليًا للطلب، ولا يرسله إلى الخادم بعد.",
+    finderKicker: "تم حفظ نتيجة موجّه الخدمات",
+    finderTitle: "نتيجتك مرتبطة بالفعل بطلب المشروع.",
+    finderBody: "احتفظنا بالخدمة المقترحة واستخدمنا إجاباتك السابقة لتعبئة مرحلة المشروع والهدف الرئيسي تلقائيًا عندما يكون الربط واضحًا. أكمل فقط التفاصيل التي لا نعرفها بعد.",
     reviewKicker: "04 / المراجعة والتأكيد",
     reviewTitle: "راجع طلبك قبل إتمامه.",
     reviewBody: "تأكد من أهم البيانات أدناه. يمكنك الرجوع وتعديل أي شيء قبل إتمام طلب المشروع.",
@@ -178,6 +192,21 @@ function createRequestId() {
   return `LT-${date}-${String(random).padStart(4, "0")}`;
 }
 
+function stageFromFinder(answerIds: FinderAnswerIds) {
+  if (answerIds.stage === "new") return "New idea";
+  if (answerIds.stage === "existing") return "Existing project";
+  if (answerIds.stage === "rebuild") return "Redesign / rebuild";
+  return "";
+}
+
+function goalFromFinder(answerIds: FinderAnswerIds) {
+  if (answerIds.priority === "operations") return "Internal operations";
+  if (answerIds.outcome === "sales") return "Sell / generate leads";
+  if (answerIds.outcome === "career" || answerIds.priority === "presentation") return "Career / portfolio";
+  if (answerIds.outcome === "identity" || answerIds.priority === "consistency" || answerIds.priority === "leads" || answerIds.outcome === "presence") return "Build credibility";
+  return "";
+}
+
 export default function ProjectIntake() {
   const [step, setStep] = useState(1);
   const language = useLanguage();
@@ -188,6 +217,7 @@ export default function ProjectIntake() {
   const [confirmed, setConfirmed] = useState(false);
   const [completed, setCompleted] = useState(false);
   const [completing, setCompleting] = useState(false);
+  const [finderLoaded, setFinderLoaded] = useState(false);
   const [requestId, setRequestId] = useState("");
   const [completedAt, setCompletedAt] = useState("");
   const [name, setName] = useState("");
@@ -206,8 +236,28 @@ export default function ProjectIntake() {
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
-    const value = new URLSearchParams(window.location.search).get("service") || "";
+    const params = new URLSearchParams(window.location.search);
+    const value = params.get("service") || "";
+    const fromFinder = params.get("source") === "finder";
+
     if (services.includes(value as (typeof services)[number])) setService(value);
+    if (!fromFinder) return;
+
+    try {
+      const raw = window.localStorage.getItem(finderStorageKey);
+      if (!raw) return;
+      const saved = JSON.parse(raw) as StoredFinderState;
+      const answerIds = saved.answerIds || {};
+      const savedService = services.includes(saved.serviceParam as (typeof services)[number]) ? saved.serviceParam || "" : "";
+      const resolvedService = services.includes(value as (typeof services)[number]) ? value : savedService;
+      const resolvedStage = stageFromFinder(answerIds);
+      const resolvedGoal = goalFromFinder(answerIds);
+
+      if (resolvedService) setService(resolvedService);
+      if (resolvedStage && stages.includes(resolvedStage as (typeof stages)[number])) setStage(resolvedStage);
+      if (resolvedGoal && goals.includes(resolvedGoal as (typeof goals)[number])) setGoal(resolvedGoal);
+      setFinderLoaded(Boolean(saved.completed && resolvedService));
+    } catch {}
   }, []);
 
   const canStep1 = Boolean(name.trim() && contact.trim() && service);
@@ -288,6 +338,7 @@ export default function ProjectIntake() {
       requestId: id,
       completedAt: timestamp,
       status: "completed-locally",
+      source: finderLoaded ? "service-finder" : "direct",
       customer: { name, company, contact, preferredContact },
       project: { service, stage, goal, idea, audience, features, references },
       scope: { budget, timing, notes },
@@ -324,6 +375,12 @@ export default function ProjectIntake() {
         return <div key={label} className={`intake-progress-item ${step===n&&!completed?"active":""} ${progressStep>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>;
       })}
     </div>
+
+    {finderLoaded && !completed && <div className="finder-context-loaded" role="status">
+      <span>{copy.finderKicker}</span>
+      <div><strong>{copy.finderTitle}</strong><p>{copy.finderBody}</p></div>
+      <b>{t(service)}</b>
+    </div>}
 
     {!completed && step===1 && <section className="intake-step">
       <div className="intake-step-head"><span>01 / ABOUT YOU</span><h3>Who are we building with?</h3><p>Start with the essentials so the project has a clear owner and communication path.</p></div>
