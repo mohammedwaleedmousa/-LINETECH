@@ -1,8 +1,8 @@
 /* LINETECH hero art scale/fix V6.
-   Loaded last. Enlarges all abstract hero drawings and force-renders the Home artwork.
+   Loaded last. This file is the final authority for artwork scale and Home visibility.
    Foreground text, buttons and layout remain untouched. */
 
-/* HOME — render the inline SVG as the definitive hero artwork. */
+/* HOME — force the inline SVG to render large and clearly. */
 .ref-home .ref-hero.home-line-hero{
   position:relative!important;
   isolation:isolate!important;
@@ -15,21 +15,24 @@
   position:absolute!important;
   z-index:1!important;
   top:50%!important;
-  right:-8%!important;
+  right:-10%!important;
+  bottom:auto!important;
   left:auto!important;
-  width:min(78vw,1220px)!important;
-  height:112%!important;
+  width:min(92vw,1500px)!important;
+  height:142%!important;
   max-width:none!important;
-  transform:translateY(-50%) scale(1.08)!important;
+  transform:translateY(-50%) scale(1.1)!important;
   transform-origin:center right!important;
   pointer-events:none!important;
   overflow:visible!important;
-  filter:drop-shadow(0 0 42px rgba(56,130,246,.13))!important;
-  -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 9%,rgba(0,0,0,.18) 24%,rgba(0,0,0,.78) 42%,#000 58%,#000 100%)!important;
-  mask-image:linear-gradient(90deg,transparent 0%,transparent 9%,rgba(0,0,0,.18) 24%,rgba(0,0,0,.78) 42%,#000 58%,#000 100%)!important;
+  filter:drop-shadow(0 0 48px rgba(56,130,246,.16))!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 12%,rgba(0,0,0,.52) 28%,#000 44%,#000 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.08) 12%,rgba(0,0,0,.52) 28%,#000 44%,#000 100%)!important;
 }
 .ref-home .home-line-hero .home-hero-abstract-v6 svg{
   display:block!important;
+  visibility:visible!important;
+  opacity:1!important;
   width:100%!important;
   height:100%!important;
   max-width:none!important;
@@ -39,57 +42,57 @@
 
 /* Enlarge every non-home illustration. */
 .page-services>section:first-child{
-  background-size:100% 100%,min(72vw,1120px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,103% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(78vw,1240px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,106% 50%,0 0,0 0!important;
 }
 .page-projects [data-project-hero]{
-  background-size:100% 100%,min(75vw,1180px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,104% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(80vw,1280px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,106% 50%,0 0,0 0!important;
 }
 .page-about>section:first-child{
-  background-size:100% 100%,min(73vw,1140px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,103% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(78vw,1240px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,105% 50%,0 0,0 0!important;
 }
 .work-page .work-hero{
-  background-size:100% 100%,min(72vw,1130px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,103% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(78vw,1240px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,105% 50%,0 0,0 0!important;
 }
 .page-contact .contact-hero{
-  background-size:100% 100%,min(72vw,1120px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,103% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(77vw,1220px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,105% 50%,0 0,0 0!important;
 }
 .finder-page .finder-hero{
-  background-size:100% 100%,min(71vw,1100px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,103% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(76vw,1200px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,105% 50%,0 0,0 0!important;
 }
 .service-detail-page.service-web .service-detail-hero,
 .service-detail-page.service-commerce .service-detail-hero{
-  background-size:100% 100%,min(72vw,1130px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,103% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(78vw,1240px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,105% 50%,0 0,0 0!important;
 }
 .service-detail-page.service-brand .service-detail-hero{
-  background-size:100% 100%,min(70vw,1090px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,102% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(75vw,1180px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,104% 50%,0 0,0 0!important;
 }
 .service-detail-page.service-cv .service-detail-hero{
-  background-size:100% 100%,min(68vw,1060px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,102% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(73vw,1140px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,104% 50%,0 0,0 0!important;
 }
 .page-faq .info-page-hero,
 .page-privacy .info-page-hero,
 .page-terms .info-page-hero{
-  background-size:100% 100%,min(67vw,1040px) auto,100% 100%,100% 100%!important;
-  background-position:0 0,102% 50%,0 0,0 0!important;
+  background-size:100% 100%,min(72vw,1120px) auto,100% 100%,100% 100%!important;
+  background-position:0 0,104% 50%,0 0,0 0!important;
 }
 
 /* RTL mirrors placement without changing foreground layout. */
 html[dir="rtl"] .ref-home .home-line-hero .home-hero-abstract-v6{
   right:auto!important;
-  left:-8%!important;
-  transform:translateY(-50%) scaleX(-1) scale(1.08)!important;
+  left:-10%!important;
+  transform:translateY(-50%) scaleX(-1) scale(1.1)!important;
   transform-origin:center left!important;
-  -webkit-mask-image:linear-gradient(270deg,transparent 0%,transparent 9%,rgba(0,0,0,.18) 24%,rgba(0,0,0,.78) 42%,#000 58%,#000 100%)!important;
-  mask-image:linear-gradient(270deg,transparent 0%,transparent 9%,rgba(0,0,0,.18) 24%,rgba(0,0,0,.78) 42%,#000 58%,#000 100%)!important;
+  -webkit-mask-image:linear-gradient(270deg,transparent 0%,rgba(0,0,0,.08) 12%,rgba(0,0,0,.52) 28%,#000 44%,#000 100%)!important;
+  mask-image:linear-gradient(270deg,transparent 0%,rgba(0,0,0,.08) 12%,rgba(0,0,0,.52) 28%,#000 44%,#000 100%)!important;
 }
 html[dir="rtl"] .page-services>section:first-child,
 html[dir="rtl"] .page-projects [data-project-hero],
@@ -101,17 +104,22 @@ html[dir="rtl"] .service-detail-page .service-detail-hero,
 html[dir="rtl"] .page-faq .info-page-hero,
 html[dir="rtl"] .page-privacy .info-page-hero,
 html[dir="rtl"] .page-terms .info-page-hero{
-  background-position:0 0,-3% 50%,0 0,0 0!important;
+  background-position:0 0,-6% 50%,0 0,0 0!important;
 }
 
 @media(max-width:900px){
   .ref-home .home-line-hero .home-hero-abstract-v6{
-    width:108vw!important;
-    right:-42vw!important;
-    height:108%!important;
-    opacity:.74!important;
+    width:122vw!important;
+    right:-48vw!important;
+    height:132%!important;
+    opacity:.8!important;
+    transform:translateY(-50%) scale(1.06)!important;
   }
-  html[dir="rtl"] .ref-home .home-line-hero .home-hero-abstract-v6{right:auto!important;left:-42vw!important}
+  html[dir="rtl"] .ref-home .home-line-hero .home-hero-abstract-v6{
+    right:auto!important;
+    left:-48vw!important;
+    transform:translateY(-50%) scaleX(-1) scale(1.06)!important;
+  }
 
   .page-services>section:first-child,
   .page-projects [data-project-hero],
@@ -123,8 +131,8 @@ html[dir="rtl"] .page-terms .info-page-hero{
   .page-faq .info-page-hero,
   .page-privacy .info-page-hero,
   .page-terms .info-page-hero{
-    background-size:100% 100%,94vw auto,100% 100%,100% 100%!important;
-    background-position:0 0,125% 50%,0 0,0 0!important;
+    background-size:100% 100%,106vw auto,100% 100%,100% 100%!important;
+    background-position:0 0,142% 50%,0 0,0 0!important;
   }
   html[dir="rtl"] .page-services>section:first-child,
   html[dir="rtl"] .page-projects [data-project-hero],
@@ -136,18 +144,23 @@ html[dir="rtl"] .page-terms .info-page-hero{
   html[dir="rtl"] .page-faq .info-page-hero,
   html[dir="rtl"] .page-privacy .info-page-hero,
   html[dir="rtl"] .page-terms .info-page-hero{
-    background-position:0 0,-25% 50%,0 0,0 0!important;
+    background-position:0 0,-42% 50%,0 0,0 0!important;
   }
 }
 
 @media(max-width:620px){
   .ref-home .home-line-hero .home-hero-abstract-v6{
-    width:150vw!important;
-    right:-82vw!important;
-    height:102%!important;
-    opacity:.46!important;
+    width:166vw!important;
+    right:-88vw!important;
+    height:118%!important;
+    opacity:.52!important;
+    transform:translateY(-49%) scale(1.03)!important;
   }
-  html[dir="rtl"] .ref-home .home-line-hero .home-hero-abstract-v6{right:auto!important;left:-82vw!important}
+  html[dir="rtl"] .ref-home .home-line-hero .home-hero-abstract-v6{
+    right:auto!important;
+    left:-88vw!important;
+    transform:translateY(-49%) scaleX(-1) scale(1.03)!important;
+  }
 
   .page-services>section:first-child,
   .page-projects [data-project-hero],
@@ -159,8 +172,8 @@ html[dir="rtl"] .page-terms .info-page-hero{
   .page-faq .info-page-hero,
   .page-privacy .info-page-hero,
   .page-terms .info-page-hero{
-    background-size:100% 100%,130vw auto,100% 100%,100% 100%!important;
-    background-position:0 0,155% 52%,0 0,0 0!important;
+    background-size:100% 100%,146vw auto,100% 100%,100% 100%!important;
+    background-position:0 0,196% 52%,0 0,0 0!important;
   }
   html[dir="rtl"] .page-services>section:first-child,
   html[dir="rtl"] .page-projects [data-project-hero],
@@ -172,6 +185,6 @@ html[dir="rtl"] .page-terms .info-page-hero{
   html[dir="rtl"] .page-faq .info-page-hero,
   html[dir="rtl"] .page-privacy .info-page-hero,
   html[dir="rtl"] .page-terms .info-page-hero{
-    background-position:0 0,-55% 52%,0 0,0 0!important;
+    background-position:0 0,-96% 52%,0 0,0 0!important;
   }
 }
