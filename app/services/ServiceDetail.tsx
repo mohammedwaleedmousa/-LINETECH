@@ -62,6 +62,11 @@ export default function ServiceDetail({
   const startHref = `/start?service=${encodeURIComponent(serviceParam)}`;
   const e = engagement[language];
   const labels = engagementLabels[language];
+  const engagementColumns: Array<[string, string, string[]]> = [
+    ["01", labels.need, e.need],
+    ["02", labels.do, e.do],
+    ["03", labels.receive, e.receive],
+  ];
 
   return (
     <Localized>
@@ -129,16 +134,12 @@ export default function ServiceDetail({
               <p>{labels.lead}</p>
             </div>
             <div className="service-detail-engagement-grid">
-              {[
-                ["01", labels.need, e.need],
-                ["02", labels.do, e.do],
-                ["03", labels.receive, e.receive],
-              ].map(([number, heading, items]) => (
-                <article className="service-detail-engagement-card" key={String(number)}>
-                  <div className="service-detail-engagement-top"><span>{number as string}</span><i aria-hidden="true" /></div>
-                  <h3>{heading as string}</h3>
+              {engagementColumns.map(([number, heading, items]) => (
+                <article className="service-detail-engagement-card" key={number}>
+                  <div className="service-detail-engagement-top"><span>{number}</span><i aria-hidden="true" /></div>
+                  <h3>{heading}</h3>
                   <ul>
-                    {(items as string[]).map((item) => <li key={item}><i aria-hidden="true" />{item}</li>)}
+                    {items.map((item) => <li key={item}><i aria-hidden="true" />{item}</li>)}
                   </ul>
                 </article>
               ))}
