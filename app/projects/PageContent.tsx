@@ -115,32 +115,48 @@ const copy = {
 export default function ProjectsPage() {
   const language = useLanguage();
   const t = copy[language];
-  const featured = t.projects[0];
-  const nextProjects = t.projects.slice(1);
 
   return (
     <main className={`${styles.page} ref-page page-projects`}>
-      <section className="ltx-hero-v2 ltx-projects-hero" data-project-hero>
-        <div className="ltx-hero-v2-shell ltx-projects-hero-shell">
-          <div className="ltx-projects-hero-top">
-            <p className="ltx-hero-v2-kicker" data-project-motion="hero">{t.hero.kicker}</p>
-            <p className="ltx-projects-hero-intro" data-project-motion="hero">{t.hero.lead}</p>
+      <section className={styles.hero} data-project-hero>
+        <div className={styles.heroField} data-project-field aria-hidden="true">
+          <svg viewBox="0 0 1600 700" preserveAspectRatio="none" fill="none" focusable="false">
+            <defs>
+              <radialGradient id="project-field-glow" cx="0" cy="0" r="1" gradientTransform="translate(1180 270) rotate(90) scale(250 350)" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#3882F6" stopOpacity=".12" />
+                <stop offset="1" stopColor="#3882F6" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            <ellipse className={styles.heroGlow} cx="1180" cy="270" rx="350" ry="250" />
+            <path className={`${styles.heroRoute} ${styles.heroRouteDashed}`} d="M640 510C790 430 850 310 1020 320s250 122 420 28 210-158 300-132" />
+            <path className={styles.heroRoute} d="M820 130c120 74 194 94 302 58s190-12 278 76 180 122 300 88" />
+            <path className={styles.heroRoute} d="M970 570c75-88 148-116 238-86s168 18 228-48 118-92 204-70" />
+            <g className={styles.heroNodes}>
+              <circle cx="1020" cy="320" r="4"/><circle cx="1202" cy="360" r="3"/><circle cx="1440" cy="348" r="4"/>
+              <circle cx="1122" cy="188" r="3"/><circle cx="1400" cy="264" r="3.5"/><circle cx="1208" cy="484" r="3"/>
+            </g>
+          </svg>
+        </div>
+
+        <div className={styles.heroShell}>
+          <div className={styles.heroCopy}>
+            <p className={styles.kicker} data-project-motion="hero">{t.hero.kicker}</p>
+            <h1 data-project-motion="hero">{t.hero.title}</h1>
+            <p className={styles.heroLead} data-project-motion="hero">{t.hero.lead}</p>
+            <div className={styles.heroActions} data-project-motion="hero">
+              <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
+              <Link className={styles.secondary} href="/services" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
+            </div>
           </div>
 
-          <div className="ltx-project-feature">
-            <div className="ltx-project-feature-copy">
-              <div className="ltx-project-feature-meta" data-project-motion="hero"><i/>{featured.n} / {featured.tag}</div>
-              <h1 data-project-motion="hero">{featured.title}</h1>
-              <p data-project-motion="hero">{featured.description}</p>
-              <div className="ltx-hero-v2-actions" data-project-motion="hero">
-                <Link className="ltx-hero-v2-btn primary" href={featured.href} prefetch>{t.work.caseStudy} <span aria-hidden="true">→</span></Link>
-                <Link className="ltx-hero-v2-btn" href="/start" prefetch>{t.hero.primary} <span aria-hidden="true">→</span></Link>
+          <div className={styles.heroIndex}>
+            {t.projects.map((project) => (
+              <div key={project.n} data-project-motion="hero">
+                <span>{project.n}</span>
+                <strong>{project.title}</strong>
+                <small>{project.tag}</small>
               </div>
-            </div>
-
-            <div className="ltx-project-index" aria-label={t.work.kicker}>
-              {nextProjects.map((project)=><Link href={project.href} key={project.n} prefetch data-project-motion="hero"><span>{project.n}</span><div><strong>{project.title}</strong><small>{project.tag}</small></div></Link>)}
-            </div>
+            ))}
           </div>
         </div>
       </section>
