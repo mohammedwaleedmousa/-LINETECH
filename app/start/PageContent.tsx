@@ -9,6 +9,7 @@ import "./intake.css";
 import "./brief-premium.css";
 import "./custom-select.css";
 import "./journey.css";
+import "./finder-context.css";
 
 const briefNotesCopy = {
   en: [
