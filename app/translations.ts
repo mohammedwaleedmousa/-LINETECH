@@ -18,6 +18,7 @@ export function translate(value: string, language: Language): string {
     else if (cannotOpen) result = `تعذر فتح ${cannotOpen[1]} في المعاينة.`;
     else if (bytes) result = `${bytes[1]} ${{B: "بايت", KB: "كيلوبايت", MB: "ميغابايت"}[bytes[2]]}`;
     else if (key.endsWith(" — LINETECH")) result = `${translate(key.slice(0, -11), language)} — لاين تك`;
+    else if (/[؀-ۿ]/.test(key) && key.includes("LINETECH")) result = key.replaceAll("LINETECH", "لاين تك");
     else return value;
   }
   return `${value.match(/^\s*/)?.[0] || ""}${result}${value.match(/\s*$/)?.[0] || ""}`;
