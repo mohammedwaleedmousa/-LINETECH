@@ -1,0 +1,52 @@
+/* Final account-access polish for complete frontend states. */
+.login-password-field{position:relative}
+.login-password-field input{padding-inline-end:68px!important}
+.login-password-toggle{
+  position:absolute;
+  inset-inline-end:10px;
+  top:50%;
+  transform:translateY(-50%);
+  min-width:46px;
+  height:30px;
+  border:0;
+  border-radius:6px;
+  background:transparent;
+  color:#8fa0af;
+  font:inherit;
+  font-size:10px;
+  font-weight:650;
+  cursor:pointer;
+}
+.login-password-toggle:hover,.login-password-toggle:focus-visible{background:rgba(255,255,255,.04);color:#dce8f5;outline:none}
+.login-inline-action{
+  width:100%;
+  margin-top:10px;
+  padding:10px 0 0;
+  border:0;
+  background:transparent;
+  color:#8fa7c2;
+  font:inherit;
+  font-size:11px;
+  cursor:pointer;
+}
+.login-inline-action:hover{color:#dce9f7}
+.login-feedback-wrap{
+  margin-top:14px;
+  padding:13px 14px;
+  border:1px solid rgba(108,168,248,.22);
+  border-radius:8px;
+  background:rgba(56,130,246,.05);
+}
+.login-feedback-wrap .login-feedback{margin:0;color:#a9c7eb;font-size:11px;line-height:1.6}
+.login-feedback-wrap a{display:inline-flex;margin-top:9px;color:#e4edf7;font-size:11px;font-weight:620}
+.login-feedback-wrap a:hover{color:#82b6f6}
+.login-submit:hover{transform:none!important}
+html[dir="rtl"] .login-submit span{display:inline-block;transform:scaleX(-1)}
+html[dir="rtl"] .login-inline-action{text-align:center}
+
+@media(max-width:620px){
+  .login-card{width:100%}
+  .account-mode-head h2{font-size:27px}
+  .login-form input[type="text"],.login-form input[type="email"],.login-form input[type="password"]{font-size:16px}
+  .login-password-toggle{height:34px;font-size:11px}
+}
