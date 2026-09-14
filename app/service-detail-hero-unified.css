@@ -1,0 +1,113 @@
+/* Service-detail hero aligned with the main LINETECH visual language. */
+.service-detail-page .service-detail-hero{
+  position:relative;
+  min-height:650px!important;
+  overflow:hidden!important;
+  isolation:isolate;
+  border-bottom:1px solid #182431!important;
+  background:
+    radial-gradient(circle at 78% 34%,rgba(90,157,245,.11),transparent 27%),
+    radial-gradient(circle at 58% 82%,rgba(37,83,145,.06),transparent 34%),
+    #05080c!important;
+  background-image:none!important;
+}
+.service-detail-page.service-web .service-detail-hero,
+.service-detail-page.service-commerce .service-detail-hero,
+.service-detail-page.service-brand .service-detail-hero,
+.service-detail-page.service-cv .service-detail-hero{
+  background-image:none!important;
+}
+
+.service-detail-page .service-detail-hero::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:1;
+  pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(5,8,12,.97) 0%,rgba(5,8,12,.89) 25%,rgba(5,8,12,.6) 48%,rgba(5,8,12,.19) 73%,rgba(5,8,12,.03) 100%),
+    linear-gradient(180deg,rgba(5,8,12,.2) 0%,transparent 25%,transparent 72%,rgba(5,8,12,.27) 100%)!important;
+}
+html[dir="rtl"] .service-detail-page .service-detail-hero::before{
+  background:
+    linear-gradient(270deg,rgba(5,8,12,.97) 0%,rgba(5,8,12,.89) 25%,rgba(5,8,12,.6) 48%,rgba(5,8,12,.19) 73%,rgba(5,8,12,.03) 100%),
+    linear-gradient(180deg,rgba(5,8,12,.2) 0%,transparent 25%,transparent 72%,rgba(5,8,12,.27) 100%)!important;
+}
+.service-detail-page .service-detail-hero::after{display:none!important}
+
+.service-detail-neuron-field{
+  position:absolute;
+  inset:-4% -3% -7%;
+  z-index:0;
+  pointer-events:none;
+  overflow:visible;
+  opacity:.69;
+}
+.service-detail-neuron-field .home-line-art{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  max-width:none!important;
+  opacity:1!important;
+  transform:scale(1.07)!important;
+  transform-origin:center!important;
+  filter:drop-shadow(0 0 26px rgba(56,130,246,.08));
+}
+.service-detail-neuron-field .home-line-art svg{
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  overflow:visible!important;
+}
+
+.service-detail-page .service-detail-hero-grid{
+  position:relative;
+  z-index:2!important;
+  min-height:650px!important;
+}
+.service-detail-page .service-detail-hero-copy{
+  position:relative;
+  z-index:3;
+}
+.service-detail-page .service-detail-visual{
+  position:relative;
+  z-index:2;
+  pointer-events:none;
+}
+.service-detail-page .service-detail-visual>i{display:none!important}
+
+.service-detail-page .service-detail-back{
+  color:#73808c!important;
+}
+.service-detail-page .service-detail-back:hover{color:#8ebcff!important}
+.service-detail-page .service-detail-hero .ref-kicker{color:#76aef3!important}
+.service-detail-page .service-detail-lead{color:#9aa7b4!important}
+
+@media(max-width:900px){
+  .service-detail-page .service-detail-hero,
+  .service-detail-page .service-detail-hero-grid{min-height:620px!important}
+  .service-detail-neuron-field{inset:-2% -18% -8%;opacity:.48}
+  .service-detail-neuron-field .home-line-art{transform:scale(1.16)!important}
+}
+
+@media(max-width:620px){
+  .service-detail-page .service-detail-hero,
+  .service-detail-page .service-detail-hero-grid{min-height:580px!important}
+  .service-detail-neuron-field{inset:7% -55% -7% -22%;opacity:.3}
+  .service-detail-neuron-field .home-line-art{transform:scale(1.22)!important}
+  .service-detail-page .service-detail-hero::before{
+    background:
+      linear-gradient(90deg,rgba(5,8,12,.98) 0%,rgba(5,8,12,.91) 48%,rgba(5,8,12,.46) 78%,rgba(5,8,12,.16) 100%),
+      linear-gradient(180deg,rgba(5,8,12,.2),transparent 38%,rgba(5,8,12,.32))!important;
+  }
+  html[dir="rtl"] .service-detail-page .service-detail-hero::before{
+    background:
+      linear-gradient(270deg,rgba(5,8,12,.98) 0%,rgba(5,8,12,.91) 48%,rgba(5,8,12,.46) 78%,rgba(5,8,12,.16) 100%),
+      linear-gradient(180deg,rgba(5,8,12,.2),transparent 38%,rgba(5,8,12,.32))!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .service-detail-neuron-field *{animation:none!important}
+}
