@@ -3,12 +3,10 @@
 import Localized from "../Localized";
 import Link from "next/link";
 
-
-
 const faqs = [
   ["How do we start a project?","Start with the project brief. You can explain the idea in simple language; technical details can be defined after the goal and scope are clear."],
   ["Do I need a complete specification before contacting LINETECH?","No. A rough idea is enough to begin the conversation. The first step is understanding the outcome, then defining the useful scope."],
-  ["How are payments usually structured?","For project work, the standard structure is 40% to begin, 30% during the project and 30% before final handover, unless a different structure is agreed for the project."],
+  ["How are project payments structured?","The payment structure depends on the project scope and is confirmed in the project proposal before work begins. The proposal should make the agreed stages, amounts, currency and payment method clear."],
   ["How long does a project take?","Timing depends on the type of work, scope, content readiness and feedback speed. The schedule is defined after the project is understood rather than promising one fixed duration for every project."],
   ["Can the scope change after work begins?","Yes, but changes that affect the agreed scope, timeline or deliverables are reviewed before they are added so the project stays controlled."],
   ["Are revisions included?","Revisions are handled within the agreed project scope. The exact review stages and what is included are defined before execution begins."],
