@@ -1,12 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../Localized";
 import "./service-finder.css";
 
 type ServiceKey = "web" | "commerce" | "brand" | "cv";
-
 type AnswerKey = "outcome" | "priority" | "stage";
 
 type Choice = {
@@ -14,6 +13,17 @@ type Choice = {
   label: string;
   scores: Partial<Record<ServiceKey, number>>;
 };
+
+type StoredFinderState = {
+  answerIds?: Partial<Record<AnswerKey, string>>;
+  index?: number;
+  completed?: boolean;
+  recommendation?: ServiceKey;
+  serviceParam?: string;
+  savedAt?: string;
+};
+
+const finderStorageKey = "linetech-service-finder-v1";
 
 const serviceMeta = {
   web: {
@@ -120,7 +130,7 @@ const copy = {
     covers: "This service usually covers",
     view: "View service details",
     start: "Start this project",
-    note: "This recommendation is a starting point. Final scope is defined after LINETECH reviews the project request.",
+    note: "This recommendation is saved on this device and will continue into your project request. Start again only if you want a different recommendation.",
   },
   ar: {
     kicker: "موجّه الخدمات",
@@ -171,7 +181,7 @@ const copy = {
     covers: "هذه الخدمة تغطي عادةً",
     view: "شاهد تفاصيل الخدمة",
     start: "ابدأ هذا المشروع",
-    note: "هذا اقتراح لنقطة البداية. يتم تحديد النطاق النهائي بعد مراجعة لاين تك لطلب المشروع.",
+    note: "تم حفظ هذه النتيجة على هذا الجهاز وستنتقل معك إلى طلب المشروع. استخدم ابدأ من جديد فقط إذا أردت نتيجة مختلفة.",
   },
 } as const;
 
@@ -180,6 +190,7 @@ export default function PageContent() {
   const t = copy[language];
   const [index, setIndex] = useState(0);
   const [answers, setAnswers] = useState<Partial<Record<AnswerKey, Choice>>>({});
+  const [hydrated, setHydrated] = useState(false);
   const done = index >= t.questions.length;
 
   const recommendation = useMemo(() => {
@@ -196,6 +207,50 @@ export default function PageContent() {
   const selectedService = serviceMeta[recommendation];
   const question = t.questions[index];
 
+  useEffect(() => {
+    try {
+      const raw = window.localStorage.getItem(finderStorageKey);
+      if (raw) {
+        const saved = JSON.parse(raw) as StoredFinderState;
+        const restored: Partial<Record<AnswerKey, Choice>> = {};
+        (Object.entries(saved.answerIds || {}) as [AnswerKey, string][]).forEach(([key, choiceId]) => {
+          const matchingQuestion = t.questions.find(item => item.key === key);
+          const matchingChoice = matchingQuestion?.choices.find(choice => choice.id === choiceId);
+          if (matchingChoice) restored[key] = matchingChoice;
+        });
+        const restoredCount = Object.keys(restored).length;
+        setAnswers(restored);
+        if (saved.completed && restoredCount === t.questions.length) {
+          setIndex(t.questions.length);
+        } else {
+          setIndex(Math.min(saved.index ?? restoredCount, t.questions.length - 1));
+        }
+      }
+    } catch {}
+    setHydrated(true);
+  }, [language]);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    const answerIds: Partial<Record<AnswerKey, string>> = {};
+    (Object.entries(answers) as [AnswerKey, Choice | undefined][]).forEach(([key, answer]) => {
+      if (answer) answerIds[key] = answer.id;
+    });
+    if (!Object.keys(answerIds).length) {
+      try { window.localStorage.removeItem(finderStorageKey); } catch {}
+      return;
+    }
+    const snapshot: StoredFinderState = {
+      answerIds,
+      index,
+      completed: done,
+      recommendation,
+      serviceParam: selectedService.serviceParam,
+      savedAt: new Date().toISOString(),
+    };
+    try { window.localStorage.setItem(finderStorageKey, JSON.stringify(snapshot)); } catch {}
+  }, [answers, index, done, recommendation, selectedService.serviceParam, hydrated]);
+
   function choose(choice: Choice) {
     if (!question) return;
     setAnswers(current => ({ ...current, [question.key]: choice }));
@@ -205,6 +260,23 @@ export default function PageContent() {
   function reset() {
     setAnswers({});
     setIndex(0);
+    try { window.localStorage.removeItem(finderStorageKey); } catch {}
+  }
+
+  function keepResultForProject() {
+    const answerIds: Partial<Record<AnswerKey, string>> = {};
+    (Object.entries(answers) as [AnswerKey, Choice | undefined][]).forEach(([key, answer]) => {
+      if (answer) answerIds[key] = answer.id;
+    });
+    const snapshot: StoredFinderState = {
+      answerIds,
+      index: t.questions.length,
+      completed: true,
+      recommendation,
+      serviceParam: selectedService.serviceParam,
+      savedAt: new Date().toISOString(),
+    };
+    try { window.localStorage.setItem(finderStorageKey, JSON.stringify(snapshot)); } catch {}
   }
 
   return (
@@ -270,7 +342,7 @@ export default function PageContent() {
               </div>
 
               <div className="finder-result-actions">
-                <Link className="ref-btn primary" href={`/start?service=${encodeURIComponent(selectedService.serviceParam)}`}>{t.start} ↗</Link>
+                <Link className="ref-btn primary" onClick={keepResultForProject} href={`/start?service=${encodeURIComponent(selectedService.serviceParam)}&source=finder`}>{t.start} ↗</Link>
                 <Link className="ref-btn ghost" href={selectedService.href}>{t.view}</Link>
                 <button type="button" onClick={reset}>{t.reset}</button>
               </div>
