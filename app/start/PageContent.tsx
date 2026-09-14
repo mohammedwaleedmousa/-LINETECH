@@ -6,6 +6,7 @@ import ProjectIntake from "./ProjectIntake";
 import "./start.css";
 import "./intake.css";
 import "./brief-premium.css";
+import "./custom-select.css";
 
 const briefNotes = [
   ["01", "Your idea stays in your browser until you choose to copy or share it."],
