@@ -1,4 +1,47 @@
-/* Final chat polish: keep one local-session indicator and make reset intent clear. */
+/* Final chat polish: keep one device-session indicator and make reset intent clear. */
 .chat-sidebar-foot{display:none!important}
 .chat-new{font-size:0!important}
 .chat-new::before{content:"↺";font-size:15px;line-height:1;font-weight:500}
+
+.chat-emoji-menu{
+  position:absolute;
+  z-index:12;
+  inset-inline-start:58px;
+  bottom:72px;
+  width:min(286px,calc(100vw - 34px));
+  display:grid;
+  grid-template-columns:repeat(6,1fr);
+  gap:5px;
+  padding:10px;
+  border:1px solid #25394c;
+  border-radius:11px;
+  background:linear-gradient(180deg,#0a1119,#070c12);
+  box-shadow:0 24px 58px rgba(0,0,0,.47);
+}
+.chat-emoji-menu button{
+  width:38px;
+  height:38px;
+  display:grid;
+  place-items:center;
+  border:1px solid transparent;
+  border-radius:8px;
+  background:transparent;
+  font-size:19px;
+  cursor:pointer;
+}
+.chat-emoji-menu button:hover,.chat-emoji-menu button:focus-visible{
+  border-color:#29455f;
+  background:#0d1721;
+  outline:none;
+}
+.chat-emoji.active{background:#0d1721!important;color:#dce8f4!important}
+
+@media(max-width:620px){
+  .chat-emoji-menu{
+    inset-inline-start:8px;
+    bottom:68px;
+    width:calc(100vw - 16px);
+    grid-template-columns:repeat(6,minmax(0,1fr));
+  }
+  .chat-emoji-menu button{width:100%;height:38px}
+}
