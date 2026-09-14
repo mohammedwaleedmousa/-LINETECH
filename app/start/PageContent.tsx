@@ -9,48 +9,56 @@ import "./brief-premium.css";
 import "./custom-select.css";
 import "./journey.css";
 
-const briefNotes = [
-  ["01", "Your idea stays in your browser until you choose to copy or share it."],
-  ["02", "Three short steps help define the real size and direction of the project."],
-  ["03", "You can start even if budget or timing are not defined yet."],
-] as const;
+const briefNotesCopy = {
+  en: [
+    ["01", "Your project information stays in your browser during the frontend phase."],
+    ["02", "Four focused steps take you from basic details to a reviewed project request."],
+    ["03", "Completing the request creates a reference number before you hand it to LINETECH."],
+  ],
+  ar: [
+    ["01", "تبقى معلومات مشروعك داخل المتصفح خلال مرحلة الواجهة الأمامية."],
+    ["02", "أربع خطوات مركزة تنقلك من البيانات الأساسية إلى طلب مشروع تمت مراجعته."],
+    ["03", "إتمام الطلب ينشئ رقمًا مرجعيًا قبل تسليم الطلب إلى LINETECH."],
+  ],
+} as const;
 
 const journeyCopy = {
   en: {
     kicker: "FROM SERVICE TO HANDOVER",
     title: "One clear path from idea to delivery.",
-    lead: "LINETECH projects are custom services. You choose the closest service, prepare a brief, share it, agree the scope, then move through build and handover.",
+    lead: "LINETECH projects are custom services. You choose the closest service, prepare and complete a project request, hand it to LINETECH, agree the scope, then move through build and handover.",
     steps: [
       ["01", "Choose service", "Review the four services and choose the closest fit for what you want to achieve."],
-      ["02", "Prepare brief", "Add the goal, current stage, must-have features, timing and any useful references."],
-      ["03", "Share brief", "Use Share or Copy and send the prepared brief through the channel you use with LINETECH."],
-      ["04", "Scope & proposal", "LINETECH clarifies deliverables, timing, reviews and commercial terms before execution starts."],
+      ["02", "Prepare request", "Add the goal, current stage, must-have features, timing and any useful references."],
+      ["03", "Review & complete", "Review the final request, confirm the details and complete it to receive a reference number."],
+      ["04", "Share & scope", "Hand the completed request to LINETECH, then agree deliverables, timing, reviews and commercial terms."],
       ["05", "Build & review", "Design and development move through the agreed stages, with review points kept clear."],
       ["06", "Handover", "You receive the deployed product plus the agreed files, assets, access and credentials."],
     ],
-    ctaLead: "Choose the service, prepare the brief and share it when you are ready to start the project conversation.",
-    ctaButton: "Prepare your brief ↗",
+    ctaLead: "Choose the service, complete your project request and hand it to LINETECH when you are ready to begin.",
+    ctaButton: "Start your request ↗",
   },
   ar: {
     kicker: "من الخدمة إلى التسليم",
     title: "مسار واضح من الفكرة إلى التسليم.",
-    lead: "مشاريع LINETECH خدمات مخصصة. تختار الخدمة الأقرب لاحتياجك، تجهز ملخص المشروع، تشاركه، نتفق على النطاق، ثم ننتقل إلى التنفيذ والتسليم.",
+    lead: "مشاريع LINETECH خدمات مخصصة. تختار الخدمة الأقرب لاحتياجك، تجهز طلب المشروع وتتمّه، تسلمه إلى LINETECH، نتفق على النطاق، ثم ننتقل إلى التنفيذ والتسليم.",
     steps: [
       ["01", "اختر الخدمة", "راجع الخدمات الأربع واختر الخدمة الأقرب للنتيجة التي تريد الوصول إليها."],
-      ["02", "جهز الملخص", "أضف الهدف، مرحلة المشروع، المتطلبات الأساسية، التوقيت وأي مراجع مفيدة."],
-      ["03", "شارك الملخص", "استخدم المشاركة أو النسخ وأرسل الملخص عبر قناة التواصل التي تستخدمها مع LINETECH."],
-      ["04", "النطاق والعرض", "نحدد المخرجات والتوقيت ومراحل المراجعة والشروط التجارية قبل بدء التنفيذ."],
+      ["02", "جهز الطلب", "أضف الهدف، مرحلة المشروع، المتطلبات الأساسية، التوقيت وأي مراجع مفيدة."],
+      ["03", "راجع وأتم الطلب", "راجع الطلب النهائي، أكد صحة البيانات ثم أتمه للحصول على رقم مرجعي."],
+      ["04", "سلّم الطلب وحدد النطاق", "سلّم الطلب المكتمل إلى LINETECH ثم نتفق على المخرجات والتوقيت والمراجعات والشروط التجارية."],
       ["05", "البناء والمراجعة", "يمر التصميم والتطوير بالمراحل المتفق عليها مع نقاط مراجعة واضحة."],
       ["06", "التسليم", "تستلم المنتج المنشور مع الملفات والأصول والصلاحيات وبيانات الدخول المتفق عليها."],
     ],
-    ctaLead: "اختر الخدمة، جهز ملخص المشروع، ثم شاركه عندما تكون جاهزًا لبدء محادثة المشروع.",
-    ctaButton: "جهز ملخص مشروعك ↖",
+    ctaLead: "اختر الخدمة، أتم طلب مشروعك، ثم سلّمه إلى LINETECH عندما تكون جاهزًا للبدء.",
+    ctaButton: "ابدأ طلبك ↖",
   },
 } as const;
 
 export default function StartPage() {
   const language = useLanguage();
   const journey = journeyCopy[language];
+  const briefNotes = briefNotesCopy[language];
 
   return (
     <Localized>
