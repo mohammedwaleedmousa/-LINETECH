@@ -78,12 +78,12 @@
 .directionItem::before{content:"";position:absolute;top:-4px;inset-inline-start:22px;width:7px;height:7px;border-radius:50%;background:#0a1118;border:1px solid #527eb1;box-shadow:0 0 0 4px #05080c}.directionItem:first-child::before{inset-inline-start:0}
 .directionItem span{color:#55718e;font-size:9px;letter-spacing:.12em}.directionItem h3{margin:24px 0 8px;color:#dce4ec;font-size:15px;font-weight:550}.directionItem p{margin:0;color:#8391a0;font-size:11.5px;line-height:1.62}
 
-/* Motion hooks */
-:global(.page-about .about-motion-hero),:global(.page-about .about-motion-reveal){opacity:0;transform:translate3d(0,14px,0)}
-:global(.page-about.about-motion-mounted .about-motion-hero){opacity:1;transform:none;transition:opacity .62s cubic-bezier(.22,.61,.36,1) var(--about-hero-delay,0ms),transform .62s cubic-bezier(.22,.61,.36,1) var(--about-hero-delay,0ms)}
-:global(.page-about .about-motion-reveal.is-visible){opacity:1;transform:none;transition:opacity .58s cubic-bezier(.22,.61,.36,1) var(--about-motion-delay,0ms),transform .58s cubic-bezier(.22,.61,.36,1) var(--about-motion-delay,0ms)}
-:global(.page-about.about-motion-mounted) .heroLine::after{--about-line-progress:100%;transition:width 1.05s cubic-bezier(.22,.61,.36,1) .45s}
-:global(.page-about .about-motion-stagger){transform:translate3d(0,10px,0)}
+/* Motion hooks — scoped through the local module root so Next.js accepts them as pure selectors. */
+.page :global(.about-motion-hero),.page :global(.about-motion-reveal){opacity:0;transform:translate3d(0,14px,0)}
+.page:global(.about-motion-mounted) :global(.about-motion-hero){opacity:1;transform:none;transition:opacity .62s cubic-bezier(.22,.61,.36,1) var(--about-hero-delay,0ms),transform .62s cubic-bezier(.22,.61,.36,1) var(--about-hero-delay,0ms)}
+.page :global(.about-motion-reveal.is-visible){opacity:1;transform:none;transition:opacity .58s cubic-bezier(.22,.61,.36,1) var(--about-motion-delay,0ms),transform .58s cubic-bezier(.22,.61,.36,1) var(--about-motion-delay,0ms)}
+.page:global(.about-motion-mounted) .heroLine::after{--about-line-progress:100%;transition:width 1.05s cubic-bezier(.22,.61,.36,1) .45s}
+.page :global(.about-motion-stagger){transform:translate3d(0,10px,0)}
 
 @media(max-width:900px){
   .storyGrid,.founderGrid,.sectionHead{grid-template-columns:1fr;gap:28px}
@@ -97,9 +97,9 @@
   .heroLine{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 0;margin-top:52px;padding-top:0}.heroLine::before,.heroLine::after{display:none}.heroPoint{padding:16px 16px 0 0;border-top:1px solid var(--line)}.heroPoint::before{top:-4px}
   .storySection,.principlesSection,.founderSection,.directionSection{padding:58px 0}.storyRoute{grid-template-columns:repeat(2,minmax(0,1fr))}.storyRoute div:nth-child(2){border-inline-end:0}.storyRoute div:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .principles,.directionRail{grid-template-columns:1fr}.principle,.principle:nth-child(2),.directionItem,.directionItem:nth-child(2){border-inline-end:0;border-bottom:1px solid var(--line)}.principle:last-child,.directionItem:last-child{border-bottom:0}.principle{min-height:0;padding:22px 0}.principle h3{margin-top:18px}.directionItem,.directionItem:first-child{min-height:0;padding:22px 0}.directionItem::before,.directionItem:first-child::before{inset-inline-start:0}.directionItem h3{margin-top:18px}
-  :global(.page-about .about-motion-hero),:global(.page-about .about-motion-reveal),:global(.page-about .about-motion-stagger){transform:translate3d(0,8px,0)}
+  .page :global(.about-motion-hero),.page :global(.about-motion-reveal),.page :global(.about-motion-stagger){transform:translate3d(0,8px,0)}
 }
 @media(prefers-reduced-motion:reduce){
-  :global(.page-about .about-motion-hero),:global(.page-about .about-motion-reveal){opacity:1!important;transform:none!important;transition:none!important}
-  :global(.page-about) .heroLine::after{width:100%!important;transition:none!important}
+  .page :global(.about-motion-hero),.page :global(.about-motion-reveal){opacity:1!important;transform:none!important;transition:none!important}
+  .page .heroLine::after{width:100%!important;transition:none!important}
 }
