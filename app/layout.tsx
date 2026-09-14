@@ -40,6 +40,7 @@ import "./home-spacing.css";
 import "./language-startup.css";
 import "./home-neurons.css";
 import "./site-home-theme.css";
+import "./service-detail-compact.css";
 import "./footer-enhanced.css";
 import "./footer-compact.css";
 
