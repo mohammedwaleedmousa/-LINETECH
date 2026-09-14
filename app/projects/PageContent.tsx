@@ -173,7 +173,7 @@ export default function ProjectsPage() {
           <div className={styles.caseStudies}>
             {t.projects.map((project) => (
               <article className={styles.caseStudy} key={project.n} data-project-motion="card">
-                <div className={styles.caseTop}>
+                <div className={styles.caseTop} data-project-part="meta">
                   <div className={styles.caseIdentity}>
                     <span className={styles.caseNumber}>{project.n}</span>
                     <span className={styles.caseType}>{project.tag}</span>
@@ -182,24 +182,24 @@ export default function ProjectsPage() {
 
                 <div className={styles.caseBody}>
                   <div className={styles.caseStory}>
-                    <h3>{project.title}</h3>
-                    <p>{project.description}</p>
+                    <h3 data-project-part="title">{project.title}</h3>
+                    <p data-project-part="description">{project.description}</p>
                   </div>
 
-                  <div className={styles.caseBuilt}>
+                  <div className={styles.caseBuilt} data-project-part="focus-group">
                     <p>{t.work.builtLabel}</p>
                     <div>
-                      {project.built.map((item) => <span key={item}>{item}</span>)}
+                      {project.built.map((item, index) => <span key={item} data-project-part="focus" style={{"--project-part-index": index} as React.CSSProperties}>{item}</span>)}
                     </div>
                   </div>
                 </div>
 
                 <div className={styles.caseFooter}>
-                  <div>
+                  <div data-project-part="stack">
                     <span className={styles.stackLabel}>{t.work.stackLabel}</span>
                     <div className={styles.stackLine}>{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
                   </div>
-                  <Link className={styles.caseOpen} href={project.href} prefetch>
+                  <Link className={styles.caseOpen} href={project.href} prefetch data-project-part="link">
                     {t.work.caseStudy}<span aria-hidden="true">→</span>
                   </Link>
                 </div>
