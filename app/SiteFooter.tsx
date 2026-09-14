@@ -20,6 +20,9 @@ const copy = {
     commerce: "E-commerce & Systems",
     brand: "Brand Identity",
     cv: "CV & Portfolio",
+    finder: "Find Your Service",
+    how: "How We Work",
+    workspace: "Client Workspace",
     privacy: "Privacy",
     terms: "Terms",
     rights: "© 2026 LINETECH. All rights reserved.",
@@ -40,6 +43,9 @@ const copy = {
     commerce: "التجارة الإلكترونية والأنظمة",
     brand: "الهوية البصرية",
     cv: "السيرة الذاتية والملف المهني",
+    finder: "اعثر على خدمتك",
+    how: "كيف نعمل",
+    workspace: "مساحة العميل",
     privacy: "الخصوصية",
     terms: "الشروط",
     rights: "© 2026 لاين تك. جميع الحقوق محفوظة.",
@@ -83,6 +89,7 @@ export default function SiteFooter() {
 
           <nav className="footer-v2-column" aria-label={t.services}>
             <h4>{t.services}</h4>
+            <Link className={linkClass("/service-finder")} href="/service-finder" prefetch>{t.finder}</Link>
             <Link className={linkClass("/services/web-development")} href="/services/web-development" prefetch>{t.web}</Link>
             <Link className={linkClass("/services/ecommerce-systems")} href="/services/ecommerce-systems" prefetch>{t.commerce}</Link>
             <Link className={linkClass("/services/brand-identity")} href="/services/brand-identity" prefetch>{t.brand}</Link>
@@ -92,6 +99,8 @@ export default function SiteFooter() {
           <nav className="footer-v2-column" aria-label={t.company}>
             <h4>{t.company}</h4>
             <Link className={linkClass("/services")} href="/services" prefetch>{t.services}</Link>
+            <Link className={linkClass("/how-we-work")} href="/how-we-work" prefetch>{t.how}</Link>
+            <Link className={linkClass("/workspace")} href="/workspace" prefetch>{t.workspace}</Link>
             <Link className={linkClass("/start")} aria-current={isActive("/start") ? "page" : undefined} href="/start" prefetch>{t.contact}</Link>
             <Link className={linkClass("/privacy")} href="/privacy" prefetch>{t.privacy}</Link>
             <Link className={linkClass("/terms")} href="/terms" prefetch>{t.terms}</Link>
