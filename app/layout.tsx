@@ -4,6 +4,7 @@ import SiteFooter from "./SiteFooter";
 import LanguageBridge from "./LanguageBridge";
 import HomeMotion from "./HomeMotion";
 import ServicesMotion from "./ServicesMotion";
+import NavigationFeedback from "./NavigationFeedback";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -97,20 +98,7 @@ const languageBootstrapScript = `
 const scrollRestorationScript = `
 (() => {
   try {
-    if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-    const key = 'linetech-scroll:' + location.pathname + location.search;
-    const save = () => sessionStorage.setItem(key, String(window.scrollY));
-    const restore = () => {
-      const raw = sessionStorage.getItem(key);
-      if (raw === null) return;
-      const y = Number(raw);
-      if (!Number.isFinite(y)) return;
-      requestAnimationFrame(() => requestAnimationFrame(() => window.scrollTo(0, y)));
-    };
-    addEventListener('scroll', save, { passive: true });
-    addEventListener('pagehide', save);
-    addEventListener('beforeunload', save);
-    addEventListener('load', restore, { once: true });
+    if ('scrollRestoration' in history) history.scrollRestoration = 'auto';
   } catch (_) {}
 })();`;
 
@@ -121,6 +109,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: languageBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
         <LanguageBridge />
+        <NavigationFeedback />
         <HomeMotion />
         <ServicesMotion />
         <SiteNav />
