@@ -6,7 +6,7 @@ html{
   min-height:100%!important;
 }
 body{
-  overflow-x:hidden!important;
+  overflow-x:clip!important;
   overflow-y:visible!important;
   height:auto!important;
   min-height:100%!important;
@@ -14,10 +14,13 @@ body{
 .route-motion{
   min-height:0!important;
   height:auto!important;
-  overflow:visible!important;
+  max-height:none!important;
+  overflow-x:clip!important;
+  overflow-y:visible!important;
 }
 .ref-home,.ref-page{
   height:auto!important;
-  overflow-x:hidden!important;
+  max-height:none!important;
+  overflow-x:clip!important;
   overflow-y:visible!important;
 }
