@@ -8,11 +8,12 @@ export function translate(value: string, language: Language): string {
   const key = value.trim().replace(/\s+/g, " ");
   let result = dictionary[key];
   if (result === undefined) {
-    const step = key.match(/^Step (\d+) of 3$/);
+    const step = key.match(/^Step (\d+) of (\d+)$/);
     const largeFile = key.match(/^(.+) is larger than 5 MB\. Keep preview documents smaller until cloud storage is connected\.$/);
     const cannotOpen = key.match(/^(.+) could not be opened in the preview\.$/);
     const bytes = key.match(/^([\d.]+) (B|KB|MB)$/);
-    if (step) result = `الخطوة ${step[1]} من 3`;
+    if (step) result = `الخطوة ${step[1]} من ${step[2]}`;
+    else if (key === "Review request") result = "مراجعة الطلب";
     else if (largeFile) result = `${largeFile[1]} أكبر من 5 ميغابايت. استخدم مستندًا أصغر في المعاينة حتى يتم ربط التخزين السحابي.`;
     else if (cannotOpen) result = `تعذر فتح ${cannotOpen[1]} في المعاينة.`;
     else if (bytes) result = `${bytes[1]} ${{B: "بايت", KB: "كيلوبايت", MB: "ميغابايت"}[bytes[2]]}`;
