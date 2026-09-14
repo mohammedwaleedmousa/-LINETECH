@@ -1,4 +1,5 @@
 @import "./hero-background-refresh.css";
+@import "./hero-background-stories.css";
 
 /* Final frontend QA guards: prevent overflow without changing the visual direction. */
 .page-contact .frontend-only-note{display:none!important}
