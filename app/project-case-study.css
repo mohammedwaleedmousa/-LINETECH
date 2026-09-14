@@ -1,0 +1,110 @@
+/* Stronger case-study sections for LINETECH project pages. */
+.project-case-decisions,
+.project-case-outcome{
+  border-top:1px solid rgba(255,255,255,.08);
+}
+.project-case-decisions{background:#05080c}
+.project-case-decision-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.project-case-decision-grid article{
+  min-height:210px;
+  padding:20px;
+  border:1px solid #182431;
+  border-radius:8px;
+  background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.006));
+}
+.project-case-decision-grid article:nth-child(2){
+  border-color:#284564;
+  background:linear-gradient(180deg,rgba(56,130,246,.05),rgba(255,255,255,.006));
+}
+.project-case-decision-grid article>span{
+  display:block;
+  margin-bottom:30px;
+  color:#6887a5;
+  font-size:9px;
+  letter-spacing:.16em;
+}
+.project-case-decision-grid h3{
+  margin:0 0 10px;
+  color:#edf3f8;
+  font-size:18px;
+  font-weight:560;
+  letter-spacing:-.02em;
+}
+.project-case-decision-grid p{
+  margin:0;
+  color:#84919e;
+  font-size:12px;
+  line-height:1.68;
+}
+.project-case-outcome{
+  background:linear-gradient(120deg,rgba(56,130,246,.045),transparent 38%),#060a0e;
+}
+.project-case-outcome-grid{
+  display:grid;
+  grid-template-columns:minmax(0,.78fr) minmax(0,1.22fr);
+  gap:clamp(42px,6vw,78px);
+  align-items:start;
+}
+.project-case-outcome-grid h2{
+  margin:8px 0 16px;
+  font-size:clamp(36px,3.8vw,54px);
+  line-height:1.02;
+  letter-spacing:-.045em;
+  font-weight:520;
+}
+.project-case-outcome-lead{
+  max-width:500px;
+  color:#7f8c98;
+  font-size:12.5px;
+  line-height:1.72;
+}
+.project-case-outcome-card{
+  padding:24px;
+  border:1px solid #1c2a38;
+  border-radius:8px;
+  background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.006));
+}
+.project-case-outcome-card>p{
+  margin:0 0 26px;
+  color:#c7d0d8;
+  font-size:16px;
+  line-height:1.72;
+}
+.project-case-outcome-card>div{
+  display:grid;
+  border-top:1px solid #182431;
+}
+.project-case-outcome-card span{
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+  padding:14px 0;
+  border-bottom:1px solid #182431;
+  color:#8795a2;
+  font-size:12px;
+  line-height:1.6;
+}
+.project-case-outcome-card b{
+  color:#6688a8;
+  font-size:9px;
+  letter-spacing:.12em;
+  font-weight:500;
+}
+html[dir="rtl"] .project-case-outcome-card span{grid-template-columns:minmax(0,1fr) 42px}
+html[dir="rtl"] .project-case-outcome-card b{grid-column:2;grid-row:1}
+
+@media(max-width:900px){
+  .project-case-decision-grid{grid-template-columns:1fr}
+  .project-case-decision-grid article{min-height:0}
+  .project-case-outcome-grid{grid-template-columns:1fr;gap:30px}
+}
+@media(max-width:620px){
+  .project-case-decision-grid article,
+  .project-case-outcome-card{padding:17px}
+  .project-case-decision-grid article>span{margin-bottom:22px}
+}
