@@ -8,7 +8,10 @@
   display:none!important;
 }
 
-/* One document scrollbar only. */
+/* One document scrollbar only.
+   `hidden + visible` on opposite overflow axes can make the second axis compute to `auto`,
+   which creates a nested scrollbar. Use `clip` horizontally so vertical overflow remains
+   visible on body/page wrappers and only the root document scrolls. */
 html{
   width:100%!important;
   min-height:100%!important;
@@ -18,7 +21,8 @@ html{
 body{
   width:100%!important;
   min-height:100%!important;
-  overflow-x:hidden!important;
+  height:auto!important;
+  overflow-x:clip!important;
   overflow-y:visible!important;
 }
 .route-motion,
@@ -27,7 +31,8 @@ body{
   width:100%!important;
   max-width:100%!important;
   height:auto!important;
-  overflow-x:hidden!important;
+  max-height:none!important;
+  overflow-x:clip!important;
   overflow-y:visible!important;
 }
 
