@@ -6,12 +6,6 @@ import { useLanguage } from "./Localized";
 
 const copy = {
   en: {
-    system: "LINETECH / TECHNOLOGY COMPANY",
-    location: "ADEN / YEMEN",
-    eyebrow: "READY TO BUILD",
-    title: "Build something worth using.",
-    lead: "From the first line to a working digital product — clear thinking, disciplined design and practical engineering.",
-    cta: "Start Your Line",
     brandLead: "Technology for a brighter tomorrow.",
     brandText: "Digital products, systems and identities built around real business needs.",
     explore: "Explore",
@@ -32,12 +26,6 @@ const copy = {
     line: "Every idea starts with a line.",
   },
   ar: {
-    system: "LINETECH / شركة تقنية",
-    location: "عدن / اليمن",
-    eyebrow: "جاهزون للبناء",
-    title: "ابنِ شيئًا يستحق الاستخدام.",
-    lead: "من الخط الأول إلى منتج رقمي يعمل — تفكير واضح، تصميم منضبط، وهندسة عملية.",
-    cta: "ابدأ خطك",
     brandLead: "تقنية لغدٍ أكثر إشراقًا.",
     brandText: "منتجات وأنظمة وهويات رقمية مبنية حول احتياجات العمل الحقيقية.",
     explore: "استكشف",
@@ -76,22 +64,6 @@ export default function SiteFooter() {
       <div className="footer-v2-watermark" aria-hidden="true">LINETECH</div>
 
       <div className="ref-shell footer-v2-shell">
-        <div className="footer-v2-system">
-          <span><i aria-hidden="true" />{t.system}</span>
-          <span>{t.location}</span>
-        </div>
-
-        <div className="footer-v2-cta">
-          <div className="footer-v2-cta-copy">
-            <p>{t.eyebrow}</p>
-            <h2>{t.title}</h2>
-            <span>{t.lead}</span>
-          </div>
-          <Link className="footer-v2-cta-button" href="/start" prefetch>
-            {t.cta}<span aria-hidden="true">→</span>
-          </Link>
-        </div>
-
         <div className="footer-v2-main">
           <div className="footer-v2-brand">
             <Link className="ref-brand footer-v2-logo" href="/" prefetch aria-label="LINETECH home">
