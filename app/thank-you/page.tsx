@@ -1,11 +1,10 @@
-import PageContent from "./PageContent";
+import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Thank You",
-  description: "Frontend preview of the LINETECH project confirmation step.",
+  title: "Start Your Line",
   robots: { index: false, follow: false },
 };
 
 export default function Page() {
-  return <PageContent />;
+  redirect("/start#brief");
 }
