@@ -60,3 +60,15 @@ body:has(#top.ref-home) .global-site-nav{
 }
 @media(max-width:900px){#top.ref-home{--home-nav-space:78px}}
 @media(max-width:620px){#top.ref-home{--home-nav-space:70px}}
+
+/* Portrait phones: frame the waterfront and keep the copy area subdued. */
+@media(max-width:620px) and (orientation:portrait){
+  #top.ref-home .ref-hero.home-line-hero::before{
+    background-image:
+      linear-gradient(180deg,rgba(3,6,10,.76) 0%,rgba(3,6,10,.78) 42%,rgba(3,6,10,.68) 72%,rgba(3,6,10,.72) 100%),
+      url('/hero/home-aden.png')!important;
+    background-position:center,58% center!important;
+    background-size:cover!important;
+    background-repeat:no-repeat!important;
+  }
+}
