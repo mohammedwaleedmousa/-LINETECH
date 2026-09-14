@@ -13,6 +13,9 @@ const qaCopy: Record<string, string> = {
   "Client Workspace": "مساحة العميل",
   "Guide": "دليل",
   "Process": "المراحل",
+  "See full process": "شاهد المراحل كاملة",
+  "Want to see the client area?": "هل تريد مشاهدة مساحة العميل؟",
+  "Open Client Workspace": "افتح مساحة العميل",
 };
 
 export function translate(value: string, language: Language): string {
