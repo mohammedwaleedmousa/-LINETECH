@@ -20,6 +20,26 @@ export default function LedgerProPage(){
       ["Dashboard visibility","Focused views that surface the information needed for clearer operational awareness."],
       ["Scalable foundation","A web architecture that can support additional business capabilities as requirements develop."],
     ]}
+    caseStudy={{
+      en:{
+        decisions:[
+          ["Structured records first","Business and financial information is organized around clear entities before adding dashboard complexity."],
+          ["Repeatable workflows","Common actions follow consistent create, update and review patterns so daily work is easier to understand and maintain."],
+          ["Visibility without overload","Dashboard views focus on the operational information that needs attention instead of exposing every record at once."],
+        ],
+        outcome:"LedgerPro turns disconnected business records into a more coherent operational product, with a structure that can support additional capabilities without rebuilding the foundation.",
+        outcomePoints:["Consistent structure for business and financial records","Repeatable operational workflows across the product","A practical web foundation for extending future business capabilities"],
+      },
+      ar:{
+        decisions:[
+          ["هيكلة السجلات أولًا","تم تنظيم المعلومات التجارية والمالية حول كيانات واضحة قبل إضافة تعقيد لوحات التحكم."],
+          ["سير عمل قابل للتكرار","تتبع العمليات اليومية أنماطًا موحدة للإنشاء والتحديث والمراجعة لتكون أسهل في الفهم والصيانة."],
+          ["وضوح بدون ازدحام","تركز لوحات العرض على المعلومات التشغيلية التي تحتاج الانتباه بدل إظهار كل السجلات في وقت واحد."],
+        ],
+        outcome:"يحوّل LedgerPro السجلات التجارية المتفرقة إلى منتج تشغيلي أكثر ترابطًا، مع أساس يسمح بإضافة قدرات جديدة مستقبلًا دون إعادة بناء النظام من الصفر.",
+        outcomePoints:["هيكلة موحدة للسجلات التجارية والمالية","سير عمل متكرر وواضح داخل المنتج","أساس ويب عملي يمكن توسيعه بقدرات أعمال إضافية"],
+      },
+    }}
     stack={["React + Vite","Node.js + Express","Sequelize","PostgreSQL"]}
     visualWords={["RECORDS","WORKFLOWS","VISIBILITY","SYSTEM"]}
   />;
