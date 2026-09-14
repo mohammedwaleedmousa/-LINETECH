@@ -44,7 +44,8 @@ const copy = {
     kicker: "CLIENT WORKSPACE",
     title: "One place for the project line.",
     lead: "Your project request, progress, conversations, files and final handover are organized here in one clear workspace.",
-    local: "Frontend workspace preview — this page reads the project request saved on this device.",
+    local: "This workspace reads the project request saved on this device.",
+    noRequestCode: "00 / NO REQUEST",
     noRequestTitle: "No project request on this device yet.",
     noRequestBody: "Complete a project request first. Once it is finished, this workspace will use that request as the starting point for the project view.",
     start: "Start project request",
@@ -92,7 +93,8 @@ const copy = {
     kicker: "مساحة العميل",
     title: "مكان واحد لمسار المشروع.",
     lead: "طلب المشروع والمراحل والمحادثات والملفات والتسليم النهائي منظمة هنا داخل مساحة عمل واحدة وواضحة.",
-    local: "معاينة واجهة مساحة العميل — تقرأ هذه الصفحة طلب المشروع المحفوظ على هذا الجهاز.",
+    local: "تقرأ مساحة العمل هذه طلب المشروع المحفوظ على هذا الجهاز.",
+    noRequestCode: "00 / لا يوجد طلب",
     noRequestTitle: "لا يوجد طلب مشروع على هذا الجهاز حتى الآن.",
     noRequestBody: "أكمل طلب مشروع أولًا. بعد إتمامه ستستخدم مساحة العميل هذا الطلب كنقطة بداية لعرض المشروع.",
     start: "ابدأ طلب المشروع",
@@ -196,7 +198,7 @@ export default function WorkspaceClient() {
       {!record ? (
         <section className="workspace-empty">
           <div className="ref-shell workspace-empty-card">
-            <span>00 / NO REQUEST</span>
+            <span>{t.noRequestCode}</span>
             <h2>{t.noRequestTitle}</h2>
             <p>{t.noRequestBody}</p>
             <div>
