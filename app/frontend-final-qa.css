@@ -2,6 +2,7 @@
 @import "./hero-background-stories.css";
 @import "./hero-background-abstract-v5.css";
 @import "./hero-background-scale-v6.css";
+@import "./hero-photo-experience-v7.css";
 
 /* Final frontend QA guards: prevent overflow without changing the visual direction. */
 .page-contact .frontend-only-note{display:none!important}
