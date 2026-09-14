@@ -20,6 +20,26 @@ export default function FlamingoParkPage(){
       ["Order journey","A clearer path from product selection to order confirmation and customer follow-up."],
       ["Store operations","Admin tools for products, content, customers, orders and store configuration."],
     ]}
+    caseStudy={{
+      en:{
+        decisions:[
+          ["Mobile first","The shopping journey prioritizes small screens because product discovery and ordering are expected to happen heavily from phones."],
+          ["Choice before checkout","Size, color and availability are surfaced before order confirmation so the customer makes the important product decisions earlier."],
+          ["Commerce and operations together","The customer storefront and the internal management flow were treated as one product rather than two disconnected experiences."],
+        ],
+        outcome:"The result is one commerce system that connects what the customer sees with the work required to keep products, content and orders organized behind the scenes.",
+        outcomePoints:["Structured catalog and brand discovery","Clear product selection and ordering flow","Operational interfaces for day-to-day store management"],
+      },
+      ar:{
+        decisions:[
+          ["الموبايل أولًا","تم إعطاء رحلة التسوق على الشاشات الصغيرة الأولوية لأن اكتشاف المنتجات والطلب يحدثان بشكل كبير من الهاتف."],
+          ["الاختيار قبل التأكيد","يظهر المقاس واللون والتوفر قبل تأكيد الطلب حتى يتخذ العميل أهم قرارات المنتج مبكرًا."],
+          ["التجارة والتشغيل كنظام واحد","تم التعامل مع واجهة العميل وإدارة المتجر كمنتج واحد بدل تجربتين منفصلتين."],
+        ],
+        outcome:"النتيجة هي نظام تجارة واحد يربط ما يراه العميل بالعمل المطلوب خلف الكواليس لإدارة المنتجات والمحتوى والطلبات بصورة أوضح.",
+        outcomePoints:["كتالوج واكتشاف منظم حسب الأقسام والماركات","مسار واضح لاختيار المنتج وإتمام الطلب","واجهات تشغيلية لإدارة المتجر بشكل يومي"],
+      },
+    }}
     stack={["React + Vite","Tailwind CSS","Supabase","Cloudflare Pages"]}
     visualWords={["DISCOVERY","COMMERCE","ORDERS","OPERATIONS"]}
   />;
