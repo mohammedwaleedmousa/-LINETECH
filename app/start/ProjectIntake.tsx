@@ -10,34 +10,79 @@ const goals = ["Sell / generate leads", "Bookings / requests", "Internal operati
 const preferredContacts = ["WhatsApp", "Email", "Call", "Either"] as const;
 const budgets = ["Need guidance", "Small focused project", "Medium project", "Large project"];
 const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
-const progressSteps = [{ n: 1, label: "About you" }, { n: 2, label: "Project" }, { n: 3, label: "Scope" }];
 
-const finishCopy = {
+const requestCopy = {
   en: {
-    localNote: "Your brief stays on this device until you choose Share or Copy.",
-    kicker: "READY TO SHARE",
-    title: "Your project brief is ready.",
-    body: "The brief now contains the information LINETECH needs for the first project conversation.",
-    share: "Share project brief",
-    copy: "Copy project brief",
+    steps: ["About you", "Project", "Scope", "Review"],
+    localNote: "Your project information stays on this device during the frontend phase. Completing the request creates a local request record; it is not sent to a server yet.",
+    reviewKicker: "04 / REVIEW & CONFIRM",
+    reviewTitle: "Review your request before completing it.",
+    reviewBody: "Check the important details below. You can go back and edit anything before you complete the project request.",
+    customer: "Customer",
+    contact: "Contact",
+    service: "Service",
+    stage: "Stage",
+    goal: "Goal",
+    budget: "Budget",
+    timing: "Timing",
+    request: "Project request",
+    confirm: "I confirm that these project details are correct and understand that final price, scope and timeline are agreed with LINETECH before work begins.",
+    complete: "Complete project request",
+    completing: "Completing request…",
+    back: "← Back to scope",
+    doneKicker: "REQUEST COMPLETE",
+    doneTitle: "Your project request is ready.",
+    doneBody: "The request has been completed and saved on this device with a reference number. The next step is handing the request to LINETECH through your chosen communication channel.",
+    requestId: "Request ID",
+    status: "Status",
+    statusValue: "Completed locally",
+    nextStep: "Next step",
+    nextStepValue: "Share with LINETECH",
+    contactMethod: "Preferred contact",
+    share: "Share request with LINETECH",
+    copy: "Copy request details",
     copied: "Copied ✓",
-    note: "Nothing is sent automatically. Use Share to choose WhatsApp, Email or another app, or copy the brief and paste it into your LINETECH conversation.",
-    shareDone: "The brief was shared through the channel you selected.",
-    copyDone: "Brief copied. Paste it into your conversation with LINETECH.",
-    copyError: "Your browser blocked clipboard access. Select Share instead.",
+    edit: "Edit request",
+    shareDone: "The request was shared through the channel you selected.",
+    copyDone: "Request details copied. Paste them into your LINETECH conversation.",
+    copyError: "Your browser blocked clipboard access. Use Share instead.",
+    storageError: "The request is complete, but this browser could not save the local record.",
   },
   ar: {
-    localNote: "يبقى ملخص مشروعك على هذا الجهاز حتى تختار المشاركة أو النسخ.",
-    kicker: "جاهز للمشاركة",
-    title: "ملخص مشروعك جاهز.",
-    body: "يحتوي الملخص الآن على المعلومات التي تحتاجها LINETECH لبدء محادثة المشروع.",
-    share: "شارك ملخص المشروع",
-    copy: "انسخ ملخص المشروع",
+    steps: ["بياناتك", "المشروع", "النطاق", "المراجعة"],
+    localNote: "تبقى معلومات مشروعك على هذا الجهاز خلال مرحلة الواجهة الأمامية. إتمام الطلب ينشئ سجلًا محليًا للطلب، ولا يرسله إلى الخادم بعد.",
+    reviewKicker: "04 / المراجعة والتأكيد",
+    reviewTitle: "راجع طلبك قبل إتمامه.",
+    reviewBody: "تأكد من أهم البيانات أدناه. يمكنك الرجوع وتعديل أي شيء قبل إتمام طلب المشروع.",
+    customer: "العميل",
+    contact: "التواصل",
+    service: "الخدمة",
+    stage: "مرحلة المشروع",
+    goal: "الهدف",
+    budget: "الميزانية",
+    timing: "الوقت المتوقع",
+    request: "طلب المشروع",
+    confirm: "أؤكد أن بيانات المشروع صحيحة، وأفهم أن السعر النهائي والنطاق والمدة يتم الاتفاق عليها مع LINETECH قبل بدء التنفيذ.",
+    complete: "إتمام طلب المشروع",
+    completing: "جارٍ إتمام الطلب…",
+    back: "العودة إلى النطاق →",
+    doneKicker: "تم إتمام الطلب",
+    doneTitle: "طلب مشروعك جاهز.",
+    doneBody: "تم إتمام الطلب وحفظه على هذا الجهاز مع رقم مرجعي. الخطوة التالية هي تسليم الطلب إلى LINETECH عبر قناة التواصل التي تختارها.",
+    requestId: "رقم الطلب",
+    status: "الحالة",
+    statusValue: "مكتمل محليًا",
+    nextStep: "الخطوة التالية",
+    nextStepValue: "مشاركته مع LINETECH",
+    contactMethod: "طريقة التواصل المفضلة",
+    share: "شارك الطلب مع LINETECH",
+    copy: "انسخ تفاصيل الطلب",
     copied: "تم النسخ ✓",
-    note: "لن يتم إرسال أي شيء تلقائيًا. استخدم المشاركة لاختيار واتساب أو البريد أو تطبيق آخر، أو انسخ الملخص والصقه في محادثتك مع LINETECH.",
-    shareDone: "تمت مشاركة الملخص عبر القناة التي اخترتها.",
-    copyDone: "تم نسخ الملخص. الصقه في محادثتك مع LINETECH.",
+    edit: "تعديل الطلب",
+    shareDone: "تمت مشاركة الطلب عبر القناة التي اخترتها.",
+    copyDone: "تم نسخ تفاصيل الطلب. الصقها في محادثتك مع LINETECH.",
     copyError: "المتصفح منع الوصول إلى الحافظة. استخدم المشاركة بدلًا من ذلك.",
+    storageError: "تم إكمال الطلب، لكن المتصفح لم يتمكن من حفظ السجل المحلي.",
   },
 } as const;
 
@@ -121,13 +166,29 @@ function CustomSelect({ value, onChange, options, placeholder, ariaLabel }: Cust
   );
 }
 
+function createRequestId() {
+  const date = new Date().toISOString().slice(2, 10).replace(/-/g, "");
+  let random = Math.floor(Math.random() * 10000);
+  try {
+    const buffer = new Uint32Array(1);
+    window.crypto.getRandomValues(buffer);
+    random = buffer[0] % 10000;
+  } catch {}
+  return `LT-${date}-${String(random).padStart(4, "0")}`;
+}
+
 export default function ProjectIntake() {
   const [step, setStep] = useState(1);
   const language = useLanguage();
   const t = useTranslation();
-  const handoff = finishCopy[language];
+  const copy = requestCopy[language];
   const [copied, setCopied] = useState(false);
   const [actionStatus, setActionStatus] = useState("");
+  const [confirmed, setConfirmed] = useState(false);
+  const [completed, setCompleted] = useState(false);
+  const [completing, setCompleting] = useState(false);
+  const [requestId, setRequestId] = useState("");
+  const [completedAt, setCompletedAt] = useState("");
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [contact, setContact] = useState("");
@@ -153,6 +214,7 @@ export default function ProjectIntake() {
 
   const brief = useMemo(() => [
     t("LINETECH — START YOUR LINE"),
+    requestId ? `${copy.requestId}: ${requestId}` : "",
     "",
     t("ABOUT"),
     `${t("Name")}：${name || "—"}`,
@@ -181,7 +243,7 @@ export default function ProjectIntake() {
     "",
     t("OTHER NOTES"),
     notes || "—",
-  ].join("\n"), [t, name, company, contact, preferredContact, service, stage, goal, audience, idea, features, references, budget, timing, notes]);
+  ].filter(Boolean).join("\n"), [t, copy.requestId, requestId, name, company, contact, preferredContact, service, stage, goal, audience, idea, features, references, budget, timing, notes]);
 
   function changeStep(next: number) {
     setStep(next);
@@ -193,10 +255,10 @@ export default function ProjectIntake() {
     try {
       await navigator.clipboard.writeText(brief);
       setCopied(true);
-      setActionStatus(handoff.copyDone);
+      setActionStatus(copy.copyDone);
       window.setTimeout(() => setCopied(false), 2200);
     } catch {
-      setActionStatus(handoff.copyError);
+      setActionStatus(copy.copyError);
     }
   }
 
@@ -204,7 +266,7 @@ export default function ProjectIntake() {
     if (navigator.share) {
       try {
         await navigator.share({ title: t("LINETECH Project Brief"), text: brief });
-        setActionStatus(handoff.shareDone);
+        setActionStatus(copy.shareDone);
       } catch (error) {
         if (error instanceof Error && error.name === "AbortError") return;
         await copyBrief();
@@ -214,14 +276,55 @@ export default function ProjectIntake() {
     await copyBrief();
   }
 
-  return <Localized><div className="project-brief-form project-intake">
-    <p className="frontend-only-note">{handoff.localNote}</p>
+  function completeRequest() {
+    if (!confirmed || completing) return;
+    setCompleting(true);
+    setActionStatus("");
 
-    <div className="intake-progress" aria-label={`Step ${step} of 3`}>
-      {progressSteps.map(({n,label}) => <div key={n} className={`intake-progress-item ${step===n?"active":""} ${step>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>)}
+    const id = createRequestId();
+    const timestamp = new Date().toISOString();
+    const record = {
+      requestId: id,
+      completedAt: timestamp,
+      status: "completed-locally",
+      customer: { name, company, contact, preferredContact },
+      project: { service, stage, goal, idea, audience, features, references },
+      scope: { budget, timing, notes },
+    };
+
+    try {
+      localStorage.setItem("linetech-project-request-v1", JSON.stringify(record));
+    } catch {
+      setActionStatus(copy.storageError);
+    }
+
+    setRequestId(id);
+    setCompletedAt(timestamp);
+    setCompleted(true);
+    setCompleting(false);
+    requestAnimationFrame(() => document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  }
+
+  function editRequest() {
+    setCompleted(false);
+    setConfirmed(false);
+    setActionStatus("");
+    setStep(4);
+  }
+
+  const progressStep = completed ? 5 : step;
+
+  return <Localized><div className={`project-brief-form project-intake ${completed ? "is-complete" : ""}`}>
+    <p className="frontend-only-note">{copy.localNote}</p>
+
+    <div className="intake-progress intake-progress-four" aria-label={`Step ${Math.min(step, 4)} of 4`}>
+      {copy.steps.map((label, index) => {
+        const n = index + 1;
+        return <div key={label} className={`intake-progress-item ${step===n&&!completed?"active":""} ${progressStep>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>;
+      })}
     </div>
 
-    {step===1 && <section className="intake-step">
+    {!completed && step===1 && <section className="intake-step">
       <div className="intake-step-head"><span>01 / ABOUT YOU</span><h3>Who are we building with?</h3><p>Start with the essentials so the project has a clear owner and communication path.</p></div>
       <div className="form-row two-col">
         <label><span>Your name *</span><input value={name} onChange={e=>setName(e.target.value)} placeholder="Your full name" /></label>
@@ -235,7 +338,7 @@ export default function ProjectIntake() {
       <div className="intake-nav intake-nav-end"><button className="button button-light" type="button" disabled={!canStep1} onClick={()=>changeStep(2)}>Continue to project <span>→</span></button></div>
     </section>}
 
-    {step===2 && <section className="intake-step">
+    {!completed && step===2 && <section className="intake-step">
       <div className="intake-step-head"><span>02 / THE PROJECT</span><h3>What needs to become real?</h3><p>Tell us the goal, current stage and the few things the solution must do well.</p></div>
       <div className="form-row two-col">
         <div className="custom-select-field"><span className="custom-select-label">Project stage *</span><CustomSelect value={stage} onChange={setStage} options={stages} placeholder="Select current stage" ariaLabel="Project stage" /></div>
@@ -248,26 +351,60 @@ export default function ProjectIntake() {
       <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(1)}>← Back</button><button className="button button-light" type="button" disabled={!canStep2} onClick={()=>changeStep(3)}>Continue to scope <span>→</span></button></div>
     </section>}
 
-    {step===3 && <section className="intake-step">
+    {!completed && step===3 && <section className="intake-step">
       <div className="intake-step-head"><span>03 / SCOPE</span><h3>How should we frame the first move?</h3><p>These details help separate a small focused engagement from a larger product build.</p></div>
       <fieldset><legend>Budget range</legend><div className="choice-grid intake-choice-grid">{budgets.map(v=><label key={v} className={`choice ${budget===v?"selected":""}`}><input type="radio" name="budget" checked={budget===v} onChange={()=>setBudget(v)}/><span>{v}</span></label>)}</div></fieldset>
       <fieldset><legend>Launch timing</legend><div className="choice-grid intake-choice-grid">{timings.map(v=><label key={v} className={`choice ${timing===v?"selected":""}`}><input type="radio" name="timing" checked={timing===v} onChange={()=>setTiming(v)}/><span>{v}</span></label>)}</div></fieldset>
       <label className="form-wide"><span>Anything else we should know?</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Constraints, preferences, deadlines or context." rows={4}/></label>
       <div className="brief-summary"><div><span>Service</span><strong>{service||"—"}</strong></div><div><span>Stage</span><strong>{stage||"—"}</strong></div><div><span>Goal</span><strong>{goal||"—"}</strong></div><div><span>Timing</span><strong>{timing}</strong></div></div>
-      <div className="brief-preview">
-        <div>
-          <p className="eyebrow">{handoff.kicker}</p>
-          <h3>{handoff.title}</h3>
-          <p>{handoff.body}</p>
-          <p className="brief-send-note">{handoff.note}</p>
-          {actionStatus && <p className="brief-action-status" role="status">{actionStatus}</p>}
-        </div>
-        <div className="brief-actions">
-          <button className="button button-light" type="button" onClick={shareBrief}>{handoff.share} <span>↗</span></button>
-          <button className="brief-share" type="button" onClick={copyBrief}>{copied?handoff.copied:handoff.copy} <span>→</span></button>
-        </div>
+      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button><button className="button button-light" type="button" onClick={()=>changeStep(4)}>Review request <span>→</span></button></div>
+    </section>}
+
+    {!completed && step===4 && <section className="intake-step intake-review-step">
+      <div className="intake-step-head"><span>{copy.reviewKicker}</span><h3>{copy.reviewTitle}</h3><p>{copy.reviewBody}</p></div>
+
+      <div className="request-review-grid">
+        <article><span>{copy.customer}</span><strong>{name}</strong><p>{company || "—"}</p></article>
+        <article><span>{copy.contact}</span><strong>{contact}</strong><p>{t(preferredContact)}</p></article>
+        <article><span>{copy.service}</span><strong>{t(service)}</strong><p>{t(stage)}</p></article>
+        <article><span>{copy.goal}</span><strong>{t(goal)}</strong><p>{t(timing)}</p></article>
+        <article><span>{copy.budget}</span><strong>{t(budget)}</strong><p>{t(timing)}</p></article>
+        <article className="request-review-wide"><span>{copy.request}</span><strong>{idea}</strong>{notes && <p>{notes}</p>}</article>
       </div>
-      <div className="intake-nav intake-nav-bottom"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button></div>
+
+      <label className={`request-confirm ${confirmed ? "is-checked" : ""}`}>
+        <input type="checkbox" checked={confirmed} onChange={event=>setConfirmed(event.target.checked)} />
+        <i aria-hidden="true">✓</i>
+        <span>{copy.confirm}</span>
+      </label>
+
+      <div className="request-complete-actions">
+        <button className="button button-light request-complete-button" type="button" disabled={!confirmed || completing} onClick={completeRequest}>{completing ? copy.completing : copy.complete} <span>→</span></button>
+        <button className="intake-back" type="button" onClick={()=>changeStep(3)}>{copy.back}</button>
+      </div>
+    </section>}
+
+    {completed && <section className="intake-step request-complete-panel">
+      <div className="request-complete-mark" aria-hidden="true">✓</div>
+      <p className="eyebrow">{copy.doneKicker}</p>
+      <h3>{copy.doneTitle}</h3>
+      <p className="request-complete-lead">{copy.doneBody}</p>
+
+      <div className="request-reference"><span>{copy.requestId}</span><strong>{requestId}</strong>{completedAt && <small>{new Date(completedAt).toLocaleString(language === "ar" ? "ar" : "en")}</small>}</div>
+
+      <div className="request-status-grid">
+        <div><span>{copy.status}</span><strong>{copy.statusValue}</strong></div>
+        <div><span>{copy.nextStep}</span><strong>{copy.nextStepValue}</strong></div>
+        <div><span>{copy.contactMethod}</span><strong>{t(preferredContact)}</strong></div>
+      </div>
+
+      {actionStatus && <p className="brief-action-status" role="status">{actionStatus}</p>}
+
+      <div className="brief-actions request-finish-actions">
+        <button className="button button-light" type="button" onClick={shareBrief}>{copy.share} <span>↗</span></button>
+        <button className="brief-share" type="button" onClick={copyBrief}>{copied ? copy.copied : copy.copy} <span>→</span></button>
+        <button className="brief-share request-edit-button" type="button" onClick={editRequest}>{copy.edit}</button>
+      </div>
     </section>}
   </div></Localized>;
 }
