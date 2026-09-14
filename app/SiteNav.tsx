@@ -12,6 +12,7 @@ const items = [
   ["/projects", "Projects"],
   ["/about", "About"],
   ["/start", "Contact"],
+  ["/chat", "Chat"],
 ] as const;
 
 const searchItems = [
@@ -29,6 +30,7 @@ const searchItems = [
   { title: "FAQ", meta: "Page", href: "/faq", keywords: "faq questions payments revisions support timeline اسئلة شائعة دفعات تعديلات دعم" },
   { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief خصوصية بيانات معلومات" },
   { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website شروط نطاق دفعات اتفاق" },
+  { title: "Chat", meta: "Client", href: "/chat", keywords: "chat messages conversation support client company project محادثة رسائل دعم عميل شركة" },
   { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea تواصل ابدأ مشروع ملخص فكرة" },
 ] as const;
 
