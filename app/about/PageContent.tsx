@@ -3,6 +3,7 @@
 import Link from "next/link";
 import HomeHeroArt from "../HomeHeroArt";
 import { useLanguage } from "../Localized";
+import CompanyProfile from "./CompanyProfile";
 import styles from "./about-page.module.css";
 
 const copy = {
@@ -146,6 +147,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      <CompanyProfile />
 
       <section className={styles.principlesSection}>
         <div className={styles.shell}>
