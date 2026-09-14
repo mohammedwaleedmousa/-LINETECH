@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import Link from "next/link";
 import { useLanguage } from "../Localized";
 import styles from "./projects-page.module.css";
@@ -189,7 +190,7 @@ export default function ProjectsPage() {
                   <div className={styles.caseBuilt} data-project-part="focus-group">
                     <p>{t.work.builtLabel}</p>
                     <div>
-                      {project.built.map((item, index) => <span key={item} data-project-part="focus" style={{"--project-part-index": index} as React.CSSProperties}>{item}</span>)}
+                      {project.built.map((item, index) => <span key={item} data-project-part="focus" style={{"--project-part-index": index} as CSSProperties}>{item}</span>)}
                     </div>
                   </div>
                 </div>
