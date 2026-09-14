@@ -21,6 +21,8 @@ type ChatMessage = {
 
 type IconName = "attach" | "image" | "document" | "mic" | "send" | "play" | "pause" | "edit" | "trash" | "more" | "close" | "download";
 
+const emojis = ["👍","👏","✅","🔥","💡","🎯","🚀","🤝","😊","🙏","💙","✨"];
+
 function Icon({name,size=18}:{name:IconName;size?:number}){
   const common = {width:size,height:size,viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:1.8,strokeLinecap:"round" as const,strokeLinejoin:"round" as const,"aria-hidden":true};
   if(name==="attach") return <svg {...common}><path d="M20.5 11.5 11 21a6 6 0 0 1-8.5-8.5l10-10a4 4 0 0 1 5.7 5.7L8.7 17.7a2 2 0 0 1-2.8-2.8l9-9"/></svg>;
@@ -49,7 +51,7 @@ const initialMessages: ChatMessage[] = [
     id: "company-context",
     sender: "company",
     kind: "text",
-    text: "When realtime messaging is connected, this will become the direct conversation between you and the LINETECH team.",
+    text: "This workspace keeps your project conversation together. Messages created here are saved on this device in the current version.",
     time: "09:01",
   },
 ];
@@ -146,6 +148,7 @@ export default function ChatWorkspace(){
   const [recordingSeconds,setRecordingSeconds] = useState(0);
   const [dragging,setDragging] = useState(false);
   const [attachmentsOpen,setAttachmentsOpen] = useState(false);
+  const [emojiOpen,setEmojiOpen] = useState(false);
   const [actionMessageId,setActionMessageId] = useState<string | null>(null);
   const [editingId,setEditingId] = useState<string | null>(null);
   const listRef = useRef<HTMLDivElement>(null);
@@ -173,7 +176,7 @@ export default function ChatWorkspace(){
     try{
       window.localStorage.setItem(storageKey, JSON.stringify(messages));
     }catch{
-      setNotice("The file works now, but this browser could not keep the full media preview after refresh.");
+      setNotice("This browser could not keep the full media item after refresh.");
     }
     requestAnimationFrame(()=>{
       const node = listRef.current;
@@ -212,8 +215,9 @@ export default function ChatWorkspace(){
       sender:"client",
       time:currentTime(),
     }]);
-    setNotice("Saved on this device only — realtime delivery will start when the chat backend is connected.");
+    setNotice("Saved on this device.");
     setActionMessageId(null);
+    setEmojiOpen(false);
   }
 
   function sendMessage(event?:FormEvent<HTMLFormElement>){
@@ -225,7 +229,7 @@ export default function ChatWorkspace(){
       setMessages(current=>current.map(message=>message.id===editingId && message.kind==="text" && !message.deleted ? {...message,text,edited:true} : message));
       setEditingId(null);
       setDraft("");
-      setNotice("Message edited in this local preview.");
+      setNotice("Message edited on this device.");
       return;
     }
 
@@ -240,12 +244,19 @@ export default function ChatWorkspace(){
     }
   }
 
+  function addEmoji(emoji:string){
+    setDraft(current=>`${current}${emoji}`);
+    setEmojiOpen(false);
+    requestAnimationFrame(()=>textareaRef.current?.focus());
+  }
+
   function beginEdit(message:ChatMessage){
     if(message.sender!=="client" || message.kind!=="text" || message.deleted) return;
     setEditingId(message.id);
     setDraft(message.text || "");
     setActionMessageId(null);
     setAttachmentsOpen(false);
+    setEmojiOpen(false);
     requestAnimationFrame(()=>textareaRef.current?.focus());
   }
 
@@ -266,20 +277,21 @@ export default function ChatWorkspace(){
     } : message));
     if(editingId===messageId) cancelEdit();
     setActionMessageId(null);
-    setNotice("Deleted for everyone in this frontend preview. Realtime deletion will be enforced when the backend is connected.");
+    setNotice("Message removed from this device.");
   }
 
   async function addImages(files: FileList | File[]){
     const images = Array.from(files).filter(file=>file.type.startsWith("image/")).slice(0,4);
     if(!images.length) return;
     setAttachmentsOpen(false);
+    setEmojiOpen(false);
     setNotice("Preparing image…");
     for(const file of images){
       try{
         const src = await compressImage(file);
         pushClientMessage({kind:"image",src,fileName:file.name,fileSize:file.size,fileType:file.type});
       }catch{
-        setNotice("This image could not be opened in the preview.");
+        setNotice("This image could not be opened.");
       }
     }
     if(imageInputRef.current) imageInputRef.current.value = "";
@@ -289,16 +301,17 @@ export default function ChatWorkspace(){
     const documents = Array.from(files).filter(file=>!file.type.startsWith("image/")).slice(0,3);
     if(!documents.length) return;
     setAttachmentsOpen(false);
+    setEmojiOpen(false);
     for(const file of documents){
       if(file.size > 5 * 1024 * 1024){
-        setNotice(`${file.name} is larger than 5 MB. Keep preview documents smaller until cloud storage is connected.`);
+        setNotice(`${file.name} is larger than 5 MB. Choose a smaller document for this device conversation.`);
         continue;
       }
       try{
         const src = await readBlobAsDataUrl(file);
         pushClientMessage({kind:"document",src,fileName:file.name,fileSize:file.size,fileType:file.type || "application/octet-stream"});
       }catch{
-        setNotice(`${file.name} could not be opened in the preview.`);
+        setNotice(`${file.name} could not be opened.`);
       }
     }
     if(documentInputRef.current) documentInputRef.current.value = "";
@@ -359,13 +372,14 @@ export default function ChatWorkspace(){
       recorder.start(200);
       setRecording(true);
       setAttachmentsOpen(false);
+      setEmojiOpen(false);
       setNotice("");
       timerRef.current = window.setInterval(()=>{
         recordingSecondsRef.current += 1;
         setRecordingSeconds(recordingSecondsRef.current);
       },1000);
     }catch{
-      setNotice("Microphone permission is needed to record a real voice message.");
+      setNotice("Microphone permission is needed to record a voice message.");
     }
   }
 
@@ -384,9 +398,10 @@ export default function ChatWorkspace(){
     setEditingId(null);
     setDraft("");
     setAttachmentsOpen(false);
+    setEmojiOpen(false);
     setActionMessageId(null);
     try{ window.localStorage.removeItem(storageKey); }catch{}
-    setNotice("Local preview conversation cleared.");
+    setNotice("Conversation reset on this device.");
   }
 
   function onDrop(event:React.DragEvent<HTMLDivElement>){
@@ -404,7 +419,7 @@ export default function ChatWorkspace(){
     <aside className="chat-sidebar">
       <div className="chat-sidebar-head">
         <div><span className="chat-eyebrow">LINETECH</span><h1>Chats</h1></div>
-        <button type="button" className="chat-new" onClick={clearPreview} aria-label="Clear local preview chat">＋</button>
+        <button type="button" className="chat-new" onClick={clearPreview} aria-label="Reset device conversation">＋</button>
       </div>
 
       <div className="chat-search-box" aria-hidden="true"><span>⌕</span><p>Search or start new chat</p></div>
@@ -417,19 +432,19 @@ export default function ChatWorkspace(){
         </button>
       </div>
 
-      <div className="chat-sidebar-foot"><span className="chat-status-dot"/><div><strong>Preview mode</strong><small>Messages stay on this device</small></div></div>
+      <div className="chat-sidebar-foot"><span className="chat-status-dot"/><div><strong>Device conversation</strong><small>Messages stay on this device</small></div></div>
     </aside>
 
     <div className={`chat-main ${dragging?"is-dragging":""}`} onDragEnter={event=>{event.preventDefault();setDragging(true)}} onDragOver={event=>event.preventDefault()} onDragLeave={event=>{if(event.currentTarget===event.target)setDragging(false)}} onDrop={onDrop}>
       <header className="chat-header">
-        <div className="chat-header-person"><span className="chat-avatar large"><i/><b/></span><div><strong>LINETECH Project Team</strong><span><i/> Company conversation</span></div></div>
+        <div className="chat-header-person"><span className="chat-avatar large"><i/><b/></span><div><strong>LINETECH Project Team</strong><span><i/> Project conversation</span></div></div>
         <div className="chat-header-actions"><button type="button" aria-label="Search conversation">⌕</button><button type="button" aria-label="Conversation menu"><Icon name="more"/></button></div>
       </header>
 
-      <div className="chat-preview-banner"><span>PREVIEW</span><p>Messages, photos, documents and real voice notes work locally now. Realtime delivery starts when authentication and the backend are connected.</p></div>
+      <div className="chat-preview-banner"><span>DEVICE MODE</span><p>Messages, photos, documents and voice notes in this conversation are saved on this device.</p></div>
 
       <div className="chat-messages" ref={listRef}>
-        <div className="chat-encryption-note">This frontend preview stays on your device.</div>
+        <div className="chat-encryption-note">This conversation is stored on this device.</div>
         <div className="chat-day"><span>TODAY</span></div>
         {messages.map(message=><div key={message.id} className={`chat-message-row ${message.sender}`}>
           <div className={`chat-bubble ${message.deleted?"deleted":message.kind}`}>
@@ -437,11 +452,11 @@ export default function ChatWorkspace(){
               <button type="button" className="chat-message-more" aria-label="Message actions" onClick={()=>setActionMessageId(current=>current===message.id?null:message.id)}><Icon name="more" size={16}/></button>
               {actionMessageId===message.id && <div className="chat-message-menu">
                 {message.kind==="text" && <button type="button" onClick={()=>beginEdit(message)}><Icon name="edit" size={15}/><span>Edit message</span></button>}
-                <button type="button" className="danger" onClick={()=>deleteForEveryone(message.id)}><Icon name="trash" size={15}/><span>Delete for everyone</span></button>
+                <button type="button" className="danger" onClick={()=>deleteForEveryone(message.id)}><Icon name="trash" size={15}/><span>Delete message</span></button>
               </div>}
             </div>}
 
-            {message.deleted ? <div className="chat-deleted-message"><Icon name="trash" size={15}/><span>This message was deleted for everyone.</span></div> : <>
+            {message.deleted ? <div className="chat-deleted-message"><Icon name="trash" size={15}/><span>This message was deleted.</span></div> : <>
               {message.kind === "text" && <p data-no-translate={message.sender === "client"}>{message.text}</p>}
               {message.kind === "image" && message.src && <figure className="chat-image-message"><img src={message.src} alt="Shared image"/>{message.fileName&&<figcaption><Icon name="image" size={13}/><span data-no-translate>{message.fileName}</span></figcaption>}</figure>}
               {message.kind === "audio" && message.src && <VoiceMessage src={message.src} duration={message.duration}/>} 
@@ -451,7 +466,7 @@ export default function ChatWorkspace(){
                 <a href={message.src} download={message.fileName || "document"} aria-label="Download document"><Icon name="download" size={17}/></a>
               </div>}
             </>}
-            <span className="chat-message-meta">{message.edited&&!message.deleted?<em>edited</em>:null}{message.time}{message.sender === "client" && !message.deleted ? <b aria-label="Saved locally">✓✓</b> : null}</span>
+            <span className="chat-message-meta">{message.edited&&!message.deleted?<em>edited</em>:null}{message.time}{message.sender === "client" && !message.deleted ? <b aria-label="Saved on this device">✓✓</b> : null}</span>
           </div>
         </div>)}
       </div>
@@ -467,17 +482,21 @@ export default function ChatWorkspace(){
           <button type="button" onClick={()=>documentInputRef.current?.click()}><span className="attachment-icon document"><Icon name="document" size={20}/></span><div><strong>Document</strong><small>PDF, Word, Excel and more</small></div></button>
         </div>}
 
+        {emojiOpen && !recording && <div className="chat-emoji-menu" role="dialog" aria-label="Choose emoji">
+          {emojis.map(emoji=><button type="button" key={emoji} onClick={()=>addEmoji(emoji)} aria-label={`Add ${emoji}`}>{emoji}</button>)}
+        </div>}
+
         {recording ? <div className="chat-recording-bar">
           <button type="button" className="recording-cancel" onClick={cancelRecording} aria-label="Cancel voice recording"><Icon name="close" size={20}/></button>
-          <div className="recording-state"><i/><strong>{formatDuration(recordingSeconds)}</strong><span><Icon name="mic" size={14}/> Recording real voice</span></div>
-          <button type="button" className="recording-send" onClick={stopRecording} aria-label="Send voice recording"><Icon name="send" size={17}/></button>
+          <div className="recording-state"><i/><strong>{formatDuration(recordingSeconds)}</strong><span><Icon name="mic" size={14}/> Recording voice</span></div>
+          <button type="button" className="recording-send" onClick={stopRecording} aria-label="Save voice recording"><Icon name="send" size={17}/></button>
         </div> : <form className="chat-composer" onSubmit={sendMessage}>
           <input ref={imageInputRef} className="chat-file-input" type="file" accept="image/*" multiple onChange={handleImages}/>
           <input ref={documentInputRef} className="chat-file-input" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,application/pdf,text/plain" multiple onChange={handleDocuments}/>
-          <button type="button" className={`chat-attach ${attachmentsOpen?"active":""}`} aria-label="Add attachment" aria-expanded={attachmentsOpen} onClick={()=>setAttachmentsOpen(open=>!open)}><Icon name="attach" size={20}/></button>
-          <button type="button" className="chat-emoji" aria-label="Emoji" onClick={()=>setNotice("Emoji picker can be connected in the next UI pass.")}>☺</button>
+          <button type="button" className={`chat-attach ${attachmentsOpen?"active":""}`} aria-label="Add attachment" aria-expanded={attachmentsOpen} onClick={()=>{setAttachmentsOpen(open=>!open);setEmojiOpen(false)}}><Icon name="attach" size={20}/></button>
+          <button type="button" className={`chat-emoji ${emojiOpen?"active":""}`} aria-label="Emoji" aria-expanded={emojiOpen} onClick={()=>{setEmojiOpen(open=>!open);setAttachmentsOpen(false)}}>☺</button>
           <textarea ref={textareaRef} value={draft} onChange={event=>setDraft(event.target.value)} onKeyDown={handleComposerKeyDown} placeholder={editingId?"Edit your message":"Type a message"} rows={1} aria-label="Message"/>
-          {draft.trim()?<button type="submit" className="chat-send" aria-label={editingId?"Save edit":"Send message"}><Icon name="send" size={18}/></button>:<button type="button" className="chat-mic" aria-label="Record voice message" onClick={startRecording}><Icon name="mic" size={18}/></button>}
+          {draft.trim()?<button type="submit" className="chat-send" aria-label={editingId?"Save edit":"Save message"}><Icon name="send" size={18}/></button>:<button type="button" className="chat-mic" aria-label="Record voice message" onClick={startRecording}><Icon name="mic" size={18}/></button>}
         </form>}
       </footer>
     </div>
