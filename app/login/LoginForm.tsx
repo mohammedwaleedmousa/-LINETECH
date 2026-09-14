@@ -13,6 +13,7 @@ const copy = {
     clientAccess: "CLIENT ACCESS",
     newAccount: "NEW ACCOUNT",
     recovery: "ACCOUNT RECOVERY",
+    accountAction: "Choose account action",
     welcome: "Welcome back.",
     createTitle: "Create your workspace.",
     recoverTitle: "Recover your account.",
@@ -40,10 +41,10 @@ const copy = {
     and: "and",
     recoverButton: "Prepare recovery",
     back: "← Back to sign in",
-    note: "Account access is currently a frontend experience. Details entered on this page are not submitted or stored.",
-    loginReady: "The sign-in experience is ready. No credentials were submitted from this version.",
-    signupReady: "The account setup experience is ready. No account was created or stored from this version.",
-    recoveryReady: "Recovery is ready as a frontend state. No recovery email was sent from this version.",
+    note: "Account access is not active yet. Details entered on this page are not submitted or stored.",
+    loginReady: "Account access is not active yet, so no credentials were submitted.",
+    signupReady: "Account creation is not active yet, so no account was created or stored.",
+    recoveryReady: "Account recovery is not active yet, so no recovery email was sent.",
     mismatch: "Passwords do not match.",
     short: "Use at least 8 characters for the password.",
     workspace: "Open Client Workspace",
@@ -54,6 +55,7 @@ const copy = {
     clientAccess: "دخول العميل",
     newAccount: "حساب جديد",
     recovery: "استعادة الحساب",
+    accountAction: "اختر إجراء الحساب",
     welcome: "مرحبًا بعودتك.",
     createTitle: "أنشئ مساحة عملك.",
     recoverTitle: "استعد حسابك.",
@@ -81,10 +83,10 @@ const copy = {
     and: "و",
     recoverButton: "تجهيز الاستعادة",
     back: "العودة إلى تسجيل الدخول →",
-    note: "الوصول إلى الحساب حاليًا تجربة واجهة أمامية. البيانات المدخلة في هذه الصفحة لا يتم إرسالها أو حفظها.",
-    loginReady: "تجربة تسجيل الدخول جاهزة. لم يتم إرسال بيانات الدخول في هذه النسخة.",
-    signupReady: "تجربة إنشاء الحساب جاهزة. لم يتم إنشاء أو حفظ حساب في هذه النسخة.",
-    recoveryReady: "حالة استعادة الحساب جاهزة في الواجهة. لم يتم إرسال رسالة استعادة في هذه النسخة.",
+    note: "الوصول إلى الحساب غير مفعّل حاليًا. البيانات المدخلة في هذه الصفحة لا يتم إرسالها أو حفظها.",
+    loginReady: "الوصول إلى الحساب غير مفعّل حاليًا، لذلك لم يتم إرسال بيانات الدخول.",
+    signupReady: "إنشاء الحساب غير مفعّل حاليًا، لذلك لم يتم إنشاء أو حفظ حساب.",
+    recoveryReady: "استعادة الحساب غير مفعّلة حاليًا، لذلك لم يتم إرسال رسالة استعادة.",
     mismatch: "كلمتا المرور غير متطابقتين.",
     short: "استخدم 8 أحرف على الأقل لكلمة المرور.",
     workspace: "افتح مساحة العميل",
@@ -132,7 +134,7 @@ export default function LoginForm(){
   const isForgot = mode === "forgot";
 
   return <div className="account-access">
-    {!isForgot && <div className="account-switch" role="tablist" aria-label="Choose account action">
+    {!isForgot && <div className="account-switch" role="tablist" aria-label={t.accountAction}>
       <button type="button" role="tab" aria-selected={mode==="login"} className={mode==="login"?"active":""} onClick={()=>switchMode("login")}>{t.signIn}</button>
       <button type="button" role="tab" aria-selected={mode==="signup"} className={mode==="signup"?"active":""} onClick={()=>switchMode("signup")}>{t.create}</button>
     </div>}
