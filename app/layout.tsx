@@ -41,6 +41,7 @@ import "./language-startup.css";
 import "./home-neurons.css";
 import "./site-home-theme.css";
 import "./service-detail-compact.css";
+import "./service-detail-hero-unified.css";
 import "./footer-enhanced.css";
 import "./footer-compact.css";
 
