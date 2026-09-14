@@ -138,37 +138,38 @@ export default function AboutPage() {
   return (
     <main className={`${styles.page} ref-page page-about`}>
       <section className={styles.hero}>
-        <div className={styles.heroField} aria-hidden="true">
-          <svg viewBox="0 0 1600 700" preserveAspectRatio="none" fill="none" focusable="false">
-            <path className={`${styles.heroRoute} ${styles.heroRouteDashed}`} d="M760 520C900 432 982 292 1135 313s218 111 365 22 183-125 250-110" />
-            <path className={styles.heroRoute} d="M870 155c120 65 202 76 304 36s196-7 278 75 164 108 272 75" />
-            <path className={styles.heroRoute} d="M1010 585c78-72 154-93 239-59s155 21 213-35 111-82 194-68" />
-            <g className={styles.heroNodes}>
-              <circle cx="1135" cy="313" r="4"/><circle cx="1324" cy="354" r="3"/><circle cx="1500" cy="335" r="4"/>
-              <circle cx="1174" cy="191" r="3"/><circle cx="1452" cy="266" r="3.5"/><circle cx="1249" cy="526" r="3"/>
-            </g>
-          </svg>
+        <div className={styles.heroMark} aria-hidden="true">
+          <span className={styles.heroMarkVertical} />
+          <span className={styles.heroMarkHorizontal} />
+          <span className={styles.heroMarkNode} />
+          <span className={styles.heroMarkWord}>LINETECH</span>
         </div>
 
         <div className={styles.heroShell}>
-          <div className={styles.heroCopy}>
+          <aside className={styles.heroRail}>
             <p className={styles.kicker} data-about-motion="hero">{t.hero.kicker}</p>
-            <h1 data-about-motion="hero">{t.hero.title}</h1>
-            <p className={styles.heroLead} data-about-motion="hero">{t.hero.lead}</p>
-            <div className={styles.heroActions} data-about-motion="hero">
-              <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
-              <Link className={styles.secondary} href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
+            <div className={styles.heroIndex}>
+              {t.hero.points.map(([n, title, detail]) => (
+                <div key={n} data-about-motion="hero">
+                  <span>{n}</span>
+                  <div>
+                    <strong>{title}</strong>
+                    <small>{detail}</small>
+                  </div>
+                </div>
+              ))}
             </div>
-          </div>
+          </aside>
 
-          <div className={styles.heroIndex}>
-            {t.hero.points.map(([n, title, detail]) => (
-              <div key={n} data-about-motion="hero">
-                <span>{n}</span>
-                <strong>{title}</strong>
-                <small>{detail}</small>
+          <div className={styles.heroStage}>
+            <h1 data-about-motion="hero">{t.hero.title}</h1>
+            <div className={styles.heroBottom}>
+              <p className={styles.heroLead} data-about-motion="hero">{t.hero.lead}</p>
+              <div className={styles.heroActions} data-about-motion="hero">
+                <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
+                <Link className={styles.secondary} href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
               </div>
-            ))}
+            </div>
           </div>
         </div>
       </section>
