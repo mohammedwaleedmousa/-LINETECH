@@ -1,6 +1,7 @@
 "use client";
 
 import Localized from "../Localized";
+import HomeHeroArt from "../HomeHeroArt";
 import Link from "next/link";
 
 type Item = [string, string];
@@ -33,6 +34,10 @@ export default function ServiceDetail({
   return (
     <Localized><main className={`ref-page service-detail-page ${className}`}>
       <section className="service-detail-hero">
+        <div className="service-detail-neuron-field" aria-hidden="true">
+          <HomeHeroArt />
+        </div>
+
         <div className="ref-shell service-detail-hero-grid">
           <div className="service-detail-hero-copy">
             <Link className="service-detail-back" href="/services" prefetch>Services <span>↗</span></Link>
