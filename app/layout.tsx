@@ -23,6 +23,7 @@ import "./hero-variants.css";
 import "./hero-images.css";
 import "./service-detail.css";
 import "./project-detail.css";
+import "./project-case-study.css";
 import "./info-pages.css";
 import "./search.css";
 import "./v1-frontend-lock.css";
