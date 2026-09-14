@@ -2,6 +2,7 @@
 
 import Localized, { useLanguage, useTranslation } from "../Localized";
 import { useEffect, useMemo, useRef, useState } from "react";
+import ScopePreview from "./ScopePreview";
 import "./custom-select.css";
 
 const services = ["Web Development", "E-commerce & Systems", "Brand Identity", "CV & Portfolio", "Other"] as const;
@@ -357,6 +358,7 @@ export default function ProjectIntake() {
       <fieldset><legend>Launch timing</legend><div className="choice-grid intake-choice-grid">{timings.map(v=><label key={v} className={`choice ${timing===v?"selected":""}`}><input type="radio" name="timing" checked={timing===v} onChange={()=>setTiming(v)}/><span>{v}</span></label>)}</div></fieldset>
       <label className="form-wide"><span>Anything else we should know?</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Constraints, preferences, deadlines or context." rows={4}/></label>
       <div className="brief-summary"><div><span>Service</span><strong>{service||"—"}</strong></div><div><span>Stage</span><strong>{stage||"—"}</strong></div><div><span>Goal</span><strong>{goal||"—"}</strong></div><div><span>Timing</span><strong>{timing}</strong></div></div>
+      <ScopePreview service={service} stage={stage} goal={goal} budget={budget} timing={timing} />
       <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button><button className="button button-light" type="button" onClick={()=>changeStep(4)}>Review request <span>→</span></button></div>
     </section>}
 
