@@ -1,100 +1,66 @@
-/** Calm full-hero neural-network artwork for the LINETECH homepage. */
+/** Abstract technical artwork for the LINETECH homepage hero. */
 export default function HomeHeroArt() {
   return (
     <div className="home-line-art home-neuron-art" aria-hidden="true">
-      <svg viewBox="0 0 1440 620" fill="none" focusable="false" preserveAspectRatio="xMidYMid meet">
+      <svg viewBox="0 0 1440 700" fill="none" focusable="false" preserveAspectRatio="xMidYMid slice">
         <defs>
-          <radialGradient id="neuron-field-a">
-            <stop stopColor="#3882F6" stopOpacity=".12" />
+          <linearGradient id="lt-main" x1="420" y1="540" x2="1320" y2="120" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#3882F6" stopOpacity="0" />
+            <stop offset=".28" stopColor="#4F94F5" stopOpacity=".26" />
+            <stop offset=".64" stopColor="#8FC1FF" stopOpacity=".82" />
+            <stop offset="1" stopColor="#D8EAFF" stopOpacity=".14" />
+          </linearGradient>
+          <linearGradient id="lt-soft" x1="740" y1="620" x2="1300" y2="90" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#2C6FC8" stopOpacity=".05" />
+            <stop offset=".56" stopColor="#70ACF8" stopOpacity=".34" />
+            <stop offset="1" stopColor="#A8D0FF" stopOpacity=".08" />
+          </linearGradient>
+          <radialGradient id="lt-glow" cx="0" cy="0" r="1" gradientTransform="translate(1060 330) rotate(90) scale(290 380)" gradientUnits="userSpaceOnUse">
+            <stop stopColor="#3882F6" stopOpacity=".16" />
             <stop offset="1" stopColor="#3882F6" stopOpacity="0" />
           </radialGradient>
-          <radialGradient id="neuron-field-b">
-            <stop stopColor="#78B3FF" stopOpacity=".075" />
-            <stop offset="1" stopColor="#78B3FF" stopOpacity="0" />
-          </radialGradient>
-          <radialGradient id="neuron-core">
-            <stop stopColor="#E4F0FF" />
-            <stop offset=".25" stopColor="#8FC1FF" />
-            <stop offset="1" stopColor="#3882F6" stopOpacity=".18" />
-          </radialGradient>
-          <linearGradient id="neuron-line" x1="80" y1="470" x2="1350" y2="150" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#7BB3FF" stopOpacity=".08" />
-            <stop offset=".35" stopColor="#5B9CFA" stopOpacity=".22" />
-            <stop offset=".72" stopColor="#72ACF8" stopOpacity=".36" />
-            <stop offset="1" stopColor="#9BC8FF" stopOpacity=".12" />
-          </linearGradient>
+          <filter id="lt-blur" x="-30%" y="-30%" width="160%" height="160%">
+            <feGaussianBlur stdDeviation="9" />
+          </filter>
         </defs>
 
-        <ellipse cx="350" cy="310" rx="360" ry="270" fill="url(#neuron-field-a)" />
-        <ellipse cx="1080" cy="290" rx="410" ry="300" fill="url(#neuron-field-b)" />
+        <ellipse cx="1060" cy="330" rx="390" ry="300" fill="url(#lt-glow)" />
 
-        <g className="neuron-network-base" stroke="url(#neuron-line)" strokeWidth="1" strokeLinecap="round">
-          <path d="M54 392 170 330 278 374 391 285 515 336 625 254 754 310 876 230 1005 286 1118 202 1260 254 1388 176" />
-          <path d="M170 330 214 214 340 168 391 285 470 190 625 254 690 152 876 230 954 128 1118 202 1196 112 1388 176" />
-          <path d="M278 374 246 490 404 512 515 336 568 462 754 310 806 475 1005 286 1072 430 1260 254 1324 392" />
-          <path d="M54 392 96 514 246 490" />
-          <path d="M340 168 286 92 190 128 214 214" />
-          <path d="M470 190 510 92 604 120 690 152" />
-          <path d="M954 128 1010 66 1112 92 1196 112" />
-          <path d="M806 475 914 536 1072 430 1190 500 1324 392" />
-          <path d="M568 462 642 552 806 475" />
+        <g className="lt-architecture" strokeLinecap="round" strokeLinejoin="round">
+          <path d="M560 566 760 448 916 492 1126 332 1352 374" stroke="url(#lt-main)" strokeWidth="1.7" />
+          <path d="M690 622 868 520 1036 558 1250 388" stroke="url(#lt-soft)" strokeWidth="1" />
+          <path d="M746 190 918 110 1164 154 1298 88" stroke="url(#lt-soft)" strokeWidth="1" />
+
+          <path d="M822 466 822 214 1038 116 1228 208 1228 442 1038 552Z" stroke="#6AA7F5" strokeOpacity=".25" strokeWidth="1.15" />
+          <path d="M876 438 876 248 1039 174 1172 238 1172 410 1039 494Z" stroke="#8ABEFF" strokeOpacity=".34" strokeWidth="1.15" />
+          <path d="M930 405 930 285 1039 236 1116 273 1116 374 1039 430Z" stroke="#A9D0FF" strokeOpacity=".48" strokeWidth="1.35" />
+
+          <path d="M822 214 1038 315 1228 208M822 466 1038 315 1228 442M1038 116V552" stroke="#5797EA" strokeOpacity=".16" strokeWidth="1" />
+          <path d="M876 248 1039 325 1172 238M876 438 1039 325 1172 410" stroke="#75B1FA" strokeOpacity=".2" strokeWidth="1" />
+
+          <path d="M718 360H885M1194 322H1372" stroke="#75B1FA" strokeOpacity=".22" strokeWidth="1" />
+          <path d="M752 330H898M1180 353H1328" stroke="#5C9EF2" strokeOpacity=".1" strokeWidth="1" />
+          <path d="M1039 236V430M930 285 1039 334 1116 273M930 405 1039 334 1116 374" stroke="#B5D7FF" strokeOpacity=".34" strokeWidth="1" />
         </g>
 
-        <g className="neuron-cluster neuron-cluster-a">
-          <path d="M190 128 286 92 340 168 278 374 170 330 214 214Z" stroke="#70AAFA" strokeOpacity=".11" />
-          <circle cx="54" cy="392" r="3" fill="#78B2FC" fillOpacity=".55" />
-          <circle cx="170" cy="330" r="4" fill="#6CA7F8" fillOpacity=".68" />
-          <circle cx="214" cy="214" r="3.2" fill="#85BBFF" fillOpacity=".62" />
-          <circle cx="286" cy="92" r="2.6" fill="#75AEF9" fillOpacity=".52" />
-          <circle cx="340" cy="168" r="4.6" fill="url(#neuron-core)" fillOpacity=".72" />
-          <circle cx="278" cy="374" r="3.5" fill="#71ABFA" fillOpacity=".62" />
-          <circle cx="246" cy="490" r="2.8" fill="#8AC0FF" fillOpacity=".48" />
+        <g className="lt-origin-points">
+          <circle cx="560" cy="566" r="3.2" fill="#6EACF8" fillOpacity=".75" />
+          <circle cx="760" cy="448" r="3" fill="#76B2FA" fillOpacity=".7" />
+          <circle cx="916" cy="492" r="3" fill="#84BAFC" fillOpacity=".62" />
+          <circle cx="1039" cy="334" r="5.5" fill="#DDEEFF" fillOpacity=".92" />
+          <circle cx="1039" cy="334" r="18" stroke="#7DB7FD" strokeOpacity=".14" />
+          <circle cx="1039" cy="334" r="36" stroke="#5C9DF0" strokeOpacity=".06" />
+          <circle cx="1228" cy="208" r="3.2" fill="#8DC0FF" fillOpacity=".74" />
+          <circle cx="1228" cy="442" r="3" fill="#6CAAF8" fillOpacity=".55" />
+          <circle cx="1352" cy="374" r="2.7" fill="#8BBEFF" fillOpacity=".58" />
         </g>
 
-        <g className="neuron-cluster neuron-cluster-b">
-          <path d="M470 190 510 92 604 120 690 152 625 254 515 336Z" stroke="#76B0FF" strokeOpacity=".14" />
-          <circle cx="391" cy="285" r="4" fill="#5F9FF6" fillOpacity=".62" />
-          <circle cx="470" cy="190" r="3" fill="#7DB5FC" fillOpacity=".58" />
-          <circle cx="510" cy="92" r="2.6" fill="#6AA5F7" fillOpacity=".44" />
-          <circle cx="604" cy="120" r="3.4" fill="#8FC2FF" fillOpacity=".58" />
-          <circle cx="625" cy="254" r="5" fill="url(#neuron-core)" fillOpacity=".8" />
-          <circle cx="515" cy="336" r="3.6" fill="#6EA9FA" fillOpacity=".62" />
-          <circle cx="568" cy="462" r="3" fill="#80B8FF" fillOpacity=".5" />
-          <circle cx="642" cy="552" r="2.6" fill="#71ABFA" fillOpacity=".38" />
+        <g opacity=".42">
+          <path d="M1004 334H1074" stroke="#D3E8FF" strokeWidth="1.2" />
+          <path d="M1039 299V369" stroke="#D3E8FF" strokeWidth="1.2" />
         </g>
 
-        <g className="neuron-cluster neuron-cluster-c">
-          <path d="M876 230 954 128 1010 66 1112 92 1196 112 1118 202 1005 286Z" stroke="#79B4FF" strokeOpacity=".16" />
-          <path d="M1005 286 1072 430 1190 500 1324 392 1260 254Z" stroke="#79B4FF" strokeOpacity=".13" />
-          <circle cx="754" cy="310" r="3.2" fill="#70AAFA" fillOpacity=".55" />
-          <circle cx="876" cy="230" r="4.2" fill="#7DB5FD" fillOpacity=".7" />
-          <circle cx="954" cy="128" r="3" fill="#74ADFA" fillOpacity=".56" />
-          <circle cx="1010" cy="66" r="2.5" fill="#8FC2FF" fillOpacity=".46" />
-          <circle cx="1112" cy="92" r="3.2" fill="#78B1FC" fillOpacity=".6" />
-          <circle cx="1118" cy="202" r="5.2" fill="url(#neuron-core)" fillOpacity=".84" />
-          <circle cx="1005" cy="286" r="3.6" fill="#6DA8F9" fillOpacity=".62" />
-          <circle cx="1072" cy="430" r="4.4" fill="#75AFFB" fillOpacity=".68" />
-          <circle cx="1190" cy="500" r="2.8" fill="#8AC0FF" fillOpacity=".5" />
-          <circle cx="1260" cy="254" r="4" fill="#6EA9F9" fillOpacity=".64" />
-          <circle cx="1324" cy="392" r="3" fill="#79B2FD" fillOpacity=".48" />
-          <circle cx="1388" cy="176" r="2.6" fill="#91C4FF" fillOpacity=".42" />
-        </g>
-
-        <g className="neuron-satellites" fill="#7FB7FF">
-          <circle cx="96" cy="514" r="2.5" />
-          <circle cx="404" cy="512" r="2.4" />
-          <circle cx="690" cy="152" r="2.8" />
-          <circle cx="806" cy="475" r="2.8" />
-          <circle cx="914" cy="536" r="2.4" />
-          <circle cx="1196" cy="112" r="2.6" />
-        </g>
-
-        <g className="neuron-pulses">
-          <circle cx="340" cy="168" r="13" stroke="#72ACFA" strokeOpacity=".10" />
-          <circle cx="625" cy="254" r="16" stroke="#72ACFA" strokeOpacity=".12" />
-          <circle cx="1118" cy="202" r="18" stroke="#7AB4FF" strokeOpacity=".12" />
-          <circle cx="1072" cy="430" r="14" stroke="#7AB4FF" strokeOpacity=".09" />
-        </g>
+        <path d="M620 586C790 510 848 420 1028 336 1136 286 1264 258 1394 234" stroke="#6EA9F6" strokeOpacity=".13" strokeWidth="18" filter="url(#lt-blur)" />
       </svg>
     </div>
   );
