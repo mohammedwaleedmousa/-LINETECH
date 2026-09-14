@@ -58,8 +58,8 @@ const copy = {
       lead: "You do not need to know the technical solution first. Choose the outcome closest to what you want to achieve, and we’ll point you to the right starting line.",
       panel: "OUTCOME ROUTER",
       status: "SELECT A DIRECTION",
-      helper: "Still not sure? Start with the problem and we’ll define the path with you.",
-      helperLink: "Describe what you need",
+      helper: "Still not sure? Answer three focused questions and we’ll recommend the closest starting service.",
+      helperLink: "Use Service Finder",
       choices: [
         { n: "01", title: "Build a stronger digital presence for my company", target: "WEB DEVELOPMENT", href: "/services/web-development" },
         { n: "02", title: "Sell online or make business operations easier", target: "E-COMMERCE & SYSTEMS", href: "/services/ecommerce-systems" },
@@ -136,8 +136,8 @@ const copy = {
       lead: "لا تحتاج أن تعرف الحل التقني أولًا. اختر النتيجة الأقرب لما تريد تحقيقه، وسنوجهك إلى نقطة البداية الصحيحة.",
       panel: "موجّه النتائج",
       status: "اختر الاتجاه",
-      helper: "ما زلت غير متأكد؟ ابدأ بالمشكلة فقط، وسنحدد المسار معك.",
-      helperLink: "اشرح لنا ما تحتاجه",
+      helper: "ما زلت غير متأكد؟ أجب عن ثلاثة أسئلة مركزة وسنقترح لك أقرب خدمة كبداية.",
+      helperLink: "استخدم موجّه الخدمات",
       choices: [
         { n: "01", title: "أريد حضورًا رقميًا أقوى لشركتي", target: "تطوير المواقع", href: "/services/web-development" },
         { n: "02", title: "أريد البيع أونلاين أو تسهيل عمليات العمل", target: "التجارة الإلكترونية والأنظمة", href: "/services/ecommerce-systems" },
@@ -253,7 +253,7 @@ export default function ServicesPage() {
 
             <div className={outcomeStyles.helper}>
               <p>{t.decision.helper}</p>
-              <Link href="/start" prefetch>{t.decision.helperLink}<span aria-hidden="true">→</span></Link>
+              <Link href="/service-finder" prefetch>{t.decision.helperLink}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
         </div>
