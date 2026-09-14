@@ -24,6 +24,18 @@ export default function WebDevelopmentPage(){
       ["New products","A strong first version for an idea that needs to become a usable web product."],
       ["Existing platforms","A clearer, faster or more structured experience for a website that has outgrown its current form."],
     ]}
+    engagement={{
+      en:{
+        need:["Business goals and target audience","Available content, brand assets and references","Required pages, features and integrations"],
+        do:["Define the information architecture and user flow","Design the responsive interface and interaction system","Build, test and prepare the product for launch"],
+        receive:["Responsive production-ready web experience","Agreed source files, assets and deployment access","Handover notes for managing the delivered product"],
+      },
+      ar:{
+        need:["أهداف النشاط والجمهور المستهدف","المحتوى والهوية والمراجع المتوفرة","الصفحات والميزات والتكاملات المطلوبة"],
+        do:["نحدد هيكلة المحتوى ومسار المستخدم","نصمم الواجهة المتجاوبة ونظام التفاعل","نبني ونختبر ونجهز المنتج للإطلاق"],
+        receive:["تجربة ويب متجاوبة وجاهزة للاستخدام","الملفات المصدرية والأصول وصلاحيات النشر المتفق عليها","ملاحظات تسليم تساعدك على إدارة المنتج بعد التسليم"],
+      },
+    }}
     process={[
       ["Understand","We define the audience, goal and the real job the website needs to do."],
       ["Structure","We shape pages, flows and priorities before visual design begins."],
