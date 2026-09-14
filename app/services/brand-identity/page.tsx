@@ -24,6 +24,18 @@ export default function BrandIdentityPage(){
       ["Growing brands","A more consistent system for a business whose current visuals no longer match its direction."],
       ["Digital products","A visual foundation that can move naturally across a website, product and social presence."],
     ]}
+    engagement={{
+      en:{
+        need:["Business story, audience and positioning","Existing logo, assets or visual material if available","References, competitors and where the identity will be used"],
+        do:["Define a focused visual direction","Develop the logo, typography, color and graphic system","Prepare practical rules for consistent application"],
+        receive:["The agreed logo versions and core brand assets","A coherent typography, color and graphic language","Practical usage guidance for future brand work"],
+      },
+      ar:{
+        need:["قصة النشاط والجمهور والتموضع","الشعار أو الأصول أو المواد البصرية الحالية إن وجدت","المراجع والمنافسون والأماكن التي ستستخدم فيها الهوية"],
+        do:["نحدد اتجاهًا بصريًا مركزًا","نطوّر الشعار والخطوط والألوان والنظام الرسومي","نجهز قواعد عملية للاستخدام المتناسق"],
+        receive:["نسخ الشعار والأصول الأساسية المتفق عليها","نظامًا متناسقًا للخطوط والألوان والعناصر الرسومية","إرشادات استخدام عملية لأعمال الهوية المستقبلية"],
+      },
+    }}
     process={[
       ["Understand","We clarify the business, audience, tone and what the identity needs to communicate."],
       ["Direction","We define the visual territory before refining individual elements."],
