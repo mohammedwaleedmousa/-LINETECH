@@ -47,7 +47,7 @@
   inset:calc(-1 * var(--home-nav-space)) 0 0!important;
   z-index:-1!important;
   pointer-events:none!important;
-  background:linear-gradient(rgba(3,6,10,.64),rgba(3,6,10,.64)),url('/hero/home-aden.png') center/cover no-repeat!important;
+  background:linear-gradient(rgba(3,6,10,.72),rgba(3,6,10,.72)),url('/hero/home-aden.png') center/cover no-repeat!important;
 }
 #top.ref-home .ref-hero.home-line-hero::after,
 #top.ref-home .ref-hero.home-line-hero .home-line-art{
