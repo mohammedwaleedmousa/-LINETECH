@@ -2,7 +2,7 @@
 
 import Localized, { useLanguage, setLanguage } from "./Localized";
 
-import Link from "next/link";
+import Link from "./IntentLink";
 import { usePathname } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
