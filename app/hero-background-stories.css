@@ -1,0 +1,510 @@
+/* LINETECH hero background stories.
+   CSS-only visual narratives. Text, buttons, spacing and content stay untouched. */
+
+/* Shared safeguards */
+.ref-home .ref-hero.home-line-hero,
+.page-services>section:first-child,
+.page-projects [data-project-hero],
+.page-about>section:first-child,
+.work-page .work-hero,
+.page-contact .contact-hero,
+.finder-page .finder-hero,
+.service-detail-page .service-detail-hero,
+.page-faq .info-page-hero,
+.page-privacy .info-page-hero,
+.page-terms .info-page-hero{
+  position:relative;
+  isolation:isolate;
+  overflow:hidden;
+}
+
+.page-about>section:first-child .home-neuron-art,
+.page-services>section:first-child .home-neuron-art,
+.ref-home .home-line-hero .home-neuron-art,
+.service-detail-page .service-detail-neuron-field,
+.page-projects [data-project-field],
+.page-contact .contact-signal{
+  opacity:0!important;
+  visibility:hidden!important;
+}
+
+/* 01 — HOME: the first line appears out of darkness. */
+.ref-home .ref-hero.home-line-hero{
+  background:
+    radial-gradient(ellipse 34% 30% at 77% 40%,rgba(133,191,255,.105),transparent 72%),
+    radial-gradient(ellipse 62% 72% at 92% 54%,rgba(56,130,246,.10),transparent 73%),
+    linear-gradient(118deg,#010203 0%,#03070b 52%,#07111c 100%)!important;
+}
+.ref-home .ref-hero.home-line-hero::before{
+  content:"";
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  width:92%;
+  height:1px;
+  left:37%;
+  top:47%;
+  background:linear-gradient(90deg,transparent 0%,rgba(56,130,246,.08) 11%,rgba(115,177,255,.74) 48%,rgba(196,224,255,.82) 51%,rgba(72,147,242,.14) 66%,transparent 100%);
+  box-shadow:0 0 20px rgba(56,130,246,.18);
+  transform:rotate(-7deg);
+  transform-origin:left center;
+  animation:storyLineDrift 13s ease-in-out infinite alternate;
+}
+.ref-home .ref-hero.home-line-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 73% 44%,rgba(210,232,255,.62) 0 1px,rgba(111,177,255,.42) 2px,rgba(56,130,246,.12) 7px,transparent 19px),
+    radial-gradient(ellipse 24% 12% at 73% 44%,rgba(103,169,250,.09),transparent 74%),
+    linear-gradient(180deg,rgba(255,255,255,.008),transparent 32%,rgba(0,0,0,.26));
+}
+
+/* 02 — SERVICES: four capabilities converge into one company. */
+.page-services>section:first-child{
+  background:
+    radial-gradient(ellipse 30% 42% at 70% 20%,rgba(85,151,239,.10),transparent 72%),
+    radial-gradient(ellipse 28% 40% at 90% 34%,rgba(123,182,255,.075),transparent 72%),
+    radial-gradient(ellipse 26% 38% at 72% 68%,rgba(48,114,207,.09),transparent 72%),
+    radial-gradient(ellipse 26% 38% at 94% 82%,rgba(91,156,239,.06),transparent 72%),
+    linear-gradient(110deg,#010203 0%,#04080d 55%,#07121d 100%)!important;
+}
+.page-services>section:first-child::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(ellipse 12% 18% at 82% 50%,rgba(157,204,255,.12),transparent 74%),
+    linear-gradient(118deg,transparent 58%,rgba(83,151,241,.025) 68%,rgba(145,196,255,.065) 69%,rgba(70,139,229,.02) 70%,transparent 79%);
+  animation:storyGlowBreathe 15s ease-in-out infinite alternate;
+}
+.page-services>section:first-child::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  width:42%;
+  height:76%;
+  right:-7%;
+  top:12%;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(57,127,220,.055),transparent 69%);
+}
+
+/* 03 — PROJECTS: selected work under gallery spotlights. */
+.page-projects [data-project-hero]{
+  background:
+    radial-gradient(ellipse 34% 54% at 22% -8%,rgba(110,171,249,.09),transparent 73%),
+    radial-gradient(ellipse 38% 60% at 74% -10%,rgba(56,130,246,.115),transparent 72%),
+    radial-gradient(ellipse 28% 38% at 94% 92%,rgba(31,74,128,.07),transparent 72%),
+    linear-gradient(180deg,#020305 0%,#05090e 56%,#030609 100%)!important;
+}
+.page-projects [data-project-hero]::before{
+  content:"";
+  position:absolute;
+  inset:-18% -8% 0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    linear-gradient(105deg,transparent 14%,rgba(111,174,255,.025) 27%,rgba(163,205,255,.075) 33%,rgba(83,151,240,.018) 40%,transparent 52%),
+    linear-gradient(76deg,transparent 47%,rgba(90,158,242,.025) 58%,rgba(145,196,255,.06) 64%,rgba(70,140,231,.014) 70%,transparent 80%);
+  filter:blur(.2px);
+  animation:storySpotlight 18s ease-in-out infinite alternate;
+}
+.page-projects [data-project-hero]::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:linear-gradient(180deg,transparent 62%,rgba(0,0,0,.34) 100%);
+}
+
+/* 04 — ABOUT: a horizon line, origin on one side and open future on the other. */
+.page-about>section:first-child{
+  background:
+    radial-gradient(ellipse 44% 52% at 20% 58%,rgba(54,124,215,.105),transparent 73%),
+    radial-gradient(ellipse 42% 42% at 88% 52%,rgba(94,159,241,.055),transparent 74%),
+    linear-gradient(112deg,#010203 0%,#05090f 50%,#07101a 100%)!important;
+}
+.page-about>section:first-child::before{
+  content:""!important;
+  position:absolute!important;
+  inset:auto 0 28% 0!important;
+  height:1px!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background:linear-gradient(90deg,transparent 0%,rgba(56,130,246,.08) 9%,rgba(102,168,250,.42) 28%,rgba(142,194,255,.28) 54%,rgba(70,139,230,.07) 78%,transparent 100%)!important;
+  box-shadow:0 0 24px rgba(56,130,246,.09)!important;
+}
+.page-about>section:first-child::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  left:14%;
+  bottom:calc(28% - 5px);
+  width:11px;
+  height:11px;
+  border-radius:50%;
+  border:1px solid rgba(133,190,255,.58);
+  background:#06101a;
+  box-shadow:0 0 0 8px rgba(56,130,246,.025),0 0 25px rgba(56,130,246,.24);
+}
+
+/* 05 — HOW WE WORK: six phases on one illuminated path. */
+.work-page .work-hero{
+  background:
+    radial-gradient(ellipse 52% 58% at 80% 44%,rgba(56,130,246,.085),transparent 73%),
+    linear-gradient(112deg,#010203 0%,#04080d 56%,#07111b 100%)!important;
+}
+.work-page .work-hero::before{
+  content:"";
+  position:absolute;
+  left:7%;
+  right:7%;
+  bottom:25%;
+  height:1px;
+  z-index:0;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,#22466f 8%,#5b9deb 50%,#254b74 92%,transparent);
+  box-shadow:0 0 18px rgba(56,130,246,.10);
+}
+.work-page .work-hero::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 14% 75%,rgba(174,212,255,.7) 0 1px,rgba(79,150,239,.32) 2px,transparent 7px),
+    radial-gradient(circle at 29% 75%,rgba(151,199,255,.58) 0 1px,rgba(69,142,235,.25) 2px,transparent 7px),
+    radial-gradient(circle at 44% 75%,rgba(151,199,255,.58) 0 1px,rgba(69,142,235,.25) 2px,transparent 7px),
+    radial-gradient(circle at 59% 75%,rgba(151,199,255,.58) 0 1px,rgba(69,142,235,.25) 2px,transparent 7px),
+    radial-gradient(circle at 74% 75%,rgba(151,199,255,.58) 0 1px,rgba(69,142,235,.25) 2px,transparent 7px),
+    radial-gradient(circle at 89% 75%,rgba(151,199,255,.58) 0 1px,rgba(69,142,235,.25) 2px,transparent 7px);
+  opacity:.8;
+}
+.work-page .work-hero>.ref-shell{position:relative;z-index:2}
+
+/* 06 — START / CONTACT: an incoming signal concentrates into one starting point. */
+.page-contact .contact-hero{
+  background:
+    radial-gradient(circle at 82% 50%,rgba(112,176,253,.13) 0%,rgba(56,130,246,.045) 22%,transparent 50%),
+    linear-gradient(110deg,#010203 0%,#04080d 54%,#07111c 100%)!important;
+}
+.page-contact .contact-hero::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background:
+    radial-gradient(circle at 82% 50%,transparent 0 9%,rgba(105,170,250,.12) 9.2% 9.45%,transparent 9.7% 17%,rgba(79,149,238,.075) 17.2% 17.4%,transparent 17.7% 25%,rgba(63,135,226,.045) 25.2% 25.35%,transparent 25.6%),
+    linear-gradient(102deg,transparent 42%,rgba(77,147,235,.025) 62%,rgba(148,197,255,.08) 72%,rgba(66,136,228,.018) 78%,transparent 88%)!important;
+  animation:storySignalPulse 13s ease-in-out infinite alternate;
+}
+.page-contact .contact-hero::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  left:45%;
+  right:10%;
+  top:50%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(73,145,236,.14),rgba(181,215,255,.72),rgba(70,143,236,.08));
+  box-shadow:0 0 14px rgba(56,130,246,.14);
+}
+.page-contact .contact-hero-shell{position:relative;z-index:2}
+
+/* 07 — SERVICE FINDER: several possible directions converge into a decision. */
+.finder-page .finder-hero{
+  background:
+    radial-gradient(ellipse 38% 48% at 82% 50%,rgba(56,130,246,.115),transparent 73%),
+    linear-gradient(112deg,#010203 0%,#04080d 57%,#07111b 100%)!important;
+}
+.finder-page .finder-hero::before,
+.finder-page .finder-hero::after{
+  content:"";
+  position:absolute;
+  z-index:0;
+  pointer-events:none;
+  width:62%;
+  height:1px;
+  right:-9%;
+  top:47%;
+  transform-origin:right center;
+  background:linear-gradient(90deg,transparent,rgba(60,132,225,.04),rgba(133,190,255,.34),rgba(182,216,255,.58));
+  box-shadow:0 0 16px rgba(56,130,246,.10);
+}
+.finder-page .finder-hero::before{transform:rotate(17deg)}
+.finder-page .finder-hero::after{transform:rotate(-17deg)}
+.finder-page .finder-hero-shell{position:relative;z-index:2}
+
+/* 08 — WEB DEVELOPMENT: a clean digital viewport emerging from depth. */
+.service-detail-page.service-web .service-detail-hero{
+  background:
+    radial-gradient(ellipse 42% 54% at 83% 48%,rgba(62,141,237,.12),transparent 72%),
+    linear-gradient(112deg,#010203 0%,#04080d 53%,#07121e 100%)!important;
+}
+.service-detail-page.service-web .service-detail-hero::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  inset:14% -6% 12% 64%!important;
+  border:1px solid rgba(111,174,255,.13)!important;
+  border-radius:22px!important;
+  background:linear-gradient(145deg,rgba(56,130,246,.035),rgba(255,255,255,.004))!important;
+  box-shadow:0 0 80px rgba(56,130,246,.045),inset 0 0 45px rgba(56,130,246,.018)!important;
+  transform:perspective(900px) rotateY(-8deg)!important;
+}
+.service-detail-page.service-web .service-detail-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:0!important;
+  right:5%;
+  top:22%;
+  width:30%;
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(112,177,255,.42),transparent);
+}
+
+/* 09 — E-COMMERCE & SYSTEMS: flow from customer action to operations. */
+.service-detail-page.service-commerce .service-detail-hero{
+  background:
+    radial-gradient(ellipse 34% 42% at 68% 34%,rgba(56,130,246,.085),transparent 72%),
+    radial-gradient(ellipse 34% 42% at 90% 68%,rgba(85,151,239,.095),transparent 72%),
+    linear-gradient(112deg,#010203 0%,#04080d 53%,#07121d 100%)!important;
+}
+.service-detail-page.service-commerce .service-detail-hero::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  left:54%!important;
+  right:-8%!important;
+  top:54%!important;
+  bottom:auto!important;
+  height:1px!important;
+  background:linear-gradient(90deg,transparent,rgba(73,145,236,.16),rgba(169,210,255,.62),rgba(71,143,234,.10),transparent)!important;
+  box-shadow:0 0 20px rgba(56,130,246,.14)!important;
+  animation:storyFlowShift 12s ease-in-out infinite alternate;
+}
+.service-detail-page.service-commerce .service-detail-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:0!important;
+  right:13%;
+  top:43%;
+  width:88px;
+  height:88px;
+  border-radius:50%;
+  border:1px solid rgba(106,171,251,.12);
+  box-shadow:0 0 0 18px rgba(56,130,246,.018),0 0 50px rgba(56,130,246,.055);
+}
+
+/* 10 — BRAND IDENTITY: one controlled halo becomes a visual signature. */
+.service-detail-page.service-brand .service-detail-hero{
+  background:
+    radial-gradient(circle at 82% 46%,rgba(103,169,250,.10),transparent 26%),
+    linear-gradient(112deg,#010203 0%,#04080d 53%,#07111d 100%)!important;
+}
+.service-detail-page.service-brand .service-detail-hero::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  width:420px!important;
+  height:420px!important;
+  inset:50% 8% auto auto!important;
+  border-radius:50%!important;
+  transform:translateY(-50%)!important;
+  background:conic-gradient(from 220deg,rgba(56,130,246,0),rgba(78,153,247,.16),rgba(145,199,255,.28),rgba(86,163,251,.11),rgba(56,130,246,0) 72%)!important;
+  filter:blur(.4px)!important;
+  animation:storyHaloTurn 28s linear infinite!important;
+}
+.service-detail-page.service-brand .service-detail-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:0!important;
+  right:calc(8% + 117px);
+  top:calc(50% - 93px);
+  width:186px;
+  height:186px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(155,204,255,.10),rgba(56,130,246,.025) 48%,transparent 72%);
+  box-shadow:0 0 60px rgba(56,130,246,.055);
+}
+
+/* 11 — CV & PORTFOLIO: an editorial spotlight, like one clear page in focus. */
+.service-detail-page.service-cv .service-detail-hero{
+  background:
+    radial-gradient(ellipse 30% 62% at 82% 42%,rgba(90,158,242,.105),transparent 73%),
+    linear-gradient(112deg,#010203 0%,#04080d 55%,#07111b 100%)!important;
+}
+.service-detail-page.service-cv .service-detail-hero::before{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  top:-18%!important;
+  right:10%!important;
+  bottom:-18%!important;
+  left:auto!important;
+  width:28%!important;
+  background:linear-gradient(180deg,transparent,rgba(143,194,255,.07) 24%,rgba(143,194,255,.13) 50%,rgba(70,142,234,.035) 72%,transparent)!important;
+  transform:skewX(-7deg)!important;
+  filter:blur(.2px)!important;
+}
+.service-detail-page.service-cv .service-detail-hero::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:0!important;
+  right:16%;
+  top:15%;
+  width:1px;
+  height:70%;
+  background:linear-gradient(180deg,transparent,rgba(188,220,255,.34),rgba(70,143,235,.16),transparent);
+  box-shadow:0 0 16px rgba(56,130,246,.08);
+}
+
+.service-detail-page .service-detail-hero-grid{position:relative;z-index:2!important}
+
+/* 12 — FAQ: questions ripple outward from one clear point. */
+.page-faq .info-page-hero{
+  background-image:none!important;
+  background:
+    radial-gradient(circle at 82% 48%,rgba(83,151,240,.10),transparent 30%),
+    linear-gradient(112deg,#010203 0%,#04080d 55%,#07111b 100%)!important;
+}
+.page-faq .info-page-hero::before{
+  background:
+    radial-gradient(circle at 82% 48%,transparent 0 12%,rgba(111,176,253,.10) 12.2% 12.45%,transparent 12.7% 23%,rgba(77,148,238,.055) 23.2% 23.4%,transparent 23.7%)!important;
+}
+.page-faq .info-page-hero::after{
+  width:38%!important;
+  right:-4%!important;
+  top:49%!important;
+  transform:rotate(0deg)!important;
+  opacity:.42;
+}
+
+/* 13 — PRIVACY: protected core, calm outer field. */
+.page-privacy .info-page-hero{
+  background-image:none!important;
+  background:
+    radial-gradient(circle at 82% 48%,rgba(56,130,246,.11),transparent 28%),
+    linear-gradient(112deg,#010203 0%,#04080d 55%,#07111b 100%)!important;
+}
+.page-privacy .info-page-hero::before{
+  background:
+    radial-gradient(circle at 82% 48%,rgba(148,199,255,.07) 0 12%,rgba(56,130,246,.03) 12.2% 25%,transparent 25.4%),
+    linear-gradient(90deg,rgba(2,4,7,.995),rgba(2,4,7,.88) 46%,rgba(2,4,7,.20) 78%,rgba(2,4,7,.05))!important;
+}
+.page-privacy .info-page-hero::after{transform:rotate(-90deg)!important;right:16%!important;top:28%!important;height:1px!important;opacity:.55}
+
+/* 14 — TERMS: one firm line, representing defined boundaries. */
+.page-terms .info-page-hero{
+  background-image:none!important;
+  background:
+    radial-gradient(ellipse 36% 46% at 84% 50%,rgba(68,139,231,.085),transparent 72%),
+    linear-gradient(112deg,#010203 0%,#04080d 55%,#07111b 100%)!important;
+}
+.page-terms .info-page-hero::before{
+  background:linear-gradient(90deg,rgba(2,4,7,.995),rgba(2,4,7,.9) 45%,rgba(2,4,7,.24) 78%,rgba(2,4,7,.06))!important;
+}
+.page-terms .info-page-hero::after{
+  width:52%!important;
+  height:1px!important;
+  right:-2%!important;
+  top:54%!important;
+  transform:rotate(0deg)!important;
+  background:linear-gradient(90deg,transparent,rgba(83,151,240,.12),rgba(175,214,255,.6),rgba(70,143,235,.08),transparent)!important;
+  box-shadow:0 0 16px rgba(56,130,246,.11)!important;
+}
+
+/* Keep all story layers behind existing content. */
+.page-services>section:first-child>*:not(.home-neuron-art),
+.page-projects [data-project-hero]>*:not([data-project-field]),
+.page-about>section:first-child>*:not(.home-neuron-art),
+.finder-page .finder-hero>* ,
+.page-faq .info-page-hero>* ,
+.page-privacy .info-page-hero>* ,
+.page-terms .info-page-hero>*{
+  position:relative;
+  z-index:2;
+}
+
+@keyframes storyLineDrift{
+  from{transform:rotate(-7deg) translate3d(-1.4%,0,0);opacity:.72}
+  to{transform:rotate(-7deg) translate3d(1.2%,1%,0);opacity:1}
+}
+@keyframes storyGlowBreathe{
+  from{transform:scale(.97);opacity:.7}
+  to{transform:scale(1.03);opacity:1}
+}
+@keyframes storySpotlight{
+  from{transform:translate3d(-1%,0,0);opacity:.72}
+  to{transform:translate3d(1%,.6%,0);opacity:1}
+}
+@keyframes storySignalPulse{
+  from{opacity:.6;transform:scale(.985)}
+  to{opacity:1;transform:scale(1.015)}
+}
+@keyframes storyFlowShift{
+  from{transform:translateX(-1.5%);opacity:.68}
+  to{transform:translateX(1.5%);opacity:1}
+}
+@keyframes storyHaloTurn{to{transform:translateY(-50%) rotate(360deg)}}
+
+@media(max-width:900px){
+  .ref-home .ref-hero.home-line-hero::before{left:30%;width:110%}
+  .page-about>section:first-child::after{left:8%}
+  .work-page .work-hero::before{bottom:18%}
+  .work-page .work-hero::after{background-position:center}
+  .page-contact .contact-hero::after{left:50%;right:4%}
+  .service-detail-page.service-web .service-detail-hero::before{inset:18% -18% 15% 60%!important}
+  .service-detail-page.service-brand .service-detail-hero::before{right:-7%!important;opacity:.78}
+  .service-detail-page.service-cv .service-detail-hero::before{right:0!important;width:34%!important}
+}
+
+@media(max-width:620px){
+  .ref-home .ref-hero.home-line-hero::before{left:16%;top:55%;width:145%;opacity:.62}
+  .page-services>section:first-child::before{opacity:.62}
+  .page-projects [data-project-hero]::before{opacity:.58}
+  .page-about>section:first-child::before{bottom:18%!important;opacity:.56}
+  .page-about>section:first-child::after{bottom:calc(18% - 5px);opacity:.7}
+  .work-page .work-hero::before{bottom:12%;opacity:.5}
+  .work-page .work-hero::after{opacity:.42}
+  .page-contact .contact-hero::before{opacity:.58}
+  .page-contact .contact-hero::after{left:42%;right:-20%;opacity:.55}
+  .finder-page .finder-hero::before,.finder-page .finder-hero::after{right:-38%;width:95%;opacity:.52}
+  .service-detail-page.service-web .service-detail-hero::before{inset:22% -50% 18% 54%!important;opacity:.7}
+  .service-detail-page.service-commerce .service-detail-hero::before{left:44%!important;right:-44%!important;opacity:.62}
+  .service-detail-page.service-commerce .service-detail-hero::after{right:-4%;opacity:.48}
+  .service-detail-page.service-brand .service-detail-hero::before{width:330px!important;height:330px!important;right:-30%!important;opacity:.6}
+  .service-detail-page.service-brand .service-detail-hero::after{right:-2%;opacity:.5}
+  .service-detail-page.service-cv .service-detail-hero::before{right:-12%!important;width:44%!important;opacity:.58}
+  .page-faq .info-page-hero::before,.page-privacy .info-page-hero::before,.page-terms .info-page-hero::before{opacity:.62}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .ref-home .ref-hero.home-line-hero::before,
+  .page-services>section:first-child::before,
+  .page-projects [data-project-hero]::before,
+  .page-contact .contact-hero::before,
+  .service-detail-page.service-commerce .service-detail-hero::before,
+  .service-detail-page.service-brand .service-detail-hero::before{
+    animation:none!important;
+  }
+}
