@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import HomeHeroArt from "../HomeHeroArt";
 import { useLanguage } from "../Localized";
 import styles from "./about-page.module.css";
 
@@ -112,6 +113,7 @@ export default function AboutPage() {
   return (
     <main className={`${styles.page} ref-page page-about`}>
       <section className={styles.hero}>
+        <div className={styles.neuronField} aria-hidden="true"><HomeHeroArt /></div>
         <div className={`${styles.shell} ${styles.heroShell}`}>
           <div className={styles.heroCopy}>
             <p className={styles.kicker} data-about-motion="hero">{t.hero.kicker}</p>
@@ -125,6 +127,13 @@ export default function AboutPage() {
           <div className={styles.heroLine} data-about-motion="hero">
             {t.hero.points.map(([n, label]) => <div className={styles.heroPoint} key={n}><span>{n}</span><strong>{label}</strong></div>)}
           </div>
+        </div>
+      </section>
+
+      <section className={styles.founderSection}>
+        <div className={`${styles.shell} ${styles.founderGrid}`}>
+          <div className={styles.founderIdentity} data-about-motion="reveal"><p className={styles.kicker}>{t.founder.kicker}</p><h2>{t.founder.name}</h2><p>{t.founder.role}</p></div>
+          <div className={styles.founderStatement} data-about-motion="reveal"><h3>{t.founder.statementTitle}</h3><p>{t.founder.statement}</p></div>
         </div>
       </section>
 
@@ -142,13 +151,6 @@ export default function AboutPage() {
         <div className={styles.shell}>
           <div className={styles.sectionHead} data-about-motion="reveal"><div><p className={styles.kicker}>{t.principles.kicker}</p><h2>{t.principles.title}</h2></div><p>{t.principles.lead}</p></div>
           <div className={styles.principles}>{t.principles.items.map(([n, title, description]) => <article className={styles.principle} key={n} data-about-motion="stagger"><span>{n}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
-        </div>
-      </section>
-
-      <section className={styles.founderSection}>
-        <div className={`${styles.shell} ${styles.founderGrid}`}>
-          <div className={styles.founderIdentity} data-about-motion="reveal"><p className={styles.kicker}>{t.founder.kicker}</p><h2>{t.founder.name}</h2><p>{t.founder.role}</p></div>
-          <div className={styles.founderStatement} data-about-motion="reveal"><h3>{t.founder.statementTitle}</h3><p>{t.founder.statement}</p></div>
         </div>
       </section>
 
