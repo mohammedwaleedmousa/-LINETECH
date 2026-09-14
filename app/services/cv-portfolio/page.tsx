@@ -24,6 +24,18 @@ export default function CvPortfolioPage(){
       ["Professionals","A stronger CV or portfolio when experience has grown but the current presentation has not."],
       ["Specialists & freelancers","A focused portfolio that helps clients or employers understand capabilities quickly."],
     ]}
+    engagement={{
+      en:{
+        need:["Current CV, profile or existing portfolio if available","Target role, industry or type of opportunity","Projects, achievements and supporting links or material"],
+        do:["Prioritize the strongest experience for the target","Rewrite and structure content for clarity and scanning","Design the CV and portfolio presentation as one consistent story"],
+        receive:["A refined professional CV in the agreed format","A clear portfolio structure for selected work","Organized source content and agreed editable/export files"],
+      },
+      ar:{
+        need:["السيرة الحالية أو الملف المهني أو الـPortfolio إن وجد","الوظيفة أو المجال أو نوع الفرصة المستهدفة","المشاريع والإنجازات والروابط أو المواد الداعمة"],
+        do:["نرتب أقوى الخبرات حسب الهدف المستهدف","نعيد صياغة المحتوى وهيكلته ليكون أوضح وأسهل في القراءة","نصمم السيرة والـPortfolio كقصة مهنية واحدة ومتناسقة"],
+        receive:["سيرة ذاتية احترافية محسنة بالصيغة المتفق عليها","هيكلة واضحة للـPortfolio والأعمال المختارة","محتوى منظم والملفات القابلة للتعديل أو التصدير المتفق عليها"],
+      },
+    }}
     process={[
       ["Review","We understand the target role, current material and strongest experience."],
       ["Prioritize","We decide what should lead, what supports it and what can be removed."],
