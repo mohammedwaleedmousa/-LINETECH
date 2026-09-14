@@ -1,0 +1,88 @@
+/* Clear client/LINETECH/delivery map for service detail pages. */
+.service-detail-engagement{
+  padding-top:clamp(68px,6vw,92px)!important;
+  padding-bottom:clamp(68px,6vw,92px)!important;
+  border-top:1px solid #111c26!important;
+  border-bottom:1px solid #111c26!important;
+  background:linear-gradient(180deg,#060a0e 0%,#05080c 100%)!important;
+}
+.service-detail-engagement-head{margin-bottom:30px!important}
+.service-detail-engagement-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+}
+.service-detail-engagement-card{
+  min-height:300px;
+  padding:20px;
+  border:1px solid #182431;
+  border-radius:8px;
+  background:linear-gradient(180deg,rgba(255,255,255,.018),rgba(255,255,255,.006));
+}
+.service-detail-engagement-card:nth-child(2){
+  border-color:#284564;
+  background:linear-gradient(180deg,rgba(56,130,246,.055),rgba(255,255,255,.006));
+}
+.service-detail-engagement-top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:28px;
+}
+.service-detail-engagement-top span{
+  color:#6787a7;
+  font-size:9px;
+  letter-spacing:.16em;
+}
+.service-detail-engagement-top i{
+  width:34px;
+  height:1px;
+  background:#26394c;
+}
+.service-detail-engagement-card:nth-child(2) .service-detail-engagement-top i{background:#5d91cf}
+.service-detail-engagement-card h3{
+  margin:0 0 22px;
+  color:#edf3f8;
+  font-size:18px;
+  line-height:1.25;
+  font-weight:560;
+  letter-spacing:-.02em;
+}
+.service-detail-engagement-card ul{
+  display:grid;
+  gap:13px;
+  margin:0;
+  padding:0;
+  list-style:none;
+}
+.service-detail-engagement-card li{
+  display:grid;
+  grid-template-columns:10px minmax(0,1fr);
+  gap:10px;
+  align-items:start;
+  color:#8795a2;
+  font-size:12px;
+  line-height:1.62;
+}
+.service-detail-engagement-card li>i{
+  width:5px;
+  height:5px;
+  margin-top:7px;
+  border:1px solid #54789c;
+  border-radius:50%;
+  background:#0a1118;
+}
+html[dir="rtl"] .service-detail-engagement-card li{grid-template-columns:minmax(0,1fr) 10px}
+html[dir="rtl"] .service-detail-engagement-card li>i{grid-column:2;grid-row:1}
+html[dir="rtl"] .service-detail-engagement-card li{direction:rtl}
+
+@media(max-width:900px){
+  .service-detail-engagement-grid{grid-template-columns:1fr}
+  .service-detail-engagement-card{min-height:0}
+}
+@media(max-width:620px){
+  .service-detail-engagement{padding-top:56px!important;padding-bottom:56px!important}
+  .service-detail-engagement-card{padding:17px}
+  .service-detail-engagement-card h3{font-size:16px;margin-bottom:18px}
+}
