@@ -1,9 +1,14 @@
 "use client";
 
-import Localized from "../Localized";
+import Localized, { useLanguage } from "../Localized";
 import Link from "next/link";
 
 type Item = [string, string];
+type CaseStudyCopy = {
+  decisions: Item[];
+  outcome: string;
+  outcomePoints: string[];
+};
 
 type ProjectDetailProps = {
   className: string;
@@ -16,9 +21,36 @@ type ProjectDetailProps = {
   built: Item[];
   stack: string[];
   visualWords: string[];
+  caseStudy: {
+    en: CaseStudyCopy;
+    ar: CaseStudyCopy;
+  };
 };
 
-export default function ProjectDetail({ className, tag, title, lead, summary, challenge, approach, built, stack, visualWords }: ProjectDetailProps){
+const caseLabels = {
+  en: {
+    decisionsKicker: "KEY PRODUCT DECISIONS",
+    decisionsTitle: "The choices behind the product.",
+    decisionsLead: "A case study is not only what was built. These are the decisions that shaped the experience and kept the product focused.",
+    outcomeKicker: "THE OUTCOME",
+    outcomeTitle: "A clearer product system.",
+    outcomeLead: "The outcome is described through the delivered product structure and experience — without invented performance claims.",
+  },
+  ar: {
+    decisionsKicker: "قرارات المنتج الرئيسية",
+    decisionsTitle: "القرارات التي شكّلت المنتج.",
+    decisionsLead: "دراسة الحالة ليست فقط ما تم بناؤه. هذه أهم القرارات التي شكّلت التجربة وحافظت على تركيز المنتج.",
+    outcomeKicker: "النتيجة",
+    outcomeTitle: "نظام منتج أكثر وضوحًا.",
+    outcomeLead: "نصف النتيجة من خلال هيكل المنتج والتجربة التي تم تنفيذها، بدون اختراع أرقام أداء غير حقيقية.",
+  },
+} as const;
+
+export default function ProjectDetail({ className, tag, title, lead, summary, challenge, approach, built, stack, visualWords, caseStudy }: ProjectDetailProps){
+  const language = useLanguage();
+  const c = caseStudy[language];
+  const labels = caseLabels[language];
+
   return <Localized><main className={`ref-page project-detail-page ${className}`}>
     <section className="project-detail-hero">
       <div className="ref-shell project-detail-hero-grid">
@@ -52,6 +84,34 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
         <div className="ref-head"><div><p className="ref-kicker">WHAT WE BUILT</p><h2>The working parts.</h2></div><p>The case study focuses on the product structure and implemented capabilities rather than invented performance claims.</p></div>
         <div className="project-detail-built-grid">
           {built.map(([title,text],index)=><article key={title}><span>0{index+1}</span><h3>{title}</h3><p>{text}</p></article>)}
+        </div>
+      </div>
+    </section>
+
+    <section className="ref-section project-case-decisions">
+      <div className="ref-shell">
+        <div className="ref-head">
+          <div><p className="ref-kicker">{labels.decisionsKicker}</p><h2>{labels.decisionsTitle}</h2></div>
+          <p>{labels.decisionsLead}</p>
+        </div>
+        <div className="project-case-decision-grid">
+          {c.decisions.map(([decisionTitle, text], index) => (
+            <article key={decisionTitle}><span>{String(index + 1).padStart(2,"0")}</span><h3>{decisionTitle}</h3><p>{text}</p></article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <section className="ref-section project-case-outcome">
+      <div className="ref-shell project-case-outcome-grid">
+        <div>
+          <p className="ref-kicker">{labels.outcomeKicker}</p>
+          <h2>{labels.outcomeTitle}</h2>
+          <p className="project-case-outcome-lead">{labels.outcomeLead}</p>
+        </div>
+        <div className="project-case-outcome-card">
+          <p>{c.outcome}</p>
+          <div>{c.outcomePoints.map((point,index)=><span key={point}><b>{String(index+1).padStart(2,"0")}</b>{point}</span>)}</div>
         </div>
       </div>
     </section>
