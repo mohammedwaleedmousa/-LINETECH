@@ -9,28 +9,41 @@ export default function ProjectsMotion() {
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const finePointer = window.matchMedia("(hover:hover) and (pointer:fine)").matches;
-    const revealNodes = Array.from(root.querySelectorAll<HTMLElement>("[data-project-motion='reveal'],[data-project-motion='card']"));
-    const heroNodes = Array.from(root.querySelectorAll<HTMLElement>("[data-project-motion='hero']"));
+    const revealNodes = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-project-motion='reveal'],[data-project-motion='card']")
+    );
+    const cardNodes = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-project-motion='card']")
+    );
+    const heroNodes = Array.from(
+      root.querySelectorAll<HTMLElement>("[data-project-motion='hero']")
+    );
 
     heroNodes.forEach((node, index) => {
       node.classList.add("projects-motion-hero");
       node.style.setProperty("--projects-hero-delay", `${70 + index * 75}ms`);
     });
 
-    revealNodes.forEach((node, index) => {
+    revealNodes.forEach((node) => {
       node.classList.add("projects-motion-reveal");
-      if (node.dataset.projectMotion === "card") {
-        node.style.setProperty("--projects-motion-delay", `${Math.min(index, 4) * 70}ms`);
-      }
     });
 
-    const observer = reduced ? null : new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (!entry.isIntersecting) return;
-        (entry.target as HTMLElement).classList.add("is-visible");
-        observer?.unobserve(entry.target);
-      });
-    }, { threshold: 0.12, rootMargin: "0px 0px -7% 0px" });
+    cardNodes.forEach((node, index) => {
+      node.style.setProperty("--projects-motion-delay", `${index * 80}ms`);
+    });
+
+    const observer = reduced
+      ? null
+      : new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (!entry.isIntersecting) return;
+              (entry.target as HTMLElement).classList.add("is-visible");
+              observer?.unobserve(entry.target);
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -7% 0px" }
+        );
 
     if (reduced) revealNodes.forEach((node) => node.classList.add("is-visible"));
     else revealNodes.forEach((node) => observer?.observe(node));
@@ -48,8 +61,10 @@ export default function ProjectsMotion() {
       if (!hero || !field) return;
       const rect = hero.getBoundingClientRect();
       if (!rect.width || !rect.height) return;
+
       const x = Math.max(-1, Math.min(1, ((event.clientX - rect.left) / rect.width - .5) * 2));
       const y = Math.max(-1, Math.min(1, ((event.clientY - rect.top) / rect.height - .5) * 2));
+
       cancelAnimationFrame(pointerFrame);
       pointerFrame = requestAnimationFrame(() => {
         field.style.setProperty("--project-field-x", `${(x * 5).toFixed(2)}px`);
@@ -72,10 +87,12 @@ export default function ProjectsMotion() {
       hero?.removeEventListener("pointerleave", reset);
       reset();
       root.classList.remove("projects-motion-mounted");
+
       heroNodes.forEach((node) => {
         node.classList.remove("projects-motion-hero");
         node.style.removeProperty("--projects-hero-delay");
       });
+
       revealNodes.forEach((node) => {
         node.classList.remove("projects-motion-reveal", "is-visible");
         node.style.removeProperty("--projects-motion-delay");
