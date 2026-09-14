@@ -98,6 +98,7 @@
 .global-site-nav .nav-login{
   transition:color .2s ease,background-color .2s ease,border-color .2s ease,opacity .2s ease;
 }
+.global-site-nav .language-toggle:hover{transform:none!important}
 
 .global-site-nav .ref-button.light{
   height:42px!important;
