@@ -1,0 +1,134 @@
+/* Targeted responsive fixes from mobile QA screenshots. */
+
+/* Home process CTA: keep the button visually separated from the heading. */
+.ref-home .process-center-head .ref-button{
+  margin-top:28px!important;
+  min-height:48px;
+  padding-inline:24px!important;
+}
+
+/* Contact: prevent the premium two-column brief layout from surviving into tablet/mobile. */
+.page-contact{
+  overflow-x:hidden;
+  overflow-x:clip;
+}
+
+@media(max-width:900px){
+  .page-contact .contact-brief-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:42px!important;
+    width:100%;
+  }
+
+  .page-contact .contact-brief-grid>*,
+  .page-contact .contact-intake-panel,
+  .page-contact .project-intake,
+  .page-contact .intake-step,
+  .page-contact .form-row,
+  .page-contact .brief-summary,
+  .page-contact .request-review-grid,
+  .page-contact .request-status-grid,
+  .page-contact .scope-preview{
+    min-width:0!important;
+    max-width:100%;
+  }
+
+  .page-contact .contact-intake-panel,
+  .page-contact .project-intake{
+    width:100%;
+    box-sizing:border-box;
+  }
+
+  .page-contact .project-brief-form input,
+  .page-contact .project-brief-form textarea,
+  .page-contact .project-brief-form select,
+  .page-contact .linetech-select,
+  .page-contact .linetech-select-trigger{
+    max-width:100%;
+    box-sizing:border-box;
+  }
+}
+
+@media(max-width:620px){
+  .ref-home .process-center-head .ref-button{
+    margin-top:24px!important;
+    min-height:48px;
+    padding-inline:22px!important;
+  }
+
+  .page-contact .ref-shell{
+    width:calc(100% - 28px)!important;
+    max-width:100%;
+  }
+
+  .page-contact .contact-brief-grid{
+    gap:32px!important;
+  }
+
+  .page-contact .contact-brief-intro h2{
+    max-width:100%!important;
+    font-size:clamp(36px,10.5vw,42px)!important;
+  }
+
+  .page-contact .contact-brief-notes,
+  .page-contact .two-col,
+  .page-contact .choice-grid,
+  .page-contact .intake-choice-grid,
+  .page-contact .brief-summary,
+  .page-contact .request-review-grid,
+  .page-contact .request-status-grid,
+  .page-contact .scope-preview-meta,
+  .page-contact .scope-preview-focus>div{
+    grid-template-columns:minmax(0,1fr)!important;
+  }
+
+  .page-contact .contact-intake-panel .project-intake{
+    padding:0 14px 18px!important;
+    border-radius:12px!important;
+  }
+
+  .page-contact .contact-intake-panel .frontend-only-note{
+    margin:0 -14px 22px!important;
+    padding-inline:42px 14px!important;
+    min-height:0!important;
+    padding-top:14px!important;
+    padding-bottom:14px!important;
+    overflow-wrap:anywhere;
+  }
+
+  .page-contact .contact-intake-panel .frontend-only-note::before{inset-inline-start:16px}
+  .page-contact .contact-intake-panel .frontend-only-note::after{inset-inline-start:19px}
+
+  /* Four steps are clearer as a 2×2 block on phones instead of four squeezed cells. */
+  .page-contact .project-intake .intake-progress-four{
+    grid-template-columns:repeat(2,minmax(0,1fr))!important;
+  }
+  .page-contact .project-intake .intake-progress-four .intake-progress-item{
+    min-width:0!important;
+    min-height:58px!important;
+    padding:10px 9px!important;
+    border-bottom:1px solid #18232f;
+  }
+  .page-contact .project-intake .intake-progress-four .intake-progress-item:nth-child(2n){border-inline-end:0}
+  .page-contact .project-intake .intake-progress-four .intake-progress-item:nth-last-child(-n+2){border-bottom:0}
+  .page-contact .project-intake .intake-progress-four .intake-progress-item strong{
+    white-space:normal;
+    overflow:visible;
+    text-overflow:clip;
+    line-height:1.3;
+  }
+
+  .page-contact .contact-intake-panel .intake-step-head h3{
+    font-size:clamp(27px,8.5vw,31px)!important;
+  }
+
+  .page-contact .scope-preview{
+    margin-inline:0;
+    padding:16px!important;
+  }
+
+  .page-contact .request-complete-actions,
+  .page-contact .brief-actions{
+    width:100%;
+  }
+}
