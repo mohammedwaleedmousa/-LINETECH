@@ -1,16 +1,96 @@
 "use client";
 
 import Localized, { useTranslation } from "../Localized";
-
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
-const services = ["Web Development", "E-commerce & Systems", "Brand Identity", "CV & Portfolio", "Other"];
-const stages = ["New idea", "Existing project", "Redesign / rebuild", "Improve an existing system"];
-const goals = ["Sell / generate leads", "Bookings / requests", "Internal operations", "Build credibility", "Career / portfolio", "Other"];
+const services = ["Web Development", "E-commerce & Systems", "Brand Identity", "CV & Portfolio", "Other"] as const;
+const stages = ["New idea", "Existing project", "Redesign / rebuild", "Improve an existing system"] as const;
+const goals = ["Sell / generate leads", "Bookings / requests", "Internal operations", "Build credibility", "Career / portfolio", "Other"] as const;
+const preferredContacts = ["WhatsApp", "Email", "Call", "Either"] as const;
 const budgets = ["Need guidance", "Small focused project", "Medium project", "Large project"];
 const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
 const progressSteps = [{ n: 1, label: "About you" }, { n: 2, label: "Project" }, { n: 3, label: "Scope" }];
+
+type CustomSelectProps = {
+  value: string;
+  onChange: (value: string) => void;
+  options: readonly string[];
+  placeholder?: string;
+  ariaLabel: string;
+};
+
+function CustomSelect({ value, onChange, options, placeholder, ariaLabel }: CustomSelectProps) {
+  const t = useTranslation();
+  const [open, setOpen] = useState(false);
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const closeOnOutside = (event: PointerEvent) => {
+      if (!rootRef.current?.contains(event.target as Node)) setOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setOpen(false);
+    };
+
+    document.addEventListener("pointerdown", closeOnOutside);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutside);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [open]);
+
+  const display = value ? t(value) : t(placeholder || "Select");
+
+  return (
+    <div ref={rootRef} className={`linetech-select ${open ? "is-open" : ""}`}>
+      <button
+        type="button"
+        className="linetech-select-trigger"
+        aria-haspopup="listbox"
+        aria-expanded={open}
+        aria-label={t(ariaLabel)}
+        onClick={() => setOpen(current => !current)}
+        onKeyDown={event => {
+          if (event.key === "ArrowDown" || event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            setOpen(true);
+          }
+        }}
+      >
+        <span className={!value ? "is-placeholder" : ""}>{display}</span>
+        <i aria-hidden="true" />
+      </button>
+
+      {open && (
+        <div className="linetech-select-menu" role="listbox" aria-label={t(ariaLabel)}>
+          {options.map(option => {
+            const selected = value === option;
+            return (
+              <button
+                type="button"
+                role="option"
+                aria-selected={selected}
+                className={`linetech-select-option ${selected ? "is-selected" : ""}`}
+                key={option}
+                onClick={() => {
+                  onChange(option);
+                  setOpen(false);
+                }}
+              >
+                <span>{t(option)}</span>
+                <i aria-hidden="true" />
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function ProjectIntake() {
   const [step, setStep] = useState(1);
@@ -33,7 +113,7 @@ export default function ProjectIntake() {
 
   useEffect(() => {
     const value = new URLSearchParams(window.location.search).get("service") || "";
-    if (services.includes(value)) setService(value);
+    if (services.includes(value as (typeof services)[number])) setService(value);
   }, []);
 
   const canStep1 = Boolean(name.trim() && contact.trim() && service);
@@ -107,17 +187,17 @@ export default function ProjectIntake() {
       </div>
       <div className="form-row two-col">
         <label><span>Email or WhatsApp *</span><input value={contact} onChange={e=>setContact(e.target.value)} placeholder="How should we reach you?" /></label>
-        <label><span>Preferred contact</span><select value={preferredContact} onChange={e=>setPreferredContact(e.target.value)}>{["WhatsApp","Email","Call","Either"].map(v=><option key={v}>{v}</option>)}</select></label>
+        <div className="custom-select-field"><span className="custom-select-label">Preferred contact</span><CustomSelect value={preferredContact} onChange={setPreferredContact} options={preferredContacts} ariaLabel="Preferred contact" /></div>
       </div>
-      <label className="form-wide"><span>Project type *</span><select value={service} onChange={e=>setService(e.target.value)}><option value="" disabled>Select a service</option>{services.map(v=><option key={v}>{v}</option>)}</select></label>
+      <div className="custom-select-field form-wide"><span className="custom-select-label">Project type *</span><CustomSelect value={service} onChange={setService} options={services} placeholder="Select a service" ariaLabel="Project type" /></div>
       <div className="intake-nav intake-nav-end"><button className="button button-light" type="button" disabled={!canStep1} onClick={()=>changeStep(2)}>Continue to project <span>→</span></button></div>
     </section>}
 
     {step===2 && <section className="intake-step">
       <div className="intake-step-head"><span>02 / THE PROJECT</span><h3>What needs to become real?</h3><p>Tell us the goal, current stage and the few things the solution must do well.</p></div>
       <div className="form-row two-col">
-        <label><span>Project stage *</span><select value={stage} onChange={e=>setStage(e.target.value)}><option value="" disabled>Select current stage</option>{stages.map(v=><option key={v}>{v}</option>)}</select></label>
-        <label><span>Main goal *</span><select value={goal} onChange={e=>setGoal(e.target.value)}><option value="" disabled>Select the main outcome</option>{goals.map(v=><option key={v}>{v}</option>)}</select></label>
+        <div className="custom-select-field"><span className="custom-select-label">Project stage *</span><CustomSelect value={stage} onChange={setStage} options={stages} placeholder="Select current stage" ariaLabel="Project stage" /></div>
+        <div className="custom-select-field"><span className="custom-select-label">Main goal *</span><CustomSelect value={goal} onChange={setGoal} options={goals} placeholder="Select the main outcome" ariaLabel="Main goal" /></div>
       </div>
       <label className="form-wide"><span>What do you want to build? *</span><textarea value={idea} onChange={e=>setIdea(e.target.value)} placeholder="Describe the idea, problem and final result." rows={6}/></label>
       <label className="form-wide"><span>Who is it for?</span><textarea value={audience} onChange={e=>setAudience(e.target.value)} placeholder="Customers, companies, a team, recruiters, a specific market..." rows={3}/></label>
