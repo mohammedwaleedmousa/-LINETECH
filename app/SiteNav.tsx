@@ -31,6 +31,7 @@ const searchItems = [
   { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief خصوصية بيانات معلومات" },
   { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website شروط نطاق دفعات اتفاق" },
   { title: "Chat", meta: "Client", href: "/chat", keywords: "chat messages conversation support client company project محادثة رسائل دعم عميل شركة" },
+  { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace تسجيل دخول إنشاء حساب" },
   { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea تواصل ابدأ مشروع ملخص فكرة" },
 ] as const;
 
@@ -108,6 +109,7 @@ export default function SiteNav() {
           <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "الإنجليزية" : "العربية"}</button>
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
+          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
           <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => { setSearchOpen(false); setOpen(v => !v); }}>
             <i/><i/>
           </button>
@@ -127,6 +129,7 @@ export default function SiteNav() {
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "English" : "Arabic"}</span><strong>{language === "ar" ? "الإنجليزية" : "العربية"}</strong></button>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>Start Your Line <span>→</span></Link>
+        <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>Login / Create Account <span>↗</span></Link>
       </div>
 
       {searchOpen && (
