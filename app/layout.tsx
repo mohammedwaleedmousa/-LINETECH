@@ -29,6 +29,7 @@ import "./viewport-qa.css";
 import "./auth.css";
 import "./chat.css";
 import "./chat-enhancements.css";
+import "./chat-modern.css";
 import "./tech-hero.css";
 import "./i18n.css";
 import "./home-motion.css";
