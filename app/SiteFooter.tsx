@@ -1,6 +1,6 @@
 "use client";
 
-import Link from "next/link";
+import Link from "./IntentLink";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "./Localized";
 
