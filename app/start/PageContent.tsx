@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Localized, { useLanguage } from "../Localized";
 import ProjectIntake from "./ProjectIntake";
+import WorkspaceAfterRequest from "./WorkspaceAfterRequest";
 import "./start.css";
 import "./intake.css";
 import "./brief-premium.css";
@@ -11,14 +12,14 @@ import "./journey.css";
 
 const briefNotesCopy = {
   en: [
-    ["01", "Your project information stays in your browser during the frontend phase."],
+    ["01", "Your project information stays in your browser until you choose to share it."],
     ["02", "Four focused steps take you from basic details to a reviewed project request."],
-    ["03", "Completing the request creates a reference number before you hand it to LINETECH."],
+    ["03", "Completing the request creates a reference number and opens the path to your Client Workspace."],
   ],
   ar: [
-    ["01", "تبقى معلومات مشروعك داخل المتصفح خلال مرحلة الواجهة الأمامية."],
+    ["01", "تبقى معلومات مشروعك داخل المتصفح حتى تختار مشاركتها."],
     ["02", "أربع خطوات مركزة تنقلك من البيانات الأساسية إلى طلب مشروع تمت مراجعته."],
-    ["03", "إتمام الطلب ينشئ رقمًا مرجعيًا قبل تسليم الطلب إلى لاين تك."],
+    ["03", "إتمام الطلب ينشئ رقمًا مرجعيًا ويفتح لك المسار إلى مساحة العميل."],
   ],
 } as const;
 
@@ -112,6 +113,7 @@ export default function StartPage() {
 
             <div className="contact-intake-panel">
               <ProjectIntake />
+              <WorkspaceAfterRequest />
             </div>
           </div>
         </section>
