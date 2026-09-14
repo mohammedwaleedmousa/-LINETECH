@@ -1,7 +1,6 @@
 "use client";
 
 import Localized from "../Localized";
-import HomeHeroArt from "../HomeHeroArt";
 import Link from "next/link";
 
 type Item = [string, string];
@@ -17,6 +16,77 @@ type ServiceDetailProps = {
   fits: Item[];
   process: Item[];
 };
+
+function ServiceHeroScene({ className }: { className: string }) {
+  if (className.includes("service-commerce")) {
+    return (
+      <div className="service-hero-scene service-scene-commerce" aria-hidden="true">
+        <div className="commerce-route route-a" />
+        <div className="commerce-route route-b" />
+        <div className="commerce-route route-c" />
+        <span className="commerce-node node-a" />
+        <span className="commerce-node node-b" />
+        <span className="commerce-node node-c" />
+        <span className="commerce-node node-d" />
+        <div className="commerce-panel panel-a"><i/><i/><i/></div>
+        <div className="commerce-panel panel-b"><i/><i/></div>
+        <div className="commerce-panel panel-c"><i/><i/><i/></div>
+        <div className="commerce-pulse" />
+      </div>
+    );
+  }
+
+  if (className.includes("service-brand")) {
+    return (
+      <div className="service-hero-scene service-scene-brand" aria-hidden="true">
+        <div className="brand-axis axis-x" />
+        <div className="brand-axis axis-y" />
+        <div className="brand-ring ring-a" />
+        <div className="brand-ring ring-b" />
+        <div className="brand-frame frame-a" />
+        <div className="brand-frame frame-b" />
+        <div className="brand-mark"><span/><span/><span/></div>
+        <i className="brand-point point-a" />
+        <i className="brand-point point-b" />
+        <i className="brand-point point-c" />
+      </div>
+    );
+  }
+
+  if (className.includes("service-cv")) {
+    return (
+      <div className="service-hero-scene service-scene-cv" aria-hidden="true">
+        <div className="cv-sheet sheet-back"><i/><i/><i/></div>
+        <div className="cv-sheet sheet-mid"><i/><i/><i/><i/></div>
+        <div className="cv-sheet sheet-front">
+          <span className="cv-avatar-mark" />
+          <i className="cv-line line-1"/><i className="cv-line line-2"/><i className="cv-line line-3"/>
+          <div className="cv-blocks"><b/><b/><b/></div>
+        </div>
+        <div className="cv-index index-a">01</div>
+        <div className="cv-index index-b">02</div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="service-hero-scene service-scene-web" aria-hidden="true">
+      <div className="web-window window-main">
+        <div className="web-window-bar"><i/><i/><i/></div>
+        <div className="web-window-body">
+          <span className="web-sidebar-line" />
+          <div className="web-module module-a" />
+          <div className="web-module module-b" />
+          <div className="web-module module-c" />
+          <div className="web-code-lines"><i/><i/><i/><i/></div>
+        </div>
+      </div>
+      <div className="web-window window-float"><span/><span/></div>
+      <div className="web-cursor-path" />
+      <i className="web-cursor-dot" />
+    </div>
+  );
+}
 
 export default function ServiceDetail({
   className,
@@ -34,9 +104,7 @@ export default function ServiceDetail({
   return (
     <Localized><main className={`ref-page service-detail-page ${className}`}>
       <section className="service-detail-hero">
-        <div className="service-detail-neuron-field" aria-hidden="true">
-          <HomeHeroArt />
-        </div>
+        <ServiceHeroScene className={className} />
 
         <div className="ref-shell service-detail-hero-grid">
           <div className="service-detail-hero-copy">
