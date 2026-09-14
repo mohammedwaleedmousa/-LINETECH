@@ -1,4 +1,4 @@
-/* Projects page motion — same calm rhythm as Home and Services. */
+/* Projects page motion — calm, layered, and compact. */
 .page-projects .projects-motion-hero,
 .page-projects .projects-motion-reveal{
   opacity:0;
@@ -17,8 +17,8 @@
   opacity:1;
   transform:none;
   transition:
-    opacity .6s cubic-bezier(.22,.61,.36,1) var(--projects-motion-delay,0ms),
-    transform .6s cubic-bezier(.22,.61,.36,1) var(--projects-motion-delay,0ms);
+    opacity .58s cubic-bezier(.22,.61,.36,1) var(--projects-motion-delay,0ms),
+    transform .58s cubic-bezier(.22,.61,.36,1) var(--projects-motion-delay,0ms);
 }
 
 .page-projects [data-project-field]{
@@ -41,19 +41,100 @@
   transition:opacity .9s ease .12s,transform .7s cubic-bezier(.22,.61,.36,1);
 }
 
+/* Compact portfolio cards enter as one unit first. */
 .page-projects .projects-motion-reveal[data-project-motion="card"]{
-  transform:translate3d(0,18px,0);
+  transform:translate3d(0,16px,0);
 }
 
 .page-projects .projects-motion-reveal[data-project-motion="card"].is-visible{
   transform:none;
 }
 
+/* Then the content settles inside each card in a restrained sequence. */
+.page-projects .projects-motion-reveal[data-project-motion="card"] [data-project-part]{
+  opacity:0;
+  transform:translate3d(0,7px,0);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part]{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .42s cubic-bezier(.22,.61,.36,1),
+    transform .42s cubic-bezier(.22,.61,.36,1);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="meta"]{
+  transition-delay:calc(var(--projects-motion-delay,0ms) + 90ms);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="title"]{
+  transition-delay:calc(var(--projects-motion-delay,0ms) + 145ms);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="description"]{
+  transition-delay:calc(var(--projects-motion-delay,0ms) + 195ms);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="focus-group"]{
+  transition-delay:calc(var(--projects-motion-delay,0ms) + 240ms);
+}
+
+/* Focus rows appear one after another inside the already-visible group. */
+.page-projects .projects-motion-reveal[data-project-motion="card"] [data-project-part="focus"]{
+  opacity:0;
+  transform:translate3d(7px,0,0);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="focus"]{
+  opacity:1;
+  transform:none;
+  transition:
+    opacity .34s cubic-bezier(.22,.61,.36,1),
+    transform .34s cubic-bezier(.22,.61,.36,1);
+}
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="focus"]:nth-child(1){transition-delay:calc(var(--projects-motion-delay,0ms) + 285ms)}
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="focus"]:nth-child(2){transition-delay:calc(var(--projects-motion-delay,0ms) + 325ms)}
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="focus"]:nth-child(3){transition-delay:calc(var(--projects-motion-delay,0ms) + 365ms)}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="stack"]{
+  transition-delay:calc(var(--projects-motion-delay,0ms) + 405ms);
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible [data-project-part="link"]{
+  transition-delay:calc(var(--projects-motion-delay,0ms) + 455ms);
+}
+
+/* A very short blue rail draws once when a card enters; it never loops. */
+.page-projects .projects-motion-reveal[data-project-motion="card"]::after{
+  content:"";
+  position:absolute;
+  inset-inline-start:18px;
+  top:0;
+  width:0;
+  height:1px;
+  background:linear-gradient(90deg,#6ca8f8,rgba(108,168,248,0));
+  opacity:.75;
+}
+
+.page-projects .projects-motion-reveal[data-project-motion="card"].is-visible::after{
+  width:52px;
+  transition:width .62s cubic-bezier(.22,.61,.36,1) calc(var(--projects-motion-delay,0ms) + 120ms);
+}
+
 @media(max-width:760px){
   .page-projects .projects-motion-hero,
   .page-projects .projects-motion-reveal,
   .page-projects .projects-motion-reveal[data-project-motion="card"]{
-    transform:translate3d(0,10px,0);
+    transform:translate3d(0,9px,0);
+  }
+
+  .page-projects .projects-motion-reveal[data-project-motion="card"] [data-project-part]{
+    transform:translate3d(0,5px,0);
+  }
+
+  .page-projects .projects-motion-reveal[data-project-motion="card"] [data-project-part="focus"]{
+    transform:translate3d(5px,0,0);
   }
 
   .page-projects [data-project-field]{transform:none!important}
@@ -63,10 +144,14 @@
   .page-projects .projects-motion-hero,
   .page-projects .projects-motion-reveal,
   .page-projects [data-project-field],
-  .page-projects [data-project-field] svg{
+  .page-projects [data-project-field] svg,
+  .page-projects [data-project-part],
+  .page-projects [data-project-motion="card"]::after{
     opacity:1!important;
     transform:none!important;
     transition:none!important;
     animation:none!important;
   }
+
+  .page-projects [data-project-motion="card"]::after{width:52px!important}
 }
