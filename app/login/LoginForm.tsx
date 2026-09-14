@@ -37,6 +37,7 @@ const copy = {
     agree: "I agree to the",
     terms: "Terms",
     privacy: "Privacy Policy",
+    and: "and",
     recoverButton: "Prepare recovery",
     back: "← Back to sign in",
     note: "Account access is currently a frontend experience. Details entered on this page are not submitted or stored.",
@@ -77,6 +78,7 @@ const copy = {
     agree: "أوافق على",
     terms: "الشروط",
     privacy: "سياسة الخصوصية",
+    and: "و",
     recoverButton: "تجهيز الاستعادة",
     back: "العودة إلى تسجيل الدخول →",
     note: "الوصول إلى الحساب حاليًا تجربة واجهة أمامية. البيانات المدخلة في هذه الصفحة لا يتم إرسالها أو حفظها.",
@@ -156,7 +158,7 @@ export default function LoginForm(){
       {mode==="login"?<div className="login-options">
         <label className="login-remember"><input type="checkbox" name="remember"/><span>{t.remember}</span></label>
         <button className="login-forgot" type="button" onClick={()=>switchMode("forgot")}>{t.forgot}</button>
-      </div>:mode==="signup"?<label className="signup-terms"><input type="checkbox" required/><span>{t.agree} <Link href="/terms">{t.terms}</Link> و <Link href="/privacy">{t.privacy}</Link>.</span></label>:null}
+      </div>:mode==="signup"?<label className="signup-terms"><input type="checkbox" required/><span>{t.agree} <Link href="/terms">{t.terms}</Link> {t.and} <Link href="/privacy">{t.privacy}</Link>.</span></label>:null}
 
       <button className="login-submit" type="submit">{mode==="login"?t.signIn:mode==="signup"?t.create:t.recoverButton} <span>→</span></button>
       {isForgot&&<button className="login-inline-action" type="button" onClick={()=>switchMode("login")}>{t.back}</button>}
