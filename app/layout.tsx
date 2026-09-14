@@ -29,6 +29,7 @@ import "./search.css";
 import "./v1-frontend-lock.css";
 import "./viewport-qa.css";
 import "./auth.css";
+import "./auth-final.css";
 import "./chat.css";
 import "./chat-enhancements.css";
 import "./chat-modern.css";
