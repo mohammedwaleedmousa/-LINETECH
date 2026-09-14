@@ -8,126 +8,100 @@ const copy = {
   en: {
     hero: {
       kicker: "ABOUT LINETECH",
-      title: "Clear ideas. Built into real products.",
-      lead: "LINETECH is a technology company focused on turning practical ideas into useful digital products through disciplined design and engineering.",
+      title: "A technology company built from a clear line.",
+      lead: "LINETECH turns ideas into useful digital products through clear thinking, disciplined design and practical engineering.",
       primary: "Start Your Line",
       secondary: "See Our Work",
-      points: [
-        ["01", "FOUNDER-LED", "Clear direction"],
-        ["02", "ADEN, YEMEN", "Company foundation"],
-        ["03", "LONG-TERM", "Built to grow"],
+      points: [["01", "IDEA"],["02", "STRUCTURE"],["03", "PRODUCT"],["04", "IMPACT"]],
+    },
+    story: {
+      kicker: "THE LINETECH IDEA",
+      title: "Every idea starts with a line.",
+      paragraphs: [
+        "The line is more than a visual element. It represents the moment an idea becomes clear enough to shape, test and build.",
+        "LINETECH exists to carry that line forward — from the first thought to a product people can actually use, operate and grow with.",
+      ],
+      route: [["01", "UNDERSTAND"],["02", "DEFINE"],["03", "BUILD"],["04", "EVOLVE"]],
+    },
+    principles: {
+      kicker: "OUR PRINCIPLES",
+      title: "Clear thinking. Strong execution.",
+      lead: "A small set of principles keeps every decision focused on the product, the user and the long-term result.",
+      items: [
+        ["01", "Clarity first.", "We define the real problem before choosing the technology."],
+        ["02", "Build for use.", "The product should work in the real world, not only look good in a presentation."],
+        ["03", "Think long term.", "Every project should leave behind a stronger and more maintainable foundation."],
+        ["04", "Stay disciplined.", "Design, scope and engineering should serve the outcome, not distract from it."],
       ],
     },
     founder: {
       kicker: "FOUNDER",
       name: "Mohammed Waleed",
       role: "Founder & CEO — LINETECH",
-      location: "Aden, Yemen",
-      title: "Building LINETECH as a company, not a temporary studio.",
-      text: "The goal is to build useful technology, keep a high standard and grow the company with a clear long-term direction. Products, systems and execution come first; presentation follows the work.",
-      focusLabel: "FOUNDER FOCUS",
-      focus: ["Useful products", "Strong systems", "Long-term growth"],
-    },
-    story: {
-      kicker: "THE LINETECH IDEA",
-      title: "Every idea starts with a line.",
-      lead: "The line represents clarity: the point where an idea becomes structured enough to design, build and improve.",
-      items: [
-        ["01", "Understand", "Find the real need."],
-        ["02", "Define", "Shape the right direction."],
-        ["03", "Build", "Turn the direction into a product."],
-        ["04", "Evolve", "Improve the product as it grows."],
-      ],
-    },
-    principles: {
-      kicker: "OUR PRINCIPLES",
-      title: "A simple standard for every project.",
-      lead: "We keep the rules small and practical so the work stays focused on the user, the product and the result.",
-      items: [
-        ["01", "Clarity first", "Define the real problem before choosing the technology."],
-        ["02", "Built for use", "A product should work in the real world, not only look good."],
-        ["03", "Strong foundation", "Build systems that can be maintained and improved."],
-        ["04", "Disciplined execution", "Every design and engineering decision should serve the outcome."],
-      ],
+      statementTitle: "Build useful technology. Keep the standard high. Think beyond the next launch.",
+      statement: "LINETECH is being built as a long-term technology company: focused on useful products, strong systems and a clear standard for how work should be designed and delivered.",
     },
     direction: {
-      kicker: "DIRECTION",
-      title: "Built in Aden. Designed to grow beyond it.",
-      lead: "LINETECH starts with a strong company foundation in Aden, deeper product capability and a path toward wider markets without losing the standard that defines the work.",
+      kicker: "WHERE WE'RE GOING",
+      title: "Built in Aden. Designed to grow beyond borders.",
+      lead: "The direction is simple: deepen the product capability, strengthen the company and expand into wider markets without losing the clarity that started the first line.",
       items: [
-        ["01", "Foundation", "Strengthen the company, its process and delivery standard."],
-        ["02", "Capability", "Build more ambitious digital products and systems."],
-        ["03", "Reach", "Expand into wider markets with the same clear operating standard."],
+        ["01", "Aden", "Build the company foundation and delivery standard."],
+        ["02", "Product depth", "Take on stronger digital products and systems."],
+        ["03", "Wider markets", "Serve clients and opportunities beyond the local market."],
+        ["04", "International company", "Grow LINETECH into a technology company with a broader presence."],
       ],
     },
-    cta: {
-      kicker: "YOUR IDEA",
-      title: "What line do you want to start?",
-      lead: "Bring the idea. We will help turn it into something real.",
-      button: "Start Your Line",
-    },
+    cta: { kicker: "YOUR IDEA", title: "What line do you want to start?", lead: "Bring the idea. We will help turn it into something real.", button: "Start Your Line" },
   },
   ar: {
     hero: {
       kicker: "عن LINETECH",
-      title: "أفكار واضحة. تتحول إلى منتجات حقيقية.",
-      lead: "LINETECH شركة تقنية تركز على تحويل الأفكار العملية إلى منتجات رقمية مفيدة من خلال تصميم منضبط وهندسة عملية.",
+      title: "شركة تقنية بُنيت من خط واضح.",
+      lead: "تحوّل LINETECH الأفكار إلى منتجات رقمية مفيدة من خلال تفكير واضح، وتصميم منضبط، وهندسة عملية.",
       primary: "ابدأ خطك",
       secondary: "شاهد أعمالنا",
-      points: [
-        ["01", "بقيادة المؤسس", "اتجاه واضح"],
-        ["02", "عدن، اليمن", "أساس الشركة"],
-        ["03", "نظرة طويلة المدى", "مصممة للنمو"],
+      points: [["01", "الفكرة"],["02", "الهيكلة"],["03", "المنتج"],["04", "الأثر"]],
+    },
+    story: {
+      kicker: "فكرة LINETECH",
+      title: "كل فكرة تبدأ بخط.",
+      paragraphs: [
+        "الخط ليس مجرد عنصر بصري. هو اللحظة التي تصبح فيها الفكرة واضحة بما يكفي لتشكيلها واختبارها وبنائها.",
+        "وجدت LINETECH لتدفع هذا الخط إلى الأمام — من أول فكرة إلى منتج يمكن للناس استخدامه وتشغيله وتطويره فعليًا.",
+      ],
+      route: [["01", "نفهم"],["02", "نحدد"],["03", "نبني"],["04", "نطور"]],
+    },
+    principles: {
+      kicker: "مبادئنا",
+      title: "تفكير واضح. تنفيذ قوي.",
+      lead: "مجموعة صغيرة من المبادئ تحافظ على تركيز كل قرار على المنتج والمستخدم والنتيجة طويلة المدى.",
+      items: [
+        ["01", "الوضوح أولًا.", "نحدد المشكلة الحقيقية قبل اختيار التقنية."],
+        ["02", "نبني للاستخدام.", "المنتج يجب أن يعمل في الواقع، لا أن يبدو جيدًا في العرض فقط."],
+        ["03", "نفكر على المدى الطويل.", "كل مشروع يجب أن يترك خلفه أساسًا أقوى وأسهل في التطوير والصيانة."],
+        ["04", "نحافظ على الانضباط.", "التصميم والنطاق والهندسة كلها تخدم النتيجة بدل أن تشتت عنها."],
       ],
     },
     founder: {
       kicker: "المؤسس",
       name: "محمد وليد",
       role: "المؤسس والرئيس التنفيذي — LINETECH",
-      location: "عدن، اليمن",
-      title: "بناء LINETECH كشركة حقيقية، لا كاستوديو مؤقت.",
-      text: "الهدف هو بناء تقنية مفيدة، والحفاظ على معيار عالٍ، وتنمية الشركة باتجاه واضح طويل المدى. المنتجات والأنظمة وجودة التنفيذ تأتي أولًا، ثم يأتي العرض ليعكس جودة العمل.",
-      focusLabel: "تركيز المؤسس",
-      focus: ["منتجات مفيدة", "أنظمة قوية", "نمو طويل المدى"],
-    },
-    story: {
-      kicker: "فكرة LINETECH",
-      title: "كل فكرة تبدأ بخط.",
-      lead: "الخط يمثل الوضوح: اللحظة التي تصبح فيها الفكرة منظمة بما يكفي لتصميمها وبنائها وتطويرها.",
-      items: [
-        ["01", "نفهم", "نحدد الاحتياج الحقيقي."],
-        ["02", "نحدد", "نرسم الاتجاه الصحيح."],
-        ["03", "نبني", "نحوّل الاتجاه إلى منتج."],
-        ["04", "نطور", "نحسن المنتج مع نموه."],
-      ],
-    },
-    principles: {
-      kicker: "مبادئنا",
-      title: "معيار بسيط لكل مشروع.",
-      lead: "نحافظ على قواعد قليلة وعملية حتى يبقى العمل مركزًا على المستخدم والمنتج والنتيجة.",
-      items: [
-        ["01", "الوضوح أولًا", "نحدد المشكلة الحقيقية قبل اختيار التقنية."],
-        ["02", "نبني للاستخدام", "المنتج يجب أن يعمل في الواقع، لا أن يبدو جميلًا فقط."],
-        ["03", "أساس قوي", "نبني أنظمة يمكن صيانتها وتطويرها."],
-        ["04", "تنفيذ منضبط", "كل قرار في التصميم والهندسة يجب أن يخدم النتيجة."],
-      ],
+      statementTitle: "ابنِ تقنية مفيدة. حافظ على معيار عالٍ. وفكّر أبعد من الإطلاق القادم.",
+      statement: "تُبنى LINETECH كشركة تقنية طويلة المدى، تركّز على المنتجات المفيدة والأنظمة القوية ومعيار واضح لكيفية تصميم العمل وتنفيذه.",
     },
     direction: {
-      kicker: "الاتجاه",
-      title: "بُنيت في عدن. ومصممة للنمو أبعد منها.",
-      lead: "تبدأ LINETECH ببناء أساس قوي للشركة في عدن، وتعميق قدرتها على بناء المنتجات، ثم التوسع نحو أسواق أوسع دون فقدان المعيار الذي يميز العمل.",
+      kicker: "إلى أين نتجه",
+      title: "بُنيت في عدن. ومصممة للنمو أبعد من الحدود.",
+      lead: "الاتجاه بسيط: تعميق قدراتنا في بناء المنتجات، تقوية الشركة، والتوسع نحو أسواق أوسع دون فقدان الوضوح الذي بدأ منه الخط الأول.",
       items: [
-        ["01", "الأساس", "تقوية الشركة وآلية العمل ومعيار التنفيذ."],
-        ["02", "القدرة", "بناء منتجات وأنظمة رقمية أكثر طموحًا."],
-        ["03", "الانتشار", "التوسع نحو أسواق أوسع بنفس المعيار الواضح."],
+        ["01", "عدن", "بناء أساس الشركة ومعيار واضح للتنفيذ."],
+        ["02", "عمق أكبر في المنتجات", "تنفيذ منتجات وأنظمة رقمية أقوى وأكثر نضجًا."],
+        ["03", "أسواق أوسع", "خدمة عملاء وفرص تتجاوز السوق المحلي."],
+        ["04", "شركة دولية", "تنمية LINETECH كشركة تقنية بحضور أوسع."],
       ],
     },
-    cta: {
-      kicker: "فكرتك",
-      title: "ما الخط الذي تريد أن تبدأه؟",
-      lead: "أحضر الفكرة، وسنساعدك في تحويلها إلى شيء حقيقي.",
-      button: "ابدأ خطك",
-    },
+    cta: { kicker: "فكرتك", title: "ما الخط الذي تريد أن تبدأه؟", lead: "أحضر الفكرة، وسنساعدك في تحويلها إلى شيء حقيقي.", button: "ابدأ خطك" },
   },
 } as const;
 
@@ -138,121 +112,55 @@ export default function AboutPage() {
   return (
     <main className={`${styles.page} ref-page page-about`}>
       <section className={styles.hero}>
-        <div className={styles.heroMark} aria-hidden="true">
-          <span className={styles.heroMarkVertical} />
-          <span className={styles.heroMarkHorizontal} />
-          <span className={styles.heroMarkNode} />
-          <span className={styles.heroMarkWord}>LINETECH</span>
-        </div>
-
-        <div className={styles.heroShell}>
-          <aside className={styles.heroRail}>
+        <div className={`${styles.shell} ${styles.heroShell}`}>
+          <div className={styles.heroCopy}>
             <p className={styles.kicker} data-about-motion="hero">{t.hero.kicker}</p>
-            <div className={styles.heroIndex}>
-              {t.hero.points.map(([n, title, detail]) => (
-                <div key={n} data-about-motion="hero">
-                  <span>{n}</span>
-                  <div>
-                    <strong>{title}</strong>
-                    <small>{detail}</small>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </aside>
-
-          <div className={styles.heroStage}>
             <h1 data-about-motion="hero">{t.hero.title}</h1>
-            <div className={styles.heroBottom}>
-              <p className={styles.heroLead} data-about-motion="hero">{t.hero.lead}</p>
-              <div className={styles.heroActions} data-about-motion="hero">
-                <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
-                <Link className={styles.secondary} href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
-              </div>
+            <p className={styles.heroLead} data-about-motion="hero">{t.hero.lead}</p>
+            <div className={styles.heroActions} data-about-motion="hero">
+              <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
+              <Link className={styles.secondary} href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
-        </div>
-      </section>
-
-      <section className={styles.founderSection}>
-        <div className={`${styles.shell} ${styles.founderGrid}`}>
-          <div className={styles.founderIdentity} data-about-motion="reveal">
-            <p className={styles.kicker}>{t.founder.kicker}</p>
-            <h2>{t.founder.name}</h2>
-            <p className={styles.founderRole}>{t.founder.role}</p>
-            <span className={styles.founderLocation}>{t.founder.location}</span>
-          </div>
-
-          <div className={styles.founderStatement} data-about-motion="reveal">
-            <h3>{t.founder.title}</h3>
-            <p>{t.founder.text}</p>
-            <div className={styles.founderFocus}>
-              <span>{t.founder.focusLabel}</span>
-              <div>{t.founder.focus.map((item) => <b key={item}>{item}</b>)}</div>
-            </div>
+          <div className={styles.heroLine} data-about-motion="hero">
+            {t.hero.points.map(([n, label]) => <div className={styles.heroPoint} key={n}><span>{n}</span><strong>{label}</strong></div>)}
           </div>
         </div>
       </section>
 
       <section className={styles.storySection}>
-        <div className={styles.shell}>
-          <div className={styles.sectionHead} data-about-motion="reveal">
-            <div><p className={styles.kicker}>{t.story.kicker}</p><h2>{t.story.title}</h2></div>
-            <p>{t.story.lead}</p>
-          </div>
-          <div className={styles.storySteps}>
-            {t.story.items.map(([n, title, description]) => (
-              <article className={styles.storyStep} key={n} data-about-motion="stagger">
-                <span>{n}</span><h3>{title}</h3><p>{description}</p>
-              </article>
-            ))}
+        <div className={`${styles.shell} ${styles.storyGrid}`}>
+          <div className={styles.storyTitle} data-about-motion="reveal"><p className={styles.kicker}>{t.story.kicker}</p><h2>{t.story.title}</h2></div>
+          <div className={styles.storyCopy} data-about-motion="reveal">
+            {t.story.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <div className={styles.storyRoute}>{t.story.route.map(([n, label]) => <div key={n}><span>{n}</span><strong>{label}</strong></div>)}</div>
           </div>
         </div>
       </section>
 
       <section className={styles.principlesSection}>
         <div className={styles.shell}>
-          <div className={styles.sectionHead} data-about-motion="reveal">
-            <div><p className={styles.kicker}>{t.principles.kicker}</p><h2>{t.principles.title}</h2></div>
-            <p>{t.principles.lead}</p>
-          </div>
-          <div className={styles.principles}>
-            {t.principles.items.map(([n, title, description]) => (
-              <article className={styles.principle} key={n} data-about-motion="stagger">
-                <span>{n}</span><h3>{title}</h3><p>{description}</p>
-              </article>
-            ))}
-          </div>
+          <div className={styles.sectionHead} data-about-motion="reveal"><div><p className={styles.kicker}>{t.principles.kicker}</p><h2>{t.principles.title}</h2></div><p>{t.principles.lead}</p></div>
+          <div className={styles.principles}>{t.principles.items.map(([n, title, description]) => <article className={styles.principle} key={n} data-about-motion="stagger"><span>{n}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
+        </div>
+      </section>
+
+      <section className={styles.founderSection}>
+        <div className={`${styles.shell} ${styles.founderGrid}`}>
+          <div className={styles.founderIdentity} data-about-motion="reveal"><p className={styles.kicker}>{t.founder.kicker}</p><h2>{t.founder.name}</h2><p>{t.founder.role}</p></div>
+          <div className={styles.founderStatement} data-about-motion="reveal"><h3>{t.founder.statementTitle}</h3><p>{t.founder.statement}</p></div>
         </div>
       </section>
 
       <section className={styles.directionSection}>
-        <div className={`${styles.shell} ${styles.directionGrid}`}>
-          <div className={styles.directionCopy} data-about-motion="reveal">
-            <p className={styles.kicker}>{t.direction.kicker}</p>
-            <h2>{t.direction.title}</h2>
-            <p>{t.direction.lead}</p>
-          </div>
-          <div className={styles.directionList}>
-            {t.direction.items.map(([n, title, description]) => (
-              <article className={styles.directionItem} key={n} data-about-motion="stagger">
-                <span>{n}</span>
-                <div><h3>{title}</h3><p>{description}</p></div>
-              </article>
-            ))}
-          </div>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead} data-about-motion="reveal"><div><p className={styles.kicker}>{t.direction.kicker}</p><h2>{t.direction.title}</h2></div><p>{t.direction.lead}</p></div>
+          <div className={styles.directionRail}>{t.direction.items.map(([n, title, description]) => <article className={styles.directionItem} key={n} data-about-motion="stagger"><span>{n}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
         </div>
       </section>
 
       <section className="ref-cta" data-about-motion="reveal">
-        <div className="ref-shell ref-cta-inner">
-          <div>
-            <p className="ref-kicker">{t.cta.kicker}</p>
-            <h2>{t.cta.title}</h2>
-            <p>{t.cta.lead}</p>
-          </div>
-          <Link className="ref-btn primary" href="/start" prefetch>{t.cta.button} ↗</Link>
-        </div>
+        <div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">{t.cta.kicker}</p><h2>{t.cta.title}</h2><p>{t.cta.lead}</p></div><Link className="ref-btn primary" href="/start" prefetch>{t.cta.button} ↗</Link></div>
       </section>
     </main>
   );
