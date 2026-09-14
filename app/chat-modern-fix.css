@@ -1,0 +1,4 @@
+/* Final chat polish: keep one local-session indicator and make reset intent clear. */
+.chat-sidebar-foot{display:none!important}
+.chat-new{font-size:0!important}
+.chat-new::before{content:"↺";font-size:15px;line-height:1;font-weight:500}
