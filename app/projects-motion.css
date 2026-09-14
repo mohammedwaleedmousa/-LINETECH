@@ -41,6 +41,26 @@
   transition:opacity .9s ease .12s,transform .7s cubic-bezier(.22,.61,.36,1);
 }
 
+/* Selected Work heading settles in layers, like the Home and Services pages. */
+.page-projects div[data-project-motion="reveal"] > div > p:first-child,
+.page-projects div[data-project-motion="reveal"] > div > h2,
+.page-projects div[data-project-motion="reveal"] > p{
+  opacity:0;
+  transform:translate3d(0,7px,0);
+}
+
+.page-projects div[data-project-motion="reveal"].is-visible > div > p:first-child,
+.page-projects div[data-project-motion="reveal"].is-visible > div > h2,
+.page-projects div[data-project-motion="reveal"].is-visible > p{
+  opacity:1;
+  transform:none;
+  transition:opacity .46s cubic-bezier(.22,.61,.36,1),transform .46s cubic-bezier(.22,.61,.36,1);
+}
+
+.page-projects div[data-project-motion="reveal"].is-visible > div > p:first-child{transition-delay:70ms}
+.page-projects div[data-project-motion="reveal"].is-visible > div > h2{transition-delay:125ms}
+.page-projects div[data-project-motion="reveal"].is-visible > p{transition-delay:185ms}
+
 /* Compact portfolio cards enter as one unit first. */
 .page-projects .projects-motion-reveal[data-project-motion="card"]{
   transform:translate3d(0,16px,0);
@@ -122,6 +142,29 @@
   transition:width .62s cubic-bezier(.22,.61,.36,1) calc(var(--projects-motion-delay,0ms) + 120ms);
 }
 
+/* Final CTA uses the same sequential rhythm as the other refined pages. */
+.page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > .ref-kicker,
+.page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > h2,
+.page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > p:last-child,
+.page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > .ref-btn{
+  opacity:0;
+  transform:translate3d(0,7px,0);
+}
+
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > div > .ref-kicker,
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > div > h2,
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > div > p:last-child,
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > .ref-btn{
+  opacity:1;
+  transform:none;
+  transition:opacity .46s cubic-bezier(.22,.61,.36,1),transform .46s cubic-bezier(.22,.61,.36,1);
+}
+
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > div > .ref-kicker{transition-delay:70ms}
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > div > h2{transition-delay:125ms}
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > div > p:last-child{transition-delay:185ms}
+.page-projects section.ref-cta[data-project-motion="reveal"].is-visible .ref-cta-inner > .ref-btn{transition-delay:235ms}
+
 @media(max-width:760px){
   .page-projects .projects-motion-hero,
   .page-projects .projects-motion-reveal,
@@ -129,7 +172,14 @@
     transform:translate3d(0,9px,0);
   }
 
-  .page-projects .projects-motion-reveal[data-project-motion="card"] [data-project-part]{
+  .page-projects .projects-motion-reveal[data-project-motion="card"] [data-project-part],
+  .page-projects div[data-project-motion="reveal"] > div > p:first-child,
+  .page-projects div[data-project-motion="reveal"] > div > h2,
+  .page-projects div[data-project-motion="reveal"] > p,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > .ref-kicker,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > h2,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > p:last-child,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > .ref-btn{
     transform:translate3d(0,5px,0);
   }
 
@@ -146,7 +196,14 @@
   .page-projects [data-project-field],
   .page-projects [data-project-field] svg,
   .page-projects [data-project-part],
-  .page-projects [data-project-motion="card"]::after{
+  .page-projects [data-project-motion="card"]::after,
+  .page-projects div[data-project-motion="reveal"] > div > p:first-child,
+  .page-projects div[data-project-motion="reveal"] > div > h2,
+  .page-projects div[data-project-motion="reveal"] > p,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > .ref-kicker,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > h2,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > div > p:last-child,
+  .page-projects section.ref-cta[data-project-motion="reveal"] .ref-cta-inner > .ref-btn{
     opacity:1!important;
     transform:none!important;
     transition:none!important;
