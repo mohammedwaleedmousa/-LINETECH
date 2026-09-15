@@ -102,6 +102,17 @@ const languageBootstrapScript = `
   } catch (_) {}
 })();`;
 
+const homeSplashBootstrapScript = `
+(() => {
+  try {
+    const path = window.location.pathname.replace(/\\/+$/, '') || '/';
+    if (path === '/' || path === '/index.html') {
+      document.documentElement.classList.add('home-splash-pre');
+      window.setTimeout(() => document.documentElement.classList.remove('home-splash-pre'), 5000);
+    }
+  } catch (_) {}
+})();`;
+
 const scrollRestorationScript = `
 (() => {
   try {
@@ -113,6 +124,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en" dir="ltr" suppressHydrationWarning>
       <body>
+        <script dangerouslySetInnerHTML={{ __html: homeSplashBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: languageBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
         <LanguageBridge />
