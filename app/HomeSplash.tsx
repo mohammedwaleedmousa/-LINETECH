@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 
 const SPLASH_TEXT = "Every idea starts with a line.";
-const SESSION_KEY = "linetech-home-splash-v1";
 
 export default function HomeSplash() {
   const [visible, setVisible] = useState(true);
@@ -11,16 +10,14 @@ export default function HomeSplash() {
   const [typed, setTyped] = useState("");
 
   useEffect(() => {
+    let startTimer: ReturnType<typeof setTimeout> | undefined;
     let typingTimer: ReturnType<typeof setInterval> | undefined;
     let leaveTimer: ReturnType<typeof setTimeout> | undefined;
     let removeTimer: ReturnType<typeof setTimeout> | undefined;
 
-    try {
-      if (sessionStorage.getItem(SESSION_KEY) === "seen") {
-        setVisible(false);
-        return;
-      }
-    } catch (_) {}
+    setVisible(true);
+    setLeaving(false);
+    setTyped("");
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -29,31 +26,32 @@ export default function HomeSplash() {
 
     if (reducedMotion) {
       setTyped(SPLASH_TEXT);
-      leaveTimer = setTimeout(() => setLeaving(true), 450);
+      leaveTimer = setTimeout(() => setLeaving(true), 550);
       removeTimer = setTimeout(() => {
-        try { sessionStorage.setItem(SESSION_KEY, "seen"); } catch (_) {}
         setVisible(false);
         document.body.style.overflow = previousOverflow;
-      }, 850);
+      }, 1050);
     } else {
-      let index = 0;
-      typingTimer = setInterval(() => {
-        index += 1;
-        setTyped(SPLASH_TEXT.slice(0, index));
+      startTimer = setTimeout(() => {
+        let index = 0;
+        typingTimer = setInterval(() => {
+          index += 1;
+          setTyped(SPLASH_TEXT.slice(0, index));
 
-        if (index >= SPLASH_TEXT.length) {
-          if (typingTimer) clearInterval(typingTimer);
-          leaveTimer = setTimeout(() => setLeaving(true), 520);
-          removeTimer = setTimeout(() => {
-            try { sessionStorage.setItem(SESSION_KEY, "seen"); } catch (_) {}
-            setVisible(false);
-            document.body.style.overflow = previousOverflow;
-          }, 1180);
-        }
-      }, 48);
+          if (index >= SPLASH_TEXT.length) {
+            if (typingTimer) clearInterval(typingTimer);
+            leaveTimer = setTimeout(() => setLeaving(true), 520);
+            removeTimer = setTimeout(() => {
+              setVisible(false);
+              document.body.style.overflow = previousOverflow;
+            }, 1180);
+          }
+        }, 48);
+      }, 180);
     }
 
     return () => {
+      if (startTimer) clearTimeout(startTimer);
       if (typingTimer) clearInterval(typingTimer);
       if (leaveTimer) clearTimeout(leaveTimer);
       if (removeTimer) clearTimeout(removeTimer);
