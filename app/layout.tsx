@@ -5,6 +5,7 @@ import LanguageBridge from "./LanguageBridge";
 import HomeMotion from "./HomeMotion";
 import ServicesMotion from "./ServicesMotion";
 import NavigationFeedback from "./NavigationFeedback";
+import HomeSplash from "./HomeSplash";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -108,7 +109,7 @@ const homeSplashBootstrapScript = `
     const path = window.location.pathname.replace(/\\/+$/, '') || '/';
     if (path === '/' || path === '/index.html') {
       document.documentElement.classList.add('home-splash-pre');
-      window.setTimeout(() => document.documentElement.classList.remove('home-splash-pre'), 5000);
+      window.setTimeout(() => document.documentElement.classList.remove('home-splash-pre'), 2500);
     }
   } catch (_) {}
 })();`;
@@ -131,6 +132,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <NavigationFeedback />
         <HomeMotion />
         <ServicesMotion />
+        <HomeSplash />
         <SiteNav />
         {children}
         <SiteFooter />
