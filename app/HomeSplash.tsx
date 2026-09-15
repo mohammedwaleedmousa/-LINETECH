@@ -71,16 +71,16 @@ export default function HomeSplash() {
         setTypedCount(index);
 
         if (index >= SPLASH_TEXT.length) {
-          readyTimer = setTimeout(() => setReady(true), 360);
+          readyTimer = setTimeout(() => setReady(true), 320);
           return;
         }
 
         const current = SPLASH_TEXT[index - 1];
-        const delay = current === " " ? 12 : current === "." ? 46 : 27;
+        const delay = current === " " ? 8 : current === "." ? 36 : 22;
         typingTimer = setTimeout(typeNext, delay);
       };
 
-      typingTimer = setTimeout(typeNext, 300);
+      typingTimer = setTimeout(typeNext, 260);
     }
 
     return () => {
@@ -101,7 +101,7 @@ export default function HomeSplash() {
       document.body.style.overflow = "";
       document.documentElement.classList.remove("home-splash-active", "home-splash-pre");
       document.body.classList.remove("home-splash-active");
-    }, 720);
+    }, 620);
   };
 
   if (!isHome || !visible) return null;
