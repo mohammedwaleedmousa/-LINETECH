@@ -263,8 +263,9 @@ body.home-splash-active{overflow:hidden!important}
 
   .home-splash-enter-wrap{
     margin-top:24px;
-    gap:12px;
-    flex-wrap:wrap;
+    gap:10px;
+    align-items:flex-start;
+    flex-direction:column;
   }
 
   .home-splash-enter{
@@ -274,6 +275,7 @@ body.home-splash-active{overflow:hidden!important}
   }
 
   .home-splash-enter-note{
+    padding-left:3px;
     font-size:9px;
     letter-spacing:.13em;
   }
@@ -291,12 +293,6 @@ body.home-splash-active{overflow:hidden!important}
     width:calc(100vw - 40px)!important;
     max-width:calc(100vw - 40px)!important;
     font-size:clamp(38px,11.1vw,48px)!important;
-  }
-
-  .home-splash-enter-wrap{
-    align-items:flex-start;
-    flex-direction:column;
-    gap:10px;
   }
 }
 
