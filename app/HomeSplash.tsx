@@ -65,22 +65,20 @@ export default function HomeSplash() {
       readyTimer = setTimeout(() => setReady(true), 120);
     } else {
       let index = 0;
-
       const typeNext = () => {
         index += 1;
         setTypedCount(index);
 
         if (index >= SPLASH_TEXT.length) {
-          readyTimer = setTimeout(() => setReady(true), 320);
+          readyTimer = setTimeout(() => setReady(true), 280);
           return;
         }
 
         const current = SPLASH_TEXT[index - 1];
-        const delay = current === " " ? 8 : current === "." ? 36 : 22;
-        typingTimer = setTimeout(typeNext, delay);
+        typingTimer = setTimeout(typeNext, current === " " ? 7 : current === "." ? 30 : 20);
       };
 
-      typingTimer = setTimeout(typeNext, 260);
+      typingTimer = setTimeout(typeNext, 220);
     }
 
     return () => {
@@ -101,19 +99,15 @@ export default function HomeSplash() {
       document.body.style.overflow = "";
       document.documentElement.classList.remove("home-splash-active", "home-splash-pre");
       document.body.classList.remove("home-splash-active");
-    }, 620);
+    }, 520);
   };
 
   if (!isHome || !visible) return null;
 
   const splash = (
     <div className={`home-splash${leaving ? " is-leaving" : ""}${ready ? " is-ready" : ""}`} role="dialog" aria-label="LINETECH introduction">
-      <div className="home-splash-ambient" aria-hidden="true" />
       <div className="home-splash-stage" dir="ltr">
-        <div className="home-splash-brand" aria-hidden="true">
-          <span className="home-splash-brand-dot" />
-          <span>LINETECH</span>
-        </div>
+        <div className="home-splash-brand">LINETECH</div>
 
         <div className="home-splash-inner">
           <span className="home-splash-measure" aria-hidden="true">
@@ -129,13 +123,10 @@ export default function HomeSplash() {
           </span>
         </div>
 
-        <div className="home-splash-enter-wrap" aria-hidden={!ready}>
-          <button className="home-splash-enter" type="button" onClick={enterSite} tabIndex={ready ? 0 : -1}>
-            <span>Let&apos;s go</span>
-            <b aria-hidden="true">→</b>
-          </button>
-          <span className="home-splash-enter-note">Enter LINETECH</span>
-        </div>
+        <button className="home-splash-enter" type="button" onClick={enterSite} tabIndex={ready ? 0 : -1} aria-hidden={!ready}>
+          <span>Let&apos;s go</span>
+          <span aria-hidden="true">→</span>
+        </button>
       </div>
     </div>
   );
