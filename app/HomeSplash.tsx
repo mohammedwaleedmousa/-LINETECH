@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useEffect, useLayoutEffect, useState } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { usePathname } from "next/navigation";
 
@@ -29,6 +29,8 @@ export default function HomeSplash() {
   const [visible, setVisible] = useState(isHome);
   const [leaving, setLeaving] = useState(false);
   const [typedCount, setTypedCount] = useState(0);
+  const [ready, setReady] = useState(false);
+  const exitTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => setMounted(true), []);
 
@@ -37,6 +39,7 @@ export default function HomeSplash() {
       setVisible(false);
       setLeaving(false);
       setTypedCount(0);
+      setReady(false);
       document.documentElement.classList.remove("home-splash-active", "home-splash-pre");
       document.body.classList.remove("home-splash-active");
       return;
@@ -45,6 +48,7 @@ export default function HomeSplash() {
     setVisible(true);
     setLeaving(false);
     setTypedCount(0);
+    setReady(false);
 
     const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
@@ -52,22 +56,13 @@ export default function HomeSplash() {
     document.body.classList.add("home-splash-active");
 
     let typingTimer: ReturnType<typeof setTimeout> | undefined;
-    let leaveTimer: ReturnType<typeof setTimeout> | undefined;
-    let removeTimer: ReturnType<typeof setTimeout> | undefined;
-
-    const finishSplash = () => {
-      setVisible(false);
-      document.body.style.overflow = previousOverflow;
-      document.documentElement.classList.remove("home-splash-active", "home-splash-pre");
-      document.body.classList.remove("home-splash-active");
-    };
+    let readyTimer: ReturnType<typeof setTimeout> | undefined;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
     if (reducedMotion) {
       setTypedCount(SPLASH_TEXT.length);
-      leaveTimer = setTimeout(() => setLeaving(true), 180);
-      removeTimer = setTimeout(finishSplash, 480);
+      readyTimer = setTimeout(() => setReady(true), 120);
     } else {
       let index = 0;
 
@@ -76,45 +71,71 @@ export default function HomeSplash() {
         setTypedCount(index);
 
         if (index >= SPLASH_TEXT.length) {
-          leaveTimer = setTimeout(() => setLeaving(true), 160);
-          removeTimer = setTimeout(finishSplash, 460);
+          readyTimer = setTimeout(() => setReady(true), 260);
           return;
         }
 
-        const nextCharacter = SPLASH_TEXT[index];
-        const delay = nextCharacter === " " ? 12 : nextCharacter === "." ? 36 : 22;
+        const current = SPLASH_TEXT[index - 1];
+        const delay = current === " " ? 18 : current === "." ? 52 : 34;
         typingTimer = setTimeout(typeNext, delay);
       };
 
-      typingTimer = setTimeout(typeNext, 70);
+      typingTimer = setTimeout(typeNext, 260);
     }
 
     return () => {
       if (typingTimer) clearTimeout(typingTimer);
-      if (leaveTimer) clearTimeout(leaveTimer);
-      if (removeTimer) clearTimeout(removeTimer);
+      if (readyTimer) clearTimeout(readyTimer);
+      if (exitTimerRef.current) clearTimeout(exitTimerRef.current);
       document.body.style.overflow = previousOverflow;
       document.documentElement.classList.remove("home-splash-active", "home-splash-pre");
       document.body.classList.remove("home-splash-active");
     };
   }, [isHome, pathname]);
 
+  const enterSite = () => {
+    if (leaving) return;
+    setLeaving(true);
+    exitTimerRef.current = setTimeout(() => {
+      setVisible(false);
+      document.body.style.overflow = "";
+      document.documentElement.classList.remove("home-splash-active", "home-splash-pre");
+      document.body.classList.remove("home-splash-active");
+    }, 720);
+  };
+
   if (!isHome || !visible) return null;
 
   const splash = (
-    <div className={`home-splash${leaving ? " is-leaving" : ""}`} aria-hidden="true">
-      <div className="home-splash-inner" dir="ltr">
-        <span className="home-splash-measure" aria-hidden="true">
-          <span>Every idea starts</span>
-          <br className="home-splash-mobile-break" />
-          <span className="home-splash-desktop-space"> </span>
-          <span>with a line.</span>
-        </span>
+    <div className={`home-splash${leaving ? " is-leaving" : ""}${ready ? " is-ready" : ""}`} role="dialog" aria-label="LINETECH introduction">
+      <div className="home-splash-ambient" aria-hidden="true" />
+      <div className="home-splash-stage" dir="ltr">
+        <div className="home-splash-brand" aria-hidden="true">
+          <span className="home-splash-brand-dot" />
+          <span>LINETECH</span>
+        </div>
 
-        <span className="home-splash-live">
-          <TypedCharacters count={typedCount} />
-          <span className="home-splash-cursor" aria-hidden="true" />
-        </span>
+        <div className="home-splash-inner">
+          <span className="home-splash-measure" aria-hidden="true">
+            <span>Every idea starts</span>
+            <br className="home-splash-mobile-break" />
+            <span className="home-splash-desktop-space"> </span>
+            <span>with a line.</span>
+          </span>
+
+          <span className="home-splash-live" aria-live="polite">
+            <TypedCharacters count={typedCount} />
+            {!ready ? <span className="home-splash-cursor" aria-hidden="true" /> : null}
+          </span>
+        </div>
+
+        <div className="home-splash-enter-wrap" aria-hidden={!ready}>
+          <button className="home-splash-enter" type="button" onClick={enterSite} tabIndex={ready ? 0 : -1}>
+            <span>Let&apos;s go</span>
+            <b aria-hidden="true">→</b>
+          </button>
+          <span className="home-splash-enter-note">Enter LINETECH</span>
+        </div>
       </div>
     </div>
   );
