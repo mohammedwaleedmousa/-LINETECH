@@ -1,14 +1,12 @@
 "use client";
 
 import Localized from "./Localized";
-import HomeSplash from "./HomeSplash";
 import HomeHeroArt from "./HomeHeroArt";
 import HomeProjects from "./HomeProjects";
 import HomeAbout from "./HomeAbout";
 import HomeWhy from "./HomeWhy";
 import Link from "next/link";
 import "./home-content.css";
-import "./home-splash.css";
 
 const services = [
   { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services/web-development" },
@@ -41,7 +39,6 @@ const faqs = [
 export default function Home() {
   return (
     <Localized><main className="ref-home" id="top">
-      <HomeSplash />
       <section className="ref-hero ref-line-section home-line-hero">
         <HomeHeroArt/>
         <div className="ref-shell ref-hero-grid">
