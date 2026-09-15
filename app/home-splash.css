@@ -16,7 +16,7 @@
   pointer-events:auto!important;
   isolation:isolate!important;
   transform:none!important;
-  transition:opacity .56s cubic-bezier(.22,.61,.36,1),visibility .56s linear;
+  transition:opacity .28s cubic-bezier(.22,.61,.36,1),visibility .28s linear;
 }
 
 .home-splash.is-leaving{
@@ -70,9 +70,9 @@
 .home-splash-char{
   display:inline-block!important;
   opacity:0;
-  transform:translateY(3px) scale(.985);
-  filter:blur(1.6px);
-  animation:homeSplashCharIn .17s cubic-bezier(.22,.78,.24,1) forwards;
+  transform:translateY(2px);
+  filter:blur(.8px);
+  animation:homeSplashCharIn .10s cubic-bezier(.22,.78,.24,1) forwards;
   will-change:opacity,transform,filter;
 }
 
@@ -88,12 +88,12 @@
   display:inline-block!important;
   width:2px;
   height:.88em;
-  margin-left:.11em;
+  margin-left:.1em;
   background:#fff!important;
-  opacity:.92;
+  opacity:.94;
   visibility:visible!important;
-  transform:translateY(.08em);
-  animation:homeSplashCursor 1s ease-in-out infinite;
+  transform:translateY(.07em);
+  animation:homeSplashCursor .68s ease-in-out infinite;
   will-change:opacity;
 }
 
@@ -114,13 +114,13 @@ body.home-splash-active{
 }
 
 @keyframes homeSplashCharIn{
-  0%{opacity:0;transform:translateY(3px) scale(.985);filter:blur(1.6px)}
-  65%{opacity:1;filter:blur(.2px)}
-  100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+  0%{opacity:0;transform:translateY(2px);filter:blur(.8px)}
+  70%{opacity:1;filter:blur(.1px)}
+  100%{opacity:1;transform:translateY(0);filter:blur(0)}
 }
 
 @keyframes homeSplashCursor{
-  0%,100%{opacity:.22}
+  0%,100%{opacity:.24}
   45%,55%{opacity:1}
 }
 
@@ -158,7 +158,7 @@ body.home-splash-active{
 
   .home-splash-cursor{
     height:.84em;
-    margin-left:.09em;
+    margin-left:.08em;
   }
 }
 
@@ -175,7 +175,7 @@ body.home-splash-active{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .home-splash{transition-duration:.35s}
+  .home-splash{transition-duration:.18s}
   .home-splash-char{animation:none;opacity:1;transform:none;filter:none}
   .home-splash-cursor{animation:none;opacity:1}
 }
