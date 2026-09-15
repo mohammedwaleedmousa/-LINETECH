@@ -8,13 +8,15 @@
   width:100vw!important;
   height:100dvh!important;
   min-height:100vh!important;
+  padding:0 24px!important;
+  box-sizing:border-box!important;
   background:#000!important;
   opacity:1;
   visibility:visible;
   pointer-events:auto!important;
   isolation:isolate!important;
   transform:none!important;
-  transition:opacity .68s cubic-bezier(.22,.61,.36,1),visibility .68s linear;
+  transition:opacity .56s cubic-bezier(.22,.61,.36,1),visibility .56s linear;
 }
 
 .home-splash.is-leaving{
@@ -26,49 +28,79 @@
 .home-splash-inner{
   position:relative!important;
   z-index:2!important;
-  display:inline-flex!important;
-  align-items:center!important;
-  min-height:1.25em;
+  display:block!important;
+  width:max-content;
   max-width:calc(100vw - 48px);
+  min-height:1.2em;
   color:#fff!important;
   font-family:inherit;
-  font-size:clamp(26px,4.2vw,58px);
+  font-size:clamp(28px,4.1vw,58px);
   font-weight:500;
   line-height:1.12;
   letter-spacing:-.035em;
-  white-space:nowrap;
   text-align:left!important;
   direction:ltr!important;
   opacity:1!important;
   visibility:visible!important;
 }
 
-.home-splash-text{
-  display:inline-block!important;
+.home-splash-measure,
+.home-splash-live{
+  display:block!important;
+  white-space:nowrap;
   color:#fff!important;
-  opacity:1!important;
-  visibility:visible!important;
+  font:inherit;
+  line-height:inherit;
+  letter-spacing:inherit;
+  text-align:left!important;
+}
+
+.home-splash-measure{
+  visibility:hidden!important;
+  pointer-events:none!important;
+  user-select:none!important;
+}
+
+.home-splash-live{
+  position:absolute!important;
+  inset:0 auto auto 0!important;
+  width:100%;
+}
+
+.home-splash-char{
+  display:inline-block!important;
+  opacity:0;
+  transform:translateY(3px) scale(.985);
+  filter:blur(1.6px);
+  animation:homeSplashCharIn .17s cubic-bezier(.22,.78,.24,1) forwards;
+  will-change:opacity,transform,filter;
+}
+
+.home-splash-char.is-space{
+  min-width:.25em;
+}
+
+.home-splash-mobile-break{
+  display:none;
 }
 
 .home-splash-cursor{
   display:inline-block!important;
   width:2px;
-  height:.92em;
-  margin-left:.12em;
+  height:.88em;
+  margin-left:.11em;
   background:#fff!important;
-  opacity:1;
+  opacity:.92;
   visibility:visible!important;
-  transform:translateY(.03em);
-  animation:homeSplashCursor .82s steps(1,end) infinite;
+  transform:translateY(.08em);
+  animation:homeSplashCursor 1s ease-in-out infinite;
+  will-change:opacity;
 }
 
-html.home-splash-active,
-body.home-splash-active{
-  overflow:hidden!important;
-}
-
+html.home-splash-pre .global-site-nav,
 html.home-splash-active .global-site-nav,
 body.home-splash-active .global-site-nav,
+html.home-splash-pre .mobile-menu-panel,
 html.home-splash-active .mobile-menu-panel,
 body.home-splash-active .mobile-menu-panel{
   opacity:0!important;
@@ -76,24 +108,74 @@ body.home-splash-active .mobile-menu-panel{
   pointer-events:none!important;
 }
 
+html.home-splash-active,
+body.home-splash-active{
+  overflow:hidden!important;
+}
+
+@keyframes homeSplashCharIn{
+  0%{opacity:0;transform:translateY(3px) scale(.985);filter:blur(1.6px)}
+  65%{opacity:1;filter:blur(.2px)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}
+}
+
 @keyframes homeSplashCursor{
-  0%,46%{opacity:1}
-  47%,100%{opacity:0}
+  0%,100%{opacity:.22}
+  45%,55%{opacity:1}
 }
 
 @media(max-width:620px){
   .home-splash{
-    justify-content:flex-start!important;
-    padding:0 24px!important;
+    padding:0 20px!important;
   }
+
   .home-splash-inner{
-    max-width:100%;
-    font-size:clamp(24px,8vw,38px);
-    white-space:normal;
+    width:min(88vw,360px)!important;
+    max-width:min(88vw,360px)!important;
+    min-height:2.5em;
+    font-size:clamp(29px,8.6vw,38px)!important;
+    line-height:1.16!important;
+    letter-spacing:-.03em!important;
+  }
+
+  .home-splash-measure,
+  .home-splash-live{
+    width:100%!important;
+    white-space:nowrap!important;
+  }
+
+  .home-splash-mobile-break{
+    display:block!important;
+  }
+
+  .home-splash-desktop-space{
+    display:none!important;
+  }
+
+  .home-splash-mobile-break + .home-splash-char.is-space{
+    display:none!important;
+  }
+
+  .home-splash-cursor{
+    height:.84em;
+    margin-left:.09em;
+  }
+}
+
+@media(max-width:380px){
+  .home-splash{
+    padding:0 18px!important;
+  }
+
+  .home-splash-inner{
+    width:calc(100vw - 36px)!important;
+    max-width:calc(100vw - 36px)!important;
+    font-size:clamp(27px,8.2vw,32px)!important;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
   .home-splash{transition-duration:.35s}
+  .home-splash-char{animation:none;opacity:1;transform:none;filter:none}
   .home-splash-cursor{animation:none;opacity:1}
 }
