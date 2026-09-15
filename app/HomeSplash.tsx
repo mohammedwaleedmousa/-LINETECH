@@ -71,16 +71,16 @@ export default function HomeSplash() {
         setTypedCount(index);
 
         if (index >= SPLASH_TEXT.length) {
-          readyTimer = setTimeout(() => setReady(true), 260);
+          readyTimer = setTimeout(() => setReady(true), 360);
           return;
         }
 
         const current = SPLASH_TEXT[index - 1];
-        const delay = current === " " ? 18 : current === "." ? 52 : 34;
+        const delay = current === " " ? 12 : current === "." ? 46 : 27;
         typingTimer = setTimeout(typeNext, delay);
       };
 
-      typingTimer = setTimeout(typeNext, 260);
+      typingTimer = setTimeout(typeNext, 300);
     }
 
     return () => {
