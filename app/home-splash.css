@@ -1,0 +1,68 @@
+.home-splash{
+  position:fixed;
+  inset:0;
+  z-index:99999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#000;
+  opacity:1;
+  visibility:visible;
+  transition:opacity .68s cubic-bezier(.22,.61,.36,1),visibility .68s linear;
+}
+
+.home-splash.is-leaving{
+  opacity:0;
+  visibility:hidden;
+}
+
+.home-splash-inner{
+  display:inline-flex;
+  align-items:center;
+  min-height:1.25em;
+  max-width:calc(100vw - 48px);
+  color:#fff;
+  font-family:inherit;
+  font-size:clamp(26px,4.2vw,58px);
+  font-weight:500;
+  line-height:1.12;
+  letter-spacing:-.035em;
+  white-space:nowrap;
+  text-align:left;
+}
+
+.home-splash-text{
+  display:inline-block;
+}
+
+.home-splash-cursor{
+  display:inline-block;
+  width:2px;
+  height:.92em;
+  margin-left:.12em;
+  background:rgba(255,255,255,.92);
+  transform:translateY(.03em);
+  animation:homeSplashCursor .82s steps(1,end) infinite;
+}
+
+@keyframes homeSplashCursor{
+  0%,46%{opacity:1}
+  47%,100%{opacity:0}
+}
+
+@media(max-width:620px){
+  .home-splash{
+    justify-content:flex-start;
+    padding:0 24px;
+  }
+  .home-splash-inner{
+    max-width:100%;
+    font-size:clamp(24px,8vw,38px);
+    white-space:normal;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .home-splash{transition-duration:.35s}
+  .home-splash-cursor{animation:none;opacity:1}
+}
