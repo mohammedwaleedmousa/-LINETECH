@@ -94,30 +94,23 @@ body:has(#top.ref-home) .global-site-nav{
   }
 }
 
-/* Services: the Earth image is a visible dedicated layer that extends behind the navbar. */
-.page-services{--services-nav-space:96px}
+/* Services: render the photograph on the hero itself. This avoids pseudo-element
+   stacking conflicts and lets the fixed navbar sit directly over the photograph. */
+.page-services{
+  --services-nav-space:96px;
+  padding-top:0!important;
+}
 .page-services>section:first-child{
   position:relative!important;
   z-index:0!important;
-  overflow:visible!important;
+  overflow:hidden!important;
   isolation:isolate!important;
-  background:transparent!important;
-}
-.page-services>section:first-child::before{
-  all:initial!important;
-  content:""!important;
-  display:block!important;
-  position:absolute!important;
-  inset:calc(-1 * var(--services-nav-space)) 0 0!important;
-  z-index:0!important;
-  opacity:1!important;
-  visibility:visible!important;
-  pointer-events:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,7,.90) 0%,rgba(2,4,7,.76) 30%,rgba(2,4,7,.44) 52%,rgba(2,4,7,.15) 74%,rgba(2,4,7,.03) 100%),
-    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35)),
-    url('/hero/services-earth.webp') center/cover no-repeat!important;
+    linear-gradient(90deg,rgba(2,4,7,.84) 0%,rgba(2,4,7,.66) 31%,rgba(2,4,7,.34) 55%,rgba(2,4,7,.12) 78%,rgba(2,4,7,.05) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.18) 54%,rgba(0,0,0,.46) 100%),
+    url('/hero/services-earth.webp') center center/cover no-repeat!important;
 }
+.page-services>section:first-child::before,
 .page-services>section:first-child::after,
 .page-services>section:first-child [class*=neuronField],
 .page-services>section:first-child .home-neuron-art,
@@ -139,8 +132,7 @@ body:has(.page-services) .global-site-nav{
   backdrop-filter:blur(10px)!important;
 }
 
-/* Keep Services at its original desktop height. The image may extend upward behind
-   the fixed navbar, but it must never add extra document height. */
+/* Keep Services at its original desktop height. */
 .page-services>section:first-child{
   min-height:650px!important;
   height:650px!important;
@@ -160,7 +152,7 @@ body:has(.page-services) .global-site-nav{
 }
 
 @media(max-width:900px){
-  .page-services{--services-nav-space:78px}
+  .page-services{--services-nav-space:78px;padding-top:0!important}
   .page-services>section:first-child{
     min-height:590px!important;
     height:auto!important;
@@ -173,8 +165,8 @@ body:has(.page-services) .global-site-nav{
   }
 }
 @media(max-width:620px){
-  .page-services{--services-nav-space:70px}
-  .page-services>section:first-child::before{
+  .page-services{--services-nav-space:70px;padding-top:0!important}
+  .page-services>section:first-child{
     background-position:center center,center center,58% center!important;
     background-size:auto,auto,cover!important;
     background-repeat:no-repeat!important;
