@@ -94,10 +94,11 @@ body:has(#top.ref-home) .global-site-nav{
   }
 }
 
-/* Services: the Earth image is a dedicated layer that extends behind the navbar. */
+/* Services: the Earth image is a visible dedicated layer that extends behind the navbar. */
 .page-services{--services-nav-space:96px}
 .page-services>section:first-child{
   position:relative!important;
+  z-index:0!important;
   overflow:visible!important;
   isolation:isolate!important;
   background:transparent!important;
@@ -108,11 +109,13 @@ body:has(#top.ref-home) .global-site-nav{
   display:block!important;
   position:absolute!important;
   inset:calc(-1 * var(--services-nav-space)) 0 0!important;
-  z-index:-1!important;
+  z-index:0!important;
+  opacity:1!important;
+  visibility:visible!important;
   pointer-events:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,7,.92) 0%,rgba(2,4,7,.80) 30%,rgba(2,4,7,.48) 52%,rgba(2,4,7,.18) 74%,rgba(2,4,7,.05) 100%),
-    linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.42)),
+    linear-gradient(90deg,rgba(2,4,7,.90) 0%,rgba(2,4,7,.76) 30%,rgba(2,4,7,.44) 52%,rgba(2,4,7,.15) 74%,rgba(2,4,7,.03) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.05),rgba(0,0,0,.35)),
     url('/hero/services-earth.webp') center/cover no-repeat!important;
 }
 .page-services>section:first-child::after,
@@ -129,7 +132,9 @@ body:has(#top.ref-home) .global-site-nav{
   z-index:2!important;
 }
 body:has(.page-services) .global-site-nav{
-  background:rgba(7,10,13,.28)!important;
+  position:relative!important;
+  z-index:50!important;
+  background:rgba(7,10,13,.24)!important;
   -webkit-backdrop-filter:blur(10px)!important;
   backdrop-filter:blur(10px)!important;
 }
