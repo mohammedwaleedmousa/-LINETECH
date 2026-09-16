@@ -109,6 +109,12 @@ const homeSplashBootstrapScript = `
     const path = window.location.pathname.replace(/\\/+$/, '') || '/';
     if (path === '/' || path === '/index.html') {
       document.documentElement.classList.add('home-splash-pre');
+      const preload = document.createElement('link');
+      preload.rel = 'preload';
+      preload.as = 'image';
+      preload.href = '/hero/home-aden.png';
+      preload.setAttribute('fetchpriority', 'high');
+      document.head.appendChild(preload);
       window.setTimeout(() => document.documentElement.classList.remove('home-splash-pre'), 2500);
     }
   } catch (_) {}
