@@ -20,7 +20,7 @@ function shouldPrefetch() {
 }
 
 export default function IntentLink({
-  prefetch: _prefetch,
+  prefetch: requestedPrefetch,
   onPointerEnter,
   onPointerLeave,
   onFocus,
@@ -29,7 +29,6 @@ export default function IntentLink({
 }: IntentLinkProps) {
   const router = useRouter();
   const timerRef = useRef<number | null>(null);
-
   const hrefString = typeof href === "string" ? href : null;
 
   const clearTimer = () => {
@@ -45,7 +44,7 @@ export default function IntentLink({
     timerRef.current = window.setTimeout(() => {
       router.prefetch(hrefString);
       timerRef.current = null;
-    }, 110);
+    }, 35);
   };
 
   const prefetchNow = () => {
@@ -58,7 +57,7 @@ export default function IntentLink({
     <NextLink
       {...props}
       href={href}
-      prefetch={false}
+      prefetch={requestedPrefetch ?? false}
       onPointerEnter={(event: PointerEvent<HTMLAnchorElement>) => {
         onPointerEnter?.(event);
         schedulePrefetch();
