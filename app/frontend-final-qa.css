@@ -93,3 +93,31 @@ body:has(#top.ref-home) .global-site-nav{
     overflow:visible!important;
   }
 }
+
+/* Services: uploaded Earth-at-night image is the single hero visual. */
+.page-services>section:first-child{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  background:
+    linear-gradient(90deg,rgba(2,4,7,.98) 0%,rgba(2,4,7,.90) 30%,rgba(2,4,7,.58) 52%,rgba(2,4,7,.22) 74%,rgba(2,4,7,.08) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.08),rgba(0,0,0,.46)),
+    url('/hero/services-earth.webp') center/cover no-repeat!important;
+}
+.page-services>section:first-child::before,
+.page-services>section:first-child::after,
+.page-services>section:first-child .home-neuron-art{
+  display:none!important;
+  content:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+}
+.page-services>section:first-child [class*=heroShell]{
+  position:relative!important;
+  z-index:2!important;
+}
+@media(max-width:620px){
+  .page-services>section:first-child{
+    background-position:58% center!important;
+  }
+}
