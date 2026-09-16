@@ -37,11 +37,17 @@ const copy = {
       ],
     },
     founder: {
-      kicker: "FOUNDER",
-      name: "Eng/ Mohammed Waleed",
-      role: "Founder & CEO — LINETECH",
-      statementTitle: "Build useful technology. Keep the standard high. Think beyond the next launch.",
-      statement: "LINETECH is being built as a long-term technology company: focused on useful products, strong systems and a clear standard for how work should be designed and delivered.",
+      kicker: "FOUNDER & CEO",
+      name: "Mohammed Waleed",
+      role: "Founder & CEO of LINETECH · AI Engineer",
+      statementTitle: "Building LINETECH as a long-term technology company.",
+      paragraphs: [
+        "I founded LINETECH around a simple belief: technology should make ideas clearer, businesses stronger and day-to-day work more capable — not add unnecessary complexity.",
+        "As Founder & CEO, my role is to set the direction, protect the standard and stay close to the work. I lead the company across product thinking, design and engineering so each project connects a real business goal with practical execution.",
+        "I want LINETECH to be known for useful products, disciplined delivery and the ability to build systems that people can actually depend on. The company is being built carefully, with a focus on quality before scale and on long-term value before short-term noise.",
+      ],
+      visionLabel: "THE COMPANY VISION",
+      vision: "The vision is to grow LINETECH from Aden into an international technology company with stronger product capability, wider markets and a reputation for clear thinking, reliable engineering and work that creates real impact.",
     },
     direction: {
       kicker: "WHERE WE'RE GOING",
@@ -86,11 +92,17 @@ const copy = {
       ],
     },
     founder: {
-      kicker: "المؤسس",
-      name: "Eng/ محمد وليد",
-      role: "المؤسس والرئيس التنفيذي — LINETECH",
-      statementTitle: "ابنِ تقنية مفيدة. حافظ على معيار عالٍ. وفكّر أبعد من الإطلاق القادم.",
-      statement: "تُبنى LINETECH كشركة تقنية طويلة المدى، تركّز على المنتجات المفيدة والأنظمة القوية ومعيار واضح لكيفية تصميم العمل وتنفيذه.",
+      kicker: "المؤسس والرئيس التنفيذي",
+      name: "محمد وليد",
+      role: "مؤسس ورئيس تنفيذي لـ LINETECH · مهندس ذكاء اصطناعي",
+      statementTitle: "أبني LINETECH كشركة تقنية طويلة المدى.",
+      paragraphs: [
+        "أسست LINETECH على فكرة بسيطة: التقنية يجب أن تجعل الأفكار أوضح، والأعمال أقوى، والتشغيل اليومي أكثر قدرة — لا أن تضيف تعقيدًا بلا فائدة.",
+        "بصفتي المؤسس والرئيس التنفيذي، مسؤوليتي هي تحديد الاتجاه، والحفاظ على معيار الشركة، والبقاء قريبًا من تفاصيل العمل. أقود الشركة عبر التفكير بالمنتج والتصميم والهندسة حتى يرتبط كل مشروع بهدف تجاري حقيقي وتنفيذ عملي واضح.",
+        "أريد أن تُعرف LINETECH بمنتجات مفيدة، وتنفيذ منضبط، وأنظمة يستطيع الناس الاعتماد عليها فعليًا. لذلك أبني الشركة بهدوء، مع تقديم الجودة على التوسع السريع، والقيمة طويلة المدى على الضجيج قصير المدى.",
+      ],
+      visionLabel: "رؤية الشركة",
+      vision: "الرؤية هي أن تنمو LINETECH من عدن إلى شركة تقنية دولية بقدرات أقوى في بناء المنتجات، وأسواق أوسع، وسمعة تقوم على وضوح التفكير، وموثوقية الهندسة، وأعمال تصنع أثرًا حقيقيًا.",
     },
     direction: {
       kicker: "إلى أين نتجه",
@@ -133,8 +145,17 @@ export default function AboutPage() {
 
       <section className={styles.founderSection}>
         <div className={`${styles.shell} ${styles.founderGrid}`}>
-          <div className={styles.founderIdentity} data-about-motion="reveal"><p className={styles.kicker}>{t.founder.kicker}</p><h2>{t.founder.name}</h2><p>{t.founder.role}</p></div>
-          <div className={styles.founderStatement} data-about-motion="reveal"><h3>{t.founder.statementTitle}</h3><p>{t.founder.statement}</p></div>
+          <div className={styles.founderIdentity} data-about-motion="reveal">
+            <p className={styles.kicker}>{t.founder.kicker}</p>
+            <h2>{t.founder.name}</h2>
+            <p>{t.founder.role}</p>
+          </div>
+          <div className={styles.founderStatement} data-about-motion="reveal">
+            <h3>{t.founder.statementTitle}</h3>
+            {t.founder.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
+            <span className="founder-vision-label">{t.founder.visionLabel}</span>
+            <p>{t.founder.vision}</p>
+          </div>
         </div>
       </section>
 
@@ -153,7 +174,7 @@ export default function AboutPage() {
       <section className={styles.principlesSection}>
         <div className={styles.shell}>
           <div className={styles.sectionHead} data-about-motion="reveal"><div><p className={styles.kicker}>{t.principles.kicker}</p><h2>{t.principles.title}</h2></div><p>{t.principles.lead}</p></div>
-          <div className={styles.principles}>{t.principles.items.map(([n, title, description]) => <article className={styles.principle} key={n} data-about-motion="stagger" style={n === "01" ? undefined : { paddingInlineStart: "24px" }}><span>{n}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
+          <div className={styles.principles}>{t.principles.items.map(([n, title, description]) => <article className={styles.principle} key={n} data-about-motion="stagger"><span>{n}</span><h3>{title}</h3><p>{description}</p></article>)}</div>
         </div>
       </section>
 
