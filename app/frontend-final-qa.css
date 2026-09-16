@@ -72,3 +72,24 @@ body:has(#top.ref-home) .global-site-nav{
     background-repeat:no-repeat!important;
   }
 }
+
+/* Home on phones must grow with its content. The previous one-viewport lock made
+   the copy/stats overflow past the hero while the photograph stopped at the
+   section boundary, which made the image look like it covered only half the hero. */
+@media(max-width:620px){
+  #top.ref-home .ref-hero.home-line-hero{
+    height:auto!important;
+    max-height:none!important;
+    min-height:calc(100svh - var(--linetech-nav-space))!important;
+  }
+  #top.ref-home .ref-hero.home-line-hero .ref-hero-grid{
+    height:auto!important;
+    max-height:none!important;
+    min-height:calc(100svh - var(--linetech-nav-space))!important;
+  }
+  #top.ref-home .ref-hero.home-line-hero .ref-hero-copy{
+    height:auto!important;
+    min-height:0!important;
+    overflow:visible!important;
+  }
+}
