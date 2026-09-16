@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import HomeHeroArt from "../HomeHeroArt";
 import { useLanguage } from "../Localized";
 import styles from "./services-page.module.css";
 import outcomeStyles from "./services-outcome.module.css";
@@ -172,7 +171,9 @@ export default function ServicesPage() {
   return (
     <main className={`${styles.page} ref-page page-services`}>
       <section className={styles.hero}>
-        <div className={styles.neuronField} aria-hidden="true"><HomeHeroArt /></div>
+        <div className="services-hero-photo" aria-hidden="true">
+          <img src="/hero/services-earth.webp?v=20260916-2" alt="" loading="eager" decoding="async" fetchPriority="high" />
+        </div>
         <div className={styles.heroShell}>
           <div className={styles.heroCopy}>
             <p className={styles.kicker}>{t.hero.kicker}</p>
