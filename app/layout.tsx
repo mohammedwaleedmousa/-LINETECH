@@ -109,7 +109,11 @@ const homeSplashBootstrapScript = `
 (() => {
   try {
     const path = window.location.pathname.replace(/\\/+$/, '') || '/';
-    if (path === '/' || path === '/index.html') {
+    let sameSiteReferrer = false;
+    try {
+      sameSiteReferrer = Boolean(document.referrer) && new URL(document.referrer).origin === window.location.origin;
+    } catch (_) {}
+    if ((path === '/' || path === '/index.html') && !sameSiteReferrer) {
       document.documentElement.classList.add('home-splash-pre');
       const preload = document.createElement('link');
       preload.rel = 'preload';
@@ -118,6 +122,8 @@ const homeSplashBootstrapScript = `
       preload.setAttribute('fetchpriority', 'high');
       document.head.appendChild(preload);
       window.setTimeout(() => document.documentElement.classList.remove('home-splash-pre'), 2500);
+    } else {
+      document.documentElement.classList.remove('home-splash-pre');
     }
   } catch (_) {}
 })();`;
