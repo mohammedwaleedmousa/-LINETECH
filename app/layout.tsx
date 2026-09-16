@@ -55,6 +55,7 @@ import "./frontend-final-qa.css";
 import "./home-splash.css";
 import "./interaction-polish.css";
 import "./services-hero-photo.css";
+import "./ui-refinement-v2.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
@@ -109,11 +110,7 @@ const homeSplashBootstrapScript = `
 (() => {
   try {
     const path = window.location.pathname.replace(/\\/+$/, '') || '/';
-    let sameSiteReferrer = false;
-    try {
-      sameSiteReferrer = Boolean(document.referrer) && new URL(document.referrer).origin === window.location.origin;
-    } catch (_) {}
-    if ((path === '/' || path === '/index.html') && !sameSiteReferrer) {
+    if (path === '/' || path === '/index.html') {
       document.documentElement.classList.add('home-splash-pre');
       const preload = document.createElement('link');
       preload.rel = 'preload';
@@ -122,8 +119,6 @@ const homeSplashBootstrapScript = `
       preload.setAttribute('fetchpriority', 'high');
       document.head.appendChild(preload);
       window.setTimeout(() => document.documentElement.classList.remove('home-splash-pre'), 2500);
-    } else {
-      document.documentElement.classList.remove('home-splash-pre');
     }
   } catch (_) {}
 })();`;
