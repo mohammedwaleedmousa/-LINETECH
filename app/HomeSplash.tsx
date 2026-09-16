@@ -14,9 +14,9 @@ function TypedCharacters({ count }: { count: number }) {
 
 export default function HomeSplash(){
   const pathname=usePathname();
-  const shouldShowOnEntryRef=useRef(pathname==="/");
+  const shouldShowOnEntryRef=useRef(false);
   const [mounted,setMounted]=useState(false);
-  const [visible,setVisible]=useState(shouldShowOnEntryRef.current);
+  const [visible,setVisible]=useState(false);
   const [leaving,setLeaving]=useState(false);
   const [typedCount,setTypedCount]=useState(0);
   const [ready,setReady]=useState(false);
@@ -27,7 +27,15 @@ export default function HomeSplash(){
   useEffect(()=>setMounted(true),[]);
 
   useLayoutEffect(()=>{
-    if(!shouldShowOnEntryRef.current){
+    let sameSiteReferrer=false;
+    try{
+      sameSiteReferrer=Boolean(document.referrer)&&new URL(document.referrer).origin===window.location.origin;
+    }catch{}
+
+    const shouldShow=pathname==="/"&&!sameSiteReferrer;
+    shouldShowOnEntryRef.current=shouldShow;
+
+    if(!shouldShow){
       setVisible(false);
       document.documentElement.classList.remove("home-splash-active","home-splash-pre");
       document.body.classList.remove("home-splash-active");
