@@ -1,10 +1,14 @@
 "use client";
 
 import Localized, { useLanguage, setLanguage } from "./Localized";
-
-import Link from "./IntentLink";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type AnchorHTMLAttributes } from "react";
+
+type StaticLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { prefetch?: boolean };
+
+function Link({ prefetch: _prefetch, ...props }: StaticLinkProps) {
+  return <a {...props} />;
+}
 
 const items = [
   ["/", "Home"],
