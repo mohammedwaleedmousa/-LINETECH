@@ -4,22 +4,39 @@
   padding:104px 0;
   border-top:1px solid rgba(255,255,255,.06);
   border-bottom:1px solid rgba(255,255,255,.06);
-  background:
-    radial-gradient(circle at 82% 18%,rgba(56,130,246,.10),transparent 30%),
-    linear-gradient(180deg,#05080d 0%,#070b11 48%,#05080d 100%);
+  background:linear-gradient(180deg,#05080d 0%,#070b11 52%,#05080d 100%);
+  isolation:isolate;
 }
 
+/* New abstract decoration: soft light arcs instead of the old blueprint grid. */
 .section::before{
   content:"";
   position:absolute;
-  inset:0;
+  width:720px;
+  height:720px;
+  inset-inline-end:-360px;
+  top:-330px;
+  border-radius:50%;
+  border:1px solid rgba(108,168,248,.12);
+  box-shadow:
+    0 0 0 84px rgba(108,168,248,.018),
+    0 0 0 168px rgba(108,168,248,.012),
+    0 0 120px rgba(56,130,246,.07);
   pointer-events:none;
-  background-image:
-    linear-gradient(rgba(111,164,230,.035) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(111,164,230,.035) 1px,transparent 1px);
-  background-size:52px 52px;
-  mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
-  -webkit-mask-image:linear-gradient(90deg,transparent,#000 18%,#000 82%,transparent);
+  opacity:.95;
+}
+
+.section::after{
+  content:"";
+  position:absolute;
+  width:520px;
+  height:220px;
+  inset-inline-start:-110px;
+  bottom:-110px;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(67,132,219,.11),rgba(67,132,219,.025) 42%,transparent 72%);
+  filter:blur(12px);
+  pointer-events:none;
 }
 
 .shell{
@@ -94,9 +111,14 @@
 .card::before{
   content:"";
   position:absolute;
-  inset:0;
+  width:190px;
+  height:190px;
+  inset-inline-end:-92px;
+  top:-104px;
   pointer-events:none;
-  background:radial-gradient(circle at 88% 8%,rgba(56,130,246,.12),transparent 34%);
+  border-radius:50%;
+  border:1px solid rgba(108,168,248,.10);
+  background:radial-gradient(circle,rgba(56,130,246,.065),transparent 66%);
 }
 
 .number{
@@ -114,15 +136,15 @@
   position:absolute;
   top:28px;
   inset-inline-end:26px;
-  width:46px;
-  height:46px;
-  display:grid;
-  place-items:center;
-  border:1px solid rgba(111,170,244,.22);
-  border-radius:50%;
+  width:auto;
+  height:auto;
+  display:block;
   color:#78b0f8;
-  background:rgba(56,130,246,.055);
-  font-size:18px;
+  background:transparent;
+  border:0;
+  font-size:11px;
+  font-weight:650;
+  letter-spacing:.16em;
 }
 
 .card h3{
@@ -153,14 +175,8 @@
   background:linear-gradient(90deg,#3882f6,rgba(56,130,246,.05));
 }
 
-:global(html[dir="rtl"]) .lead{
-  margin-left:0;
-  margin-right:auto;
-}
-
-:global(html[dir="rtl"]) .kicker{
-  letter-spacing:0;
-}
+:global(html[dir="rtl"]) .lead{margin-left:0;margin-right:auto}
+:global(html[dir="rtl"]) .kicker,:global(html[dir="rtl"]) .icon{letter-spacing:0}
 
 @media(max-width:900px){
   .section{padding:82px 0}
@@ -169,6 +185,7 @@
   .grid{grid-template-columns:1fr}
   .card{min-height:230px}
   .number{margin-bottom:52px}
+  .section::before{width:560px;height:560px;inset-inline-end:-330px;top:-250px}
 }
 
 @media(max-width:620px){
@@ -178,4 +195,6 @@
   .card{padding:26px 22px 24px}
   .icon{top:23px;inset-inline-end:20px}
   .line{left:22px;right:22px}
+  .section::before{width:430px;height:430px;inset-inline-end:-290px;top:-180px;opacity:.7}
+  .section::after{width:360px;height:180px;inset-inline-start:-150px}
 }
