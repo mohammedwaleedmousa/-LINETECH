@@ -3,6 +3,8 @@
   "name": "linetech",
   "compatibility_date": "2026-09-13",
   "assets": {
-    "directory": "./out"
+    "directory": "./out",
+    "html_handling": "drop-trailing-slash",
+    "not_found_handling": "404-page"
   }
 }
