@@ -132,13 +132,46 @@ body:has(#top.ref-home) .global-site-nav{
   z-index:2!important;
 }
 body:has(.page-services) .global-site-nav{
-  position:relative!important;
-  z-index:50!important;
+  position:fixed!important;
+  z-index:9999!important;
   background:rgba(7,10,13,.24)!important;
   -webkit-backdrop-filter:blur(10px)!important;
   backdrop-filter:blur(10px)!important;
 }
-@media(max-width:900px){.page-services{--services-nav-space:78px}}
+
+/* Keep Services at its original desktop height. The image may extend upward behind
+   the fixed navbar, but it must never add extra document height. */
+.page-services>section:first-child{
+  min-height:650px!important;
+  height:650px!important;
+  max-height:650px!important;
+}
+.page-services>section:first-child [class*=heroShell]{
+  min-height:650px!important;
+  height:650px!important;
+  max-height:650px!important;
+}
+
+@media(min-width:1101px) and (max-width:1700px){
+  .global-site-nav .ref-nav-links{gap:24px!important}
+  .global-site-nav .ref-nav-end{gap:10px!important}
+  .global-site-nav .ref-button.light{padding-inline:14px!important}
+  .global-site-nav .nav-login{padding-inline:13px!important;white-space:nowrap!important}
+}
+
+@media(max-width:900px){
+  .page-services{--services-nav-space:78px}
+  .page-services>section:first-child{
+    min-height:590px!important;
+    height:auto!important;
+    max-height:none!important;
+  }
+  .page-services>section:first-child [class*=heroShell]{
+    min-height:590px!important;
+    height:auto!important;
+    max-height:none!important;
+  }
+}
 @media(max-width:620px){
   .page-services{--services-nav-space:70px}
   .page-services>section:first-child::before{
