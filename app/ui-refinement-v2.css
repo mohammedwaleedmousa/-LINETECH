@@ -1,0 +1,182 @@
+/* Final UI refinements — loaded after earlier interaction experiments. */
+
+/* Home FAQ: give every question breathing room instead of touching section edges. */
+.ref-home .home-faq-list{
+  display:grid!important;
+  gap:10px!important;
+  border-top:0!important;
+}
+.ref-home .home-faq-list details{
+  overflow:hidden!important;
+  border:1px solid #1d2a38!important;
+  border-radius:10px!important;
+  background:#070b10!important;
+}
+.ref-home .home-faq-list summary{
+  min-height:72px!important;
+  padding:20px 22px!important;
+}
+.ref-home .home-faq-list details>p{
+  max-width:70ch!important;
+  padding:0 22px 22px!important;
+  margin:0!important;
+}
+@media(hover:hover) and (pointer:fine){
+  .ref-home .home-faq-list details:hover{
+    border-color:#30465d!important;
+    background:#081019!important;
+    box-shadow:none!important;
+  }
+}
+
+/* Services / OUR PROCESS — separate cards and keep hover calm. */
+.page-services [class*="processSection"] [class*="timeline"]{
+  gap:12px!important;
+  border-top:0!important;
+}
+.page-services [class*="processSection"] [class*="step"]{
+  min-height:176px!important;
+  padding:24px!important;
+  border:1px solid #1a2633!important;
+  border-radius:10px!important;
+  background:#070b10!important;
+  transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease!important;
+}
+.page-services [class*="processSection"] [class*="step"]::before{display:none!important}
+@media(hover:hover) and (pointer:fine){
+  .page-services [class*="processSection"] [class*="step"]:hover{
+    transform:none!important;
+    border-color:#30465d!important;
+    background:#091019!important;
+    box-shadow:0 10px 26px rgba(0,0,0,.12)!important;
+  }
+}
+
+/* About / PRINCIPLES + DIRECTION — independent cards, no jumping hover. */
+.page-about [class*="principles"],
+.page-about [class*="directionRail"]{
+  gap:12px!important;
+  border-top:0!important;
+  border-bottom:0!important;
+}
+.page-about [class*="principle"],
+.page-about [class*="directionItem"]{
+  min-height:170px!important;
+  padding:24px!important;
+  border:1px solid #1a2633!important;
+  border-radius:10px!important;
+  background:#070b10!important;
+  transition:border-color .2s ease,background-color .2s ease,box-shadow .2s ease!important;
+}
+.page-about [class*="directionItem"]::before{display:none!important}
+@media(hover:hover) and (pointer:fine){
+  .page-about [class*="principle"]:hover,
+  .page-about [class*="directionItem"]:hover{
+    transform:none!important;
+    border-color:#30465d!important;
+    background:#091019!important;
+    box-shadow:0 10px 26px rgba(0,0,0,.12)!important;
+  }
+}
+
+/* Founder: intentionally simple and editorial. Remove the previous showcase card. */
+.page-about [class*="founderSection"]{
+  background:#05080c!important;
+  overflow:visible!important;
+}
+.page-about [class*="founderSection"]::before{display:none!important;content:none!important}
+.page-about [class*="founderGrid"]{
+  padding:0!important;
+  border:0!important;
+  border-radius:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+  grid-template-columns:minmax(230px,.55fr) minmax(0,1.45fr)!important;
+  gap:clamp(48px,7vw,100px)!important;
+}
+.page-about [class*="founderGrid"]::after{display:none!important;content:none!important}
+.page-about [class*="founderIdentity"]{
+  padding:0!important;
+  border:0!important;
+}
+.page-about [class*="founderIdentity"] h2{
+  max-width:430px!important;
+  font-size:clamp(34px,4vw,50px)!important;
+  line-height:1.04!important;
+  letter-spacing:-.04em!important;
+}
+.page-about [class*="founderIdentity"]>p:last-child{
+  margin-top:12px!important;
+  color:#7891ac!important;
+  font-size:11px!important;
+  font-weight:550!important;
+  letter-spacing:.08em!important;
+}
+.page-about [class*="founderStatement"]{
+  padding:28px 0 0!important;
+  border-top:1px solid #1a2633!important;
+}
+.page-about [class*="founderStatement"]::before{
+  display:block!important;
+  content:""!important;
+  width:64px!important;
+  height:1px!important;
+  top:-1px!important;
+  background:#6ca8f8!important;
+}
+.page-about [class*="founderStatement"] h3{
+  max-width:760px!important;
+  font-size:clamp(28px,3.4vw,43px)!important;
+  line-height:1.1!important;
+}
+.page-about [class*="founderStatement"] p{
+  max-width:760px!important;
+  margin:18px 0 0!important;
+  color:#9aa7b5!important;
+  font-size:14px!important;
+  line-height:1.9!important;
+}
+.page-about .founder-vision-label{
+  display:block;
+  margin:28px 0 8px;
+  color:#6ca8f8;
+  font-size:10px;
+  font-weight:650;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+}
+html[dir="rtl"] .page-about .founder-vision-label{letter-spacing:0}
+
+/* Services hero photo: always paint a real image layer and keep it bright enough to read. */
+.page-services>section:first-child .services-hero-photo{
+  background:url('/hero/services-earth.webp') center 48%/cover no-repeat!important;
+}
+.page-services>section:first-child .services-hero-photo img{
+  z-index:0!important;
+  filter:brightness(1.2) saturate(1.08) contrast(1.04)!important;
+}
+.page-services>section:first-child .services-hero-photo::after{
+  z-index:1!important;
+  background:
+    linear-gradient(90deg,rgba(3,6,10,.76) 0%,rgba(3,6,10,.58) 31%,rgba(3,6,10,.28) 56%,rgba(3,6,10,.06) 82%,rgba(3,6,10,.02) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.28))!important;
+}
+html[dir="rtl"] .page-services>section:first-child .services-hero-photo::after{
+  background:
+    linear-gradient(270deg,rgba(3,6,10,.76) 0%,rgba(3,6,10,.58) 31%,rgba(3,6,10,.28) 56%,rgba(3,6,10,.06) 82%,rgba(3,6,10,.02) 100%),
+    linear-gradient(180deg,rgba(0,0,0,.02),rgba(0,0,0,.28))!important;
+}
+
+@media(max-width:900px){
+  .page-about [class*="founderGrid"]{grid-template-columns:1fr!important;gap:28px!important}
+}
+@media(max-width:620px){
+  .ref-home .home-faq-list summary{padding:18px!important}
+  .ref-home .home-faq-list details>p{padding:0 18px 18px!important}
+  .page-services [class*="processSection"] [class*="timeline"],
+  .page-about [class*="principles"],
+  .page-about [class*="directionRail"]{gap:10px!important}
+  .page-services [class*="processSection"] [class*="step"],
+  .page-about [class*="principle"],
+  .page-about [class*="directionItem"]{min-height:0!important;padding:20px!important}
+}
