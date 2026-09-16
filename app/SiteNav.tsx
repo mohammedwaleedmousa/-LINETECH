@@ -1,22 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import Localized, { useLanguage, setLanguage } from "./Localized";
 import { usePathname } from "next/navigation";
-import { useEffect, useMemo, useRef, useState, type AnchorHTMLAttributes } from "react";
-
-type StaticLinkProps = AnchorHTMLAttributes<HTMLAnchorElement> & { prefetch?: boolean };
-
-function Link({ prefetch: _prefetch, ...props }: StaticLinkProps) {
-  return <a {...props} />;
-}
+import { useEffect, useMemo, useRef, useState } from "react";
 
 const items = [
-  ["/", "Home"],
-  ["/services", "Services"],
-  ["/projects", "Projects"],
-  ["/about", "About"],
-  ["/start", "Contact"],
-  ["/chat", "Chat"],
+  { href: "/", en: "Home", ar: "الرئيسية" },
+  { href: "/services", en: "Services", ar: "الخدمات" },
+  { href: "/projects", en: "Projects", ar: "المشاريع" },
+  { href: "/about", en: "About", ar: "عن الشركة" },
+  { href: "/start", en: "Contact", ar: "تواصل" },
+  { href: "/chat", en: "Chat", ar: "المحادثة" },
 ] as const;
 
 const searchItems = [
@@ -64,17 +59,11 @@ export default function SiteNav() {
 
   useEffect(() => {
     if (!searchOpen) return;
-
     document.documentElement.classList.add("search-scroll-lock");
     document.body.classList.add("search-scroll-lock");
-
     const timer = window.setTimeout(() => inputRef.current?.focus(), 360);
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setSearchOpen(false);
-    };
-
+    const onKeyDown = (event: KeyboardEvent) => { if (event.key === "Escape") setSearchOpen(false); };
     window.addEventListener("keydown", onKeyDown);
-
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener("keydown", onKeyDown);
@@ -90,6 +79,9 @@ export default function SiteNav() {
   }, [query]);
 
   const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const workspaceLabel = language === "ar" ? "مساحة العمل" : "Workspace";
+  const loginLabel = language === "ar" ? "تسجيل الدخول" : "Login";
+  const startLabel = language === "ar" ? "ابدأ خطك" : "Start Your Line";
 
   function toggleLanguage(){
     const next:SiteLanguage = language === "ar" ? "en" : "ar";
@@ -103,69 +95,44 @@ export default function SiteNav() {
           <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
-          {items.map(([href, label]) => {
-            const active = isActive(href);
-            return (
-              <Link key={href} href={href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>
-                {label}
-              </Link>
-            );
+          {items.map((item) => {
+            const active = isActive(item.href);
+            return <Link key={item.href} href={item.href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>{language === "ar" ? item.ar : item.en}</Link>;
           })}
         </nav>
         <div className="ref-nav-end">
-          <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "الإنجليزية" : "العربية"}</button>
+          <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "ENG" : "العربية"}</button>
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
-          <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
-          <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>Workspace <span>→</span></Link>
-          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
-          <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => { setSearchOpen(false); setOpen(v => !v); }}>
-            <i/><i/>
-          </button>
+          <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>
+          <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>
+          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>{loginLabel} <span>↗</span></Link>
+          <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => { setSearchOpen(false); setOpen(v => !v); }}><i/><i/></button>
         </div>
       </header>
 
       <div id="mobile-navigation" className={`mobile-menu-panel ${open ? "open" : ""}`} aria-hidden={!open}>
         <nav aria-label="Mobile navigation">
-          {items.map(([href, label], index) => {
-            const active = isActive(href);
-            return (
-              <Link key={href} href={href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}>
-                <span>0{index + 1}</span>{label}<b>→</b>
-              </Link>
-            );
+          {items.map((item, index) => {
+            const active = isActive(item.href);
+            return <Link key={item.href} href={item.href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span>{language === "ar" ? item.ar : item.en}<b>→</b></Link>;
           })}
         </nav>
-        <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "English" : "Arabic"}</span><strong>{language === "ar" ? "الإنجليزية" : "العربية"}</strong></button>
-        <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>Start Your Line <span>→</span></Link>
-        <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>Client Workspace <span>→</span></Link>
-        <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>Login / Create Account <span>↗</span></Link>
+        <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
+        <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>
+        <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>
+        <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>{loginLabel} <span>↗</span></Link>
       </div>
 
       {searchOpen && (
         <div className="site-search-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSearchOpen(false); }}>
           <div className="site-search-panel" role="dialog" aria-modal="false" aria-label="Search LINETECH">
             <div className="site-search-rail" aria-hidden="true"><i/><i/><i/></div>
-            <div className="site-search-topline">
-              <span>SEARCH / LINETECH</span>
-              <button type="button" onClick={() => setSearchOpen(false)} aria-label="Close search">ESC <b>×</b></button>
-            </div>
+            <div className="site-search-topline"><span>SEARCH / LINETECH</span><button type="button" onClick={() => setSearchOpen(false)} aria-label="Close search">ESC <b>×</b></button></div>
             <div className="site-search-content">
-              <div className="site-search-field">
-                <span aria-hidden="true">⌕</span>
-                <input ref={inputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="What are you looking for?" aria-label="Search" />
-              </div>
-              <div className="site-search-caption">
-                <span>{query ? "SEARCH RESULTS" : "QUICK ACCESS"}</span>
-                <span>{results.length.toString().padStart(2, "0")}</span>
-              </div>
+              <div className="site-search-field"><span aria-hidden="true">⌕</span><input ref={inputRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="What are you looking for?" aria-label="Search" /></div>
+              <div className="site-search-caption"><span>{query ? "SEARCH RESULTS" : "QUICK ACCESS"}</span><span>{results.length.toString().padStart(2, "0")}</span></div>
               <div className="site-search-results" aria-live="polite">
-                {results.length > 0 ? results.map((item, index) => (
-                  <Link key={`${item.title}-${item.href}`} href={item.href} prefetch onClick={() => setSearchOpen(false)}>
-                    <span className="site-search-index">{String(index + 1).padStart(2, "0")}</span>
-                    <span className="site-search-title">{item.title}<small>{item.meta}</small></span>
-                    <b>→</b>
-                  </Link>
-                )) : <p className="site-search-empty">No results found. Try another word.</p>}
+                {results.length > 0 ? results.map((item, index) => <Link key={`${item.title}-${item.href}`} href={item.href} prefetch onClick={() => setSearchOpen(false)}><span className="site-search-index">{String(index + 1).padStart(2, "0")}</span><span className="site-search-title">{item.title}<small>{item.meta}</small></span><b>→</b></Link>) : <p className="site-search-empty">No results found. Try another word.</p>}
               </div>
               <div className="site-search-hint"><span>Type to search</span><span>ESC to close</span></div>
             </div>
