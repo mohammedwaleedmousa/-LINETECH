@@ -112,7 +112,8 @@ export default function SiteNav() {
           <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "الإنجليزية" : "العربية"}</button>
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>Start Your Line <span>→</span></Link>
-          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") || pathname.startsWith("/workspace") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
+          <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>Workspace <span>→</span></Link>
+          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>Login <span>↗</span></Link>
           <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => { setSearchOpen(false); setOpen(v => !v); }}>
             <i/><i/>
           </button>
