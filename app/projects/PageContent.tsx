@@ -119,17 +119,65 @@ export default function ProjectsPage() {
   return (
     <main className={`${styles.page} ref-page page-projects`}>
       <section className={styles.hero} data-project-hero>
-        <div className="projects-journey-art" aria-hidden="true">
+        <div className="projects-showcase-art" aria-hidden="true">
           <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
             <defs>
-              <linearGradient id="projectsJourneyRoute" x1="760" y1="0" x2="1540" y2="0" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#DDEEFF" stopOpacity=".08" />
-                <stop offset=".32" stopColor="#A9CCFA" stopOpacity=".26" />
-                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".14" />
+              <linearGradient id="projectsStripFill" x1="840" y1="270" x2="1510" y2="640" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#0A111A" stopOpacity=".78" />
+                <stop offset=".55" stopColor="#0A1018" stopOpacity=".48" />
+                <stop offset="1" stopColor="#071019" stopOpacity=".22" />
               </linearGradient>
+              <linearGradient id="projectsStripEdge" x1="840" y1="0" x2="1510" y2="0" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#8BB9F5" stopOpacity=".14" />
+                <stop offset=".5" stopColor="#9BC5FF" stopOpacity=".42" />
+                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".12" />
+              </linearGradient>
+              <linearGradient id="projectsStripSweep" x1="0" y1="0" x2="1" y2="0">
+                <stop stopColor="#FFFFFF" stopOpacity="0" />
+                <stop offset=".5" stopColor="#CFE4FF" stopOpacity=".22" />
+                <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
+              </linearGradient>
+              <clipPath id="projectsStripClip">
+                <rect x="820" y="250" width="700" height="390" rx="26" />
+              </clipPath>
             </defs>
-            <path className="projects-journey-route" d="M760 520 C950 420 1160 455 1540 410" />
-            <path className="projects-journey-shimmer" d="M760 520 C950 420 1160 455 1540 410" />
+
+            <g className="projects-strip-shell">
+              <rect x="820" y="250" width="700" height="390" rx="26" fill="url(#projectsStripFill)" />
+              <rect x="820.5" y="250.5" width="699" height="389" rx="25.5" stroke="url(#projectsStripEdge)" />
+
+              <line x1="1053" y1="282" x2="1053" y2="608" className="projects-strip-divider" />
+              <line x1="1286" y1="282" x2="1286" y2="608" className="projects-strip-divider" />
+
+              <g className="projects-strip-commerce">
+                <rect x="864" y="334" width="54" height="74" rx="7" />
+                <rect x="930" y="334" width="54" height="74" rx="7" />
+                <rect x="864" y="420" width="120" height="14" rx="7" />
+                <rect x="864" y="448" width="84" height="10" rx="5" />
+              </g>
+
+              <g className="projects-strip-marketplace">
+                <circle cx="1128" cy="372" r="14" />
+                <circle cx="1190" cy="344" r="10" />
+                <circle cx="1218" cy="408" r="11" />
+                <path d="M1141 365L1180 349M1140 382L1207 404M1196 354L1213 397" />
+                <rect x="1094" y="456" width="122" height="10" rx="5" />
+              </g>
+
+              <g className="projects-strip-system">
+                <rect x="1330" y="334" width="138" height="18" rx="9" />
+                <rect x="1330" y="370" width="104" height="12" rx="6" />
+                <rect x="1330" y="400" width="118" height="12" rx="6" />
+                <rect x="1330" y="442" width="18" height="64" rx="5" />
+                <rect x="1362" y="424" width="18" height="82" rx="5" />
+                <rect x="1394" y="456" width="18" height="50" rx="5" />
+                <rect x="1426" y="410" width="18" height="96" rx="5" />
+              </g>
+
+              <g clipPath="url(#projectsStripClip)">
+                <rect className="projects-strip-sweep" x="760" y="240" width="180" height="420" fill="url(#projectsStripSweep)" />
+              </g>
+            </g>
           </svg>
         </div>
 
