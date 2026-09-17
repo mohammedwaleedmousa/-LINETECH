@@ -1,0 +1,244 @@
+/* About hero — one clear line evolving through four stages. */
+
+.page-about{
+  padding-top:0!important;
+}
+
+.page-about>section:first-child{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:
+    radial-gradient(ellipse at 84% 44%,rgba(61,107,169,.085) 0%,rgba(61,107,169,.03) 28%,rgba(61,107,169,0) 60%),
+    linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
+}
+
+/* Remove old About neuron/background layers. */
+.page-about>section:first-child::before,
+.page-about>section:first-child::after{
+  content:none!important;
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+  background:none!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  transform:none!important;
+}
+
+.page-about>section:first-child [class*="neuronField"]{
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+}
+
+/* One visual only: the LINETECH line moving through four stages. */
+.page-about .about-line-art{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  opacity:.96!important;
+}
+
+.page-about .about-line-art svg{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  overflow:visible!important;
+}
+
+.page-about .about-line-halo{
+  fill:none!important;
+  stroke:#6ca8f8!important;
+  stroke-width:9!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke!important;
+  opacity:.045!important;
+  filter:url(#aboutLineBlur)!important;
+}
+
+.page-about .about-line-base{
+  fill:none!important;
+  stroke:url(#aboutLineGradient)!important;
+  stroke-width:1.45!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke!important;
+  opacity:.72!important;
+  filter:drop-shadow(0 0 8px rgba(92,154,234,.12))!important;
+  animation:aboutLineBreath 6.8s ease-in-out infinite!important;
+}
+
+.page-about .about-line-flow{
+  fill:none!important;
+  stroke:#e6f1ff!important;
+  stroke-width:1.05!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke!important;
+  opacity:.30!important;
+  stroke-dasharray:90 820!important;
+  animation:aboutLineFlow 9.5s linear infinite!important;
+}
+
+.page-about .about-point-halo{
+  fill:#6ca8f8!important;
+  opacity:.055!important;
+  filter:url(#aboutPointGlow)!important;
+}
+
+.page-about .about-point-core{
+  fill:#eef7ff!important;
+  stroke:#80b6fa!important;
+  stroke-width:1!important;
+  filter:drop-shadow(0 0 8px rgba(114,177,248,.52))!important;
+}
+
+.page-about .about-line-point{
+  transform-box:fill-box!important;
+  transform-origin:center!important;
+  animation:aboutPointPulse 7.2s ease-in-out infinite!important;
+}
+
+.page-about .about-line-point-2{animation-delay:1.8s!important}
+.page-about .about-line-point-3{animation-delay:3.6s!important}
+.page-about .about-line-point-4{animation-delay:5.4s!important}
+
+/* Full-screen spacing: copy stays left, with comfortable distance from navbar. */
+.page-about>section:first-child>[class*="heroShell"]{
+  position:relative!important;
+  z-index:2!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:100svh!important;
+  height:auto!important;
+  margin:0!important;
+  padding-top:clamp(185px,23vh,235px)!important;
+  padding-right:clamp(48px,11vw,184px)!important;
+  padding-bottom:54px!important;
+  padding-left:clamp(48px,11vw,184px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
+  align-items:stretch!important;
+}
+
+.page-about>section:first-child>[class*="heroShell"]>[class*="heroCopy"]{
+  align-self:flex-start!important;
+  margin:0!important;
+  max-width:900px!important;
+  text-align:left!important;
+}
+
+html[dir="rtl"] .page-about>section:first-child>[class*="heroShell"]>[class*="heroCopy"]{
+  align-self:flex-end!important;
+  text-align:right!important;
+}
+
+/* Keep the 4 About stages as the quiet bottom anchor. */
+.page-about>section:first-child>[class*="heroShell"]>[class*="heroLine"]{
+  margin-top:auto!important;
+  width:min(980px,100%)!important;
+  max-width:980px!important;
+  align-self:flex-start!important;
+  padding-top:34px!important;
+  opacity:.90!important;
+}
+
+html[dir="rtl"] .page-about>section:first-child>[class*="heroShell"]>[class*="heroLine"]{
+  align-self:flex-end!important;
+}
+
+html[dir="rtl"] .page-about .about-line-art{
+  transform:scaleX(-1)!important;
+  transform-origin:center!important;
+}
+
+body:has(.page-about) .global-site-nav{
+  position:fixed!important;
+  z-index:9999!important;
+  background:rgba(4,7,9,.34)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  backdrop-filter:blur(10px)!important;
+}
+
+@keyframes aboutLineFlow{
+  from{stroke-dashoffset:940}
+  to{stroke-dashoffset:-940}
+}
+
+@keyframes aboutLineBreath{
+  0%,100%{opacity:.58}
+  50%{opacity:.80}
+}
+
+@keyframes aboutPointPulse{
+  0%,72%,100%{opacity:.52;transform:scale(.94)}
+  12%,24%{opacity:1;transform:scale(1.22)}
+}
+
+@media(max-width:1100px){
+  .page-about .about-line-art{
+    transform:translateX(5%)!important;
+    opacity:.78!important;
+  }
+}
+
+@media(max-width:900px){
+  .page-about>section:first-child,
+  .page-about>section:first-child>[class*="heroShell"]{
+    min-height:100svh!important;
+  }
+
+  .page-about .about-line-art{
+    transform:translateX(12%) scale(.94)!important;
+    transform-origin:center right!important;
+    opacity:.54!important;
+  }
+
+  html[dir="rtl"] .page-about .about-line-art{
+    transform:scaleX(-1) translateX(12%) scale(.94)!important;
+  }
+
+  .page-about>section:first-child>[class*="heroShell"]{
+    padding-top:clamp(160px,21vh,200px)!important;
+    padding-right:32px!important;
+    padding-left:32px!important;
+  }
+}
+
+@media(max-width:620px){
+  .page-about .about-line-art{
+    display:none!important;
+  }
+
+  .page-about>section:first-child>[class*="heroShell"]{
+    padding-top:142px!important;
+    padding-right:24px!important;
+    padding-bottom:38px!important;
+    padding-left:24px!important;
+  }
+
+  .page-about>section:first-child>[class*="heroShell"]>[class*="heroLine"]{
+    margin-top:48px!important;
+    padding-top:0!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page-about .about-line-base,
+  .page-about .about-line-flow,
+  .page-about .about-line-point{
+    animation:none!important;
+  }
+}
