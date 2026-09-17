@@ -16,58 +16,115 @@
 .kicker::before{content:"";width:34px;height:1px;background:var(--blue);box-shadow:0 0 12px rgba(108,168,248,.25)}
 :global(html[dir="rtl"]) .kicker{letter-spacing:0}
 
+/* ABOUT HERO — single source of truth. */
 .hero{
   position:relative;
-  min-height:650px;
+  min-height:100svh;
   overflow:hidden;
   isolation:isolate;
   border-bottom:1px solid var(--line);
   background:
-    radial-gradient(circle at 78% 34%,rgba(90,157,245,.11),transparent 27%),
-    radial-gradient(circle at 58% 82%,rgba(37,83,145,.065),transparent 34%),
-    var(--bg)!important;
+    radial-gradient(ellipse at 84% 44%,rgba(61,107,169,.085) 0%,rgba(61,107,169,.03) 28%,rgba(61,107,169,0) 60%),
+    linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
 }
-.hero::before{
-  content:"";
+
+.page :global(.about-line-art){
   position:absolute;
   inset:0;
-  z-index:1;
-  pointer-events:none;
-  background:
-    linear-gradient(90deg,rgba(5,8,12,.97) 0%,rgba(5,8,12,.88) 24%,rgba(5,8,12,.58) 46%,rgba(5,8,12,.18) 72%,rgba(5,8,12,.02) 100%),
-    linear-gradient(180deg,rgba(5,8,12,.22) 0%,transparent 24%,transparent 72%,rgba(5,8,12,.28) 100%);
-}
-:global(html[dir="rtl"]) .hero::before{
-  background:
-    linear-gradient(270deg,rgba(5,8,12,.97) 0%,rgba(5,8,12,.88) 24%,rgba(5,8,12,.58) 46%,rgba(5,8,12,.18) 72%,rgba(5,8,12,.02) 100%),
-    linear-gradient(180deg,rgba(5,8,12,.22) 0%,transparent 24%,transparent 72%,rgba(5,8,12,.28) 100%);
-}
-
-.neuronField{
-  position:absolute;
-  inset:-4% -3% -6%;
   z-index:0;
   pointer-events:none;
+  overflow:hidden;
+  opacity:.96;
+}
+.page :global(.about-line-art svg){
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
   overflow:visible;
-  opacity:.7;
 }
-.neuronField::after{display:none}
-.neuronField :global(.home-line-art){
-  position:absolute!important;
-  inset:0!important;
-  width:100%!important;
-  height:100%!important;
-  max-width:none!important;
-  opacity:1!important;
-  transform:scale(1.07)!important;
-  transform-origin:center!important;
-  filter:drop-shadow(0 0 26px rgba(56,130,246,.08));
+.page :global(.about-line-halo){
+  fill:none;
+  stroke:#6ca8f8;
+  stroke-width:9;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+  opacity:.045;
+  filter:url(#aboutLineBlur);
 }
-.neuronField :global(.home-line-art svg){width:100%;height:100%;display:block;overflow:visible}
+.page :global(.about-line-base){
+  fill:none;
+  stroke:url(#aboutLineGradient);
+  stroke-width:1.45;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+  opacity:.72;
+  filter:drop-shadow(0 0 8px rgba(92,154,234,.12));
+  animation:aboutLineBreath 6.8s ease-in-out infinite;
+}
+.page :global(.about-line-flow){
+  fill:none;
+  stroke:#e6f1ff;
+  stroke-width:1.05;
+  stroke-linecap:round;
+  vector-effect:non-scaling-stroke;
+  opacity:.30;
+  stroke-dasharray:90 820;
+  animation:aboutLineFlow 9.5s linear infinite;
+}
+.page :global(.about-point-halo){
+  fill:#6ca8f8;
+  opacity:.055;
+  filter:url(#aboutPointGlow);
+}
+.page :global(.about-point-core){
+  fill:#eef7ff;
+  stroke:#80b6fa;
+  stroke-width:1;
+  filter:drop-shadow(0 0 8px rgba(114,177,248,.52));
+}
+.page :global(.about-line-point){
+  transform-box:fill-box;
+  transform-origin:center;
+  animation:aboutPointPulse 7.2s ease-in-out infinite;
+}
+.page :global(.about-line-point-2){animation-delay:1.8s}
+.page :global(.about-line-point-3){animation-delay:3.6s}
+.page :global(.about-line-point-4){animation-delay:5.4s}
 
-.heroShell{position:relative;z-index:2;min-height:650px;padding:108px 0 54px;display:flex;flex-direction:column;justify-content:center}
-.heroCopy{max-width:910px}
-.hero h1{max-width:970px;margin:0;color:#f7f9fb;font-size:clamp(58px,7vw,102px);font-weight:520;line-height:.91;letter-spacing:-.064em;text-wrap:balance}
+.heroShell{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:none;
+  min-height:100svh;
+  margin:0;
+  padding:clamp(185px,23vh,235px) clamp(48px,11vw,184px) 54px;
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-start;
+  align-items:stretch;
+}
+.heroCopy{
+  align-self:flex-start;
+  max-width:900px;
+  text-align:left;
+}
+:global(html[dir="rtl"]) .heroCopy{
+  align-self:flex-end;
+  text-align:right;
+}
+.hero h1{
+  max-width:970px;
+  margin:0;
+  color:#f7f9fb;
+  font-size:clamp(58px,7vw,102px);
+  font-weight:520;
+  line-height:.91;
+  letter-spacing:-.064em;
+  text-wrap:balance;
+}
 :global(html[dir="rtl"]) .hero h1{line-height:1.08;letter-spacing:-.025em}
 .heroLead{max-width:720px;margin:27px 0 0;color:#a2adba;font-size:16px;line-height:1.78}
 .heroActions{display:flex;gap:12px;flex-wrap:wrap;margin-top:31px}
@@ -78,14 +135,38 @@
 .secondary:hover{color:#fff;border-color:#40556b}
 :global(html[dir="rtl"]) .primary span,:global(html[dir="rtl"]) .secondary span{transform:scaleX(-1)}
 
-.heroLine{position:relative;margin-top:auto;padding-top:48px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));max-width:980px}
-.heroLine::before{content:"";position:absolute;top:48px;inset-inline:0;height:1px;background:#172433}
-.heroLine::after{content:"";position:absolute;top:48px;inset-inline-start:0;width:var(--about-line-progress,0%);height:1px;background:linear-gradient(90deg,#5b9ff5,#85baff 65%,rgba(133,186,255,.12));box-shadow:0 0 16px rgba(82,151,240,.18)}
+.heroLine{
+  position:relative;
+  margin-top:auto;
+  padding-top:34px;
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  width:min(980px,100%);
+  max-width:980px;
+  align-self:flex-start;
+  opacity:.9;
+}
+:global(html[dir="rtl"]) .heroLine{align-self:flex-end}
+.heroLine::before{content:"";position:absolute;top:34px;inset-inline:0;height:1px;background:#172433}
+.heroLine::after{content:"";position:absolute;top:34px;inset-inline-start:0;width:var(--about-line-progress,0%);height:1px;background:linear-gradient(90deg,#5b9ff5,#85baff 65%,rgba(133,186,255,.12));box-shadow:0 0 16px rgba(82,151,240,.18)}
 .heroPoint{position:relative;padding-top:22px;padding-inline-end:24px;min-width:0}
 .heroPoint::before{content:"";position:absolute;top:-3px;inset-inline-start:0;width:7px;height:7px;border-radius:50%;background:#0b1118;border:1px solid #5f91cc;box-shadow:0 0 0 4px #05080c}
 .heroPoint span{display:block;color:#55718e;font-size:9px;letter-spacing:.13em}
 .heroPoint strong{display:block;margin-top:7px;color:#c7d1dc;font-size:11px;font-weight:550}
 :global(html[dir="rtl"]) .heroPoint span{letter-spacing:0}
+
+@keyframes aboutLineFlow{
+  from{stroke-dashoffset:940}
+  to{stroke-dashoffset:-940}
+}
+@keyframes aboutLineBreath{
+  0%,100%{opacity:.58}
+  50%{opacity:.80}
+}
+@keyframes aboutPointPulse{
+  0%,72%,100%{opacity:.52;transform:scale(.94)}
+  12%,24%{opacity:1;transform:scale(1.22)}
+}
 
 .storySection{padding:clamp(78px,7vw,108px) 0;border-bottom:1px solid var(--line);background:var(--bg)!important}
 .storyGrid{display:grid;grid-template-columns:minmax(0,.88fr) minmax(0,1.12fr);gap:clamp(68px,8vw,120px);align-items:start}
@@ -137,8 +218,6 @@
   .principles{grid-template-columns:repeat(2,minmax(0,1fr))}
   .principle:nth-child(2){border-inline-end:0}.principle:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .directionRail{grid-template-columns:repeat(2,minmax(0,1fr))}.directionItem:nth-child(2){border-inline-end:0}.directionItem:nth-child(-n+2){border-bottom:1px solid var(--line)}
-  .neuronField{inset:-2% -18% -8%;opacity:.5}
-  .neuronField :global(.home-line-art){transform:scale(1.16)!important}
 }
 @media(max-width:620px){
   .shell{width:min(100% - 28px,1180px)}
@@ -146,12 +225,47 @@
   .heroLine{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 0;margin-top:52px;padding-top:0}.heroLine::before,.heroLine::after{display:none}.heroPoint{padding:16px 16px 0 0;border-top:1px solid var(--line)}.heroPoint::before{top:-4px}
   .storySection,.principlesSection,.founderSection,.directionSection{padding:58px 0}.storyRoute{grid-template-columns:repeat(2,minmax(0,1fr))}.storyRoute div:nth-child(2){border-inline-end:0}.storyRoute div:nth-child(-n+2){border-bottom:1px solid var(--line)}
   .principles,.directionRail{grid-template-columns:1fr}.principle,.principle:nth-child(2),.directionItem,.directionItem:nth-child(2){border-inline-end:0;border-bottom:1px solid var(--line)}.principle:last-child,.directionItem:last-child{border-bottom:0}.principle{min-height:0;padding:22px 0}.principle h3{margin-top:18px}.directionItem,.directionItem:first-child{min-height:0;padding:22px 0}.directionItem::before,.directionItem:first-child::before{inset-inline-start:0}.directionItem h3{margin-top:18px}
-  .neuronField{inset:8% -55% -6% -22%;opacity:.31}
-  .neuronField :global(.home-line-art){transform:scale(1.22)!important}
   .page :global(.about-motion-hero),.page :global(.about-motion-reveal),.page :global(.about-motion-stagger){transform:translate3d(0,8px,0)}
 }
 @media(prefers-reduced-motion:reduce){
   .page :global(.about-motion-hero),.page :global(.about-motion-reveal){opacity:1!important;transform:none!important;transition:none!important}
   .page .heroLine::after{width:100%!important;transition:none!important}
-  .neuronField :global(*){animation:none!important;transition:none!important}
+}
+
+/* About hero responsive rules stay here, after all page rules, to avoid overrides. */
+@media(max-width:1100px){
+  .page :global(.about-line-art){transform:translateX(5%);opacity:.78}
+}
+
+@media(max-width:900px){
+  .hero,.heroShell{min-height:100svh}
+  .page :global(.about-line-art){
+    transform:translateX(12%) scale(.94);
+    transform-origin:center right;
+    opacity:.54;
+  }
+  :global(html[dir="rtl"]) .page :global(.about-line-art){
+    transform:scaleX(-1) translateX(12%) scale(.94);
+  }
+  .heroShell{padding:clamp(160px,21vh,200px) 32px 46px}
+}
+
+@media(max-width:620px){
+  .shell{width:min(100% - 28px,1180px)}
+  .page :global(.about-line-art){display:none}
+  .heroShell{min-height:100svh;padding:142px 24px 38px}
+  .hero h1{font-size:clamp(48px,13vw,64px)}
+  .heroLead{font-size:14px;line-height:1.7}
+  .heroActions{flex-direction:column;align-items:stretch;max-width:340px}
+  .primary,.secondary{width:100%}
+  .heroLine{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 0;margin-top:48px;padding-top:0}
+  .heroLine::before,.heroLine::after{display:none}
+  .heroPoint{padding:16px 16px 0 0;border-top:1px solid var(--line)}
+  .heroPoint::before{top:-4px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page :global(.about-line-base),
+  .page :global(.about-line-flow),
+  .page :global(.about-line-point){animation:none!important}
 }
