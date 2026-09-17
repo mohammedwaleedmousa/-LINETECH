@@ -1,4 +1,4 @@
-/* Services hero — visual system inspired directly by the four services.
+/* Services hero — calm, content-led visual system.
    Scope: Services hero background/art/readability/full viewport only. */
 
 .page-services{
@@ -11,29 +11,28 @@
   isolation:isolate!important;
   min-height:100svh!important;
   background:
-    radial-gradient(circle at 79% 42%,rgba(70,126,214,.08),transparent 24%),
-    radial-gradient(circle at 88% 76%,rgba(255,255,255,.025),transparent 18%),
-    linear-gradient(180deg,#030507 0%,#06090d 52%,#030507 100%)!important;
+    radial-gradient(circle at 82% 46%,rgba(58,101,166,.055),transparent 27%),
+    linear-gradient(180deg,#030507 0%,#05080b 56%,#030507 100%)!important;
 }
 
-/* Remove old generic hero artwork sources. */
+/* Remove all previous decorative hero systems. */
 .page-services>section:first-child [class*="neuronField"],
 .page-services>section:first-child .home-neuron-art,
 .page-services>section:first-child .home-line-art{
   display:none!important;
 }
 
-/* Reuse the existing photo container as a content-specific Services visual.
-   The original image is intentionally hidden. */
+/* The existing media container becomes one quiet service register.
+   No image, no tilted grids, no floating cards. */
 .page-services>section:first-child .services-hero-photo{
   display:block!important;
   position:absolute!important;
   top:50%!important;
-  right:2.5vw!important;
+  right:5vw!important;
   left:auto!important;
-  width:min(46vw,760px)!important;
-  height:min(76vh,720px)!important;
-  transform:translateY(-48%)!important;
+  width:min(34vw,520px)!important;
+  height:min(54vh,520px)!important;
+  transform:translateY(-46%)!important;
   z-index:0!important;
   opacity:1!important;
   visibility:visible!important;
@@ -45,33 +44,33 @@
   display:none!important;
 }
 
-/* Four actual deliverable worlds: website / commerce / identity / CV.
-   Flat 2D boards, no planet, no AI iconography, no decorative line network. */
+/* One single vertical system with four restrained rows:
+   web / commerce / identity / CV. */
 .page-services>section:first-child .services-hero-photo::before{
   content:""!important;
   position:absolute!important;
   inset:0!important;
   display:block!important;
-  opacity:.92!important;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 720'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- WEBSITE --%3E%3Crect x='48' y='54' width='430' height='232' rx='18' fill='%23090D12' fill-opacity='.72' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Cpath d='M48 96H478' stroke='%238B99AA' stroke-opacity='.24'/%3E%3Ccircle cx='76' cy='76' r='4' fill='%23D8E1EC' fill-opacity='.38' stroke='none'/%3E%3Ccircle cx='91' cy='76' r='4' fill='%23D8E1EC' fill-opacity='.20' stroke='none'/%3E%3Ccircle cx='106' cy='76' r='4' fill='%235B9BFF' fill-opacity='.74' stroke='none'/%3E%3Crect x='75' y='124' width='202' height='72' rx='8' fill='%23101720' stroke='%2377899C' stroke-opacity='.22'/%3E%3Cpath d='M95 145H240M95 161H207' stroke='%23DCE4ED' stroke-opacity='.45' stroke-width='2'/%3E%3Cpath d='M96 178H160' stroke='%235B9BFF' stroke-opacity='.80' stroke-width='3'/%3E%3Crect x='300' y='124' width='150' height='72' rx='8' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Cpath d='M321 147H414M321 164H391' stroke='%23DCE4ED' stroke-opacity='.30' stroke-width='2'/%3E%3Crect x='75' y='216' width='112' height='44' rx='7' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='199' y='216' width='112' height='44' rx='7' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='323' y='216' width='127' height='44' rx='7' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3C!-- BRAND IDENTITY --%3E%3Crect x='500' y='92' width='206' height='220' rx='18' fill='%23090D12' fill-opacity='.72' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Cpath d='M525 121H681' stroke='%238B99AA' stroke-opacity='.20'/%3E%3Ccircle cx='603' cy='192' r='47' stroke='%235B9BFF' stroke-opacity='.72' stroke-width='1.5'/%3E%3Crect x='565' y='154' width='76' height='76' stroke='%23DCE4ED' stroke-opacity='.23'/%3E%3Cpath d='M548 192H658M603 137V247M568 157L638 227M638 157L568 227' stroke='%23DCE4ED' stroke-opacity='.16'/%3E%3Cpath d='M531 270H583M593 270H624M634 270H674' stroke='%23DCE4ED' stroke-opacity='.30' stroke-width='3'/%3E%3C!-- CV / PORTFOLIO --%3E%3Crect x='82' y='342' width='270' height='308' rx='18' fill='%23090D12' fill-opacity='.76' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Ccircle cx='126' cy='390' r='20' fill='%23141C25' stroke='%235B9BFF' stroke-opacity='.52'/%3E%3Cpath d='M164 378H295M164 393H258' stroke='%23DCE4ED' stroke-opacity='.42' stroke-width='3'/%3E%3Cpath d='M108 438H326' stroke='%238B99AA' stroke-opacity='.18'/%3E%3Cpath d='M108 466H181M108 484H197M108 502H171' stroke='%235B9BFF' stroke-opacity='.58' stroke-width='3'/%3E%3Cpath d='M211 466H318M211 484H304M211 502H289' stroke='%23DCE4ED' stroke-opacity='.26' stroke-width='2.5'/%3E%3Cpath d='M108 542H326' stroke='%238B99AA' stroke-opacity='.18'/%3E%3Crect x='108' y='568' width='64' height='50' rx='6' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='182' y='568' width='64' height='50' rx='6' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='256' y='568' width='62' height='50' rx='6' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3C!-- ECOMMERCE / SYSTEMS --%3E%3Crect x='385' y='352' width='328' height='266' rx='18' fill='%23090D12' fill-opacity='.78' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Cpath d='M430 352V618' stroke='%238B99AA' stroke-opacity='.20'/%3E%3Cpath d='M400 385H416M400 412H416M400 439H416M400 466H416' stroke='%23DCE4ED' stroke-opacity='.28' stroke-width='3'/%3E%3Crect x='454' y='380' width='110' height='72' rx='8' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Cpath d='M474 428V410M493 428V396M512 428V403M531 428V388' stroke='%235B9BFF' stroke-opacity='.72' stroke-width='5'/%3E%3Crect x='581' y='380' width='106' height='72' rx='8' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Ccircle cx='609' cy='414' r='14' stroke='%235B9BFF' stroke-opacity='.58' stroke-width='5'/%3E%3Cpath d='M633 403H667M633 417H658M633 431H650' stroke='%23DCE4ED' stroke-opacity='.28' stroke-width='2.5'/%3E%3Crect x='454' y='474' width='233' height='116' rx='8' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Cpath d='M474 499H665' stroke='%238B99AA' stroke-opacity='.16'/%3E%3Ccircle cx='487' cy='526' r='9' fill='%235B9BFF' fill-opacity='.52' stroke='none'/%3E%3Cpath d='M508 521H566M508 533H548M612 527H662' stroke='%23DCE4ED' stroke-opacity='.28' stroke-width='2.5'/%3E%3Ccircle cx='487' cy='560' r='9' fill='%23DCE4ED' fill-opacity='.18' stroke='none'/%3E%3Cpath d='M508 555H576M508 567H541M612 561H654' stroke='%23DCE4ED' stroke-opacity='.22' stroke-width='2.5'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat!important;
+  opacity:.56!important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 520'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='30' y='22' width='460' height='476' rx='22' fill='%23080C11' fill-opacity='.38' stroke='%238C9BAB' stroke-opacity='.18'/%3E%3Cpath d='M30 141H490M30 260H490M30 379H490' stroke='%238C9BAB' stroke-opacity='.13'/%3E%3C!-- 01 web --%3E%3Crect x='64' y='58' width='92' height='54' rx='7' stroke='%23DCE5EF' stroke-opacity='.22'/%3E%3Cpath d='M64 72H156M78 88H134M78 98H116' stroke='%23DCE5EF' stroke-opacity='.22'/%3E%3Cpath d='M188 77H372M188 94H314' stroke='%23DCE5EF' stroke-opacity='.19' stroke-width='3'/%3E%3Cpath d='M402 84H454' stroke='%235B9BFF' stroke-opacity='.62' stroke-width='2'/%3E%3C!-- 02 commerce --%3E%3Crect x='64' y='176' width='92' height='54' rx='7' stroke='%23DCE5EF' stroke-opacity='.20'/%3E%3Cpath d='M80 213V199M95 213V189M110 213V195M125 213V184M140 213V202' stroke='%235B9BFF' stroke-opacity='.46' stroke-width='3'/%3E%3Cpath d='M188 196H344M188 213H298' stroke='%23DCE5EF' stroke-opacity='.18' stroke-width='3'/%3E%3Cpath d='M402 203H454' stroke='%23DCE5EF' stroke-opacity='.21' stroke-width='2'/%3E%3C!-- 03 identity --%3E%3Ccircle cx='110' cy='319' r='27' stroke='%235B9BFF' stroke-opacity='.48'/%3E%3Crect x='89' y='298' width='42' height='42' stroke='%23DCE5EF' stroke-opacity='.15'/%3E%3Cpath d='M188 315H332M188 332H286' stroke='%23DCE5EF' stroke-opacity='.18' stroke-width='3'/%3E%3Cpath d='M402 322H454' stroke='%23DCE5EF' stroke-opacity='.21' stroke-width='2'/%3E%3C!-- 04 cv --%3E%3Crect x='76' y='414' width='68' height='50' rx='6' stroke='%23DCE5EF' stroke-opacity='.18'/%3E%3Ccircle cx='93' cy='431' r='7' stroke='%235B9BFF' stroke-opacity='.42'/%3E%3Cpath d='M106 428H132M106 437H126M88 451H132' stroke='%23DCE5EF' stroke-opacity='.18'/%3E%3Cpath d='M188 433H356M188 450H309' stroke='%23DCE5EF' stroke-opacity='.18' stroke-width='3'/%3E%3Cpath d='M402 441H454' stroke='%23DCE5EF' stroke-opacity='.21' stroke-width='2'/%3E%3C/g%3E%3Cg fill='%235B9BFF'%3E%3Ccircle cx='47' cy='82' r='2.4' fill-opacity='.62'/%3E%3Ccircle cx='47' cy='201' r='2.4' fill-opacity='.38'/%3E%3Ccircle cx='47' cy='320' r='2.4' fill-opacity='.38'/%3E%3Ccircle cx='47' cy='439' r='2.4' fill-opacity='.38'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat!important;
 }
 
-/* Very subtle depth only; keeps the boards integrated into the hero. */
 .page-services>section:first-child .services-hero-photo::after{
   content:""!important;
   position:absolute!important;
-  inset:8% 4% 6% 8%!important;
-  background:radial-gradient(circle at 52% 46%,rgba(69,126,220,.10),rgba(69,126,220,0) 62%)!important;
-  filter:blur(22px)!important;
+  inset:16% 10%!important;
+  background:radial-gradient(circle at 50% 50%,rgba(62,111,190,.06),rgba(62,111,190,0) 68%)!important;
+  filter:blur(26px)!important;
   z-index:-1!important;
 }
 
-/* Readability shadow: dense at the copy side, open toward the service boards. */
+/* No extra pattern behind the copy. */
 .page-services>section:first-child::before{
   content:none!important;
   display:none!important;
 }
 
+/* Readability shadow stays quiet and only supports the typography. */
 .page-services>section:first-child::after{
   content:""!important;
   display:block!important;
@@ -80,8 +79,8 @@
   z-index:1!important;
   pointer-events:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.94) 28%,rgba(2,4,6,.72) 43%,rgba(2,4,6,.28) 58%,rgba(2,4,6,0) 74%),
-    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 54%,rgba(0,0,0,.45) 100%)!important;
+    linear-gradient(90deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.95) 30%,rgba(2,4,6,.78) 45%,rgba(2,4,6,.34) 58%,rgba(2,4,6,0) 72%),
+    linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,0) 58%,rgba(0,0,0,.38) 100%)!important;
 }
 
 .page-services>section:first-child [class*="heroShell"]{
@@ -90,16 +89,15 @@
   min-height:100svh!important;
 }
 
-/* Arabic: move the visual to the opposite side without mirroring its internal geometry. */
 html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
-  left:2.5vw!important;
+  left:5vw!important;
   right:auto!important;
 }
 
 html[dir="rtl"] .page-services>section:first-child::after{
   background:
-    linear-gradient(270deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.94) 28%,rgba(2,4,6,.72) 43%,rgba(2,4,6,.28) 58%,rgba(2,4,6,0) 74%),
-    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 54%,rgba(0,0,0,.45) 100%)!important;
+    linear-gradient(270deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.95) 30%,rgba(2,4,6,.78) 45%,rgba(2,4,6,.34) 58%,rgba(2,4,6,0) 72%),
+    linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,0) 58%,rgba(0,0,0,.38) 100%)!important;
 }
 
 body:has(.page-services) .global-site-nav{
@@ -117,47 +115,46 @@ body:has(.page-services) .global-site-nav{
   }
 
   .page-services>section:first-child .services-hero-photo{
-    width:58vw!important;
-    height:66vh!important;
-    right:-5vw!important;
-    opacity:.72!important;
+    width:40vw!important;
+    height:46vh!important;
+    right:1vw!important;
+    opacity:.55!important;
   }
 
   html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
-    left:-5vw!important;
+    left:1vw!important;
     right:auto!important;
   }
 
   .page-services>section:first-child::after{
     background:
-      linear-gradient(90deg,rgba(2,4,6,.97) 0%,rgba(2,4,6,.89) 38%,rgba(2,4,6,.58) 56%,rgba(2,4,6,.13) 77%,rgba(2,4,6,0) 100%),
-      linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.05) 58%,rgba(0,0,0,.52) 100%)!important;
+      linear-gradient(90deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.91) 42%,rgba(2,4,6,.57) 59%,rgba(2,4,6,.10) 78%,rgba(2,4,6,0) 100%),
+      linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.04) 60%,rgba(0,0,0,.43) 100%)!important;
   }
 
   html[dir="rtl"] .page-services>section:first-child::after{
     background:
-      linear-gradient(270deg,rgba(2,4,6,.97) 0%,rgba(2,4,6,.89) 38%,rgba(2,4,6,.58) 56%,rgba(2,4,6,.13) 77%,rgba(2,4,6,0) 100%),
-      linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.05) 58%,rgba(0,0,0,.52) 100%)!important;
+      linear-gradient(270deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.91) 42%,rgba(2,4,6,.57) 59%,rgba(2,4,6,.10) 78%,rgba(2,4,6,0) 100%),
+      linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.04) 60%,rgba(0,0,0,.43) 100%)!important;
   }
 }
 
 @media(max-width:620px){
   .page-services>section:first-child .services-hero-photo{
-    top:61%!important;
-    right:-30vw!important;
-    width:92vw!important;
-    height:56vh!important;
-    opacity:.34!important;
+    right:-24vw!important;
+    width:72vw!important;
+    height:46vh!important;
+    opacity:.18!important;
   }
 
   html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
-    left:-30vw!important;
+    left:-24vw!important;
     right:auto!important;
   }
 
   .page-services>section:first-child::after,
   html[dir="rtl"] .page-services>section:first-child::after{
     background:
-      linear-gradient(180deg,rgba(2,4,6,.79) 0%,rgba(2,4,6,.68) 42%,rgba(2,4,6,.80) 72%,rgba(2,4,6,.97) 100%)!important;
+      linear-gradient(180deg,rgba(2,4,6,.83) 0%,rgba(2,4,6,.71) 44%,rgba(2,4,6,.82) 74%,rgba(2,4,6,.97) 100%)!important;
   }
 }
