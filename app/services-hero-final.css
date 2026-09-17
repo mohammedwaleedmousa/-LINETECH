@@ -1,5 +1,5 @@
-/* Services hero — typography-first, calm, content-led.
-   Scope: background/readability/full viewport only. */
+/* Services hero — calm abstract architectural elements.
+   Scope: Services hero background/art/readability/full viewport only. */
 
 .page-services{
   padding-top:0!important;
@@ -11,13 +11,12 @@
   isolation:isolate!important;
   min-height:100svh!important;
   background:
-    radial-gradient(ellipse at 82% 38%,rgba(49,96,170,.065) 0%,rgba(49,96,170,.025) 28%,rgba(49,96,170,0) 58%),
-    radial-gradient(ellipse at 18% 86%,rgba(255,255,255,.018) 0%,rgba(255,255,255,0) 42%),
-    linear-gradient(180deg,#030507 0%,#05080b 52%,#030507 100%)!important;
+    radial-gradient(ellipse at 82% 43%,rgba(48,82,121,.055) 0%,rgba(48,82,121,.022) 30%,rgba(48,82,121,0) 62%),
+    linear-gradient(180deg,#030507 0%,#05080a 54%,#030507 100%)!important;
 }
 
-/* Remove every decorative/image layer from the Services hero. */
-.page-services>section:first-child .services-hero-photo,
+/* Remove every old decorative system except the existing hero art container,
+   which is reused as a quiet architectural composition. */
 .page-services>section:first-child [class*="neuronField"],
 .page-services>section:first-child .home-neuron-art,
 .page-services>section:first-child .home-line-art{
@@ -26,13 +25,98 @@
   visibility:hidden!important;
 }
 
-/* No illustration, pattern, grid or card system behind the content. */
+/* A very restrained floor plane. */
 .page-services>section:first-child::before{
-  content:none!important;
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  right:-13vw!important;
+  bottom:-14vh!important;
+  width:72vw!important;
+  height:34vh!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  opacity:.72!important;
+  transform:skewY(7deg)!important;
+  transform-origin:right bottom!important;
+  border-top:1px solid rgba(100,145,190,.10)!important;
+  background:
+    linear-gradient(180deg,rgba(17,25,33,.30) 0%,rgba(8,13,18,.18) 42%,rgba(3,6,9,0) 100%)!important;
+}
+
+/* Reuse the existing media wrapper as the calm abstract decorative element.
+   No image is shown; the wrapper and its pseudo-elements form three matte planes. */
+.page-services>section:first-child .services-hero-photo{
+  display:block!important;
+  position:absolute!important;
+  top:50%!important;
+  right:1.8vw!important;
+  left:auto!important;
+  width:min(46vw,760px)!important;
+  height:min(70vh,670px)!important;
+  transform:translateY(-45%)!important;
+  z-index:0!important;
+  opacity:.88!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  overflow:visible!important;
+  background:
+    linear-gradient(90deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(13,20,27,.30) 38.15%,
+      rgba(15,23,31,.46) 54%,
+      rgba(8,13,18,.15) 54.15%,
+      transparent 54.3%,
+      transparent 100%)!important;
+  border:0!important;
+  filter:none!important;
+}
+
+.page-services>section:first-child .services-hero-photo>img{
   display:none!important;
 }
 
-/* Only a soft readability/depth shadow. */
+/* Left plane — short, soft and almost invisible. */
+.page-services>section:first-child .services-hero-photo::before{
+  content:""!important;
+  position:absolute!important;
+  left:7%!important;
+  top:29%!important;
+  width:31%!important;
+  height:54%!important;
+  display:block!important;
+  background:
+    linear-gradient(160deg,rgba(18,27,36,.24) 0%,rgba(9,14,20,.11) 64%,rgba(5,9,13,.04) 100%)!important;
+  border:1px solid rgba(112,150,188,.11)!important;
+  box-shadow:
+    inset -1px 0 0 rgba(95,142,190,.035),
+    0 28px 58px rgba(0,0,0,.16)!important;
+  transform:skewY(8deg)!important;
+  transform-origin:left bottom!important;
+}
+
+/* Right plane — wider, with only a whisper of blue on the lower edge. */
+.page-services>section:first-child .services-hero-photo::after{
+  content:""!important;
+  position:absolute!important;
+  right:0!important;
+  top:18%!important;
+  width:43%!important;
+  height:67%!important;
+  display:block!important;
+  background:
+    linear-gradient(152deg,rgba(17,26,35,.22) 0%,rgba(9,14,20,.10) 62%,rgba(5,9,13,.035) 100%)!important;
+  border:1px solid rgba(112,150,188,.10)!important;
+  border-bottom-color:rgba(76,137,204,.18)!important;
+  box-shadow:
+    inset 1px 0 0 rgba(102,149,194,.025),
+    0 30px 64px rgba(0,0,0,.15)!important;
+  transform:skewY(-8deg)!important;
+  transform-origin:right bottom!important;
+}
+
+/* Quiet depth/readability shadow. No pattern, no glow, no visual noise. */
 .page-services>section:first-child::after{
   content:""!important;
   position:absolute!important;
@@ -40,8 +124,8 @@
   z-index:1!important;
   pointer-events:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,6,.44) 0%,rgba(2,4,6,.22) 34%,rgba(2,4,6,.05) 62%,rgba(2,4,6,0) 78%),
-    linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 62%,rgba(0,0,0,.28) 100%)!important;
+    linear-gradient(90deg,rgba(2,4,6,.60) 0%,rgba(2,4,6,.36) 34%,rgba(2,4,6,.11) 55%,rgba(2,4,6,0) 72%),
+    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 61%,rgba(0,0,0,.30) 100%)!important;
 }
 
 .page-services>section:first-child [class*="heroShell"]{
@@ -50,10 +134,24 @@
   min-height:100svh!important;
 }
 
+/* Arabic mirrors only the composition placement, not the panels themselves. */
+html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
+  left:1.8vw!important;
+  right:auto!important;
+  transform:translateY(-45%) scaleX(-1)!important;
+}
+
+html[dir="rtl"] .page-services>section:first-child::before{
+  left:-13vw!important;
+  right:auto!important;
+  transform:skewY(-7deg)!important;
+  transform-origin:left bottom!important;
+}
+
 html[dir="rtl"] .page-services>section:first-child::after{
   background:
-    linear-gradient(270deg,rgba(2,4,6,.44) 0%,rgba(2,4,6,.22) 34%,rgba(2,4,6,.05) 62%,rgba(2,4,6,0) 78%),
-    linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 62%,rgba(0,0,0,.28) 100%)!important;
+    linear-gradient(270deg,rgba(2,4,6,.60) 0%,rgba(2,4,6,.36) 34%,rgba(2,4,6,.11) 55%,rgba(2,4,6,0) 72%),
+    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 61%,rgba(0,0,0,.30) 100%)!important;
 }
 
 body:has(.page-services) .global-site-nav{
@@ -70,22 +168,57 @@ body:has(.page-services) .global-site-nav{
     min-height:100svh!important;
   }
 
+  .page-services>section:first-child .services-hero-photo{
+    width:44vw!important;
+    height:56vh!important;
+    right:-1vw!important;
+    opacity:.62!important;
+  }
+
+  html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
+    left:-1vw!important;
+    right:auto!important;
+  }
+
+  .page-services>section:first-child::before{
+    width:62vw!important;
+    height:28vh!important;
+    opacity:.50!important;
+  }
+
   .page-services>section:first-child::after{
     background:
-      linear-gradient(90deg,rgba(2,4,6,.34) 0%,rgba(2,4,6,.15) 46%,rgba(2,4,6,0) 78%),
-      linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.02) 62%,rgba(0,0,0,.30) 100%)!important;
+      linear-gradient(90deg,rgba(2,4,6,.58) 0%,rgba(2,4,6,.34) 43%,rgba(2,4,6,.09) 64%,rgba(2,4,6,0) 82%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.02) 62%,rgba(0,0,0,.31) 100%)!important;
   }
 
   html[dir="rtl"] .page-services>section:first-child::after{
     background:
-      linear-gradient(270deg,rgba(2,4,6,.34) 0%,rgba(2,4,6,.15) 46%,rgba(2,4,6,0) 78%),
-      linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.02) 62%,rgba(0,0,0,.30) 100%)!important;
+      linear-gradient(270deg,rgba(2,4,6,.58) 0%,rgba(2,4,6,.34) 43%,rgba(2,4,6,.09) 64%,rgba(2,4,6,0) 82%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.02) 62%,rgba(0,0,0,.31) 100%)!important;
   }
 }
 
 @media(max-width:620px){
+  .page-services>section:first-child .services-hero-photo{
+    top:58%!important;
+    right:-24vw!important;
+    width:78vw!important;
+    height:44vh!important;
+    opacity:.20!important;
+  }
+
+  html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
+    left:-24vw!important;
+    right:auto!important;
+  }
+
+  .page-services>section:first-child::before{
+    opacity:.24!important;
+  }
+
   .page-services>section:first-child::after,
   html[dir="rtl"] .page-services>section:first-child::after{
-    background:linear-gradient(180deg,rgba(2,4,6,.06) 0%,rgba(2,4,6,.12) 64%,rgba(2,4,6,.34) 100%)!important;
+    background:linear-gradient(180deg,rgba(2,4,6,.10) 0%,rgba(2,4,6,.18) 62%,rgba(2,4,6,.38) 100%)!important;
   }
 }
