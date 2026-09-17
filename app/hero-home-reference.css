@@ -1,0 +1,154 @@
+/* LINETECH hero viewport lock — Home is the only reference.
+   Scope: sizing + navbar integration only. Background artwork is intentionally untouched. */
+
+:root{
+  --linetech-hero-nav-space:96px;
+}
+
+/* The fixed navbar must sit over the first hero instead of reserving a strip above it. */
+.page-services,
+.page-projects,
+.page-about,
+.page-contact,
+.work-page,
+.finder-page,
+.service-detail-page,
+.project-detail-page,
+.info-page,
+.thank-you-page,
+.login-page{
+  padding-top:0!important;
+}
+
+/* Every public hero owns the full viewport, including the area behind the navbar. */
+.page-services>section:first-child,
+.page-projects>section:first-child,
+.page-about>section:first-child,
+.page-contact>.contact-hero,
+.work-page>.work-hero,
+.finder-page>.finder-hero,
+.service-detail-page>.service-detail-hero,
+.project-detail-page>.project-detail-hero,
+.info-page>.info-page-hero,
+.thank-you-page>.thank-you-hero,
+.login-page>.login-stage,
+.not-found-page{
+  position:relative!important;
+  width:100%!important;
+  max-width:none!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  box-sizing:border-box!important;
+}
+
+/* CSS-module heroes use an inner shell. Keep that shell at the same viewport scale. */
+.page-services>section:first-child>[class*="heroShell"],
+.page-projects>section:first-child>[class*="heroShell"],
+.page-about>section:first-child>[class*="heroShell"],
+.page-contact>.contact-hero>.contact-hero-shell{
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  box-sizing:border-box!important;
+}
+
+/* Detail pages previously subtracted navbar height from their hero grids. */
+.service-detail-hero>.service-detail-hero-grid,
+.project-detail-hero>.project-detail-hero-grid,
+.legal-hero>.legal-hero-grid{
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  box-sizing:border-box!important;
+}
+
+/* Simple editorial heroes keep their current composition but center it inside a full viewport. */
+.work-page>.work-hero,
+.finder-page>.finder-hero{
+  display:flex!important;
+  align-items:center!important;
+  padding-top:calc(var(--linetech-hero-nav-space) + 28px)!important;
+  padding-bottom:clamp(54px,7vh,88px)!important;
+}
+
+.work-page>.work-hero>.ref-shell,
+.finder-page>.finder-hero>.ref-shell{
+  width:min(1180px,calc(100% - 48px))!important;
+  margin-inline:auto!important;
+}
+
+/* The navbar uses the same translucent treatment as Home while it overlays hero pages. */
+body:has(.page-services) .global-site-nav,
+body:has(.page-projects) .global-site-nav,
+body:has(.page-about) .global-site-nav,
+body:has(.page-contact) .global-site-nav,
+body:has(.work-page) .global-site-nav,
+body:has(.finder-page) .global-site-nav,
+body:has(.service-detail-page) .global-site-nav,
+body:has(.project-detail-page) .global-site-nav,
+body:has(.info-page) .global-site-nav,
+body:has(.login-page) .global-site-nav,
+body:has(.not-found-page) .global-site-nav{
+  background:rgba(7,10,13,.28)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  backdrop-filter:blur(10px)!important;
+}
+
+@media(max-width:900px){
+  :root{--linetech-hero-nav-space:78px}
+
+  .page-services>section:first-child>[class*="heroShell"],
+  .page-projects>section:first-child>[class*="heroShell"],
+  .page-about>section:first-child>[class*="heroShell"],
+  .page-contact>.contact-hero>.contact-hero-shell,
+  .service-detail-hero>.service-detail-hero-grid,
+  .project-detail-hero>.project-detail-hero-grid,
+  .legal-hero>.legal-hero-grid{
+    min-height:100svh!important;
+    height:auto!important;
+  }
+
+  .work-page>.work-hero,
+  .finder-page>.finder-hero{
+    padding-top:calc(var(--linetech-hero-nav-space) + 24px)!important;
+    padding-bottom:52px!important;
+  }
+
+  .work-page>.work-hero>.ref-shell,
+  .finder-page>.finder-hero>.ref-shell{
+    width:min(100% - 32px,1180px)!important;
+  }
+}
+
+@media(max-width:620px){
+  :root{--linetech-hero-nav-space:70px}
+
+  /* Phones still get a full-screen hero, but may grow if copy needs more room. */
+  .page-services>section:first-child,
+  .page-projects>section:first-child,
+  .page-about>section:first-child,
+  .page-contact>.contact-hero,
+  .work-page>.work-hero,
+  .finder-page>.finder-hero,
+  .service-detail-page>.service-detail-hero,
+  .project-detail-page>.project-detail-hero,
+  .info-page>.info-page-hero,
+  .thank-you-page>.thank-you-hero,
+  .login-page>.login-stage,
+  .not-found-page{
+    min-height:100svh!important;
+    height:auto!important;
+  }
+
+  .work-page>.work-hero,
+  .finder-page>.finder-hero{
+    padding-top:calc(var(--linetech-hero-nav-space) + 20px)!important;
+    padding-bottom:46px!important;
+  }
+
+  .work-page>.work-hero>.ref-shell,
+  .finder-page>.finder-hero>.ref-shell{
+    width:min(100% - 24px,1180px)!important;
+  }
+}
