@@ -1,4 +1,4 @@
-/* Projects hero — one unified project strip, three project types. */
+/* Projects hero — one refined line, three project milestones. */
 
 .page-projects{
   padding-top:0!important;
@@ -15,11 +15,11 @@
   border-radius:0!important;
   box-shadow:none!important;
   background:
-    radial-gradient(ellipse at 82% 46%,rgba(61,107,169,.085) 0%,rgba(61,107,169,.03) 27%,rgba(61,107,169,0) 59%),
+    radial-gradient(ellipse at 84% 46%,rgba(61,107,169,.095) 0%,rgba(61,107,169,.032) 28%,rgba(61,107,169,0) 60%),
     linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
 }
 
-/* Hard reset previous Projects hero experiments. */
+/* Remove every old Projects frame/grid/panel. */
 .page-projects>section:first-child::before,
 .page-projects>section:first-child::after{
   content:none!important;
@@ -37,7 +37,8 @@
 }
 
 .page-projects [data-project-field],
-.page-projects .projects-journey-art{
+.page-projects .projects-journey-art,
+.page-projects .projects-showcase-art{
   display:none!important;
   opacity:0!important;
   visibility:hidden!important;
@@ -60,69 +61,83 @@
   display:none!important;
 }
 
-/* One visual object only: a calm portfolio strip on the right. */
-.page-projects .projects-showcase-art{
+/* The only hero decoration: one line with three quiet milestones. */
+.page-projects .projects-line-art{
   position:absolute!important;
   inset:0!important;
   z-index:0!important;
   pointer-events:none!important;
   overflow:hidden!important;
-  opacity:.92!important;
+  opacity:.96!important;
+  background:none!important;
+  border:0!important;
+  box-shadow:none!important;
 }
 
-.page-projects .projects-showcase-art svg{
+.page-projects .projects-line-art svg{
   position:absolute!important;
   inset:0!important;
   width:100%!important;
   height:100%!important;
   display:block!important;
   overflow:visible!important;
-  transform:none!important;
 }
 
-.page-projects .projects-strip-shell{
-  transform-origin:center!important;
-  animation:projectsStripFloat 9s ease-in-out infinite alternate!important;
-}
-
-.page-projects .projects-strip-divider{
-  stroke:rgba(132,174,226,.10)!important;
-  stroke-width:1!important;
-  vector-effect:non-scaling-stroke!important;
-}
-
-.page-projects .projects-strip-commerce rect,
-.page-projects .projects-strip-system rect{
-  fill:rgba(128,176,238,.055)!important;
-  stroke:rgba(135,182,240,.20)!important;
-  stroke-width:1!important;
-  vector-effect:non-scaling-stroke!important;
-}
-
-.page-projects .projects-strip-marketplace circle{
-  fill:rgba(124,173,235,.065)!important;
-  stroke:rgba(137,184,242,.24)!important;
-  stroke-width:1!important;
-  vector-effect:non-scaling-stroke!important;
-}
-
-.page-projects .projects-strip-marketplace path{
+.page-projects .projects-line-halo{
   fill:none!important;
-  stroke:rgba(137,184,242,.18)!important;
-  stroke-width:1!important;
+  stroke:#6ca8f8!important;
+  stroke-width:9!important;
+  stroke-linecap:round!important;
   vector-effect:non-scaling-stroke!important;
+  opacity:.055!important;
+  filter:url(#projectsLineBlur)!important;
 }
 
-.page-projects .projects-strip-marketplace rect{
-  fill:rgba(128,176,238,.05)!important;
+.page-projects .projects-line-base{
+  fill:none!important;
+  stroke:url(#projectsLineGradient)!important;
+  stroke-width:1.55!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke!important;
+  opacity:.78!important;
+  filter:drop-shadow(0 0 8px rgba(92,154,234,.14))!important;
+  animation:projectsLineBreath 6.5s ease-in-out infinite!important;
 }
 
-.page-projects .projects-strip-sweep{
-  opacity:.42!important;
-  animation:projectsStripSweep 8.5s ease-in-out infinite!important;
+.page-projects .projects-line-flow{
+  fill:none!important;
+  stroke:#e4f1ff!important;
+  stroke-width:1.15!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke!important;
+  opacity:.38!important;
+  stroke-dasharray:95 780!important;
+  animation:projectsLineFlow 8.8s linear infinite!important;
 }
 
-/* Copy remains left; only top padding controls vertical placement. */
+.page-projects .projects-node-halo{
+  fill:#6ca8f8!important;
+  opacity:.07!important;
+  filter:url(#projectsNodeGlow)!important;
+}
+
+.page-projects .projects-node-core{
+  fill:#eef7ff!important;
+  stroke:#80b6fa!important;
+  stroke-width:1!important;
+  filter:drop-shadow(0 0 9px rgba(114,177,248,.58))!important;
+}
+
+.page-projects .projects-line-node{
+  transform-box:fill-box!important;
+  transform-origin:center!important;
+  animation:projectsNodePulse 5.7s ease-in-out infinite!important;
+}
+
+.page-projects .projects-line-node-2{animation-delay:1.9s!important}
+.page-projects .projects-line-node-3{animation-delay:3.8s!important}
+
+/* Copy stays left. Only spacing from the navbar is adjusted. */
 .page-projects>section:first-child>[class*="heroShell"]{
   position:relative!important;
   z-index:2!important;
@@ -153,7 +168,7 @@ html[dir="rtl"] .page-projects>section:first-child>[class*="heroShell"]>[class*=
   text-align:right!important;
 }
 
-html[dir="rtl"] .page-projects .projects-showcase-art{
+html[dir="rtl"] .page-projects .projects-line-art{
   transform:scaleX(-1)!important;
   transform-origin:center!important;
 }
@@ -166,23 +181,25 @@ body:has(.page-projects) .global-site-nav{
   backdrop-filter:blur(10px)!important;
 }
 
-@keyframes projectsStripFloat{
-  0%{transform:translate3d(0,0,0)}
-  100%{transform:translate3d(0,-7px,0)}
+@keyframes projectsLineFlow{
+  from{stroke-dashoffset:920}
+  to{stroke-dashoffset:-920}
 }
 
-@keyframes projectsStripSweep{
-  0%,18%{transform:translateX(-40px);opacity:0}
-  34%{opacity:.42}
-  64%{opacity:.42}
-  82%,100%{transform:translateX(820px);opacity:0}
+@keyframes projectsLineBreath{
+  0%,100%{opacity:.62}
+  50%{opacity:.86}
+}
+
+@keyframes projectsNodePulse{
+  0%,68%,100%{opacity:.58;transform:scale(.94)}
+  12%,25%{opacity:1;transform:scale(1.24)}
 }
 
 @media(max-width:1100px){
-  .page-projects .projects-showcase-art{
-    opacity:.72!important;
-    transform:translateX(8%) scale(.94)!important;
-    transform-origin:center right!important;
+  .page-projects .projects-line-art{
+    transform:translateX(5%)!important;
+    opacity:.78!important;
   }
 }
 
@@ -192,13 +209,14 @@ body:has(.page-projects) .global-site-nav{
     min-height:100svh!important;
   }
 
-  .page-projects .projects-showcase-art{
-    opacity:.46!important;
-    transform:translateX(17%) scale(.86)!important;
+  .page-projects .projects-line-art{
+    transform:translateX(12%) scale(.94)!important;
+    transform-origin:center right!important;
+    opacity:.58!important;
   }
 
-  html[dir="rtl"] .page-projects .projects-showcase-art{
-    transform:scaleX(-1) translateX(17%) scale(.86)!important;
+  html[dir="rtl"] .page-projects .projects-line-art{
+    transform:scaleX(-1) translateX(12%) scale(.94)!important;
   }
 
   .page-projects>section:first-child>[class*="heroShell"]{
@@ -209,7 +227,7 @@ body:has(.page-projects) .global-site-nav{
 }
 
 @media(max-width:620px){
-  .page-projects .projects-showcase-art{
+  .page-projects .projects-line-art{
     display:none!important;
   }
 
@@ -222,8 +240,9 @@ body:has(.page-projects) .global-site-nav{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .page-projects .projects-strip-shell,
-  .page-projects .projects-strip-sweep{
+  .page-projects .projects-line-base,
+  .page-projects .projects-line-flow,
+  .page-projects .projects-line-node{
     animation:none!important;
   }
 }
