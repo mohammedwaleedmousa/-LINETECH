@@ -1,5 +1,5 @@
-/* Services hero — calm, content-led visual system.
-   Scope: Services hero background/art/readability/full viewport only. */
+/* Services hero — typography-first, calm, content-led.
+   Scope: background/readability/full viewport only. */
 
 .page-services{
   padding-top:0!important;
@@ -11,76 +11,37 @@
   isolation:isolate!important;
   min-height:100svh!important;
   background:
-    radial-gradient(circle at 82% 46%,rgba(58,101,166,.055),transparent 27%),
-    linear-gradient(180deg,#030507 0%,#05080b 56%,#030507 100%)!important;
+    radial-gradient(ellipse at 82% 38%,rgba(49,96,170,.065) 0%,rgba(49,96,170,.025) 28%,rgba(49,96,170,0) 58%),
+    radial-gradient(ellipse at 18% 86%,rgba(255,255,255,.018) 0%,rgba(255,255,255,0) 42%),
+    linear-gradient(180deg,#030507 0%,#05080b 52%,#030507 100%)!important;
 }
 
-/* Remove all previous decorative hero systems. */
+/* Remove every decorative/image layer from the Services hero. */
+.page-services>section:first-child .services-hero-photo,
 .page-services>section:first-child [class*="neuronField"],
 .page-services>section:first-child .home-neuron-art,
 .page-services>section:first-child .home-line-art{
   display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
 }
 
-/* The existing media container becomes one quiet service register.
-   No image, no tilted grids, no floating cards. */
-.page-services>section:first-child .services-hero-photo{
-  display:block!important;
-  position:absolute!important;
-  top:50%!important;
-  right:5vw!important;
-  left:auto!important;
-  width:min(34vw,520px)!important;
-  height:min(54vh,520px)!important;
-  transform:translateY(-46%)!important;
-  z-index:0!important;
-  opacity:1!important;
-  visibility:visible!important;
-  pointer-events:none!important;
-  overflow:visible!important;
-}
-
-.page-services>section:first-child .services-hero-photo>img{
-  display:none!important;
-}
-
-/* One single vertical system with four restrained rows:
-   web / commerce / identity / CV. */
-.page-services>section:first-child .services-hero-photo::before{
-  content:""!important;
-  position:absolute!important;
-  inset:0!important;
-  display:block!important;
-  opacity:.56!important;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 520 520'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='30' y='22' width='460' height='476' rx='22' fill='%23080C11' fill-opacity='.38' stroke='%238C9BAB' stroke-opacity='.18'/%3E%3Cpath d='M30 141H490M30 260H490M30 379H490' stroke='%238C9BAB' stroke-opacity='.13'/%3E%3C!-- 01 web --%3E%3Crect x='64' y='58' width='92' height='54' rx='7' stroke='%23DCE5EF' stroke-opacity='.22'/%3E%3Cpath d='M64 72H156M78 88H134M78 98H116' stroke='%23DCE5EF' stroke-opacity='.22'/%3E%3Cpath d='M188 77H372M188 94H314' stroke='%23DCE5EF' stroke-opacity='.19' stroke-width='3'/%3E%3Cpath d='M402 84H454' stroke='%235B9BFF' stroke-opacity='.62' stroke-width='2'/%3E%3C!-- 02 commerce --%3E%3Crect x='64' y='176' width='92' height='54' rx='7' stroke='%23DCE5EF' stroke-opacity='.20'/%3E%3Cpath d='M80 213V199M95 213V189M110 213V195M125 213V184M140 213V202' stroke='%235B9BFF' stroke-opacity='.46' stroke-width='3'/%3E%3Cpath d='M188 196H344M188 213H298' stroke='%23DCE5EF' stroke-opacity='.18' stroke-width='3'/%3E%3Cpath d='M402 203H454' stroke='%23DCE5EF' stroke-opacity='.21' stroke-width='2'/%3E%3C!-- 03 identity --%3E%3Ccircle cx='110' cy='319' r='27' stroke='%235B9BFF' stroke-opacity='.48'/%3E%3Crect x='89' y='298' width='42' height='42' stroke='%23DCE5EF' stroke-opacity='.15'/%3E%3Cpath d='M188 315H332M188 332H286' stroke='%23DCE5EF' stroke-opacity='.18' stroke-width='3'/%3E%3Cpath d='M402 322H454' stroke='%23DCE5EF' stroke-opacity='.21' stroke-width='2'/%3E%3C!-- 04 cv --%3E%3Crect x='76' y='414' width='68' height='50' rx='6' stroke='%23DCE5EF' stroke-opacity='.18'/%3E%3Ccircle cx='93' cy='431' r='7' stroke='%235B9BFF' stroke-opacity='.42'/%3E%3Cpath d='M106 428H132M106 437H126M88 451H132' stroke='%23DCE5EF' stroke-opacity='.18'/%3E%3Cpath d='M188 433H356M188 450H309' stroke='%23DCE5EF' stroke-opacity='.18' stroke-width='3'/%3E%3Cpath d='M402 441H454' stroke='%23DCE5EF' stroke-opacity='.21' stroke-width='2'/%3E%3C/g%3E%3Cg fill='%235B9BFF'%3E%3Ccircle cx='47' cy='82' r='2.4' fill-opacity='.62'/%3E%3Ccircle cx='47' cy='201' r='2.4' fill-opacity='.38'/%3E%3Ccircle cx='47' cy='320' r='2.4' fill-opacity='.38'/%3E%3Ccircle cx='47' cy='439' r='2.4' fill-opacity='.38'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat!important;
-}
-
-.page-services>section:first-child .services-hero-photo::after{
-  content:""!important;
-  position:absolute!important;
-  inset:16% 10%!important;
-  background:radial-gradient(circle at 50% 50%,rgba(62,111,190,.06),rgba(62,111,190,0) 68%)!important;
-  filter:blur(26px)!important;
-  z-index:-1!important;
-}
-
-/* No extra pattern behind the copy. */
+/* No illustration, pattern, grid or card system behind the content. */
 .page-services>section:first-child::before{
   content:none!important;
   display:none!important;
 }
 
-/* Readability shadow stays quiet and only supports the typography. */
+/* Only a soft readability/depth shadow. */
 .page-services>section:first-child::after{
   content:""!important;
-  display:block!important;
   position:absolute!important;
   inset:0!important;
   z-index:1!important;
   pointer-events:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.95) 30%,rgba(2,4,6,.78) 45%,rgba(2,4,6,.34) 58%,rgba(2,4,6,0) 72%),
-    linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,0) 58%,rgba(0,0,0,.38) 100%)!important;
+    linear-gradient(90deg,rgba(2,4,6,.44) 0%,rgba(2,4,6,.22) 34%,rgba(2,4,6,.05) 62%,rgba(2,4,6,0) 78%),
+    linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 62%,rgba(0,0,0,.28) 100%)!important;
 }
 
 .page-services>section:first-child [class*="heroShell"]{
@@ -89,15 +50,10 @@
   min-height:100svh!important;
 }
 
-html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
-  left:5vw!important;
-  right:auto!important;
-}
-
 html[dir="rtl"] .page-services>section:first-child::after{
   background:
-    linear-gradient(270deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.95) 30%,rgba(2,4,6,.78) 45%,rgba(2,4,6,.34) 58%,rgba(2,4,6,0) 72%),
-    linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,0) 58%,rgba(0,0,0,.38) 100%)!important;
+    linear-gradient(270deg,rgba(2,4,6,.44) 0%,rgba(2,4,6,.22) 34%,rgba(2,4,6,.05) 62%,rgba(2,4,6,0) 78%),
+    linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,0) 62%,rgba(0,0,0,.28) 100%)!important;
 }
 
 body:has(.page-services) .global-site-nav{
@@ -114,47 +70,22 @@ body:has(.page-services) .global-site-nav{
     min-height:100svh!important;
   }
 
-  .page-services>section:first-child .services-hero-photo{
-    width:40vw!important;
-    height:46vh!important;
-    right:1vw!important;
-    opacity:.55!important;
-  }
-
-  html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
-    left:1vw!important;
-    right:auto!important;
-  }
-
   .page-services>section:first-child::after{
     background:
-      linear-gradient(90deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.91) 42%,rgba(2,4,6,.57) 59%,rgba(2,4,6,.10) 78%,rgba(2,4,6,0) 100%),
-      linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.04) 60%,rgba(0,0,0,.43) 100%)!important;
+      linear-gradient(90deg,rgba(2,4,6,.34) 0%,rgba(2,4,6,.15) 46%,rgba(2,4,6,0) 78%),
+      linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.02) 62%,rgba(0,0,0,.30) 100%)!important;
   }
 
   html[dir="rtl"] .page-services>section:first-child::after{
     background:
-      linear-gradient(270deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.91) 42%,rgba(2,4,6,.57) 59%,rgba(2,4,6,.10) 78%,rgba(2,4,6,0) 100%),
-      linear-gradient(180deg,rgba(0,0,0,.04) 0%,rgba(0,0,0,.04) 60%,rgba(0,0,0,.43) 100%)!important;
+      linear-gradient(270deg,rgba(2,4,6,.34) 0%,rgba(2,4,6,.15) 46%,rgba(2,4,6,0) 78%),
+      linear-gradient(180deg,rgba(0,0,0,0) 0%,rgba(0,0,0,.02) 62%,rgba(0,0,0,.30) 100%)!important;
   }
 }
 
 @media(max-width:620px){
-  .page-services>section:first-child .services-hero-photo{
-    right:-24vw!important;
-    width:72vw!important;
-    height:46vh!important;
-    opacity:.18!important;
-  }
-
-  html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
-    left:-24vw!important;
-    right:auto!important;
-  }
-
   .page-services>section:first-child::after,
   html[dir="rtl"] .page-services>section:first-child::after{
-    background:
-      linear-gradient(180deg,rgba(2,4,6,.83) 0%,rgba(2,4,6,.71) 44%,rgba(2,4,6,.82) 74%,rgba(2,4,6,.97) 100%)!important;
+    background:linear-gradient(180deg,rgba(2,4,6,.06) 0%,rgba(2,4,6,.12) 64%,rgba(2,4,6,.34) 100%)!important;
   }
 }
