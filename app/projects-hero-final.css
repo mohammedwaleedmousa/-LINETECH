@@ -1,0 +1,262 @@
+/* Projects hero — one completed line, three real project milestones. */
+
+.page-projects{
+  padding-top:0!important;
+}
+
+.page-projects>section:first-child{
+  position:relative!important;
+  overflow:hidden!important;
+  isolation:isolate!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  background:
+    radial-gradient(ellipse at 78% 43%,rgba(58,102,160,.07) 0%,rgba(58,102,160,.024) 27%,rgba(58,102,160,0) 58%),
+    linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
+}
+
+/* Remove the old capability-map frame/grid from the previous hero direction. */
+.page-projects>section:first-child::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  border:0!important;
+  box-shadow:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  background:
+    radial-gradient(ellipse at 76% 48%,rgba(75,126,192,.045) 0%,rgba(75,126,192,.014) 28%,rgba(75,126,192,0) 58%)!important;
+}
+
+.page-projects>section:first-child::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  left:0!important;
+  width:auto!important;
+  height:auto!important;
+  z-index:1!important;
+  pointer-events:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  transform:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+  background:
+    linear-gradient(90deg,rgba(2,4,6,.72) 0%,rgba(2,4,6,.53) 29%,rgba(2,4,6,.18) 49%,rgba(2,4,6,.03) 63%,rgba(2,4,6,0) 77%),
+    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 64%,rgba(0,0,0,.28) 100%)!important;
+}
+
+/* Reuse the existing inline SVG as a single project journey instead of a network. */
+.page-projects [data-project-field]{
+  --project-field-x:0px!important;
+  --project-field-y:0px!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  opacity:.95!important;
+  mix-blend-mode:normal!important;
+  transform:translate3d(var(--project-field-x),var(--project-field-y),0)!important;
+}
+
+.page-projects [data-project-field] svg{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  overflow:visible!important;
+  transform:translateX(5%) translateY(-1%)!important;
+  filter:none!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0%,transparent 34%,#000 48%,#000 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0%,transparent 34%,#000 48%,#000 100%)!important;
+}
+
+/* Keep one route only: idea -> project 01 -> project 02 -> project 03. */
+.page-projects [data-project-field] path{
+  fill:none!important;
+  vector-effect:non-scaling-stroke!important;
+}
+
+.page-projects [data-project-field] path:nth-of-type(1){
+  display:block!important;
+  stroke:rgba(119,173,242,.54)!important;
+  stroke-width:1.15!important;
+  stroke-linecap:round!important;
+  stroke-dasharray:none!important;
+  opacity:.72!important;
+  filter:drop-shadow(0 0 8px rgba(75,143,232,.11))!important;
+  animation:projectsRouteBreath 5.8s ease-in-out infinite!important;
+}
+
+.page-projects [data-project-field] path:nth-of-type(2),
+.page-projects [data-project-field] path:nth-of-type(3){
+  display:none!important;
+  opacity:0!important;
+}
+
+.page-projects [data-project-field] ellipse{
+  fill:rgba(56,130,246,.025)!important;
+  opacity:.42!important;
+}
+
+/* Three milestones = the three case studies shown on the page. */
+.page-projects [data-project-field] g circle{
+  fill:#dcecff!important;
+  stroke:rgba(125,181,249,.34)!important;
+  stroke-width:1!important;
+  filter:drop-shadow(0 0 8px rgba(92,157,240,.35))!important;
+}
+
+.page-projects [data-project-field] g circle:nth-child(1),
+.page-projects [data-project-field] g circle:nth-child(2),
+.page-projects [data-project-field] g circle:nth-child(3){
+  display:block!important;
+  opacity:.78!important;
+  transform-box:fill-box!important;
+  transform-origin:center!important;
+  animation:projectsNodePulse 5.4s ease-in-out infinite!important;
+}
+
+.page-projects [data-project-field] g circle:nth-child(2){animation-delay:1.8s!important}
+.page-projects [data-project-field] g circle:nth-child(3){animation-delay:3.6s!important}
+
+.page-projects [data-project-field] g circle:nth-child(n+4){
+  display:none!important;
+  opacity:0!important;
+}
+
+/* A tiny light travels through the three project milestones. */
+.page-projects [data-project-field]::after{
+  content:""!important;
+  position:absolute!important;
+  left:40%!important;
+  top:72%!important;
+  width:5px!important;
+  height:5px!important;
+  border-radius:999px!important;
+  pointer-events:none!important;
+  z-index:2!important;
+  background:#f5f9ff!important;
+  box-shadow:
+    0 0 8px rgba(229,241,255,.95),
+    0 0 22px rgba(99,162,244,.55),
+    0 0 50px rgba(73,136,221,.20)!important;
+  animation:projectsTraveler 9s cubic-bezier(.45,.05,.3,.95) infinite!important;
+  will-change:left,top,opacity,transform!important;
+}
+
+.page-projects>section:first-child>[class*="heroShell"]{
+  position:relative!important;
+  z-index:2!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  padding-top:118px!important;
+  padding-bottom:44px!important;
+}
+
+html[dir="rtl"] .page-projects [data-project-field]{
+  transform:scaleX(-1)!important;
+  transform-origin:center!important;
+}
+
+html[dir="rtl"] .page-projects>section:first-child::after{
+  background:
+    linear-gradient(270deg,rgba(2,4,6,.72) 0%,rgba(2,4,6,.53) 29%,rgba(2,4,6,.18) 49%,rgba(2,4,6,.03) 63%,rgba(2,4,6,0) 77%),
+    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 64%,rgba(0,0,0,.28) 100%)!important;
+}
+
+body:has(.page-projects) .global-site-nav{
+  position:fixed!important;
+  z-index:9999!important;
+  background:rgba(4,7,9,.34)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  backdrop-filter:blur(10px)!important;
+}
+
+@keyframes projectsRouteBreath{
+  0%,100%{opacity:.46;filter:drop-shadow(0 0 5px rgba(75,143,232,.07))}
+  50%{opacity:.78;filter:drop-shadow(0 0 12px rgba(75,143,232,.17))}
+}
+
+@keyframes projectsNodePulse{
+  0%,70%,100%{opacity:.48;transform:scale(.9)}
+  12%,24%{opacity:1;transform:scale(1.38)}
+}
+
+@keyframes projectsTraveler{
+  0%{left:40%;top:72%;opacity:0;transform:scale(.6)}
+  6%{opacity:1;transform:scale(1)}
+  34%{left:63.5%;top:46%;opacity:1;transform:scale(1)}
+  62%{left:76%;top:51%;opacity:1;transform:scale(.95)}
+  91%{left:91%;top:50%;opacity:1;transform:scale(.9)}
+  100%{left:93%;top:48%;opacity:0;transform:scale(.55)}
+}
+
+@media(max-width:900px){
+  .page-projects>section:first-child,
+  .page-projects>section:first-child>[class*="heroShell"]{
+    min-height:100svh!important;
+  }
+
+  .page-projects [data-project-field]{opacity:.68!important}
+  .page-projects [data-project-field] svg{transform:translateX(11%) translateY(3%)!important}
+  .page-projects [data-project-field]::after{opacity:.72!important}
+
+  .page-projects>section:first-child::after{
+    background:
+      linear-gradient(90deg,rgba(2,4,6,.76) 0%,rgba(2,4,6,.58) 40%,rgba(2,4,6,.22) 61%,rgba(2,4,6,.04) 78%,rgba(2,4,6,0) 89%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.30) 100%)!important;
+  }
+
+  html[dir="rtl"] .page-projects>section:first-child::after{
+    background:
+      linear-gradient(270deg,rgba(2,4,6,.76) 0%,rgba(2,4,6,.58) 40%,rgba(2,4,6,.22) 61%,rgba(2,4,6,.04) 78%,rgba(2,4,6,0) 89%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.30) 100%)!important;
+  }
+}
+
+@media(max-width:620px){
+  .page-projects [data-project-field]{
+    top:22%!important;
+    opacity:.34!important;
+  }
+
+  .page-projects [data-project-field] svg{
+    width:132%!important;
+    left:-4%!important;
+    transform:translateX(12%) translateY(8%)!important;
+  }
+
+  .page-projects [data-project-field]::after{display:none!important}
+
+  .page-projects>section:first-child::after,
+  html[dir="rtl"] .page-projects>section:first-child::after{
+    background:linear-gradient(180deg,rgba(2,4,6,.24) 0%,rgba(2,4,6,.32) 48%,rgba(2,4,6,.62) 76%,rgba(2,4,6,.92) 100%)!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page-projects [data-project-field],
+  .page-projects [data-project-field] path:nth-of-type(1),
+  .page-projects [data-project-field] g circle,
+  .page-projects [data-project-field]::after{
+    animation:none!important;
+    transition:none!important;
+  }
+}
