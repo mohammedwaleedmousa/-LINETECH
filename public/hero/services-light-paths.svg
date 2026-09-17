@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <linearGradient id="incoming" x1="300" y1="0" x2="975" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8bbaf5" stop-opacity="0"/>
+      <stop offset="0.72" stop-color="#b9d7ff" stop-opacity="0.16"/>
+      <stop offset="1" stop-color="#f4f9ff" stop-opacity="0.72"/>
+    </linearGradient>
+    <linearGradient id="route" x1="965" y1="0" x2="1540" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#edf6ff" stop-opacity="0.82"/>
+      <stop offset="0.2" stop-color="#b6d7ff" stop-opacity="0.58"/>
+      <stop offset="1" stop-color="#72a9ee" stop-opacity="0.30"/>
+    </linearGradient>
+    <radialGradient id="originGlow" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(965 505) rotate(90) scale(46)">
+      <stop stop-color="#dceeff" stop-opacity="0.36"/>
+      <stop offset="0.28" stop-color="#83b8fb" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#6ea8f3" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="softGlow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <path d="M260 505 C500 505 730 505 965 505" stroke="url(#incoming)" stroke-width="1.1" stroke-linecap="round"/>
+
+  <g stroke="url(#route)" stroke-width="1.35" stroke-linecap="round">
+    <path d="M965 505 C1050 482 1120 392 1232 314 C1332 244 1430 235 1530 250"/>
+    <path d="M965 505 C1065 498 1155 457 1262 416 C1360 378 1442 374 1540 386"/>
+    <path d="M965 505 C1075 516 1160 542 1275 572 C1380 599 1458 620 1542 636"/>
+    <path d="M965 505 C1055 536 1125 620 1234 696 C1335 766 1420 788 1524 782"/>
+  </g>
+
+  <g stroke="#d7eaff" stroke-width="1.7" stroke-linecap="round" fill="none" opacity="0.7" filter="url(#softGlow)">
+    <path d="M965 505 C1050 482 1120 392 1232 314 C1332 244 1430 235 1530 250" stroke-dasharray="30 560">
+      <animate attributeName="stroke-dashoffset" from="580" to="-70" dur="8.2s" repeatCount="indefinite"/>
+    </path>
+    <path d="M965 505 C1065 498 1155 457 1262 416 C1360 378 1442 374 1540 386" stroke-dasharray="28 520">
+      <animate attributeName="stroke-dashoffset" from="540" to="-60" dur="7.6s" begin="-1.8s" repeatCount="indefinite"/>
+    </path>
+    <path d="M965 505 C1075 516 1160 542 1275 572 C1380 599 1458 620 1542 636" stroke-dasharray="28 520">
+      <animate attributeName="stroke-dashoffset" from="540" to="-60" dur="8.6s" begin="-3.4s" repeatCount="indefinite"/>
+    </path>
+    <path d="M965 505 C1055 536 1125 620 1234 696 C1335 766 1420 788 1524 782" stroke-dasharray="30 560">
+      <animate attributeName="stroke-dashoffset" from="580" to="-70" dur="9.1s" begin="-5s" repeatCount="indefinite"/>
+    </path>
+  </g>
+
+  <circle cx="965" cy="505" r="46" fill="url(#originGlow)"/>
+  <circle cx="965" cy="505" r="3.2" fill="#f8fbff" filter="url(#softGlow)">
+    <animate attributeName="opacity" values="0.72;1;0.72" dur="3.8s" repeatCount="indefinite"/>
+  </circle>
+
+  <g fill="#dbeeff">
+    <circle cx="1530" cy="250" r="2.1"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="4.8s" repeatCount="indefinite"/></circle>
+    <circle cx="1540" cy="386" r="1.9"><animate attributeName="opacity" values="0.42;0.82;0.42" dur="5.2s" begin="-1.3s" repeatCount="indefinite"/></circle>
+    <circle cx="1542" cy="636" r="1.9"><animate attributeName="opacity" values="0.42;0.82;0.42" dur="5.6s" begin="-2.1s" repeatCount="indefinite"/></circle>
+    <circle cx="1524" cy="782" r="2.1"><animate attributeName="opacity" values="0.5;0.9;0.5" dur="5s" begin="-3s" repeatCount="indefinite"/></circle>
+  </g>
+</svg>
