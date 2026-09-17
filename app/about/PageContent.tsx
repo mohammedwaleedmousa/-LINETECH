@@ -125,47 +125,12 @@ export default function AboutPage() {
   return (
     <main className={`${styles.page} ref-page page-about`}>
       <section className={styles.hero}>
-        <div className="about-line-art" aria-hidden="true">
-          <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
-            <defs>
-              <linearGradient id="aboutLineGradient" x1="790" y1="0" x2="1550" y2="0" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#DDEEFF" stopOpacity=".08" />
-                <stop offset=".24" stopColor="#BBD8FF" stopOpacity=".38" />
-                <stop offset=".62" stopColor="#8FBCF8" stopOpacity=".62" />
-                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".30" />
-              </linearGradient>
-              <filter id="aboutLineBlur" x="-40%" y="-120%" width="180%" height="340%">
-                <feGaussianBlur stdDeviation="8" />
-              </filter>
-              <filter id="aboutPointGlow" x="-400%" y="-400%" width="900%" height="900%">
-                <feGaussianBlur stdDeviation="10" />
-              </filter>
-              <path id="aboutMainPath" d="M790 548 C910 505 1018 482 1125 470 C1250 456 1372 438 1548 360" />
-            </defs>
-
-            <use href="#aboutMainPath" className="about-line-halo" />
-            <use href="#aboutMainPath" className="about-line-base" />
-            <use href="#aboutMainPath" className="about-line-flow" />
-
-            <g className="about-line-points">
-              <g className="about-line-point about-line-point-1">
-                <circle className="about-point-halo" cx="900" cy="507" r="14" />
-                <circle className="about-point-core" cx="900" cy="507" r="3" />
-              </g>
-              <g className="about-line-point about-line-point-2">
-                <circle className="about-point-halo" cx="1118" cy="471" r="14" />
-                <circle className="about-point-core" cx="1118" cy="471" r="3" />
-              </g>
-              <g className="about-line-point about-line-point-3">
-                <circle className="about-point-halo" cx="1350" cy="442" r="14" />
-                <circle className="about-point-core" cx="1350" cy="442" r="3" />
-              </g>
-              <g className="about-line-point about-line-point-4">
-                <circle className="about-point-halo" cx="1548" cy="360" r="14" />
-                <circle className="about-point-core" cx="1548" cy="360" r="3" />
-              </g>
-            </g>
-          </svg>
+        <div className="about-aperture-art" aria-hidden="true">
+          <span className="about-aperture-haze" />
+          <span className="about-aperture-opening" />
+          <span className="about-aperture-floor" />
+          <span className="about-aperture-shadow about-aperture-shadow-a" />
+          <span className="about-aperture-shadow about-aperture-shadow-b" />
         </div>
         <div className={`${styles.shell} ${styles.heroShell}`}>
           <div className={styles.heroCopy}>
