@@ -168,6 +168,39 @@ html[dir="rtl"] .page-projects>section:first-child>[class*="heroShell"]>[class*=
   text-align:right!important;
 }
 
+/* Compact project index anchors the bottom of the hero without competing with the copy. */
+.page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]{
+  margin-top:auto!important;
+  width:min(960px,100%)!important;
+  max-width:960px!important;
+  align-self:flex-start!important;
+  padding-top:28px!important;
+  border-top:1px solid rgba(255,255,255,.07)!important;
+  opacity:.88!important;
+}
+
+.page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]>div{
+  padding-top:0!important;
+}
+
+.page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"] span{
+  color:#5e7b98!important;
+}
+
+.page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"] strong{
+  color:#c7d2dd!important;
+  font-weight:520!important;
+}
+
+.page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"] small{
+  color:#637180!important;
+  opacity:.85!important;
+}
+
+html[dir="rtl"] .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]{
+  align-self:flex-end!important;
+}
+
 html[dir="rtl"] .page-projects .projects-line-art{
   transform:scaleX(-1)!important;
   transform-origin:center!important;
@@ -234,8 +267,20 @@ body:has(.page-projects) .global-site-nav{
   .page-projects>section:first-child>[class*="heroShell"]{
     padding-top:142px!important;
     padding-right:24px!important;
-    padding-bottom:48px!important;
+    padding-bottom:38px!important;
     padding-left:24px!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]{
+    margin-top:48px!important;
+    grid-template-columns:1fr!important;
+    gap:14px!important;
+    padding-top:20px!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]>div{
+    padding-inline:0!important;
+    border-inline-start:0!important;
   }
 }
 
