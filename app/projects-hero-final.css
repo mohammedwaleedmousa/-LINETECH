@@ -1,4 +1,4 @@
-/* Projects hero — one quiet journey, three completed project milestones. */
+/* Projects hero — left-aligned copy, one visible journey, three milestones. */
 
 .page-projects{
   padding-top:0!important;
@@ -12,107 +12,150 @@
   height:auto!important;
   max-height:none!important;
   background:
-    radial-gradient(ellipse at 78% 44%,rgba(58,102,160,.075) 0%,rgba(58,102,160,.026) 27%,rgba(58,102,160,0) 58%),
+    radial-gradient(ellipse at 78% 44%,rgba(58,102,160,.11) 0%,rgba(58,102,160,.038) 26%,rgba(58,102,160,0) 58%),
     linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
 }
 
-/* Remove every old Projects grid/frame layer. */
 .page-projects>section:first-child::before{
-  content:none!important;
-  display:none!important;
-  background:none!important;
-  border:0!important;
-  box-shadow:none!important;
-}
-
-/* Use the existing heroField only as a full-bleed container for the new artwork. */
-.page-projects [data-project-field]{
-  --project-field-x:0px!important;
-  --project-field-y:0px!important;
+  content:""!important;
   position:absolute!important;
   inset:0!important;
-  width:100%!important;
-  height:100%!important;
   z-index:0!important;
   pointer-events:none!important;
-  overflow:hidden!important;
-  opacity:1!important;
-  visibility:visible!important;
-  mix-blend-mode:normal!important;
-  transform:none!important;
-  transition:none!important;
   background:
-    url('/hero/projects-journey.svg?v=20260918-1') center center/cover no-repeat!important;
-  animation:projectsFieldDrift 9s ease-in-out infinite alternate!important;
+    radial-gradient(circle at 62% 58%,rgba(109,168,248,.055) 0%,rgba(109,168,248,0) 19%),
+    radial-gradient(circle at 79% 49%,rgba(109,168,248,.04) 0%,rgba(109,168,248,0) 22%)!important;
 }
 
-/* The old inline network SVG is no longer used. */
-.page-projects [data-project-field]>svg{
+.page-projects [data-project-field]{
   display:none!important;
   opacity:0!important;
   visibility:hidden!important;
 }
 
-/* Readability overlay only — no box, no frame. */
+.page-projects .projects-journey-art{
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  opacity:.96!important;
+}
+
+.page-projects .projects-journey-art svg{
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  display:block!important;
+  overflow:visible!important;
+}
+
+.page-projects .projects-journey-route{
+  fill:none!important;
+  stroke:url(#projectsJourneyRoute)!important;
+  stroke-width:1.6!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke!important;
+  opacity:.9!important;
+  filter:drop-shadow(0 0 9px rgba(91,155,238,.18))!important;
+}
+
+.page-projects .projects-journey-shimmer{
+  fill:none!important;
+  stroke:#dbeaff!important;
+  stroke-width:1.2!important;
+  stroke-linecap:round!important;
+  vector-effect:non-scaling-stroke!important;
+  opacity:.48!important;
+  stroke-dasharray:90 760!important;
+  animation:projectsJourneyFlow 7.5s linear infinite!important;
+}
+
+.page-projects .projects-journey-nodes circle{
+  fill:#eef7ff!important;
+  stroke:#79aff7!important;
+  stroke-width:1!important;
+  filter:drop-shadow(0 0 10px rgba(104,169,248,.65))!important;
+  transform-box:fill-box!important;
+  transform-origin:center!important;
+  animation:projectsJourneyNode 5.4s ease-in-out infinite!important;
+}
+
+.page-projects .projects-journey-nodes circle:nth-child(2){animation-delay:1.8s!important}
+.page-projects .projects-journey-nodes circle:nth-child(3){animation-delay:3.6s!important}
+
+.page-projects .projects-journey-traveler{
+  fill:#f8fbff!important;
+  filter:drop-shadow(0 0 10px rgba(224,240,255,.95)) drop-shadow(0 0 22px rgba(99,162,244,.58))!important;
+  opacity:.75!important;
+  animation:projectsOriginPulse 3.8s ease-in-out infinite!important;
+}
+
 .page-projects>section:first-child::after{
   content:""!important;
-  display:block!important;
   position:absolute!important;
   inset:0!important;
   z-index:1!important;
   pointer-events:none!important;
-  opacity:1!important;
-  visibility:visible!important;
   border:0!important;
   border-radius:0!important;
-  outline:0!important;
   box-shadow:none!important;
-  transform:none!important;
-  -webkit-mask-image:none!important;
-  mask-image:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,6,.68) 0%,rgba(2,4,6,.50) 29%,rgba(2,4,6,.17) 48%,rgba(2,4,6,.035) 62%,rgba(2,4,6,0) 77%),
-    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 64%,rgba(0,0,0,.28) 100%)!important;
+    linear-gradient(90deg,rgba(2,4,6,.74) 0%,rgba(2,4,6,.57) 25%,rgba(2,4,6,.24) 40%,rgba(2,4,6,.055) 53%,rgba(2,4,6,0) 66%),
+    linear-gradient(180deg,rgba(0,0,0,.01) 0%,rgba(0,0,0,0) 65%,rgba(0,0,0,.25) 100%)!important;
 }
 
-/*
-  Keep the project index pinned near the bottom,
-  while centering the hero copy in the usable space below the navbar.
-*/
+/* Keep the copy on the left. Vertical placement comes from top padding only. */
 .page-projects>section:first-child>[class*="heroShell"]{
   position:relative!important;
   z-index:2!important;
-  width:min(1180px,calc(100% - 48px))!important;
+  width:100%!important;
+  max-width:none!important;
   min-height:100svh!important;
   height:auto!important;
-  max-height:none!important;
-  margin:0 auto!important;
-  padding:128px 0 44px!important;
-  display:grid!important;
-  grid-template-rows:minmax(0,1fr) auto!important;
+  margin:0!important;
+  padding-top:clamp(190px,24vh,245px)!important;
+  padding-right:clamp(48px,11vw,184px)!important;
+  padding-bottom:44px!important;
+  padding-left:clamp(48px,11vw,184px)!important;
+  display:flex!important;
+  flex-direction:column!important;
+  justify-content:flex-start!important;
   align-items:stretch!important;
 }
 
 .page-projects>section:first-child>[class*="heroShell"]>[class*="heroCopy"]{
-  align-self:center!important;
-  margin-top:clamp(24px,4vh,56px)!important;
-  margin-bottom:clamp(34px,5vh,72px)!important;
+  align-self:flex-start!important;
+  margin:0!important;
+  text-align:left!important;
+  max-width:820px!important;
+}
+
+html[dir="rtl"] .page-projects>section:first-child>[class*="heroShell"]>[class*="heroCopy"]{
+  align-self:flex-end!important;
+  text-align:right!important;
 }
 
 .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]{
-  align-self:end!important;
-  margin-top:0!important;
+  margin-top:auto!important;
+  align-self:flex-start!important;
+  width:min(960px,100%)!important;
 }
 
-html[dir="rtl"] .page-projects [data-project-field]{
+html[dir="rtl"] .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]{
+  align-self:flex-end!important;
+}
+
+html[dir="rtl"] .page-projects .projects-journey-art{
   transform:scaleX(-1)!important;
   transform-origin:center!important;
 }
 
 html[dir="rtl"] .page-projects>section:first-child::after{
   background:
-    linear-gradient(270deg,rgba(2,4,6,.68) 0%,rgba(2,4,6,.50) 29%,rgba(2,4,6,.17) 48%,rgba(2,4,6,.035) 62%,rgba(2,4,6,0) 77%),
-    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 64%,rgba(0,0,0,.28) 100%)!important;
+    linear-gradient(270deg,rgba(2,4,6,.74) 0%,rgba(2,4,6,.57) 25%,rgba(2,4,6,.24) 40%,rgba(2,4,6,.055) 53%,rgba(2,4,6,0) 66%),
+    linear-gradient(180deg,rgba(0,0,0,.01) 0%,rgba(0,0,0,0) 65%,rgba(0,0,0,.25) 100%)!important;
 }
 
 body:has(.page-projects) .global-site-nav{
@@ -123,9 +166,19 @@ body:has(.page-projects) .global-site-nav{
   backdrop-filter:blur(10px)!important;
 }
 
-@keyframes projectsFieldDrift{
-  0%{background-position:50% 50%;opacity:.86}
-  100%{background-position:51% 49.5%;opacity:1}
+@keyframes projectsJourneyFlow{
+  from{stroke-dashoffset:850}
+  to{stroke-dashoffset:-850}
+}
+
+@keyframes projectsJourneyNode{
+  0%,68%,100%{opacity:.48;transform:scale(.9)}
+  12%,24%{opacity:1;transform:scale(1.38)}
+}
+
+@keyframes projectsOriginPulse{
+  0%,100%{opacity:.48}
+  50%{opacity:1}
 }
 
 @media(max-width:900px){
@@ -134,54 +187,58 @@ body:has(.page-projects) .global-site-nav{
     min-height:100svh!important;
   }
 
-  .page-projects [data-project-field]{
-    opacity:.68!important;
-    background-position:58% center!important;
+  .page-projects .projects-journey-art{
+    opacity:.72!important;
+    transform:translateX(7%)!important;
+  }
+
+  html[dir="rtl"] .page-projects .projects-journey-art{
+    transform:scaleX(-1) translateX(7%)!important;
   }
 
   .page-projects>section:first-child>[class*="heroShell"]{
-    padding-top:118px!important;
+    padding-top:clamp(165px,22vh,205px)!important;
+    padding-right:32px!important;
+    padding-left:32px!important;
   }
 
   .page-projects>section:first-child::after{
     background:
-      linear-gradient(90deg,rgba(2,4,6,.75) 0%,rgba(2,4,6,.57) 40%,rgba(2,4,6,.21) 60%,rgba(2,4,6,.04) 78%,rgba(2,4,6,0) 89%),
-      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.30) 100%)!important;
+      linear-gradient(90deg,rgba(2,4,6,.78) 0%,rgba(2,4,6,.61) 39%,rgba(2,4,6,.25) 58%,rgba(2,4,6,.04) 76%,rgba(2,4,6,0) 88%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.29) 100%)!important;
   }
 
   html[dir="rtl"] .page-projects>section:first-child::after{
     background:
-      linear-gradient(270deg,rgba(2,4,6,.75) 0%,rgba(2,4,6,.57) 40%,rgba(2,4,6,.21) 60%,rgba(2,4,6,.04) 78%,rgba(2,4,6,0) 89%),
-      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.30) 100%)!important;
+      linear-gradient(270deg,rgba(2,4,6,.78) 0%,rgba(2,4,6,.61) 39%,rgba(2,4,6,.25) 58%,rgba(2,4,6,.04) 76%,rgba(2,4,6,0) 88%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.29) 100%)!important;
   }
 }
 
 @media(max-width:620px){
-  .page-projects [data-project-field]{
+  .page-projects .projects-journey-art{
     opacity:.34!important;
-    background-size:145% auto!important;
-    background-position:72% 60%!important;
+    width:145%!important;
+    left:-20%!important;
   }
 
   .page-projects>section:first-child>[class*="heroShell"]{
-    padding-top:106px!important;
+    padding-top:145px!important;
+    padding-right:24px!important;
     padding-bottom:34px!important;
-  }
-
-  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroCopy"]{
-    margin-top:30px!important;
-    margin-bottom:42px!important;
+    padding-left:24px!important;
   }
 
   .page-projects>section:first-child::after,
   html[dir="rtl"] .page-projects>section:first-child::after{
-    background:linear-gradient(180deg,rgba(2,4,6,.26) 0%,rgba(2,4,6,.32) 48%,rgba(2,4,6,.62) 76%,rgba(2,4,6,.92) 100%)!important;
+    background:linear-gradient(180deg,rgba(2,4,6,.24) 0%,rgba(2,4,6,.31) 48%,rgba(2,4,6,.61) 76%,rgba(2,4,6,.91) 100%)!important;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  .page-projects [data-project-field]{
+  .page-projects .projects-journey-shimmer,
+  .page-projects .projects-journey-nodes circle,
+  .page-projects .projects-journey-traveler{
     animation:none!important;
-    transition:none!important;
   }
 }
