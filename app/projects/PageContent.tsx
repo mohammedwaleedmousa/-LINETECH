@@ -122,24 +122,14 @@ export default function ProjectsPage() {
         <div className="projects-journey-art" aria-hidden="true">
           <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
             <defs>
-              <linearGradient id="projectsJourneyRoute" x1="720" y1="0" x2="1535" y2="0" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#EAF4FF" stopOpacity=".16" />
-                <stop offset=".18" stopColor="#BFD9FF" stopOpacity=".70" />
-                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".44" />
+              <linearGradient id="projectsJourneyRoute" x1="760" y1="0" x2="1540" y2="0" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#DDEEFF" stopOpacity=".08" />
+                <stop offset=".32" stopColor="#A9CCFA" stopOpacity=".26" />
+                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".14" />
               </linearGradient>
-              <filter id="projectsJourneyGlow" x="-200%" y="-200%" width="500%" height="500%">
-                <feGaussianBlur stdDeviation="7" result="blur" />
-                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
-              </filter>
             </defs>
-            <path className="projects-journey-route" d="M690 525 C820 488 880 408 990 414 C1108 420 1160 492 1260 474 C1365 455 1418 382 1540 398" />
-            <path className="projects-journey-shimmer" d="M690 525 C820 488 880 408 990 414 C1108 420 1160 492 1260 474 C1365 455 1418 382 1540 398" />
-            <g className="projects-journey-nodes">
-              <circle cx="990" cy="414" r="4" />
-              <circle cx="1260" cy="474" r="4" />
-              <circle cx="1540" cy="398" r="4" />
-            </g>
-            <circle className="projects-journey-traveler" cx="690" cy="525" r="3.5" />
+            <path className="projects-journey-route" d="M760 520 C950 420 1160 455 1540 410" />
+            <path className="projects-journey-shimmer" d="M760 520 C950 420 1160 455 1540 410" />
           </svg>
         </div>
 
@@ -152,16 +142,6 @@ export default function ProjectsPage() {
               <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
               <Link className={styles.secondary} href="/services" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
             </div>
-          </div>
-
-          <div className={styles.heroIndex}>
-            {t.projects.map((project) => (
-              <div key={project.n} data-project-motion="hero">
-                <span>{project.n}</span>
-                <strong>{project.title}</strong>
-                <small>{project.tag}</small>
-              </div>
-            ))}
           </div>
         </div>
       </section>
