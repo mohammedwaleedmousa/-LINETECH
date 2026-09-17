@@ -1,5 +1,4 @@
-/* Services hero — one light, four paths.
-   Scope: Services hero background/art/readability/full viewport only. */
+/* Services hero — one full background, one light source, four calm paths. */
 
 .page-services{
   padding-top:0!important;
@@ -10,13 +9,25 @@
   overflow:hidden!important;
   isolation:isolate!important;
   min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
   background:
-    radial-gradient(ellipse at 83% 47%,rgba(52,92,145,.07) 0%,rgba(52,92,145,.025) 30%,rgba(52,92,145,0) 62%),
+    radial-gradient(ellipse at 78% 48%,rgba(57,103,163,.075) 0%,rgba(57,103,163,.026) 28%,rgba(57,103,163,0) 60%),
     linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
 }
 
-/* Remove every previous decorative/image layer. */
-.page-services>section:first-child .services-hero-photo,
+/* Kill every older grid/frame/background layer from previous hero experiments. */
+.page-services>section:first-child::before{
+  content:none!important;
+  display:none!important;
+  background:none!important;
+  border:0!important;
+  box-shadow:none!important;
+  outline:0!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+
 .page-services>section:first-child [class*="neuronField"],
 .page-services>section:first-child .home-neuron-art,
 .page-services>section:first-child .home-line-art{
@@ -25,53 +36,127 @@
   visibility:hidden!important;
 }
 
-/*
-   One source of light becomes four paths — one for each service.
-   The drawing is intentionally thin and quiet so the typography stays dominant.
-*/
-.page-services>section:first-child::before{
-  content:""!important;
-  position:absolute!important;
-  right:1.5vw!important;
-  left:auto!important;
-  top:50%!important;
-  width:min(58vw,900px)!important;
-  height:min(64vh,620px)!important;
-  transform:translateY(-44%)!important;
-  z-index:0!important;
-  pointer-events:none!important;
-  opacity:.92!important;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 900 620' preserveAspectRatio='xMidYMid meet'%3E%3Cdefs%3E%3ClinearGradient id='beam' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%236da8f8' stop-opacity='0'/%3E%3Cstop offset='.58' stop-color='%239bc5ff' stop-opacity='.22'/%3E%3Cstop offset='.9' stop-color='%23dbeaff' stop-opacity='.72'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='.95'/%3E%3C/linearGradient%3E%3ClinearGradient id='pathA' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23eef6ff' stop-opacity='.88'/%3E%3Cstop offset='.28' stop-color='%239cc8ff' stop-opacity='.66'/%3E%3Cstop offset='1' stop-color='%235e9df0' stop-opacity='.42'/%3E%3C/linearGradient%3E%3Cfilter id='softGlow' x='-60%25' y='-60%25' width='220%25' height='220%25'%3E%3CfeGaussianBlur stdDeviation='8' result='b'/%3E%3CfeMerge%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3Cfilter id='nodeGlow' x='-300%25' y='-300%25' width='700%25' height='700%25'%3E%3CfeGaussianBlur stdDeviation='10'/%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M0 310H184' stroke='url(%23beam)' stroke-width='1.15' fill='none'/%3E%3Cg fill='none' stroke='url(%23pathA)' stroke-width='1.35' stroke-linecap='round'%3E%3Cpath d='M184 310C300 290 355 198 472 126C580 60 686 54 838 66'/%3E%3Cpath d='M184 310C320 304 390 267 500 224C610 181 699 166 855 178'/%3E%3Cpath d='M184 310C320 316 393 334 515 352C635 370 725 390 860 430'/%3E%3Cpath d='M184 310C298 333 360 397 465 468C575 542 679 567 824 566'/%3E%3C/g%3E%3Ccircle cx='184' cy='310' r='18' fill='%237eb8ff' fill-opacity='.16' filter='url(%23nodeGlow)'/%3E%3Ccircle cx='184' cy='310' r='3.2' fill='%23ffffff' fill-opacity='.95' filter='url(%23softGlow)'/%3E%3Cg fill='%23d9ecff'%3E%3Ccircle cx='838' cy='66' r='2.3' fill-opacity='.88'/%3E%3Ccircle cx='855' cy='178' r='2.2' fill-opacity='.78'/%3E%3Ccircle cx='860' cy='430' r='2.2' fill-opacity='.78'/%3E%3Ccircle cx='824' cy='566' r='2.3' fill-opacity='.88'/%3E%3C/g%3E%3Cg fill='%237eb8ff' fill-opacity='.13' filter='url(%23nodeGlow)'%3E%3Ccircle cx='838' cy='66' r='11'/%3E%3Ccircle cx='855' cy='178' r='10'/%3E%3Ccircle cx='860' cy='430' r='10'/%3E%3Ccircle cx='824' cy='566' r='11'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat!important;
-}
-
-/* Soft shadow only; no grid, cards or extra shapes. */
-.page-services>section:first-child::after{
-  content:""!important;
+/* Full-bleed art layer: no box, no panel, no visible container. */
+.page-services>section:first-child .services-hero-photo{
+  display:block!important;
   position:absolute!important;
   inset:0!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  left:0!important;
+  width:100%!important;
+  height:100%!important;
+  z-index:0!important;
+  opacity:1!important;
+  visibility:visible!important;
+  pointer-events:none!important;
+  overflow:hidden!important;
+  background:none!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  filter:none!important;
+  transform:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+
+.page-services>section:first-child .services-hero-photo>img{
+  display:none!important;
+  opacity:0!important;
+  visibility:hidden!important;
+}
+
+/* One line enters, then splits into four service paths. */
+.page-services>section:first-child .services-hero-photo::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  width:100%!important;
+  height:100%!important;
+  pointer-events:none!important;
+  opacity:.92!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='in' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%238dbcf8' stop-opacity='0'/%3E%3Cstop offset='.7' stop-color='%23b9d7ff' stop-opacity='.20'/%3E%3Cstop offset='1' stop-color='%23f5f9ff' stop-opacity='.88'/%3E%3C/linearGradient%3E%3ClinearGradient id='out' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23eef6ff' stop-opacity='.88'/%3E%3Cstop offset='.22' stop-color='%23a9ceff' stop-opacity='.68'/%3E%3Cstop offset='1' stop-color='%236da8f8' stop-opacity='.38'/%3E%3C/linearGradient%3E%3C/svg%3E")!important;
+  background-size:0 0!important;
+}
+
+/* Actual paths are layered separately so the whole effect remains a single background. */
+.page-services>section:first-child .services-hero-photo::before{
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%2393c1fb' stop-opacity='0'/%3E%3Cstop offset='.70' stop-color='%23c9e0ff' stop-opacity='.19'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='.86'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23f2f7ff' stop-opacity='.92'/%3E%3Cstop offset='.20' stop-color='%23acd0ff' stop-opacity='.72'/%3E%3Cstop offset='1' stop-color='%236ba6f4' stop-opacity='.38'/%3E%3C/linearGradient%3E%3C/svg%3E")!important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%2393c1fb' stop-opacity='0'/%3E%3Cstop offset='.70' stop-color='%23c9e0ff' stop-opacity='.19'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='.86'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23f2f7ff' stop-opacity='.92'/%3E%3Cstop offset='.20' stop-color='%23acd0ff' stop-opacity='.72'/%3E%3Cstop offset='1' stop-color='%236ba6f4' stop-opacity='.38'/%3E%3C/linearGradient%3E%3Cfilter id='g' x='-30%25' y='-30%25' width='160%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3C/svg%3E") center/cover no-repeat!important;
+}
+
+/* Draw the four routes and origin using a second full-screen SVG layer. */
+.page-services>section:first-child .services-hero-photo::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  pointer-events:none!important;
+  opacity:.96!important;
+  border:0!important;
+  border-radius:0!important;
+  box-shadow:none!important;
+  background:
+    radial-gradient(circle at 57.2% 57.3%,rgba(205,229,255,.42) 0 1px,rgba(112,169,241,.18) 3px,rgba(112,169,241,0) 33px),
+    radial-gradient(ellipse at 73% 50%,rgba(70,120,188,.055) 0%,rgba(70,120,188,0) 50%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='xMidYMid slice'%3E%3Cdefs%3E%3ClinearGradient id='beam' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%238bb9f5' stop-opacity='0'/%3E%3Cstop offset='.72' stop-color='%23bcd9ff' stop-opacity='.20'/%3E%3Cstop offset='1' stop-color='%23ffffff' stop-opacity='.88'/%3E%3C/linearGradient%3E%3ClinearGradient id='route' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23edf6ff' stop-opacity='.88'/%3E%3Cstop offset='.18' stop-color='%23afd2ff' stop-opacity='.68'/%3E%3Cstop offset='1' stop-color='%236ea8f3' stop-opacity='.42'/%3E%3C/linearGradient%3E%3Cfilter id='soft' x='-100%25' y='-100%25' width='300%25' height='300%25'%3E%3CfeGaussianBlur stdDeviation='7' result='b'/%3E%3CfeMerge%3E%3CfeMergeNode in='b'/%3E%3CfeMergeNode in='SourceGraphic'/%3E%3C/feMerge%3E%3C/filter%3E%3C/defs%3E%3Cpath d='M170 516 C430 516 660 516 915 516' stroke='url(%23beam)' stroke-width='1.15' fill='none'/%3E%3Cg fill='none' stroke='url(%23route)' stroke-width='1.45' stroke-linecap='round'%3E%3Cpath d='M915 516 C1028 494 1112 392 1230 316 C1332 251 1422 244 1536 252'/%3E%3Cpath d='M915 516 C1040 509 1135 462 1250 419 C1351 381 1435 374 1544 386'/%3E%3Cpath d='M915 516 C1046 523 1148 547 1260 575 C1370 602 1450 621 1546 637'/%3E%3Cpath d='M915 516 C1026 542 1110 626 1226 699 C1332 766 1419 786 1528 782'/%3E%3C/g%3E%3Ccircle cx='915' cy='516' r='3.4' fill='%23ffffff' filter='url(%23soft)'/%3E%3Cg fill='%23e7f2ff'%3E%3Ccircle cx='1536' cy='252' r='2.1'/%3E%3Ccircle cx='1544' cy='386' r='2'/%3E%3Ccircle cx='1546' cy='637' r='2'/%3E%3Ccircle cx='1528' cy='782' r='2.1'/%3E%3C/g%3E%3C/svg%3E") center/cover no-repeat!important;
+  animation:servicesGlowPulse 5.2s ease-in-out infinite!important;
+  will-change:opacity,transform!important;
+}
+
+/* Readability layer is full-screen only — all old frame properties are explicitly reset. */
+.page-services>section:first-child::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  top:0!important;
+  right:0!important;
+  bottom:0!important;
+  left:0!important;
+  width:auto!important;
+  height:auto!important;
   z-index:1!important;
   pointer-events:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  border:0!important;
+  border-radius:0!important;
+  outline:0!important;
+  box-shadow:none!important;
+  transform:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,6,.68) 0%,rgba(2,4,6,.48) 31%,rgba(2,4,6,.15) 51%,rgba(2,4,6,.025) 65%,rgba(2,4,6,0) 78%),
-    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 63%,rgba(0,0,0,.26) 100%)!important;
+    linear-gradient(90deg,rgba(2,4,6,.70) 0%,rgba(2,4,6,.52) 30%,rgba(2,4,6,.18) 49%,rgba(2,4,6,.035) 62%,rgba(2,4,6,0) 76%),
+    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 64%,rgba(0,0,0,.28) 100%)!important;
 }
 
 .page-services>section:first-child [class*="heroShell"]{
   position:relative!important;
   z-index:2!important;
   min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
 }
 
-html[dir="rtl"] .page-services>section:first-child::before{
-  left:1.5vw!important;
-  right:auto!important;
-  transform:translateY(-44%) scaleX(-1)!important;
+/* Keep the same visual logic in Arabic without creating a separate panel. */
+html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
+  transform:scaleX(-1)!important;
+  transform-origin:center!important;
 }
 
 html[dir="rtl"] .page-services>section:first-child::after{
   background:
-    linear-gradient(270deg,rgba(2,4,6,.68) 0%,rgba(2,4,6,.48) 31%,rgba(2,4,6,.15) 51%,rgba(2,4,6,.025) 65%,rgba(2,4,6,0) 78%),
-    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 63%,rgba(0,0,0,.26) 100%)!important;
+    linear-gradient(270deg,rgba(2,4,6,.70) 0%,rgba(2,4,6,.52) 30%,rgba(2,4,6,.18) 49%,rgba(2,4,6,.035) 62%,rgba(2,4,6,0) 76%),
+    linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,0) 64%,rgba(0,0,0,.28) 100%)!important;
 }
 
 body:has(.page-services) .global-site-nav{
@@ -82,57 +167,50 @@ body:has(.page-services) .global-site-nav{
   backdrop-filter:blur(10px)!important;
 }
 
+@keyframes servicesGlowPulse{
+  0%,100%{opacity:.78;transform:translate3d(0,0,0) scale(1)}
+  50%{opacity:1;transform:translate3d(7px,-2px,0) scale(1.006)}
+}
+
 @media(max-width:900px){
   .page-services>section:first-child,
   .page-services>section:first-child [class*="heroShell"]{
     min-height:100svh!important;
   }
 
-  .page-services>section:first-child::before{
-    right:-11vw!important;
-    width:72vw!important;
-    height:58vh!important;
-    opacity:.62!important;
-  }
-
-  html[dir="rtl"] .page-services>section:first-child::before{
-    left:-11vw!important;
-    right:auto!important;
+  .page-services>section:first-child .services-hero-photo::after{
+    opacity:.72!important;
+    background-position:58% center!important;
   }
 
   .page-services>section:first-child::after{
     background:
-      linear-gradient(90deg,rgba(2,4,6,.73) 0%,rgba(2,4,6,.52) 40%,rgba(2,4,6,.17) 61%,rgba(2,4,6,0) 80%),
-      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.29) 100%)!important;
+      linear-gradient(90deg,rgba(2,4,6,.73) 0%,rgba(2,4,6,.55) 39%,rgba(2,4,6,.20) 59%,rgba(2,4,6,.03) 76%,rgba(2,4,6,0) 88%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.30) 100%)!important;
   }
 
   html[dir="rtl"] .page-services>section:first-child::after{
     background:
-      linear-gradient(270deg,rgba(2,4,6,.73) 0%,rgba(2,4,6,.52) 40%,rgba(2,4,6,.17) 61%,rgba(2,4,6,0) 80%),
-      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.29) 100%)!important;
+      linear-gradient(270deg,rgba(2,4,6,.73) 0%,rgba(2,4,6,.55) 39%,rgba(2,4,6,.20) 59%,rgba(2,4,6,.03) 76%,rgba(2,4,6,0) 88%),
+      linear-gradient(180deg,rgba(0,0,0,.02) 0%,rgba(0,0,0,.01) 66%,rgba(0,0,0,.30) 100%)!important;
   }
 }
 
 @media(max-width:620px){
-  .page-services>section:first-child::before{
-    top:61%!important;
-    right:-34vw!important;
-    width:112vw!important;
-    height:48vh!important;
-    opacity:.28!important;
-  }
-
-  html[dir="rtl"] .page-services>section:first-child::before{
-    left:-34vw!important;
-    right:auto!important;
+  .page-services>section:first-child .services-hero-photo::after{
+    opacity:.36!important;
+    background-position:68% 62%!important;
   }
 
   .page-services>section:first-child::after,
   html[dir="rtl"] .page-services>section:first-child::after{
-    background:linear-gradient(180deg,rgba(2,4,6,.30) 0%,rgba(2,4,6,.34) 48%,rgba(2,4,6,.64) 76%,rgba(2,4,6,.92) 100%)!important;
+    background:linear-gradient(180deg,rgba(2,4,6,.28) 0%,rgba(2,4,6,.32) 48%,rgba(2,4,6,.62) 76%,rgba(2,4,6,.92) 100%)!important;
   }
 }
 
 @media(prefers-reduced-motion:reduce){
-  .page-services>section:first-child::before{transition:none!important}
+  .page-services>section:first-child .services-hero-photo::after{
+    animation:none!important;
+    transform:none!important;
+  }
 }
