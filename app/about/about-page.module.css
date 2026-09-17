@@ -16,7 +16,7 @@
 .kicker::before{content:"";width:34px;height:1px;background:var(--blue);box-shadow:0 0 12px rgba(108,168,248,.25)}
 :global(html[dir="rtl"]) .kicker{letter-spacing:0}
 
-/* ABOUT HERO — single source of truth. */
+/* ABOUT HERO — architectural light, intentionally different from Projects. */
 .hero{
   position:relative;
   min-height:100svh;
@@ -24,74 +24,92 @@
   isolation:isolate;
   border-bottom:1px solid var(--line);
   background:
-    radial-gradient(ellipse at 84% 44%,rgba(61,107,169,.085) 0%,rgba(61,107,169,.03) 28%,rgba(61,107,169,0) 60%),
+    radial-gradient(ellipse at 80% 42%,rgba(43,77,119,.075) 0%,rgba(43,77,119,.022) 28%,rgba(43,77,119,0) 58%),
     linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
 }
 
-.page :global(.about-line-art){
+/* No route, no network, no grid: one soft architectural opening. */
+.page :global(.about-aperture-art){
   position:absolute;
   inset:0;
   z-index:0;
   pointer-events:none;
   overflow:hidden;
-  opacity:.96;
 }
-.page :global(.about-line-art svg){
+
+.page :global(.about-aperture-haze){
   position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-  overflow:visible;
+  width:48vw;
+  height:58vw;
+  max-width:760px;
+  max-height:880px;
+  right:-3vw;
+  top:4vh;
+  border-radius:50%;
+  background:radial-gradient(ellipse at 48% 50%,rgba(110,163,231,.13) 0%,rgba(72,119,178,.055) 28%,rgba(32,56,84,.018) 48%,rgba(5,8,12,0) 72%);
+  filter:blur(26px);
+  opacity:.75;
+  animation:aboutApertureHaze 10s ease-in-out infinite alternate;
 }
-.page :global(.about-line-halo){
-  fill:none;
-  stroke:#6ca8f8;
-  stroke-width:9;
-  stroke-linecap:round;
-  vector-effect:non-scaling-stroke;
-  opacity:.045;
-  filter:url(#aboutLineBlur);
-}
-.page :global(.about-line-base){
-  fill:none;
-  stroke:url(#aboutLineGradient);
-  stroke-width:1.45;
-  stroke-linecap:round;
-  vector-effect:non-scaling-stroke;
-  opacity:.72;
-  filter:drop-shadow(0 0 8px rgba(92,154,234,.12));
-  animation:aboutLineBreath 6.8s ease-in-out infinite;
-}
-.page :global(.about-line-flow){
-  fill:none;
-  stroke:#e6f1ff;
-  stroke-width:1.05;
-  stroke-linecap:round;
-  vector-effect:non-scaling-stroke;
-  opacity:.30;
-  stroke-dasharray:90 820;
-  animation:aboutLineFlow 9.5s linear infinite;
-}
-.page :global(.about-point-halo){
-  fill:#6ca8f8;
-  opacity:.055;
-  filter:url(#aboutPointGlow);
-}
-.page :global(.about-point-core){
-  fill:#eef7ff;
-  stroke:#80b6fa;
-  stroke-width:1;
-  filter:drop-shadow(0 0 8px rgba(114,177,248,.52));
-}
-.page :global(.about-line-point){
-  transform-box:fill-box;
+
+.page :global(.about-aperture-opening){
+  position:absolute;
+  right:10vw;
+  top:13vh;
+  width:clamp(180px,18vw,330px);
+  height:clamp(440px,64vh,650px);
+  transform:skewX(-7deg);
   transform-origin:center;
-  animation:aboutPointPulse 7.2s ease-in-out infinite;
+  clip-path:polygon(32% 0,100% 0,74% 100%,0 100%);
+  background:
+    linear-gradient(180deg,
+      rgba(182,216,255,.015) 0%,
+      rgba(139,187,245,.07) 22%,
+      rgba(115,170,238,.16) 48%,
+      rgba(92,148,218,.085) 73%,
+      rgba(53,88,129,.012) 100%);
+  filter:blur(10px);
+  opacity:.72;
+  box-shadow:0 0 90px rgba(74,132,207,.04);
+  animation:aboutApertureBreath 8s ease-in-out infinite;
 }
-.page :global(.about-line-point-2){animation-delay:1.8s}
-.page :global(.about-line-point-3){animation-delay:3.6s}
-.page :global(.about-line-point-4){animation-delay:5.4s}
+
+.page :global(.about-aperture-floor){
+  position:absolute;
+  right:1vw;
+  bottom:4vh;
+  width:min(48vw,760px);
+  height:180px;
+  border-radius:50%;
+  background:radial-gradient(ellipse at center,rgba(101,157,226,.105) 0%,rgba(70,116,173,.04) 35%,rgba(5,8,12,0) 72%);
+  filter:blur(20px);
+  opacity:.68;
+  transform:rotate(-5deg);
+  animation:aboutFloorGlow 9s ease-in-out infinite alternate;
+}
+
+.page :global(.about-aperture-shadow){
+  position:absolute;
+  z-index:1;
+  pointer-events:none;
+  filter:blur(18px);
+  opacity:.9;
+}
+.page :global(.about-aperture-shadow-a){
+  right:29vw;
+  top:4vh;
+  width:18vw;
+  height:86vh;
+  background:linear-gradient(90deg,rgba(3,5,7,0),rgba(3,5,7,.66) 72%,rgba(3,5,7,.92));
+  transform:skewX(-7deg);
+}
+.page :global(.about-aperture-shadow-b){
+  right:-5vw;
+  top:0;
+  width:16vw;
+  height:100%;
+  background:linear-gradient(90deg,rgba(3,5,7,.35),rgba(3,5,7,.96));
+}
 
 .heroShell{
   position:relative;
@@ -135,37 +153,43 @@
 .secondary:hover{color:#fff;border-color:#40556b}
 :global(html[dir="rtl"]) .primary span,:global(html[dir="rtl"]) .secondary span{transform:scaleX(-1)}
 
+/* Four stages are content, not another line motif. */
 .heroLine{
   position:relative;
   margin-top:auto;
-  padding-top:34px;
   display:grid;
   grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:clamp(24px,4vw,58px);
   width:min(980px,100%);
   max-width:980px;
   align-self:flex-start;
-  opacity:.9;
+  padding-top:32px;
+  border-top:1px solid rgba(255,255,255,.055);
 }
 :global(html[dir="rtl"]) .heroLine{align-self:flex-end}
-.heroLine::before{content:"";position:absolute;top:34px;inset-inline:0;height:1px;background:#172433}
-.heroLine::after{content:"";position:absolute;top:34px;inset-inline-start:0;width:var(--about-line-progress,0%);height:1px;background:linear-gradient(90deg,#5b9ff5,#85baff 65%,rgba(133,186,255,.12));box-shadow:0 0 16px rgba(82,151,240,.18)}
-.heroPoint{position:relative;padding-top:22px;padding-inline-end:24px;min-width:0}
-.heroPoint::before{content:"";position:absolute;top:-3px;inset-inline-start:0;width:7px;height:7px;border-radius:50%;background:#0b1118;border:1px solid #5f91cc;box-shadow:0 0 0 4px #05080c}
+.heroLine::before,.heroLine::after{content:none!important;display:none!important}
+.heroPoint{
+  position:relative;
+  min-width:0;
+  padding:0;
+  border:0;
+}
+.heroPoint::before{content:none!important;display:none!important}
 .heroPoint span{display:block;color:#55718e;font-size:9px;letter-spacing:.13em}
-.heroPoint strong{display:block;margin-top:7px;color:#c7d1dc;font-size:11px;font-weight:550}
+.heroPoint strong{display:block;margin-top:8px;color:#c7d1dc;font-size:11px;font-weight:550}
 :global(html[dir="rtl"]) .heroPoint span{letter-spacing:0}
 
-@keyframes aboutLineFlow{
-  from{stroke-dashoffset:940}
-  to{stroke-dashoffset:-940}
+@keyframes aboutApertureBreath{
+  0%,100%{opacity:.58;transform:skewX(-7deg) translate3d(0,0,0) scale(.99)}
+  50%{opacity:.78;transform:skewX(-7deg) translate3d(-5px,-3px,0) scale(1.015)}
 }
-@keyframes aboutLineBreath{
-  0%,100%{opacity:.58}
-  50%{opacity:.80}
+@keyframes aboutApertureHaze{
+  from{opacity:.58;transform:translate3d(0,0,0) scale(.98)}
+  to{opacity:.78;transform:translate3d(-12px,4px,0) scale(1.03)}
 }
-@keyframes aboutPointPulse{
-  0%,72%,100%{opacity:.52;transform:scale(.94)}
-  12%,24%{opacity:1;transform:scale(1.22)}
+@keyframes aboutFloorGlow{
+  from{opacity:.48;transform:rotate(-5deg) scale(.97)}
+  to{opacity:.72;transform:rotate(-5deg) scale(1.035)}
 }
 
 .storySection{padding:clamp(78px,7vw,108px) 0;border-bottom:1px solid var(--line);background:var(--bg)!important}
@@ -232,40 +256,34 @@
   .page .heroLine::after{width:100%!important;transition:none!important}
 }
 
-/* About hero responsive rules stay here, after all page rules, to avoid overrides. */
+
+/* About hero responsive rules — kept at the end so the hero has one clear owner. */
 @media(max-width:1100px){
-  .page :global(.about-line-art){transform:translateX(5%);opacity:.78}
+  .page :global(.about-aperture-art){opacity:.82;transform:translateX(4%)}
 }
 
 @media(max-width:900px){
   .hero,.heroShell{min-height:100svh}
-  .page :global(.about-line-art){
-    transform:translateX(12%) scale(.94);
-    transform-origin:center right;
-    opacity:.54;
-  }
-  :global(html[dir="rtl"]) .page :global(.about-line-art){
-    transform:scaleX(-1) translateX(12%) scale(.94);
-  }
   .heroShell{padding:clamp(160px,21vh,200px) 32px 46px}
+  .page :global(.about-aperture-art){opacity:.52;transform:translateX(12%) scale(.96);transform-origin:center right}
+  .page :global(.about-aperture-opening){right:3vw}
+  .page :global(.about-aperture-haze){right:-16vw}
 }
 
 @media(max-width:620px){
   .shell{width:min(100% - 28px,1180px)}
-  .page :global(.about-line-art){display:none}
+  .page :global(.about-aperture-art){display:none}
   .heroShell{min-height:100svh;padding:142px 24px 38px}
   .hero h1{font-size:clamp(48px,13vw,64px)}
   .heroLead{font-size:14px;line-height:1.7}
   .heroActions{flex-direction:column;align-items:stretch;max-width:340px}
   .primary,.secondary{width:100%}
-  .heroLine{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 0;margin-top:48px;padding-top:0}
-  .heroLine::before,.heroLine::after{display:none}
-  .heroPoint{padding:16px 16px 0 0;border-top:1px solid var(--line)}
-  .heroPoint::before{top:-4px}
+  .heroLine{grid-template-columns:repeat(2,minmax(0,1fr));gap:20px 28px;margin-top:48px;padding-top:22px}
+  .heroPoint{padding:0!important;border:0!important}
 }
 
 @media(prefers-reduced-motion:reduce){
-  .page :global(.about-line-base),
-  .page :global(.about-line-flow),
-  .page :global(.about-line-point){animation:none!important}
+  .page :global(.about-aperture-haze),
+  .page :global(.about-aperture-opening),
+  .page :global(.about-aperture-floor){animation:none!important}
 }
