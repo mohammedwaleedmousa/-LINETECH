@@ -59,6 +59,7 @@ import "./hero-home-reference.css";
 import "./hero-backgrounds-phase1.css";
 import "./services-hero-final.css";
 import "./projects-hero-final.css";
+import "./about-hero-final.css";
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
