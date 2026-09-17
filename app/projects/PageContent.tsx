@@ -119,63 +119,40 @@ export default function ProjectsPage() {
   return (
     <main className={`${styles.page} ref-page page-projects`}>
       <section className={styles.hero} data-project-hero>
-        <div className="projects-showcase-art" aria-hidden="true">
+        <div className="projects-line-art" aria-hidden="true">
           <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
             <defs>
-              <linearGradient id="projectsStripFill" x1="840" y1="270" x2="1510" y2="640" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#0A111A" stopOpacity=".78" />
-                <stop offset=".55" stopColor="#0A1018" stopOpacity=".48" />
-                <stop offset="1" stopColor="#071019" stopOpacity=".22" />
+              <linearGradient id="projectsLineGradient" x1="820" y1="0" x2="1545" y2="0" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#DDEEFF" stopOpacity=".10" />
+                <stop offset=".18" stopColor="#B8D6FF" stopOpacity=".48" />
+                <stop offset=".58" stopColor="#8CBAF8" stopOpacity=".72" />
+                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".34" />
               </linearGradient>
-              <linearGradient id="projectsStripEdge" x1="840" y1="0" x2="1510" y2="0" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#8BB9F5" stopOpacity=".14" />
-                <stop offset=".5" stopColor="#9BC5FF" stopOpacity=".42" />
-                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".12" />
-              </linearGradient>
-              <linearGradient id="projectsStripSweep" x1="0" y1="0" x2="1" y2="0">
-                <stop stopColor="#FFFFFF" stopOpacity="0" />
-                <stop offset=".5" stopColor="#CFE4FF" stopOpacity=".22" />
-                <stop offset="1" stopColor="#FFFFFF" stopOpacity="0" />
-              </linearGradient>
-              <clipPath id="projectsStripClip">
-                <rect x="820" y="250" width="700" height="390" rx="26" />
-              </clipPath>
+              <filter id="projectsLineBlur" x="-30%" y="-80%" width="160%" height="260%">
+                <feGaussianBlur stdDeviation="7" />
+              </filter>
+              <filter id="projectsNodeGlow" x="-400%" y="-400%" width="900%" height="900%">
+                <feGaussianBlur stdDeviation="9" />
+              </filter>
+              <path id="projectsMainPath" d="M820 548 C930 490 1018 426 1118 438 C1228 451 1292 492 1388 448 C1452 419 1498 370 1548 348" />
             </defs>
 
-            <g className="projects-strip-shell">
-              <rect x="820" y="250" width="700" height="390" rx="26" fill="url(#projectsStripFill)" />
-              <rect x="820.5" y="250.5" width="699" height="389" rx="25.5" stroke="url(#projectsStripEdge)" />
+            <use href="#projectsMainPath" className="projects-line-halo" />
+            <use href="#projectsMainPath" className="projects-line-base" />
+            <use href="#projectsMainPath" className="projects-line-flow" />
 
-              <line x1="1053" y1="282" x2="1053" y2="608" className="projects-strip-divider" />
-              <line x1="1286" y1="282" x2="1286" y2="608" className="projects-strip-divider" />
-
-              <g className="projects-strip-commerce">
-                <rect x="864" y="334" width="54" height="74" rx="7" />
-                <rect x="930" y="334" width="54" height="74" rx="7" />
-                <rect x="864" y="420" width="120" height="14" rx="7" />
-                <rect x="864" y="448" width="84" height="10" rx="5" />
+            <g className="projects-line-nodes">
+              <g className="projects-line-node projects-line-node-1">
+                <circle className="projects-node-halo" cx="1118" cy="438" r="15" />
+                <circle className="projects-node-core" cx="1118" cy="438" r="3.4" />
               </g>
-
-              <g className="projects-strip-marketplace">
-                <circle cx="1128" cy="372" r="14" />
-                <circle cx="1190" cy="344" r="10" />
-                <circle cx="1218" cy="408" r="11" />
-                <path d="M1141 365L1180 349M1140 382L1207 404M1196 354L1213 397" />
-                <rect x="1094" y="456" width="122" height="10" rx="5" />
+              <g className="projects-line-node projects-line-node-2">
+                <circle className="projects-node-halo" cx="1388" cy="448" r="15" />
+                <circle className="projects-node-core" cx="1388" cy="448" r="3.4" />
               </g>
-
-              <g className="projects-strip-system">
-                <rect x="1330" y="334" width="138" height="18" rx="9" />
-                <rect x="1330" y="370" width="104" height="12" rx="6" />
-                <rect x="1330" y="400" width="118" height="12" rx="6" />
-                <rect x="1330" y="442" width="18" height="64" rx="5" />
-                <rect x="1362" y="424" width="18" height="82" rx="5" />
-                <rect x="1394" y="456" width="18" height="50" rx="5" />
-                <rect x="1426" y="410" width="18" height="96" rx="5" />
-              </g>
-
-              <g clipPath="url(#projectsStripClip)">
-                <rect className="projects-strip-sweep" x="760" y="240" width="180" height="420" fill="url(#projectsStripSweep)" />
+              <g className="projects-line-node projects-line-node-3">
+                <circle className="projects-node-halo" cx="1548" cy="348" r="15" />
+                <circle className="projects-node-core" cx="1548" cy="348" r="3.4" />
               </g>
             </g>
           </svg>
