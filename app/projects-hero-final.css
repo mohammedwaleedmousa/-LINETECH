@@ -1,4 +1,4 @@
-/* Projects hero — deliberately minimal: copy + one quiet trajectory. */
+/* Projects hero — one unified project strip, three project types. */
 
 .page-projects{
   padding-top:0!important;
@@ -15,11 +15,11 @@
   border-radius:0!important;
   box-shadow:none!important;
   background:
-    radial-gradient(ellipse at 82% 47%,rgba(62,106,163,.065) 0%,rgba(62,106,163,.022) 26%,rgba(62,106,163,0) 58%),
+    radial-gradient(ellipse at 82% 46%,rgba(61,107,169,.085) 0%,rgba(61,107,169,.03) 27%,rgba(61,107,169,0) 59%),
     linear-gradient(180deg,#030507 0%,#05080b 54%,#030507 100%)!important;
 }
 
-/* Hard reset every old decorative frame/grid that used section pseudos. */
+/* Hard reset previous Projects hero experiments. */
 .page-projects>section:first-child::before,
 .page-projects>section:first-child::after{
   content:none!important;
@@ -36,14 +36,13 @@
   mask-image:none!important;
 }
 
-/* Remove previous project network layer completely. */
-.page-projects [data-project-field]{
+.page-projects [data-project-field],
+.page-projects .projects-journey-art{
   display:none!important;
   opacity:0!important;
   visibility:hidden!important;
 }
 
-/* Prevent old hero experiments from drawing extra shapes around the copy. */
 .page-projects>section:first-child>[class*="heroShell"],
 .page-projects>section:first-child>[class*="heroShell"]>[class*="heroCopy"]{
   background:none!important;
@@ -61,20 +60,17 @@
   display:none!important;
 }
 
-/* One restrained trajectory only. No nodes, no boxes, no dashboard-like decoration. */
-.page-projects .projects-journey-art{
+/* One visual object only: a calm portfolio strip on the right. */
+.page-projects .projects-showcase-art{
   position:absolute!important;
   inset:0!important;
   z-index:0!important;
   pointer-events:none!important;
   overflow:hidden!important;
-  opacity:.82!important;
-  background:none!important;
-  border:0!important;
-  box-shadow:none!important;
+  opacity:.92!important;
 }
 
-.page-projects .projects-journey-art svg{
+.page-projects .projects-showcase-art svg{
   position:absolute!important;
   inset:0!important;
   width:100%!important;
@@ -84,28 +80,49 @@
   transform:none!important;
 }
 
-.page-projects .projects-journey-route{
-  fill:none!important;
-  stroke:url(#projectsJourneyRoute)!important;
-  stroke-width:1.25!important;
-  stroke-linecap:round!important;
-  vector-effect:non-scaling-stroke!important;
-  opacity:.55!important;
-  filter:drop-shadow(0 0 8px rgba(86,147,226,.10))!important;
+.page-projects .projects-strip-shell{
+  transform-origin:center!important;
+  animation:projectsStripFloat 9s ease-in-out infinite alternate!important;
 }
 
-.page-projects .projects-journey-shimmer{
-  fill:none!important;
-  stroke:#d8eaff!important;
+.page-projects .projects-strip-divider{
+  stroke:rgba(132,174,226,.10)!important;
   stroke-width:1!important;
-  stroke-linecap:round!important;
   vector-effect:non-scaling-stroke!important;
-  opacity:.28!important;
-  stroke-dasharray:80 900!important;
-  animation:projectsJourneyFlow 10s linear infinite!important;
 }
 
-/* Left aligned copy. Only top padding controls its vertical position. */
+.page-projects .projects-strip-commerce rect,
+.page-projects .projects-strip-system rect{
+  fill:rgba(128,176,238,.055)!important;
+  stroke:rgba(135,182,240,.20)!important;
+  stroke-width:1!important;
+  vector-effect:non-scaling-stroke!important;
+}
+
+.page-projects .projects-strip-marketplace circle{
+  fill:rgba(124,173,235,.065)!important;
+  stroke:rgba(137,184,242,.24)!important;
+  stroke-width:1!important;
+  vector-effect:non-scaling-stroke!important;
+}
+
+.page-projects .projects-strip-marketplace path{
+  fill:none!important;
+  stroke:rgba(137,184,242,.18)!important;
+  stroke-width:1!important;
+  vector-effect:non-scaling-stroke!important;
+}
+
+.page-projects .projects-strip-marketplace rect{
+  fill:rgba(128,176,238,.05)!important;
+}
+
+.page-projects .projects-strip-sweep{
+  opacity:.42!important;
+  animation:projectsStripSweep 8.5s ease-in-out infinite!important;
+}
+
+/* Copy remains left; only top padding controls vertical placement. */
 .page-projects>section:first-child>[class*="heroShell"]{
   position:relative!important;
   z-index:2!important;
@@ -136,7 +153,7 @@ html[dir="rtl"] .page-projects>section:first-child>[class*="heroShell"]>[class*=
   text-align:right!important;
 }
 
-html[dir="rtl"] .page-projects .projects-journey-art{
+html[dir="rtl"] .page-projects .projects-showcase-art{
   transform:scaleX(-1)!important;
   transform-origin:center!important;
 }
@@ -149,9 +166,24 @@ body:has(.page-projects) .global-site-nav{
   backdrop-filter:blur(10px)!important;
 }
 
-@keyframes projectsJourneyFlow{
-  from{stroke-dashoffset:980}
-  to{stroke-dashoffset:-980}
+@keyframes projectsStripFloat{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(0,-7px,0)}
+}
+
+@keyframes projectsStripSweep{
+  0%,18%{transform:translateX(-40px);opacity:0}
+  34%{opacity:.42}
+  64%{opacity:.42}
+  82%,100%{transform:translateX(820px);opacity:0}
+}
+
+@media(max-width:1100px){
+  .page-projects .projects-showcase-art{
+    opacity:.72!important;
+    transform:translateX(8%) scale(.94)!important;
+    transform-origin:center right!important;
+  }
 }
 
 @media(max-width:900px){
@@ -160,13 +192,13 @@ body:has(.page-projects) .global-site-nav{
     min-height:100svh!important;
   }
 
-  .page-projects .projects-journey-art{
-    opacity:.48!important;
-    transform:translateX(10%)!important;
+  .page-projects .projects-showcase-art{
+    opacity:.46!important;
+    transform:translateX(17%) scale(.86)!important;
   }
 
-  html[dir="rtl"] .page-projects .projects-journey-art{
-    transform:scaleX(-1) translateX(10%)!important;
+  html[dir="rtl"] .page-projects .projects-showcase-art{
+    transform:scaleX(-1) translateX(17%) scale(.86)!important;
   }
 
   .page-projects>section:first-child>[class*="heroShell"]{
@@ -177,7 +209,7 @@ body:has(.page-projects) .global-site-nav{
 }
 
 @media(max-width:620px){
-  .page-projects .projects-journey-art{
+  .page-projects .projects-showcase-art{
     display:none!important;
   }
 
@@ -190,7 +222,8 @@ body:has(.page-projects) .global-site-nav{
 }
 
 @media(prefers-reduced-motion:reduce){
-  .page-projects .projects-journey-shimmer{
+  .page-projects .projects-strip-shell,
+  .page-projects .projects-strip-sweep{
     animation:none!important;
   }
 }
