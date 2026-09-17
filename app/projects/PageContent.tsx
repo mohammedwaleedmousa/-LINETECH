@@ -168,6 +168,16 @@ export default function ProjectsPage() {
               <Link className={styles.secondary} href="/services" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
+
+          <div className={styles.heroIndex} aria-label={t.hero.kicker}>
+            {t.projects.map((project) => (
+              <div key={project.n} data-project-motion="hero">
+                <span>{project.n}</span>
+                <strong>{project.title}</strong>
+                <small>{project.tag}</small>
+              </div>
+            ))}
+          </div>
         </div>
       </section>
 
