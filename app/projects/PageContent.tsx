@@ -119,22 +119,27 @@ export default function ProjectsPage() {
   return (
     <main className={`${styles.page} ref-page page-projects`}>
       <section className={styles.hero} data-project-hero>
-        <div className={styles.heroField} data-project-field aria-hidden="true">
-          <svg viewBox="0 0 1600 700" preserveAspectRatio="none" fill="none" focusable="false">
+        <div className="projects-journey-art" aria-hidden="true">
+          <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
             <defs>
-              <radialGradient id="project-field-glow" cx="0" cy="0" r="1" gradientTransform="translate(1180 270) rotate(90) scale(250 350)" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#3882F6" stopOpacity=".12" />
-                <stop offset="1" stopColor="#3882F6" stopOpacity="0" />
-              </radialGradient>
+              <linearGradient id="projectsJourneyRoute" x1="720" y1="0" x2="1535" y2="0" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#EAF4FF" stopOpacity=".16" />
+                <stop offset=".18" stopColor="#BFD9FF" stopOpacity=".70" />
+                <stop offset="1" stopColor="#6CA8F8" stopOpacity=".44" />
+              </linearGradient>
+              <filter id="projectsJourneyGlow" x="-200%" y="-200%" width="500%" height="500%">
+                <feGaussianBlur stdDeviation="7" result="blur" />
+                <feMerge><feMergeNode in="blur" /><feMergeNode in="SourceGraphic" /></feMerge>
+              </filter>
             </defs>
-            <ellipse className={styles.heroGlow} cx="1180" cy="270" rx="350" ry="250" />
-            <path className={`${styles.heroRoute} ${styles.heroRouteDashed}`} d="M640 510C790 430 850 310 1020 320s250 122 420 28 210-158 300-132" />
-            <path className={styles.heroRoute} d="M820 130c120 74 194 94 302 58s190-12 278 76 180 122 300 88" />
-            <path className={styles.heroRoute} d="M970 570c75-88 148-116 238-86s168 18 228-48 118-92 204-70" />
-            <g className={styles.heroNodes}>
-              <circle cx="1020" cy="320" r="4"/><circle cx="1202" cy="360" r="3"/><circle cx="1440" cy="348" r="4"/>
-              <circle cx="1122" cy="188" r="3"/><circle cx="1400" cy="264" r="3.5"/><circle cx="1208" cy="484" r="3"/>
+            <path className="projects-journey-route" d="M690 525 C820 488 880 408 990 414 C1108 420 1160 492 1260 474 C1365 455 1418 382 1540 398" />
+            <path className="projects-journey-shimmer" d="M690 525 C820 488 880 408 990 414 C1108 420 1160 492 1260 474 C1365 455 1418 382 1540 398" />
+            <g className="projects-journey-nodes">
+              <circle cx="990" cy="414" r="4" />
+              <circle cx="1260" cy="474" r="4" />
+              <circle cx="1540" cy="398" r="4" />
             </g>
+            <circle className="projects-journey-traveler" cx="690" cy="525" r="3.5" />
           </svg>
         </div>
 
