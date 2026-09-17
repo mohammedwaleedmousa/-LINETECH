@@ -1,5 +1,5 @@
-/* Services hero — LINETECH line-system background.
-   Scope: background, readability shadow and full-viewport hero only. */
+/* Services hero — visual system inspired directly by the four services.
+   Scope: Services hero background/art/readability/full viewport only. */
 
 .page-services{
   padding-top:0!important;
@@ -11,51 +11,77 @@
   isolation:isolate!important;
   min-height:100svh!important;
   background:
-    radial-gradient(circle at 78% 38%,rgba(41,104,210,.10),transparent 24%),
-    radial-gradient(circle at 66% 74%,rgba(41,104,210,.055),transparent 18%),
-    linear-gradient(180deg,#030507 0%,#05080b 52%,#030507 100%)!important;
+    radial-gradient(circle at 79% 42%,rgba(70,126,214,.08),transparent 24%),
+    radial-gradient(circle at 88% 76%,rgba(255,255,255,.025),transparent 18%),
+    linear-gradient(180deg,#030507 0%,#06090d 52%,#030507 100%)!important;
 }
 
-/* Remove the generic photo layer and any old hero art. */
-.page-services>section:first-child .services-hero-photo,
+/* Remove old generic hero artwork sources. */
 .page-services>section:first-child [class*="neuronField"],
 .page-services>section:first-child .home-neuron-art,
 .page-services>section:first-child .home-line-art{
   display:none!important;
 }
 
-/* LINETECH: one line becomes four service directions. */
-.page-services>section:first-child::before{
-  content:""!important;
+/* Reuse the existing photo container as a content-specific Services visual.
+   The original image is intentionally hidden. */
+.page-services>section:first-child .services-hero-photo{
   display:block!important;
   position:absolute!important;
-  inset:0!important;
+  top:50%!important;
+  right:2.5vw!important;
+  left:auto!important;
+  width:min(46vw,760px)!important;
+  height:min(76vh,720px)!important;
+  transform:translateY(-48%)!important;
   z-index:0!important;
-  opacity:.92!important;
+  opacity:1!important;
   visibility:visible!important;
   pointer-events:none!important;
-  background-image:
-    linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px),
-    linear-gradient(0deg,rgba(255,255,255,.018) 1px,transparent 1px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1600 900' preserveAspectRatio='xMidYMid slice'%3E%3Cg fill='none' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M720 900V675L790 605V392' stroke='%23F4F7FA' stroke-opacity='.54' stroke-width='1.15'/%3E%3Cpath d='M790 605H1115L1248 472H1525' stroke='%235B9BFF' stroke-opacity='.78' stroke-width='1.35'/%3E%3Cpath d='M790 520H1010L1128 402H1440' stroke='%23D8E5F7' stroke-opacity='.25' stroke-width='1'/%3E%3Cpath d='M790 454H930L1068 316H1335L1430 221H1600' stroke='%235B9BFF' stroke-opacity='.38' stroke-width='1'/%3E%3Cpath d='M790 676H980L1110 806H1420' stroke='%23D8E5F7' stroke-opacity='.22' stroke-width='1'/%3E%3Cpath d='M1040 472V585H1210' stroke='%235B9BFF' stroke-opacity='.24' stroke-width='1'/%3E%3Cpath d='M1210 585V650H1550' stroke='%23D8E5F7' stroke-opacity='.14' stroke-width='1'/%3E%3C/g%3E%3Cg fill='%235B9BFF'%3E%3Ccircle cx='790' cy='605' r='3.2' fill-opacity='.95'/%3E%3Ccircle cx='1115' cy='605' r='2.3' fill-opacity='.58'/%3E%3Ccircle cx='1248' cy='472' r='2.5' fill-opacity='.80'/%3E%3Ccircle cx='1128' cy='402' r='2.1' fill-opacity='.44'/%3E%3Ccircle cx='1068' cy='316' r='2.1' fill-opacity='.50'/%3E%3Ccircle cx='1110' cy='806' r='2.1' fill-opacity='.32'/%3E%3C/g%3E%3Cg fill='%23F4F7FA' fill-opacity='.32'%3E%3Crect x='1519' y='466' width='12' height='12'/%3E%3Crect x='1434' y='396' width='10' height='10'/%3E%3Crect x='1329' y='310' width='10' height='10'/%3E%3Crect x='1414' y='800' width='12' height='12'/%3E%3C/g%3E%3C/svg%3E")!important;
-  background-size:112px 112px,112px 112px,cover!important;
-  background-position:center center!important;
-  background-repeat:repeat,repeat,no-repeat!important;
+  overflow:visible!important;
 }
 
-/* Home-like readability shadow: dense at text side, open toward the artwork. */
+.page-services>section:first-child .services-hero-photo>img{
+  display:none!important;
+}
+
+/* Four actual deliverable worlds: website / commerce / identity / CV.
+   Flat 2D boards, no planet, no AI iconography, no decorative line network. */
+.page-services>section:first-child .services-hero-photo::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  display:block!important;
+  opacity:.92!important;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 760 720'%3E%3Cg fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3C!-- WEBSITE --%3E%3Crect x='48' y='54' width='430' height='232' rx='18' fill='%23090D12' fill-opacity='.72' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Cpath d='M48 96H478' stroke='%238B99AA' stroke-opacity='.24'/%3E%3Ccircle cx='76' cy='76' r='4' fill='%23D8E1EC' fill-opacity='.38' stroke='none'/%3E%3Ccircle cx='91' cy='76' r='4' fill='%23D8E1EC' fill-opacity='.20' stroke='none'/%3E%3Ccircle cx='106' cy='76' r='4' fill='%235B9BFF' fill-opacity='.74' stroke='none'/%3E%3Crect x='75' y='124' width='202' height='72' rx='8' fill='%23101720' stroke='%2377899C' stroke-opacity='.22'/%3E%3Cpath d='M95 145H240M95 161H207' stroke='%23DCE4ED' stroke-opacity='.45' stroke-width='2'/%3E%3Cpath d='M96 178H160' stroke='%235B9BFF' stroke-opacity='.80' stroke-width='3'/%3E%3Crect x='300' y='124' width='150' height='72' rx='8' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Cpath d='M321 147H414M321 164H391' stroke='%23DCE4ED' stroke-opacity='.30' stroke-width='2'/%3E%3Crect x='75' y='216' width='112' height='44' rx='7' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='199' y='216' width='112' height='44' rx='7' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='323' y='216' width='127' height='44' rx='7' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3C!-- BRAND IDENTITY --%3E%3Crect x='500' y='92' width='206' height='220' rx='18' fill='%23090D12' fill-opacity='.72' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Cpath d='M525 121H681' stroke='%238B99AA' stroke-opacity='.20'/%3E%3Ccircle cx='603' cy='192' r='47' stroke='%235B9BFF' stroke-opacity='.72' stroke-width='1.5'/%3E%3Crect x='565' y='154' width='76' height='76' stroke='%23DCE4ED' stroke-opacity='.23'/%3E%3Cpath d='M548 192H658M603 137V247M568 157L638 227M638 157L568 227' stroke='%23DCE4ED' stroke-opacity='.16'/%3E%3Cpath d='M531 270H583M593 270H624M634 270H674' stroke='%23DCE4ED' stroke-opacity='.30' stroke-width='3'/%3E%3C!-- CV / PORTFOLIO --%3E%3Crect x='82' y='342' width='270' height='308' rx='18' fill='%23090D12' fill-opacity='.76' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Ccircle cx='126' cy='390' r='20' fill='%23141C25' stroke='%235B9BFF' stroke-opacity='.52'/%3E%3Cpath d='M164 378H295M164 393H258' stroke='%23DCE4ED' stroke-opacity='.42' stroke-width='3'/%3E%3Cpath d='M108 438H326' stroke='%238B99AA' stroke-opacity='.18'/%3E%3Cpath d='M108 466H181M108 484H197M108 502H171' stroke='%235B9BFF' stroke-opacity='.58' stroke-width='3'/%3E%3Cpath d='M211 466H318M211 484H304M211 502H289' stroke='%23DCE4ED' stroke-opacity='.26' stroke-width='2.5'/%3E%3Cpath d='M108 542H326' stroke='%238B99AA' stroke-opacity='.18'/%3E%3Crect x='108' y='568' width='64' height='50' rx='6' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='182' y='568' width='64' height='50' rx='6' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Crect x='256' y='568' width='62' height='50' rx='6' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3C!-- ECOMMERCE / SYSTEMS --%3E%3Crect x='385' y='352' width='328' height='266' rx='18' fill='%23090D12' fill-opacity='.78' stroke='%238B99AA' stroke-opacity='.30'/%3E%3Cpath d='M430 352V618' stroke='%238B99AA' stroke-opacity='.20'/%3E%3Cpath d='M400 385H416M400 412H416M400 439H416M400 466H416' stroke='%23DCE4ED' stroke-opacity='.28' stroke-width='3'/%3E%3Crect x='454' y='380' width='110' height='72' rx='8' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Cpath d='M474 428V410M493 428V396M512 428V403M531 428V388' stroke='%235B9BFF' stroke-opacity='.72' stroke-width='5'/%3E%3Crect x='581' y='380' width='106' height='72' rx='8' fill='%23101720' stroke='%2377899C' stroke-opacity='.18'/%3E%3Ccircle cx='609' cy='414' r='14' stroke='%235B9BFF' stroke-opacity='.58' stroke-width='5'/%3E%3Cpath d='M633 403H667M633 417H658M633 431H650' stroke='%23DCE4ED' stroke-opacity='.28' stroke-width='2.5'/%3E%3Crect x='454' y='474' width='233' height='116' rx='8' fill='%230D1218' stroke='%2377899C' stroke-opacity='.18'/%3E%3Cpath d='M474 499H665' stroke='%238B99AA' stroke-opacity='.16'/%3E%3Ccircle cx='487' cy='526' r='9' fill='%235B9BFF' fill-opacity='.52' stroke='none'/%3E%3Cpath d='M508 521H566M508 533H548M612 527H662' stroke='%23DCE4ED' stroke-opacity='.28' stroke-width='2.5'/%3E%3Ccircle cx='487' cy='560' r='9' fill='%23DCE4ED' fill-opacity='.18' stroke='none'/%3E%3Cpath d='M508 555H576M508 567H541M612 561H654' stroke='%23DCE4ED' stroke-opacity='.22' stroke-width='2.5'/%3E%3C/g%3E%3C/svg%3E") center/contain no-repeat!important;
+}
+
+/* Very subtle depth only; keeps the boards integrated into the hero. */
+.page-services>section:first-child .services-hero-photo::after{
+  content:""!important;
+  position:absolute!important;
+  inset:8% 4% 6% 8%!important;
+  background:radial-gradient(circle at 52% 46%,rgba(69,126,220,.10),rgba(69,126,220,0) 62%)!important;
+  filter:blur(22px)!important;
+  z-index:-1!important;
+}
+
+/* Readability shadow: dense at the copy side, open toward the service boards. */
+.page-services>section:first-child::before{
+  content:none!important;
+  display:none!important;
+}
+
 .page-services>section:first-child::after{
   content:""!important;
   display:block!important;
   position:absolute!important;
   inset:0!important;
   z-index:1!important;
-  opacity:1!important;
-  visibility:visible!important;
   pointer-events:none!important;
   background:
-    linear-gradient(90deg,rgba(2,4,6,.96) 0%,rgba(2,4,6,.90) 27%,rgba(2,4,6,.66) 43%,rgba(2,4,6,.18) 62%,rgba(2,4,6,0) 78%),
-    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 52%,rgba(0,0,0,.46) 100%)!important;
+    linear-gradient(90deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.94) 28%,rgba(2,4,6,.72) 43%,rgba(2,4,6,.28) 58%,rgba(2,4,6,0) 74%),
+    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 54%,rgba(0,0,0,.45) 100%)!important;
 }
 
 .page-services>section:first-child [class*="heroShell"]{
@@ -64,15 +90,16 @@
   min-height:100svh!important;
 }
 
-/* Arabic: keep the art opposite the copy. */
-html[dir="rtl"] .page-services>section:first-child::before{
-  transform:scaleX(-1)!important;
+/* Arabic: move the visual to the opposite side without mirroring its internal geometry. */
+html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
+  left:2.5vw!important;
+  right:auto!important;
 }
 
 html[dir="rtl"] .page-services>section:first-child::after{
   background:
-    linear-gradient(270deg,rgba(2,4,6,.96) 0%,rgba(2,4,6,.90) 27%,rgba(2,4,6,.66) 43%,rgba(2,4,6,.18) 62%,rgba(2,4,6,0) 78%),
-    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 52%,rgba(0,0,0,.46) 100%)!important;
+    linear-gradient(270deg,rgba(2,4,6,.98) 0%,rgba(2,4,6,.94) 28%,rgba(2,4,6,.72) 43%,rgba(2,4,6,.28) 58%,rgba(2,4,6,0) 74%),
+    linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,0) 54%,rgba(0,0,0,.45) 100%)!important;
 }
 
 body:has(.page-services) .global-site-nav{
@@ -89,39 +116,48 @@ body:has(.page-services) .global-site-nav{
     min-height:100svh!important;
   }
 
-  .page-services>section:first-child::before{
+  .page-services>section:first-child .services-hero-photo{
+    width:58vw!important;
+    height:66vh!important;
+    right:-5vw!important;
     opacity:.72!important;
-    background-size:88px 88px,88px 88px,cover!important;
-    background-position:center center!important;
+  }
+
+  html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
+    left:-5vw!important;
+    right:auto!important;
   }
 
   .page-services>section:first-child::after{
     background:
-      linear-gradient(90deg,rgba(2,4,6,.94) 0%,rgba(2,4,6,.82) 38%,rgba(2,4,6,.45) 58%,rgba(2,4,6,.08) 78%,rgba(2,4,6,0) 100%),
+      linear-gradient(90deg,rgba(2,4,6,.97) 0%,rgba(2,4,6,.89) 38%,rgba(2,4,6,.58) 56%,rgba(2,4,6,.13) 77%,rgba(2,4,6,0) 100%),
       linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.05) 58%,rgba(0,0,0,.52) 100%)!important;
   }
 
   html[dir="rtl"] .page-services>section:first-child::after{
     background:
-      linear-gradient(270deg,rgba(2,4,6,.94) 0%,rgba(2,4,6,.82) 38%,rgba(2,4,6,.45) 58%,rgba(2,4,6,.08) 78%,rgba(2,4,6,0) 100%),
+      linear-gradient(270deg,rgba(2,4,6,.97) 0%,rgba(2,4,6,.89) 38%,rgba(2,4,6,.58) 56%,rgba(2,4,6,.13) 77%,rgba(2,4,6,0) 100%),
       linear-gradient(180deg,rgba(0,0,0,.08) 0%,rgba(0,0,0,.05) 58%,rgba(0,0,0,.52) 100%)!important;
   }
 }
 
 @media(max-width:620px){
-  .page-services>section:first-child::before{
-    opacity:.48!important;
-    background-size:72px 72px,72px 72px,auto 100%!important;
-    background-position:70% center!important;
+  .page-services>section:first-child .services-hero-photo{
+    top:61%!important;
+    right:-30vw!important;
+    width:92vw!important;
+    height:56vh!important;
+    opacity:.34!important;
   }
 
-  html[dir="rtl"] .page-services>section:first-child::before{
-    background-position:30% center!important;
+  html[dir="rtl"] .page-services>section:first-child .services-hero-photo{
+    left:-30vw!important;
+    right:auto!important;
   }
 
   .page-services>section:first-child::after,
   html[dir="rtl"] .page-services>section:first-child::after{
     background:
-      linear-gradient(180deg,rgba(2,4,6,.74) 0%,rgba(2,4,6,.60) 42%,rgba(2,4,6,.76) 72%,rgba(2,4,6,.96) 100%)!important;
+      linear-gradient(180deg,rgba(2,4,6,.79) 0%,rgba(2,4,6,.68) 42%,rgba(2,4,6,.80) 72%,rgba(2,4,6,.97) 100%)!important;
   }
 }
