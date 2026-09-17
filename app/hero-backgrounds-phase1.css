@@ -1,0 +1,236 @@
+/* LINETECH hero backgrounds — phase 1
+   Home remains the only photographic hero (Aden).
+   Services = capability/circuit map.
+   Projects = digital product network.
+   This file is intentionally loaded last so old photo/background rules cannot win. */
+
+/* =========================================================
+   SERVICES — CAPABILITY / CIRCUIT MAP
+   ========================================================= */
+.page-services>section:first-child{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  background:
+    radial-gradient(circle at 78% 28%,rgba(56,130,246,.12),transparent 22%),
+    radial-gradient(circle at 63% 72%,rgba(78,142,227,.055),transparent 18%),
+    radial-gradient(circle at 92% 88%,rgba(56,130,246,.035),transparent 18%),
+    linear-gradient(135deg,#05080c 0%,#07101a 55%,#05080c 100%)!important;
+}
+
+/* The Home/Aden photograph is now the only photographic hero on the site. */
+.page-services .services-hero-photo,
+.page-services .services-hero-photo img{
+  display:none!important;
+  visibility:hidden!important;
+  opacity:0!important;
+}
+
+/* Dark readability field + very fine technical grid. */
+.page-services>section:first-child::before{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  visibility:visible!important;
+  opacity:1!important;
+  background:
+    linear-gradient(90deg,rgba(5,8,12,.98) 0%,rgba(5,8,12,.91) 31%,rgba(5,8,12,.56) 55%,rgba(5,8,12,.18) 79%,rgba(5,8,12,.05) 100%),
+    repeating-linear-gradient(90deg,transparent 0 63px,rgba(132,174,223,.026) 64px,transparent 65px),
+    repeating-linear-gradient(0deg,transparent 0 47px,rgba(132,174,223,.022) 48px,transparent 49px)!important;
+}
+
+/* The capability map: four connected service lanes, not a decorative AI icon. */
+.page-services>section:first-child::after{
+  content:""!important;
+  display:block!important;
+  position:absolute!important;
+  z-index:1!important;
+  right:clamp(24px,5.5vw,92px)!important;
+  top:15%!important;
+  width:min(44vw,660px)!important;
+  height:66%!important;
+  pointer-events:none!important;
+  visibility:visible!important;
+  opacity:.82!important;
+  border:1px solid rgba(113,164,224,.105)!important;
+  border-radius:8px!important;
+  background:
+    radial-gradient(circle at 14% 21%,rgba(183,216,255,.95) 0 1.5px,rgba(56,130,246,.28) 2px 4px,transparent 5px),
+    radial-gradient(circle at 43% 48%,rgba(123,181,255,.9) 0 1.6px,rgba(56,130,246,.24) 2px 5px,transparent 6px),
+    radial-gradient(circle at 75% 31%,rgba(148,198,255,.78) 0 1.5px,rgba(56,130,246,.19) 2px 4px,transparent 5px),
+    radial-gradient(circle at 83% 76%,rgba(230,242,255,.92) 0 1.3px,rgba(56,130,246,.22) 2px 4px,transparent 5px),
+    linear-gradient(90deg,transparent 0 14%,rgba(91,154,238,.23) 14.1% 14.35%,transparent 14.45% 43%,rgba(91,154,238,.16) 43.1% 43.32%,transparent 43.42% 74%,rgba(197,222,252,.11) 74.1% 74.28%,transparent 74.4%),
+    linear-gradient(0deg,transparent 0 21%,rgba(91,154,238,.18) 21.1% 21.35%,transparent 21.45% 48%,rgba(91,154,238,.14) 48.1% 48.32%,transparent 48.42% 76%,rgba(91,154,238,.17) 76.1% 76.35%,transparent 76.45%),
+    linear-gradient(135deg,rgba(14,27,42,.22),rgba(6,12,18,.03))!important;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.012),
+    0 0 70px rgba(56,130,246,.035)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0,#000 16%,#000 100%)!important;
+}
+
+.page-services>section:first-child>[class*="heroShell"]{
+  position:relative!important;
+  z-index:3!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+}
+
+/* =========================================================
+   PROJECTS — DIGITAL PRODUCT NETWORK
+   ========================================================= */
+.page-projects>section:first-child{
+  position:relative!important;
+  isolation:isolate!important;
+  overflow:hidden!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+  background:
+    radial-gradient(circle at 79% 25%,rgba(56,130,246,.13),transparent 23%),
+    radial-gradient(circle at 67% 69%,rgba(72,137,224,.065),transparent 19%),
+    radial-gradient(circle at 96% 62%,rgba(56,130,246,.03),transparent 16%),
+    linear-gradient(145deg,#05080c 0%,#07101a 57%,#05080c 100%)!important;
+}
+
+.page-projects>section:first-child::before{
+  content:""!important;
+  position:absolute!important;
+  inset:0!important;
+  z-index:0!important;
+  pointer-events:none!important;
+  background:
+    linear-gradient(90deg,rgba(5,8,12,.985) 0%,rgba(5,8,12,.93) 28%,rgba(5,8,12,.62) 51%,rgba(5,8,12,.19) 78%,rgba(5,8,12,.045) 100%),
+    repeating-linear-gradient(90deg,transparent 0 79px,rgba(116,163,219,.024) 80px,transparent 81px),
+    repeating-linear-gradient(0deg,transparent 0 53px,rgba(116,163,219,.021) 54px,transparent 55px)!important;
+}
+
+/* A quiet product-system frame behind the route SVG. */
+.page-projects>section:first-child::after{
+  content:""!important;
+  position:absolute!important;
+  z-index:0!important;
+  right:4.5%!important;
+  top:13%!important;
+  width:min(47vw,720px)!important;
+  height:68%!important;
+  pointer-events:none!important;
+  opacity:.72!important;
+  border:1px solid rgba(117,167,225,.075)!important;
+  border-radius:7px!important;
+  background:
+    linear-gradient(90deg,transparent 0 19%,rgba(89,151,234,.12) 19.08% 19.28%,transparent 19.38% 52%,rgba(89,151,234,.085) 52.08% 52.26%,transparent 52.36% 81%,rgba(210,230,252,.07) 81.08% 81.22%,transparent 81.32%),
+    linear-gradient(0deg,transparent 0 23%,rgba(89,151,234,.11) 23.08% 23.28%,transparent 23.38% 58%,rgba(89,151,234,.08) 58.08% 58.26%,transparent 58.36% 82%,rgba(89,151,234,.10) 82.08% 82.28%,transparent 82.38%),
+    radial-gradient(circle at 19% 23%,rgba(177,213,255,.85) 0 1.4px,rgba(56,130,246,.22) 2px 4px,transparent 5px),
+    radial-gradient(circle at 52% 58%,rgba(116,178,255,.88) 0 1.5px,rgba(56,130,246,.22) 2px 5px,transparent 6px),
+    radial-gradient(circle at 81% 82%,rgba(224,239,255,.86) 0 1.3px,rgba(56,130,246,.2) 2px 4px,transparent 5px)!important;
+  box-shadow:0 0 80px rgba(56,130,246,.028)!important;
+  -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 13%,#000 100%)!important;
+  mask-image:linear-gradient(90deg,transparent 0,#000 13%,#000 100%)!important;
+}
+
+/* Reuse the existing routes/nodes as the real network layer and make them more intentional. */
+.page-projects [data-project-field]{
+  z-index:1!important;
+  opacity:.95!important;
+  mix-blend-mode:screen!important;
+}
+.page-projects [data-project-field] svg{
+  filter:drop-shadow(0 0 15px rgba(56,130,246,.035))!important;
+}
+.page-projects [data-project-field] path{
+  stroke:rgba(108,168,248,.62)!important;
+  opacity:.21!important;
+  stroke-width:1!important;
+}
+.page-projects [data-project-field] circle:not(ellipse){
+  opacity:.58!important;
+  filter:drop-shadow(0 0 6px rgba(83,155,247,.35))!important;
+}
+
+.page-projects>section:first-child>[class*="heroShell"]{
+  position:relative!important;
+  z-index:3!important;
+  min-height:100svh!important;
+  height:auto!important;
+  max-height:none!important;
+}
+
+/* Navbar remains visually inside both heroes, matching the Home reference. */
+body:has(.page-services) .global-site-nav,
+body:has(.page-projects) .global-site-nav{
+  background:rgba(7,10,13,.28)!important;
+  -webkit-backdrop-filter:blur(10px)!important;
+  backdrop-filter:blur(10px)!important;
+}
+
+/* RTL mirrors the technical field so the visual weight follows the copy direction. */
+html[dir="rtl"] .page-services>section:first-child::after,
+html[dir="rtl"] .page-projects>section:first-child::after{
+  right:auto!important;
+  left:clamp(18px,4.5vw,74px)!important;
+  transform:scaleX(-1)!important;
+}
+
+@media(max-width:900px){
+  .page-services>section:first-child::after{
+    right:-13%!important;
+    top:22%!important;
+    width:68vw!important;
+    height:58%!important;
+    opacity:.54!important;
+  }
+  .page-projects>section:first-child::after{
+    right:-12%!important;
+    top:21%!important;
+    width:72vw!important;
+    height:58%!important;
+    opacity:.5!important;
+  }
+  html[dir="rtl"] .page-services>section:first-child::after,
+  html[dir="rtl"] .page-projects>section:first-child::after{
+    right:auto!important;
+    left:-13%!important;
+  }
+}
+
+@media(max-width:620px){
+  .page-services>section:first-child,
+  .page-projects>section:first-child{
+    min-height:100svh!important;
+  }
+  .page-services>section:first-child::before,
+  .page-projects>section:first-child::before{
+    background:
+      linear-gradient(180deg,rgba(5,8,12,.96) 0%,rgba(5,8,12,.88) 44%,rgba(5,8,12,.55) 72%,rgba(5,8,12,.78) 100%),
+      repeating-linear-gradient(90deg,transparent 0 55px,rgba(116,163,219,.018) 56px,transparent 57px),
+      repeating-linear-gradient(0deg,transparent 0 43px,rgba(116,163,219,.018) 44px,transparent 45px)!important;
+  }
+  .page-services>section:first-child::after,
+  .page-projects>section:first-child::after{
+    top:39%!important;
+    right:-34%!important;
+    width:112vw!important;
+    height:48%!important;
+    opacity:.34!important;
+    -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 20%,#000 100%)!important;
+    mask-image:linear-gradient(180deg,transparent 0,#000 20%,#000 100%)!important;
+  }
+  html[dir="rtl"] .page-services>section:first-child::after,
+  html[dir="rtl"] .page-projects>section:first-child::after{
+    right:auto!important;
+    left:-34%!important;
+  }
+  .page-projects [data-project-field]{opacity:.55!important}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .page-projects [data-project-field]{transform:none!important;transition:none!important}
+}
