@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import ContentHeroArt from "../ContentHeroArt";
 
 import { useLanguage } from "../Localized";
@@ -186,6 +187,29 @@ const copy = {
 export default function TermsPage() {
   const language = useLanguage();
   const t = copy[language];
+  const [activeSection, setActiveSection] = useState(t.sections[0].id);
+
+  useEffect(() => {
+    setActiveSection(t.sections[0].id);
+
+    const sections = t.sections
+      .map((section) => document.getElementById(section.id))
+      .filter((section): section is HTMLElement => Boolean(section));
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+
+        if (visible[0]?.target.id) setActiveSection(visible[0].target.id);
+      },
+      { rootMargin: "-18% 0px -62% 0px", threshold: 0 }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    return () => observer.disconnect();
+  }, [language, t.sections]);
 
   return (
     <main className="info-page page-terms">
@@ -214,7 +238,12 @@ export default function TermsPage() {
             <nav className="terms-index" aria-label={t.contents}>
               <span className="terms-index-label">{t.contents}</span>
               {t.sections.map((section) => (
-                <a href={`#${section.id}`} key={section.id}>
+                <a
+                  href={`#${section.id}`}
+                  key={section.id}
+                  className={activeSection === section.id ? "is-active" : undefined}
+                  aria-current={activeSection === section.id ? "location" : undefined}
+                >
                   <span>{section.number}</span>
                   <b>{section.title}</b>
                 </a>
