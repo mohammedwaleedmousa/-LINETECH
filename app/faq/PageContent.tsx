@@ -10,9 +10,10 @@ const copy = {
     heroTitle: "Clear answers before we build.",
     heroLead: "Common questions about scope, payments, revisions, launch and the way LINETECH approaches project work.",
     heroRail: ["Starting", "Scope & payment", "Reviews & delivery", "After launch"],
-    listTitle: "Frequently asked questions.",
-    ctaTitle: "A question specific to your project?",
-    ctaButton: "Start Your Line",
+    sideKicker: "WORKING TOGETHER",
+    sideTitle: "Keep the process clear from the first line.",
+    sideLead: "If your question is specific to your project, prepare the brief first, then share it through your preferred contact channel.",
+    cta: "Start Your Line",
     faqs: [
       ["How do we start a project?","Start with the project brief. You can explain the idea in simple language; technical details can be defined after the goal and scope are clear."],
       ["Do I need a complete specification before contacting LINETECH?","No. A rough idea is enough to begin the conversation. The first step is understanding the outcome, then defining the useful scope."],
@@ -28,9 +29,10 @@ const copy = {
     heroTitle: "إجابات واضحة قبل أن نبدأ البناء.",
     heroLead: "أسئلة شائعة حول النطاق والدفعات والتعديلات والإطلاق وطريقة تعامل لاين تك مع المشاريع.",
     heroRail: ["البداية", "النطاق والدفعات", "المراجعات والتسليم", "بعد الإطلاق"],
-    listTitle: "الأسئلة الشائعة.",
-    ctaTitle: "لديك سؤال خاص بمشروعك؟",
-    ctaButton: "ابدأ خطك",
+    sideKicker: "العمل معًا",
+    sideTitle: "اجعل العملية واضحة من الخط الأول.",
+    sideLead: "إذا كان سؤالك مرتبطًا بمشروعك تحديدًا، جهّز طلب المشروع أولًا ثم شاركه عبر قناة التواصل التي تفضلها.",
+    cta: "ابدأ خطك",
     faqs: [
       ["كيف نبدأ مشروعًا؟","ابدأ بطلب المشروع. يمكنك شرح الفكرة بلغة بسيطة، ويمكن تحديد التفاصيل التقنية بعد أن تصبح النتيجة والنطاق واضحين."],
       ["هل أحتاج إلى مواصفات كاملة قبل التواصل مع لاين تك؟","لا. تكفي فكرة أولية لبدء الحوار. الخطوة الأولى هي فهم النتيجة المطلوبة ثم تحديد النطاق المفيد."],
@@ -70,12 +72,16 @@ export default function FaqPage(){
         </div>
       </section>
 
-      <section className="faq-main">
-        <div className="faq-shell faq-list-shell">
-          <header className="faq-list-head">
-            <p className="ref-kicker">FAQ · 08</p>
-            <h2>{t.listTitle}</h2>
-          </header>
+      <section className="faq-content">
+        <div className="faq-shell faq-content-grid">
+          <aside className="faq-aside">
+            <p className="ref-kicker">{t.sideKicker}</p>
+            <h2>{t.sideTitle}</h2>
+            <p>{t.sideLead}</p>
+            <Link className="ref-btn ghost faq-aside-button" href="/start" prefetch>
+              {t.cta} <span aria-hidden="true">→</span>
+            </Link>
+          </aside>
 
           <div className="faq-list">
             {t.faqs.map(([question,answer],index)=>(
@@ -92,15 +98,6 @@ export default function FaqPage(){
               </details>
             ))}
           </div>
-        </div>
-      </section>
-
-      <section className="faq-final">
-        <div className="faq-shell faq-final-inner">
-          <h2>{t.ctaTitle}</h2>
-          <Link className="ref-btn primary" href="/start" prefetch>
-            {t.ctaButton} <span aria-hidden="true">→</span>
-          </Link>
         </div>
       </section>
     </main>
