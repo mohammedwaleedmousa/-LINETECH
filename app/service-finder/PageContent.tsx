@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../Localized";
@@ -281,7 +283,8 @@ export default function PageContent() {
 
   return (
     <main className="finder-page ref-page">
-      <section className="finder-hero">
+      <section className="finder-hero" data-content-hero="finder">
+        <ContentHeroArt motif="finder" />
         <div className="ref-shell finder-hero-shell">
           <div>
             <p className="finder-kicker">{t.kicker}</p>

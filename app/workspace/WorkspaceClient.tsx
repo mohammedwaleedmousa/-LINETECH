@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage, useTranslation } from "../Localized";
@@ -352,7 +354,8 @@ export default function WorkspaceClient() {
 
   return (
     <main className="workspace-page ref-page">
-      <section className="workspace-hero">
+      <section className="workspace-hero" data-content-hero="workspace">
+        <ContentHeroArt motif="workspace" />
         <div className="ref-shell workspace-hero-grid">
           <div>
             <p className="workspace-kicker">{t.kicker}</p>

@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Link from "next/link";
 import Localized, { useLanguage } from "../Localized";
 import ProjectIntake from "./ProjectIntake";
@@ -65,7 +67,8 @@ export default function StartPage() {
   return (
     <Localized>
       <main className="ref-page page-contact">
-        <section className="contact-hero">
+        <section className="contact-hero" data-content-hero="start">
+          <ContentHeroArt motif="start" />
           <div className="contact-signal" aria-hidden="true">
             <span className="contact-signal-line contact-signal-line-main" />
             <span className="contact-signal-line contact-signal-line-top" />

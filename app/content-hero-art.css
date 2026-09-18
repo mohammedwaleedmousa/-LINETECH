@@ -1,0 +1,89 @@
+/* Explicit opt-in: Home, Services and Projects index heroes never match.
+   Each SVG documents its source in that page's content. No stock imagery.
+   The repeated attribute deliberately outranks legacy global !important layers. */
+[data-content-hero][data-content-hero][data-content-hero] {
+  position: relative !important;
+  isolation: isolate;
+  overflow: hidden !important;
+  background: radial-gradient(ellipse at 85% 46%, #0c1b2b 0%, transparent 58%), #05080c !important;
+}
+
+[data-content-hero][data-content-hero][data-content-hero]::before,
+[data-content-hero][data-content-hero][data-content-hero]::after {
+  display: none !important;
+}
+
+[data-content-hero] > :not(.content-hero-art) {
+  position: relative;
+  z-index: 2;
+}
+
+/* Retire only the older decoration inside these opted-in heroes. */
+[data-content-hero] .about-soft-light,
+[data-content-hero] .contact-signal,
+[data-content-hero] .legal-hero-visual,
+[data-content-hero] .service-detail-visual {
+  display: none !important;
+}
+
+[data-content-hero] > .content-hero-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  user-select: none;
+  overflow: hidden;
+  /* Calm behind the copy; the composition remains legible on the open side. */
+  mask-image: linear-gradient(90deg, transparent 24%, #0005 48%, #000 70%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 24%, #0005 48%, #000 70%);
+}
+
+.content-hero-art > img {
+  position: absolute;
+  inset-inline-end: -2%;
+  top: 50%;
+  width: min(64vw, 920px);
+  height: auto;
+  max-width: none;
+  transform: translateY(-50%);
+  opacity: .78;
+}
+
+/* Split-content headers also carry copy on the artwork side. */
+:is([data-content-hero="process"], [data-content-hero="finder"], [data-content-hero="workspace"], [data-content-hero="access"]) .content-hero-art > img {
+  opacity: .36;
+}
+[data-content-hero^="project-"] .content-hero-art > img { opacity: .48; }
+[data-content-hero] .project-detail-visual { background: transparent !important; }
+[data-content-hero] .project-detail-visual::before,
+[data-content-hero] .project-detail-visual::after { display: none !important; }
+
+html[dir="rtl"] [data-content-hero][data-content-hero][data-content-hero] {
+  background: radial-gradient(ellipse at 15% 46%, #0c1b2b 0%, transparent 58%), #05080c !important;
+}
+html[dir="rtl"] [data-content-hero] > .content-hero-art {
+  mask-image: linear-gradient(270deg, transparent 24%, #0005 48%, #000 70%);
+  -webkit-mask-image: linear-gradient(270deg, transparent 24%, #0005 48%, #000 70%);
+}
+html[dir="rtl"] .content-hero-art > img { transform: translateY(-50%) scaleX(-1); }
+
+@media (max-width: 900px) {
+  .content-hero-art > img {
+    width: 90vw;
+    inset-inline-end: -18%;
+    opacity: .5;
+  }
+}
+@media (max-width: 620px) {
+  [data-content-hero] > .content-hero-art,
+  html[dir="rtl"] [data-content-hero] > .content-hero-art {
+    mask-image: linear-gradient(180deg, transparent 8%, #0005 40%, #000 100%);
+    -webkit-mask-image: linear-gradient(180deg, transparent 8%, #0005 40%, #000 100%);
+  }
+  .content-hero-art > img {
+    width: 125vw;
+    inset-inline-end: -36%;
+    top: 62%;
+    opacity: .38;
+  }
+}

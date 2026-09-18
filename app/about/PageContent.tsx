@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Link from "next/link";
 import { useLanguage } from "../Localized";
 import CompanyProfile from "./CompanyProfile";
@@ -124,7 +126,8 @@ export default function AboutPage() {
 
   return (
     <main className={`${styles.page} ref-page page-about`}>
-      <section className={styles.hero}>
+      <section className={styles.hero} data-content-hero="about">
+        <ContentHeroArt motif="about" />
         <div className="about-soft-light" aria-hidden="true">
           <span className="about-soft-glow" />
           <span className="about-soft-haze" />

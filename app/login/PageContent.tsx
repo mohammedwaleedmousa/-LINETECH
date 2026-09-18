@@ -1,11 +1,14 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Localized from "../Localized";
 import Link from "next/link";
 import LoginForm from "./LoginForm";
 
 export default function LoginPage(){return <Localized><main className="login-page">
-  <section className="login-stage">
+  <section className="login-stage" data-content-hero="access">
+    <ContentHeroArt motif="access" />
     <div className="login-shell">
       <div className="login-copy">
         <p className="login-kicker">LINETECH / ACCESS</p>

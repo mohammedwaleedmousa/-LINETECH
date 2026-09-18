@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Link from "next/link";
 import { useLanguage } from "../Localized";
 
@@ -46,7 +48,8 @@ export default function FaqPage(){
   const language = useLanguage();
   const t = copy[language];
   return <main className="info-page page-faq">
-    <section className="info-page-hero"><div className="ref-shell"><p className="ref-kicker">FAQ</p><h1>{t.heroTitle}</h1><p>{t.heroLead}</p></div></section>
+    <section className="info-page-hero" data-content-hero="faq">
+      <ContentHeroArt motif="faq" /><div className="ref-shell"><p className="ref-kicker">FAQ</p><h1>{t.heroTitle}</h1><p>{t.heroLead}</p></div></section>
     <section className="info-content"><div className="ref-shell info-content-grid"><aside className="info-content-aside"><p className="ref-kicker">{t.sideKicker}</p><h2>{t.sideTitle}</h2><p>{t.sideLead}</p><Link className="ref-btn ghost" href="/start" prefetch>{t.cta} ↗</Link></aside><div className="faq-list">{t.faqs.map(([question,answer])=><details key={question}><summary>{question}</summary><p>{answer}</p></details>)}</div></div></section>
   </main>;
 }

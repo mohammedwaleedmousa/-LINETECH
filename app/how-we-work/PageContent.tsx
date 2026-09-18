@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Link from "next/link";
 import { useLanguage } from "../Localized";
 import "./how-we-work.css";
@@ -159,7 +161,8 @@ export default function PageContent() {
 
   return (
     <main className="work-page ref-page">
-      <section className="work-hero">
+      <section className="work-hero" data-content-hero="process">
+        <ContentHeroArt motif="process" />
         <div className="ref-shell work-hero-grid">
           <div>
             <p className="work-kicker">{t.kicker}</p>

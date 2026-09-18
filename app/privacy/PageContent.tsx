@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import { useLanguage } from "../Localized";
 
 const copy = {
@@ -45,7 +47,8 @@ export default function PrivacyPage(){
   const language = useLanguage();
   const t = copy[language];
   return <main className="info-page page-privacy">
-    <section className="info-page-hero legal-hero">
+    <section className="info-page-hero legal-hero" data-content-hero="privacy">
+      <ContentHeroArt motif="privacy" />
       <div className="ref-shell legal-hero-grid">
         <div className="legal-hero-copy">
           <span className="legal-hero-index">{t.index}</span>

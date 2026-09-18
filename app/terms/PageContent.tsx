@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import { useLanguage } from "../Localized";
 
 const copy = {
@@ -48,7 +50,8 @@ export default function TermsPage(){
   const t = copy[language];
 
   return <main className="info-page page-terms">
-    <section className="info-page-hero legal-hero">
+    <section className="info-page-hero legal-hero" data-content-hero="terms">
+      <ContentHeroArt motif="terms" />
       <div className="ref-shell legal-hero-grid">
         <div className="legal-hero-copy">
           <span className="legal-hero-index">{t.index}</span>

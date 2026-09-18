@@ -1,5 +1,7 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
+
 import Localized, { useLanguage } from "../Localized";
 import Link from "next/link";
 
@@ -52,7 +54,8 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
   const labels = caseLabels[language];
 
   return <Localized><main className={`ref-page project-detail-page ${className}`}>
-    <section className="project-detail-hero">
+    <section className="project-detail-hero" data-content-hero={className}>
+      <ContentHeroArt motif={className} />
       <div className="ref-shell project-detail-hero-grid">
         <div className="project-detail-hero-copy">
           <Link className="project-detail-back" href="/projects" prefetch>Projects <span>↗</span></Link>
