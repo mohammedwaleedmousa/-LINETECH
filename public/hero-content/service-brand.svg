@@ -1,5 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
-<!-- Content source: A consistent visual identity takes shape through proportions and a reusable construction grid. -->
-<defs><linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="680" y2="800"><stop stop-color="#e0edff" stop-opacity=".75"/><stop offset=".55" stop-color="#78afff" stop-opacity=".85"/><stop offset="1" stop-color="#3882f6" stop-opacity=".2"/></linearGradient></defs>
-<g stroke="url(#ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M150 110V660M100 160H690" opacity="0.16"/><path d="M250 110V660M100 260H690" opacity="0.16"/><path d="M350 110V660M100 360H690" opacity="0.16"/><path d="M450 110V660M100 460H690" opacity="0.16"/><path d="M550 110V660M100 560H690" opacity="0.16"/><path d="M650 110V660M100 660H690" opacity="0.16"/><circle cx="400" cy="380" r="180" opacity=".35"/><path d="M270 540V220H370V440H550V540Z" opacity="1"/><path d="M100 680L690 90" opacity="0.23"/><circle cx="270" cy="220" r="4" fill="#a8ccff" stroke="none"/><circle cx="270" cy="220" r="11" opacity=".25"/><circle cx="550" cy="540" r="4" fill="#a8ccff" stroke="none"/><circle cx="550" cy="540" r="11" opacity=".25"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Content source: Brand Identity — proportion, consistency and a distinctive mark emerge from one visual system. -->
+  <defs>
+    <linearGradient id="route" x1="760" y1="0" x2="1580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8BBBF7" stop-opacity="0"/>
+      <stop offset=".22" stop-color="#A8CDFF" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#D9EAFF" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#6FAAF4" stop-opacity=".26"/>
+    </linearGradient>
+    <filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <path d="M1080 450a155 155 0 1 1 310 0a155 155 0 1 1-310 0" stroke="#8DBBF4" stroke-width="1" opacity=".16"/>
+   <path d="M1140 450a95 95 0 1 1 190 0a95 95 0 1 1-190 0" stroke="#D5E9FF" stroke-width="1" opacity=".12"/>
+   
+  <path d="M790 610 C960 610 1040 540 1140 450 C1240 360 1350 300 1570 290" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".78"/>
+  <path d="M790 610 C960 610 1040 540 1140 450 C1240 360 1350 300 1570 290" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="10.2s" begin="0s" repeatCount="indefinite"/>
+  </path>
+   <path d="M930 260 L1450 650" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".12"/>
+   <circle cx="1140" cy="450" r="3.2" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1140" cy="450" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1390" cy="325" r="2.8" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1390" cy="325" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/>
 </svg>
