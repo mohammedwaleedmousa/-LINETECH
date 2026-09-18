@@ -2,7 +2,7 @@ import PageContent from "./PageContent";
 
 export const metadata = {
   title: "Privacy Policy",
-  description: "LINETECH privacy information for website visitors and project brief interactions.",
+  description: "How LINETECH handles project-request data, local browser storage, preference cookies, technical website data and direct communications.",
 };
 
 export default function Page() {
