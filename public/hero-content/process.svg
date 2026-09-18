@@ -1,5 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
-<!-- Content source: The six actual stages: request, scope, structure, build, review and handover. -->
-<defs><linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="680" y2="800"><stop stop-color="#e0edff" stop-opacity=".75"/><stop offset=".55" stop-color="#78afff" stop-opacity=".85"/><stop offset="1" stop-color="#3882f6" stop-opacity=".2"/></linearGradient></defs>
-<g stroke="url(#ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M110 190H550Q620 190 620 260V350Q620 420 550 420H260Q190 420 190 490V530Q190 600 260 600H640" opacity="1"/><rect x="116" y="156" width="68" height="68" rx="4" opacity="0.45"/><circle cx="150" cy="190" r="4" fill="#a8ccff" stroke="none"/><circle cx="150" cy="190" r="11" opacity=".25"/><rect x="346" y="156" width="68" height="68" rx="4" opacity="0.45"/><circle cx="380" cy="190" r="4" fill="#a8ccff" stroke="none"/><circle cx="380" cy="190" r="11" opacity=".25"/><rect x="586" y="266" width="68" height="68" rx="4" opacity="0.45"/><circle cx="620" cy="300" r="4" fill="#a8ccff" stroke="none"/><circle cx="620" cy="300" r="11" opacity=".25"/><rect x="366" y="386" width="68" height="68" rx="4" opacity="0.45"/><circle cx="400" cy="420" r="4" fill="#a8ccff" stroke="none"/><circle cx="400" cy="420" r="11" opacity=".25"/><rect x="156" y="486" width="68" height="68" rx="4" opacity="0.45"/><circle cx="190" cy="520" r="4" fill="#a8ccff" stroke="none"/><circle cx="190" cy="520" r="11" opacity=".25"/><rect x="536" y="566" width="68" height="68" rx="4" opacity="0.45"/><circle cx="570" cy="600" r="4" fill="#a8ccff" stroke="none"/><circle cx="570" cy="600" r="11" opacity=".25"/><path d="M80 100H710M80 690H710" opacity="0.15"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Content source: How We Work — request, scope, structure, build, review and handover form one continuous route. -->
+  <defs>
+    <linearGradient id="route" x1="760" y1="0" x2="1580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8BBBF7" stop-opacity="0"/>
+      <stop offset=".22" stop-color="#A8CDFF" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#D9EAFF" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#6FAAF4" stop-opacity=".26"/>
+    </linearGradient>
+    <filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <path d="M780 650 C900 650 900 560 1000 560 C1100 560 1090 468 1190 468 C1290 468 1280 370 1380 370 C1480 370 1490 270 1570 220" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".80"/>
+  <path d="M780 650 C900 650 900 560 1000 560 C1100 560 1090 468 1190 468 C1290 468 1280 370 1380 370 C1480 370 1490 270 1570 220" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="11.6s" begin="0s" repeatCount="indefinite"/>
+  </path>
+   <circle cx="860" cy="635" r="2.7" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="860" cy="635" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1000" cy="560" r="2.7" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1000" cy="560" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1190" cy="468" r="2.7" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1190" cy="468" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1380" cy="370" r="2.7" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1380" cy="370" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1510" cy="285" r="2.7" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1510" cy="285" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1570" cy="220" r="2.7" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1570" cy="220" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/>
 </svg>
