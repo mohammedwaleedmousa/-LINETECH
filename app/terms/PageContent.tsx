@@ -187,7 +187,7 @@ const copy = {
 export default function TermsPage() {
   const language = useLanguage();
   const t = copy[language];
-  const [activeSection, setActiveSection] = useState(t.sections[0].id);
+  const [activeSection, setActiveSection] = useState<string>(t.sections[0].id);
 
   useEffect(() => {
     setActiveSection(t.sections[0].id);
