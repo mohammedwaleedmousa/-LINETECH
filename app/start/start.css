@@ -42,7 +42,7 @@ html[dir="rtl"] .contact-hero::before{background:linear-gradient(270deg,rgba(5,8
   position:relative;
   z-index:3;
   min-height:650px;
-  padding:112px 0 62px;
+  padding:132px 0 62px;
   display:flex;
   flex-direction:column;
   justify-content:center;
@@ -228,7 +228,7 @@ html[dir="rtl"] .contact-final-cta h2{line-height:1.2;letter-spacing:-.015em}
 @media(max-width:620px){
   .page-contact .ref-shell{width:min(100% - 28px,1180px)}
   .contact-hero{min-height:610px}
-  .contact-hero-shell{min-height:610px;padding:86px 0 38px}
+  .contact-hero-shell{min-height:610px;padding:96px 0 38px}
   .contact-hero h1{font-size:clamp(48px,13vw,64px)}
   .contact-hero-lead{font-size:14px;line-height:1.72}
   .contact-hero-actions{flex-direction:column;align-items:stretch;max-width:340px}
