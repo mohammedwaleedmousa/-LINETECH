@@ -125,12 +125,9 @@ export default function AboutPage() {
   return (
     <main className={`${styles.page} ref-page page-about`}>
       <section className={styles.hero}>
-        <div className="about-aperture-art" aria-hidden="true">
-          <span className="about-aperture-haze" />
-          <span className="about-aperture-opening" />
-          <span className="about-aperture-floor" />
-          <span className="about-aperture-shadow about-aperture-shadow-a" />
-          <span className="about-aperture-shadow about-aperture-shadow-b" />
+        <div className="about-soft-light" aria-hidden="true">
+          <span className="about-soft-glow" />
+          <span className="about-soft-haze" />
         </div>
         <div className={`${styles.shell} ${styles.heroShell}`}>
           <div className={styles.heroCopy}>
