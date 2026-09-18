@@ -1,5 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
-<!-- Content source: Responsive interfaces and page architecture from Web Development deliverables. -->
-<defs><linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="680" y2="800"><stop stop-color="#e0edff" stop-opacity=".75"/><stop offset=".55" stop-color="#78afff" stop-opacity=".85"/><stop offset="1" stop-color="#3882f6" stop-opacity=".2"/></linearGradient></defs>
-<g stroke="url(#ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="80" y="180" width="490" height="330" rx="4" opacity="0.7"/><path d="M80 225H570" opacity="0.4"/><rect x="125" y="270" width="145" height="180" rx="4" opacity="0.4"/><path d="M310 280h200" opacity="0.45"/><path d="M310 304h130.0" opacity="0.45"/><path d="M310 328h200" opacity="0.45"/><path d="M310 352h130.0" opacity="0.45"/><path d="M310 376h200" opacity="0.45"/><rect x="510" y="355" width="170" height="260" rx="4" opacity="0.9"/><rect x="530" y="395" width="130" height="150" rx="4" opacity="0.4"/><path d="M200 570H420M310 510V570" opacity="0.3"/><circle cx="112" cy="202" r="2" fill="#a8ccff" stroke="none"/><circle cx="112" cy="202" r="9" opacity=".25"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Content source: Web Development — different screen paths resolve into one responsive digital experience. -->
+  <defs>
+    <linearGradient id="route" x1="760" y1="0" x2="1580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8BBBF7" stop-opacity="0"/>
+      <stop offset=".22" stop-color="#A8CDFF" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#D9EAFF" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#6FAAF4" stop-opacity=".26"/>
+    </linearGradient>
+    <filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <path d="M790 250 C960 270 1050 330 1180 440" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".15"/>
+   <path d="M790 440 C960 440 1050 440 1180 440" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".24"/>
+   <path d="M790 630 C960 610 1050 550 1180 440" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".15"/>
+   
+  <path d="M1180 440 C1300 410 1410 350 1570 300" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".82"/>
+  <path d="M1180 440 C1300 410 1410 350 1570 300" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="9.4s" begin="0s" repeatCount="indefinite"/>
+  </path>
+   <circle cx="1180" cy="440" r="3.5" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1180" cy="440" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1480" cy="330" r="2.7" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1480" cy="330" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/>
 </svg>
