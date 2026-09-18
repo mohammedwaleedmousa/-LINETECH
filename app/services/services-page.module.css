@@ -147,7 +147,7 @@
   display:grid;
   grid-template-columns:minmax(0,1fr) minmax(300px,.72fr);
   gap:68px;
-  align-items:end;
+  align-items: flex-end;
   margin-bottom:44px;
 }
 .sectionHead h2{
