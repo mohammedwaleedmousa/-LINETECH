@@ -240,7 +240,7 @@
 :global(html[dir="rtl"]) .choice span{transform:scaleX(-1)}
 
 .processSection{padding:clamp(72px,6vw,92px) 0;border-bottom:1px solid var(--line);background:var(--bg)!important}
-.processTop{display:flex;align-items:end;justify-content:space-between;gap:38px;margin-bottom:38px}
+.processTop{display:flex;align-items:flex-end;justify-content:space-between;gap:38px;margin-bottom:38px}
 .processTop h2{margin:0;font-size:clamp(36px,4.3vw,54px);font-weight:520;line-height:1.04;letter-spacing:-.04em}
 .processTop>p{max-width:500px;margin:0;color:var(--muted);font-size:14px;line-height:1.8}
 .timeline{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid var(--line)}
