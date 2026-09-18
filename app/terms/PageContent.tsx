@@ -7,72 +7,243 @@ import { useLanguage } from "../Localized";
 const copy = {
   en: {
     index: "02 / TERMS",
-    kicker: "TERMS",
-    title: "Clear expectations make better work.",
-    lead: "These terms cover use of the LINETECH website. Individual projects are governed by the scope and agreement accepted for that project.",
+    kicker: "TERMS OF SERVICE",
+    title: "Clear terms. Better work.",
+    lead: "These terms explain how the LINETECH website may be used and the general framework for working with LINETECH. Project-specific scope and commercial terms are confirmed separately for each engagement.",
     updated: "LAST UPDATED",
     date: "September 2026",
-    aside: "Project scope, payment stages, deliverables and timelines should be confirmed before execution begins.",
+    aside: "The project agreement always takes priority for project-specific scope, fees, deliverables, approvals and timelines.",
+    contents: "ON THIS PAGE",
+    contactLabel: "QUESTIONS",
+    contactTitle: "Need clarity before we begin?",
+    contactText: "If anything in these terms needs clarification, contact LINETECH before approving a proposal or starting a project.",
+    contactCta: "Contact LINETECH",
     sections: [
-      ["1. Website use", "You may use the LINETECH website to learn about the company, services, selected work and how to begin a project. You should not misuse the site, interfere with its operation or attempt unauthorized access to systems or data."],
-      ["2. Information on the website", "Website content describes LINETECH and its services in general terms. Specific project scope, pricing, delivery dates and responsibilities are confirmed only through the agreement for that project."],
-      ["3. Project proposals and scope", "A project begins after the agreed scope, deliverables, timeline and commercial terms are confirmed. Requests outside the agreed scope may require an updated timeline, price or deliverables before they are added."],
-      ["4. Payments", "Payment schedule, amount, currency and payment method are defined for each project before work begins. No single payment structure applies automatically to every project."],
-      ["5. Client materials and approvals", "Clients are responsible for providing the materials, access and approvals required for their project. Delays in required information or approvals may affect the project schedule."],
-      ["6. Intellectual property and handover", "Ownership, licenses, source files, credentials and handover items depend on the type of project and are defined in the applicable project agreement. Third-party tools, fonts, services and software remain subject to their own licenses and terms."],
-      ["7. External services", "Projects and this website may rely on third-party hosting, infrastructure or software. LINETECH cannot control the availability or terms of independent third-party services."],
-      ["8. Changes", "These website terms may be updated as LINETECH services and website features evolve. The current version is published on this page."],
+      {
+        id: "website-use",
+        number: "01",
+        title: "Website use",
+        text: "You may use the LINETECH website to learn about the company, services, selected work and ways to start a project. You must not misuse the website, disrupt its operation, attempt unauthorized access, or use its content or systems in a way that violates applicable law or the rights of others.",
+      },
+      {
+        id: "service-information",
+        number: "02",
+        title: "Service information and proposals",
+        text: "Website content describes LINETECH and its services in general terms. A proposal, estimate or conversation does not create a project commitment until the applicable scope, commercial terms and approval to proceed are confirmed.",
+      },
+      {
+        id: "scope-and-changes",
+        number: "03",
+        title: "Project scope and changes",
+        text: "Each project is based on an agreed scope, deliverables and working assumptions. Requests outside that scope may require a revised price, timeline or delivery plan. LINETECH may pause out-of-scope work until the change is agreed.",
+      },
+      {
+        id: "client-responsibilities",
+        number: "04",
+        title: "Client responsibilities",
+        text: "Clients are responsible for providing accurate information, required materials, access, feedback and approvals in a timely manner. The client must also have the right to provide any content, files, trademarks, credentials or other materials supplied to LINETECH.",
+      },
+      {
+        id: "fees-and-costs",
+        number: "05",
+        title: "Fees, payments and third-party costs",
+        text: "Project fees, currency, payment stages and payment method are confirmed before work begins. Hosting, domains, paid software, licenses, advertising, platform fees or other third-party costs are included only when the project agreement expressly says so.",
+      },
+      {
+        id: "timelines",
+        number: "06",
+        title: "Timelines and delays",
+        text: "Delivery dates depend on the agreed scope and timely client participation. Delays in materials, access, decisions, approvals, payments or external services may require the project schedule to be adjusted.",
+      },
+      {
+        id: "revisions-and-handover",
+        number: "07",
+        title: "Revisions, acceptance and handover",
+        text: "Included revisions, review stages, acceptance criteria and handover items are defined for each project. Additional revisions or work requested after approval may be treated as a scope change.",
+      },
+      {
+        id: "intellectual-property",
+        number: "08",
+        title: "Intellectual property",
+        text: "Ownership and usage rights for final deliverables are defined in the applicable project agreement. Unless agreed otherwise, LINETECH retains ownership of its pre-existing methods, reusable components, internal tools and know-how. Third-party assets remain subject to their own licenses and terms.",
+      },
+      {
+        id: "confidentiality",
+        number: "09",
+        title: "Confidentiality and project access",
+        text: "Where a project requires access to non-public information, accounts or systems, both sides should handle that access responsibly and only for the project purpose. Any project-specific confidentiality obligations may be documented separately when required.",
+      },
+      {
+        id: "third-party-services",
+        number: "10",
+        title: "Third-party services",
+        text: "The website and client projects may rely on independent providers for hosting, domains, infrastructure, payment services, software or other tools. LINETECH does not control those providers and cannot guarantee their uninterrupted availability, pricing or future terms.",
+      },
+      {
+        id: "suspension-and-cancellation",
+        number: "11",
+        title: "Suspension and cancellation",
+        text: "Either side may request to pause or end a project subject to the applicable project agreement. Amounts already due, completed work, committed third-party costs and handover obligations are handled according to that agreement and the work completed at that point.",
+      },
+      {
+        id: "liability-and-updates",
+        number: "12",
+        title: "Responsibility and updates to these terms",
+        text: "LINETECH aims to deliver services with reasonable care and in line with the agreed project scope. Project-specific warranties, limitations, remedies and governing terms should be stated in the applicable agreement. These website terms may be updated as LINETECH services evolve, and the current version will be published on this page.",
+      },
     ],
   },
   ar: {
     index: "02 / الشروط",
-    kicker: "الشروط",
-    title: "التوقعات الواضحة تصنع عملًا أفضل.",
-    lead: "تغطي هذه الشروط استخدام موقع لاين تك. أما كل مشروع فيخضع للنطاق والاتفاق المعتمد لذلك المشروع.",
+    kicker: "شروط الخدمة",
+    title: "شروط واضحة. عمل أفضل.",
+    lead: "توضح هذه الشروط طريقة استخدام موقع لاين تك والإطار العام للعمل مع الشركة. أما نطاق كل مشروع وشروطه التجارية فيتم اعتمادها بشكل مستقل لكل مشروع.",
     updated: "آخر تحديث",
     date: "سبتمبر 2026",
-    aside: "يجب تأكيد نطاق المشروع ومراحل الدفع والمخرجات والمدة قبل بدء التنفيذ.",
+    aside: "يكون اتفاق المشروع هو المرجع الأول في النطاق والرسوم والمخرجات والموافقات والمدة الخاصة بذلك المشروع.",
+    contents: "في هذه الصفحة",
+    contactLabel: "لديك سؤال؟",
+    contactTitle: "هل تحتاج توضيحًا قبل أن نبدأ؟",
+    contactText: "إذا كان أي جزء من هذه الشروط غير واضح، تواصل مع لاين تك قبل اعتماد العرض أو بدء المشروع.",
+    contactCta: "تواصل مع لاين تك",
     sections: [
-      ["1. استخدام الموقع", "يمكنك استخدام موقع لاين تك للتعرف على الشركة والخدمات والأعمال المختارة وطريقة بدء مشروع. لا يجوز إساءة استخدام الموقع أو تعطيل عمله أو محاولة الوصول غير المصرح به إلى الأنظمة أو البيانات."],
-      ["2. المعلومات الموجودة في الموقع", "يصف محتوى الموقع لاين تك وخدماتها بصورة عامة. ولا يتم اعتماد نطاق مشروع محدد أو سعر أو تاريخ تسليم أو مسؤوليات إلا من خلال الاتفاق الخاص بذلك المشروع."],
-      ["3. عروض المشاريع والنطاق", "يبدأ المشروع بعد تأكيد النطاق والمخرجات والمدة والشروط التجارية المتفق عليها. وأي طلبات خارج النطاق المتفق عليه قد تتطلب تعديلًا في المدة أو السعر أو المخرجات قبل إضافتها."],
-      ["4. الدفعات", "يتم تحديد جدول الدفعات والمبلغ والعملة وطريقة الدفع لكل مشروع قبل بدء العمل. ولا توجد صيغة دفع واحدة تُطبق تلقائيًا على جميع المشاريع."],
-      ["5. مواد العميل والموافقات", "يتحمل العميل مسؤولية توفير المواد والصلاحيات والموافقات اللازمة للمشروع. وقد تؤثر أي تأخيرات في المعلومات أو الموافقات المطلوبة على الجدول الزمني للمشروع."],
-      ["6. الملكية الفكرية والتسليم", "تختلف الملكية والتراخيص والملفات المصدرية وبيانات الدخول وعناصر التسليم حسب نوع المشروع، ويتم تحديدها في اتفاق المشروع المعتمد. وتظل الأدوات والخطوط والخدمات والبرمجيات التابعة لجهات خارجية خاضعة لتراخيصها وشروطها الخاصة."],
-      ["7. الخدمات الخارجية", "قد تعتمد المشاريع وهذا الموقع على استضافة أو بنية تحتية أو برمجيات من جهات خارجية. ولا تتحكم لاين تك في توفر أو شروط الخدمات المستقلة التابعة لتلك الجهات."],
-      ["8. التغييرات", "قد يتم تحديث شروط الموقع مع تطور خدمات لاين تك وميزات الموقع. ويتم نشر النسخة الحالية في هذه الصفحة."],
+      {
+        id: "website-use",
+        number: "01",
+        title: "استخدام الموقع",
+        text: "يمكنك استخدام موقع لاين تك للتعرف على الشركة وخدماتها وأعمالها المختارة وطرق بدء مشروع. ولا يجوز إساءة استخدام الموقع أو تعطيل عمله أو محاولة الوصول غير المصرح به أو استخدام محتواه أو أنظمته بما يخالف الأنظمة المعمول بها أو حقوق الآخرين.",
+      },
+      {
+        id: "service-information",
+        number: "02",
+        title: "معلومات الخدمات والعروض",
+        text: "يصف محتوى الموقع لاين تك وخدماتها بصورة عامة. ولا يُعد العرض أو التقدير أو المحادثة التزامًا ببدء المشروع حتى يتم تأكيد النطاق والشروط التجارية والموافقة على بدء التنفيذ.",
+      },
+      {
+        id: "scope-and-changes",
+        number: "03",
+        title: "نطاق المشروع والتغييرات",
+        text: "يعتمد كل مشروع على نطاق ومخرجات وافتراضات عمل متفق عليها. وقد تتطلب الطلبات الخارجة عن النطاق تعديل السعر أو المدة أو خطة التسليم، ويجوز إيقاف تنفيذ العمل الإضافي حتى يتم اعتماد التغيير.",
+      },
+      {
+        id: "client-responsibilities",
+        number: "04",
+        title: "مسؤوليات العميل",
+        text: "يتحمل العميل مسؤولية توفير المعلومات الصحيحة والمواد والصلاحيات والملاحظات والموافقات المطلوبة في الوقت المناسب، كما يجب أن يملك الحق في تزويد لاين تك بأي محتوى أو ملفات أو علامات تجارية أو بيانات دخول أو مواد أخرى يقدمها للمشروع.",
+      },
+      {
+        id: "fees-and-costs",
+        number: "05",
+        title: "الرسوم والدفعات وتكاليف الجهات الخارجية",
+        text: "يتم تحديد رسوم المشروع والعملة ومراحل الدفع وطريقة السداد قبل بدء العمل. ولا تشمل الرسوم تكاليف الاستضافة أو النطاقات أو البرامج المدفوعة أو التراخيص أو الإعلانات أو رسوم المنصات أو أي تكاليف خارجية أخرى إلا إذا نص اتفاق المشروع على ذلك صراحة.",
+      },
+      {
+        id: "timelines",
+        number: "06",
+        title: "المدة والتأخيرات",
+        text: "تعتمد مواعيد التسليم على النطاق المتفق عليه وعلى مشاركة العميل في الوقت المناسب. وقد تستلزم التأخيرات في المواد أو الصلاحيات أو القرارات أو الموافقات أو الدفعات أو الخدمات الخارجية تعديل الجدول الزمني للمشروع.",
+      },
+      {
+        id: "revisions-and-handover",
+        number: "07",
+        title: "المراجعات والاعتماد والتسليم",
+        text: "يتم تحديد المراجعات المشمولة ومراحل المراجعة ومعايير الاعتماد وعناصر التسليم لكل مشروع. وقد تُعامل المراجعات الإضافية أو الأعمال المطلوبة بعد الاعتماد كتغيير في نطاق المشروع.",
+      },
+      {
+        id: "intellectual-property",
+        number: "08",
+        title: "الملكية الفكرية",
+        text: "يتم تحديد ملكية المخرجات النهائية وحقوق استخدامها في اتفاق المشروع المعتمد. وما لم يتم الاتفاق على خلاف ذلك، تحتفظ لاين تك بملكية الأساليب والمكونات القابلة لإعادة الاستخدام والأدوات الداخلية والخبرات التي كانت لديها قبل المشروع، بينما تظل أصول الجهات الخارجية خاضعة لتراخيصها وشروطها.",
+      },
+      {
+        id: "confidentiality",
+        number: "09",
+        title: "السرية وصلاحيات المشروع",
+        text: "عندما يتطلب المشروع الوصول إلى معلومات أو حسابات أو أنظمة غير عامة، يجب على الطرفين التعامل مع تلك الصلاحيات بمسؤولية واستخدامها لغرض المشروع فقط. ويمكن توثيق أي التزامات سرية خاصة بالمشروع بشكل مستقل عند الحاجة.",
+      },
+      {
+        id: "third-party-services",
+        number: "10",
+        title: "خدمات الجهات الخارجية",
+        text: "قد يعتمد الموقع أو مشاريع العملاء على مزودين مستقلين للاستضافة أو النطاقات أو البنية التحتية أو خدمات الدفع أو البرامج أو غيرها من الأدوات. ولا تتحكم لاين تك في تلك الجهات ولا تضمن استمرار توفر خدماتها أو أسعارها أو شروطها مستقبلًا.",
+      },
+      {
+        id: "suspension-and-cancellation",
+        number: "11",
+        title: "إيقاف المشروع أو إلغاؤه",
+        text: "يجوز لأي من الطرفين طلب إيقاف المشروع مؤقتًا أو إنهائه وفقًا لاتفاق المشروع المعتمد. ويتم التعامل مع المبالغ المستحقة والعمل المنجز والتكاليف الخارجية الملتزم بها والتسليمات وفقًا لذلك الاتفاق وحالة المشروع عند التوقف.",
+      },
+      {
+        id: "liability-and-updates",
+        number: "12",
+        title: "المسؤولية وتحديث الشروط",
+        text: "تعمل لاين تك على تقديم خدماتها بعناية معقولة ووفق نطاق المشروع المتفق عليه. وتُحدد أي ضمانات أو حدود للمسؤولية أو حلول أو شروط حاكمة خاصة بالمشروع في اتفاقه المعتمد. وقد يتم تحديث شروط الموقع مع تطور خدمات لاين تك، وتُنشر النسخة الحالية دائمًا في هذه الصفحة.",
+      },
     ],
   },
 } as const;
 
-export default function TermsPage(){
+export default function TermsPage() {
   const language = useLanguage();
   const t = copy[language];
 
-  return <main className="info-page page-terms">
-    <section className="info-page-hero legal-hero" data-content-hero="terms">
-      <ContentHeroArt motif="terms" />
-      <div className="ref-shell legal-hero-grid">
-        <div className="legal-hero-copy">
-          <span className="legal-hero-index">{t.index}</span>
-          <p className="ref-kicker">{t.kicker}</p>
-          <h1>{t.title}</h1>
-          <p>{t.lead}</p>
+  return (
+    <main className="info-page page-terms">
+      <section className="info-page-hero legal-hero" data-content-hero="terms">
+        <ContentHeroArt motif="terms" />
+        <div className="ref-shell legal-hero-grid">
+          <div className="legal-hero-copy">
+            <span className="legal-hero-index">{t.index}</span>
+            <p className="ref-kicker">{t.kicker}</p>
+            <h1>{t.title}</h1>
+            <p>{t.lead}</p>
+          </div>
+          <div className="legal-hero-visual" aria-hidden="true"><i /></div>
         </div>
-        <div className="legal-hero-visual" aria-hidden="true"><i/></div>
-      </div>
-    </section>
-    <section className="info-content">
-      <div className="ref-shell info-content-grid">
-        <aside className="info-content-aside">
-          <p className="ref-kicker">{t.updated}</p>
-          <h2>{t.date}</h2>
-          <p>{t.aside}</p>
-        </aside>
-        <div className="info-prose">
-          {t.sections.map(([title,text])=><section key={title}><h2>{title}</h2><p>{text}</p></section>)}
+      </section>
+
+      <section className="info-content terms-content">
+        <div className="ref-shell info-content-grid terms-content-grid">
+          <aside className="info-content-aside terms-aside">
+            <div className="terms-meta">
+              <p className="ref-kicker">{t.updated}</p>
+              <h2>{t.date}</h2>
+              <p>{t.aside}</p>
+            </div>
+
+            <nav className="terms-index" aria-label={t.contents}>
+              <span className="terms-index-label">{t.contents}</span>
+              {t.sections.map((section) => (
+                <a href={`#${section.id}`} key={section.id}>
+                  <span>{section.number}</span>
+                  <b>{section.title}</b>
+                </a>
+              ))}
+            </nav>
+          </aside>
+
+          <div className="info-prose terms-prose">
+            {t.sections.map((section) => (
+              <section id={section.id} key={section.id} className="terms-section">
+                <span className="terms-section-number" aria-hidden="true">{section.number}</span>
+                <div>
+                  <h2>{section.title}</h2>
+                  <p>{section.text}</p>
+                </div>
+              </section>
+            ))}
+
+            <section className="terms-contact">
+              <p className="ref-kicker">{t.contactLabel}</p>
+              <h2>{t.contactTitle}</h2>
+              <p>{t.contactText}</p>
+              <a className="terms-contact-link" href="/contact">
+                {t.contactCta}<span aria-hidden="true">→</span>
+              </a>
+            </section>
+          </div>
         </div>
-      </div>
-    </section>
-  </main>;
+      </section>
+    </main>
+  );
 }
