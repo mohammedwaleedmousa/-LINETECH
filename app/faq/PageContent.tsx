@@ -18,6 +18,7 @@ const copy = {
     questionsKicker: "QUESTIONS BY STAGE",
     questionsTitle: "What you need to know, exactly when you need it.",
     questionsLead: "The essentials are grouped around the project journey so you can find the right answer without reading a wall of text.",
+    answerLabel: "ANSWER",
     groups: [
       {
         number: "01",
@@ -78,6 +79,7 @@ const copy = {
     questionsKicker: "الأسئلة حسب المرحلة",
     questionsTitle: "ما تحتاج معرفته، في اللحظة التي تحتاجه فيها.",
     questionsLead: "رتبنا الأسئلة حول رحلة المشروع حتى تصل للإجابة المناسبة مباشرة بدون قراءة كتلة طويلة من النصوص.",
+    answerLabel: "الإجابة",
     groups: [
       {
         number: "01",
@@ -187,7 +189,7 @@ export default function FaqPage(){
                   <header className="faq-group-head">
                     <div><span>{group.number}</span><i aria-hidden="true"/></div>
                     <p>{group.label}</p>
-                    <small>{String(group.items.length).padStart(2,"0")} Q</small>
+                    <small>{String(group.items.length).padStart(2,"0")}</small>
                   </header>
 
                   <div className="faq-questions">
@@ -199,7 +201,7 @@ export default function FaqPage(){
                           <i aria-hidden="true"/>
                         </summary>
                         <div className="faq-answer">
-                          <span aria-hidden="true">ANSWER</span>
+                          <span aria-hidden="true">{t.answerLabel}</span>
                           <p>{answer}</p>
                         </div>
                       </details>
