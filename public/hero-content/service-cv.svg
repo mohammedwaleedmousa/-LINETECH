@@ -1,5 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
-<!-- Content source: A professional story connects a structured CV to selected portfolio work. -->
-<defs><linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="680" y2="800"><stop stop-color="#e0edff" stop-opacity=".75"/><stop offset=".55" stop-color="#78afff" stop-opacity=".85"/><stop offset="1" stop-color="#3882f6" stop-opacity=".2"/></linearGradient></defs>
-<g stroke="url(#ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="115" y="150" width="300" height="440" rx="4" opacity="0.65"/><circle cx="180" cy="225" r="26" opacity=".7"/><path d="M235 212h140" opacity="0.45"/><path d="M235 236h91.0" opacity="0.45"/><path d="M155 310h205" opacity="0.45"/><path d="M155 334h133.25" opacity="0.45"/><path d="M155 358h205" opacity="0.45"/><path d="M155 382h133.25" opacity="0.45"/><path d="M155 406h205" opacity="0.45"/><path d="M155 430h133.25" opacity="0.45"/><path d="M155 454h205" opacity="0.45"/><path d="M415 370H495" opacity="0.75"/><rect x="495" y="245" width="195" height="150" rx="4" opacity="0.75"/><rect x="495" y="445" width="195" height="150" rx="4" opacity="0.45"/><path d="M520 280h130" opacity="0.45"/><path d="M520 304h84.5" opacity="0.45"/><path d="M520 328h130" opacity="0.45"/><path d="M520 480h130" opacity="0.45"/><path d="M520 504h84.5" opacity="0.45"/><path d="M520 528h130" opacity="0.45"/><circle cx="495" cy="370" r="3" fill="#a8ccff" stroke="none"/><circle cx="495" cy="370" r="10" opacity=".25"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Content source: CV & Portfolio — experience forms a clear professional timeline with selected work branching from it. -->
+  <defs>
+    <linearGradient id="route" x1="760" y1="0" x2="1580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8BBBF7" stop-opacity="0"/>
+      <stop offset=".22" stop-color="#A8CDFF" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#D9EAFF" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#6FAAF4" stop-opacity=".26"/>
+    </linearGradient>
+    <filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <path d="M860 660 C910 600 930 540 980 480 C1030 420 1050 360 1100 300 C1170 220 1270 210 1390 250 C1470 278 1520 320 1570 360" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".74"/>
+  <path d="M860 660 C910 600 930 540 980 480 C1030 420 1050 360 1100 300 C1170 220 1270 210 1390 250 C1470 278 1520 320 1570 360" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="10.8s" begin="0s" repeatCount="indefinite"/>
+  </path>
+   <path d="M1100 300 C1190 380 1270 442 1380 500" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".18"/>
+   <path d="M980 480 C1110 540 1230 590 1370 620" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".14"/>
+   <circle cx="980" cy="480" r="2.8" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="980" cy="480" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1100" cy="300" r="3.2" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1100" cy="300" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1380" cy="500" r="2.8" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1380" cy="500" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/>
 </svg>
