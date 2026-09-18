@@ -1,7 +1,6 @@
 "use client";
 
 import ContentHeroArt from "../ContentHeroArt";
-
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useLanguage, useTranslation } from "../Localized";
@@ -87,11 +86,11 @@ const copy = {
   en: {
     kicker: "CLIENT WORKSPACE",
     title: "One place for the project line.",
-    lead: "See where your project is now, what changed most recently, what comes next and whether LINETECH needs anything from you.",
-    local: "Your project request and current project view are organized here.",
+    lead: "Follow the project without the noise. See the current stage, the latest change and what comes next.",
+    local: "Your project request and progress stay connected here.",
     noRequestCode: "00 / NO REQUEST",
     noRequestTitle: "No project request on this device yet.",
-    noRequestBody: "Complete a project request first. Once it is finished, this workspace will use that request as the starting point for the project view.",
+    noRequestBody: "Complete a project request first. Once it is finished, this workspace will use it as the starting point for your project view.",
     start: "Start project request",
     finder: "Find the right service",
     tracking: "PROJECT STATUS",
@@ -102,29 +101,16 @@ const copy = {
     statusInProgress: "In progress",
     statusReview: "Waiting for review",
     statusComplete: "Project complete",
-    latest: "LATEST UPDATE",
-    latestFallback: "Your project request was completed and is ready to move into scope and proposal.",
-    nextMilestone: "NEXT MILESTONE",
-    nextMilestoneFallback: "Scope & proposal",
-    milestonePending: "A date will appear here when this milestone is scheduled.",
-    action: "ACTION NEEDED FROM YOU",
+    latest: "Latest update",
+    latestFallback: "Your project request is complete and ready to move into scope and proposal.",
+    nextMilestone: "Next",
+    milestonePending: "Scheduling will appear here once confirmed.",
+    action: "ACTION REQUIRED",
     actionDefaultTitle: "Move the completed request into the project conversation.",
     actionDefaultBody: "Open project chat so the request can move into scope and proposal.",
     actionDefaultLabel: "Open project chat",
-    noAction: "No action needed from you right now.",
-    noActionBody: "You can follow the next update here when the project moves forward.",
-    request: "PROJECT REQUEST",
-    requestReady: "Request details",
-    completed: "Saved request",
-    reference: "Reference",
-    service: "Service",
-    customer: "Customer",
-    company: "Company / Brand",
-    contact: "Preferred contact",
-    goal: "Main goal",
-    timing: "Timing",
-    budget: "Budget",
-    idea: "Project need",
+    noAction: "No action needed right now.",
+    noActionBody: "The next update will appear here when the project moves forward.",
     progress: "PROJECT TIMELINE",
     current: "Current phase",
     phaseDone: "Completed",
@@ -137,45 +123,48 @@ const copy = {
       ["04", "Review & launch", "Agreed revisions are completed and the project is prepared for launch."],
       ["05", "Handover", "Final files, access and agreed deliverables are handed over."],
     ],
-    activity: "PROJECT ACTIVITY",
-    activityTitle: "A clear record of what changed.",
+    activity: "RECENT ACTIVITY",
+    activityTitle: "What changed, in order.",
     activityRequest: "Project request completed",
     activityRequestDetail: "The project request was completed and a reference number was created.",
     filesReview: "FILES & REVIEWS",
-    filesReviewTitle: "Review material stays connected to the project stage.",
-    filesEmpty: "No project files have been added for review yet.",
-    filesEmptyBody: "When a design, document or deliverable is ready, it can appear here with its review status.",
+    filesReviewTitle: "Only what needs your attention.",
+    filesEmpty: "No project files have been added yet.",
+    filesEmptyBody: "Designs, documents and review material will appear here when they are ready.",
     fileInProgress: "In progress",
     fileReady: "Ready",
     fileReview: "Ready for review",
     fileApproved: "Approved",
-    next: "PROJECT CONVERSATION",
-    nextTitle: "Keep the project context in one place.",
-    nextBody: "Use the project conversation for questions, references, files and decisions while tracking the project status here.",
-    chat: "Open project chat",
-    process: "View how we work",
-    files: "FILES & DELIVERABLES",
-    filesTitle: "Project material stays organized.",
-    filesBody: "Review material and final deliverables are connected to the project stages above.",
-    messages: "MESSAGES",
-    messagesTitle: "Keep the project conversation in one place.",
-    messagesBody: "Use the chat interface for project questions, files, photos or voice notes.",
-    handover: "HANDOVER",
-    handoverTitle: "Final ownership stays clear.",
-    handoverBody: "The final handover area is reserved for the agreed product, source files, assets, access and credentials.",
-    handoverLocked: "Available at handover",
+    brief: "PROJECT BRIEF",
+    briefTitle: "The request, without the clutter.",
+    viewBrief: "View project brief",
+    hideBrief: "Hide project brief",
+    request: "Reference",
+    service: "Service",
+    customer: "Customer",
+    company: "Company / Brand",
+    contact: "Preferred contact",
+    goal: "Main goal",
+    timing: "Timing",
+    budget: "Budget",
+    idea: "Project need",
     copyId: "Copy request ID",
     copied: "Copied",
     newRequest: "Prepare another request",
+    tools: "PROJECT TOOLS",
+    conversation: "Conversation",
+    files: "Files",
+    handover: "Handover",
+    handoverLocked: "Available at handover",
   },
   ar: {
     kicker: "مساحة العميل",
     title: "مكان واحد لمسار المشروع.",
-    lead: "شاهد أين وصل مشروعك الآن، وآخر تحديث، وما هي الخطوة القادمة، وهل تحتاج لاين تك شيئًا منك.",
-    local: "طلب المشروع وحالته الحالية منظمان هنا داخل مساحة واحدة.",
+    lead: "تابع مشروعك بدون ضوضاء. اعرف المرحلة الحالية، آخر ما تغير، وما الذي يأتي بعدها.",
+    local: "طلب المشروع وتقدمه يبقيان مرتبطين هنا.",
     noRequestCode: "00 / لا يوجد طلب",
     noRequestTitle: "لا يوجد طلب مشروع على هذا الجهاز حتى الآن.",
-    noRequestBody: "أكمل طلب مشروع أولًا. بعد إتمامه ستستخدم مساحة العميل هذا الطلب كنقطة بداية لعرض المشروع.",
+    noRequestBody: "أكمل طلب مشروع أولًا. بعد إتمامه ستستخدم مساحة العميل هذا الطلب كنقطة بداية لعرض مشروعك.",
     start: "ابدأ طلب المشروع",
     finder: "اعثر على الخدمة المناسبة",
     tracking: "حالة المشروع",
@@ -187,29 +176,16 @@ const copy = {
     statusReview: "بانتظار المراجعة",
     statusComplete: "اكتمل المشروع",
     latest: "آخر تحديث",
-    latestFallback: "تم إكمال طلب مشروعك وهو جاهز للانتقال إلى تحديد النطاق والعرض.",
-    nextMilestone: "المحطة القادمة",
-    nextMilestoneFallback: "النطاق والعرض",
-    milestonePending: "سيظهر التاريخ هنا عند تحديد موعد هذه المرحلة.",
-    action: "المطلوب منك",
+    latestFallback: "اكتمل طلب مشروعك وهو جاهز للانتقال إلى تحديد النطاق والعرض.",
+    nextMilestone: "التالي",
+    milestonePending: "سيظهر الموعد هنا بعد اعتماده.",
+    action: "إجراء مطلوب",
     actionDefaultTitle: "انقل الطلب المكتمل إلى محادثة المشروع.",
     actionDefaultBody: "افتح محادثة المشروع حتى ينتقل الطلب إلى تحديد النطاق والعرض.",
     actionDefaultLabel: "افتح محادثة المشروع",
-    noAction: "لا يوجد إجراء مطلوب منك الآن.",
-    noActionBody: "يمكنك متابعة التحديث القادم هنا عند تقدم المشروع.",
-    request: "طلب المشروع",
-    requestReady: "تفاصيل الطلب",
-    completed: "طلب محفوظ",
-    reference: "الرقم المرجعي",
-    service: "الخدمة",
-    customer: "العميل",
-    company: "الشركة / العلامة",
-    contact: "التواصل المفضل",
-    goal: "الهدف الرئيسي",
-    timing: "التوقيت",
-    budget: "الميزانية",
-    idea: "احتياج المشروع",
-    progress: "الجدول الزمني للمشروع",
+    noAction: "لا يوجد إجراء مطلوب الآن.",
+    noActionBody: "سيظهر التحديث التالي هنا عندما يتقدم المشروع.",
+    progress: "مسار المشروع",
     current: "المرحلة الحالية",
     phaseDone: "مكتملة",
     phaseCurrent: "الحالية",
@@ -221,36 +197,39 @@ const copy = {
       ["04", "المراجعة والإطلاق", "تكتمل التعديلات المتفق عليها ويجهز المشروع للإطلاق."],
       ["05", "التسليم", "يتم تسليم الملفات النهائية والصلاحيات والمخرجات المتفق عليها."],
     ],
-    activity: "نشاط المشروع",
-    activityTitle: "سجل واضح لكل ما تغير.",
+    activity: "آخر النشاط",
+    activityTitle: "ما الذي تغير، بترتيب واضح.",
     activityRequest: "تم إكمال طلب المشروع",
     activityRequestDetail: "تم إكمال طلب المشروع وإنشاء رقم مرجعي له.",
     filesReview: "الملفات والمراجعات",
-    filesReviewTitle: "تبقى مواد المراجعة مرتبطة بمرحلة المشروع.",
-    filesEmpty: "لم تتم إضافة ملفات للمراجعة بعد.",
-    filesEmptyBody: "عندما يصبح تصميم أو مستند أو مخرج جاهزًا، يمكن أن يظهر هنا مع حالة المراجعة.",
+    filesReviewTitle: "فقط ما يحتاج انتباهك.",
+    filesEmpty: "لم تتم إضافة ملفات للمشروع بعد.",
+    filesEmptyBody: "ستظهر التصاميم والمستندات ومواد المراجعة هنا عندما تصبح جاهزة.",
     fileInProgress: "قيد العمل",
     fileReady: "جاهز",
     fileReview: "جاهز للمراجعة",
     fileApproved: "تمت الموافقة",
-    next: "محادثة المشروع",
-    nextTitle: "اجعل سياق المشروع في مكان واحد.",
-    nextBody: "استخدم محادثة المشروع للأسئلة والمراجع والملفات والقرارات، وتابع حالة المشروع من هذه الصفحة.",
-    chat: "افتح محادثة المشروع",
-    process: "شاهد كيف نعمل",
-    files: "الملفات والمخرجات",
-    filesTitle: "تبقى مواد المشروع منظمة.",
-    filesBody: "ترتبط مواد المراجعة والمخرجات النهائية بمراحل المشروع الموضحة أعلاه.",
-    messages: "المحادثات",
-    messagesTitle: "اجعل محادثة المشروع في مكان واحد.",
-    messagesBody: "استخدم واجهة المحادثة لأسئلة المشروع والملفات والصور والرسائل الصوتية.",
-    handover: "التسليم",
-    handoverTitle: "تبقى الملكية النهائية واضحة.",
-    handoverBody: "منطقة التسليم النهائي مخصصة للمنتج والملفات المصدرية والأصول والصلاحيات وبيانات الدخول المتفق عليها.",
-    handoverLocked: "متاح عند التسليم",
+    brief: "ملخص المشروع",
+    briefTitle: "تفاصيل الطلب، بدون ازدحام.",
+    viewBrief: "عرض تفاصيل المشروع",
+    hideBrief: "إخفاء تفاصيل المشروع",
+    request: "الرقم المرجعي",
+    service: "الخدمة",
+    customer: "العميل",
+    company: "الشركة / العلامة",
+    contact: "التواصل المفضل",
+    goal: "الهدف الرئيسي",
+    timing: "التوقيت",
+    budget: "الميزانية",
+    idea: "احتياج المشروع",
     copyId: "انسخ رقم الطلب",
     copied: "تم النسخ",
     newRequest: "جهز طلبًا آخر",
+    tools: "أدوات المشروع",
+    conversation: "المحادثة",
+    files: "الملفات",
+    handover: "التسليم",
+    handoverLocked: "متاح عند التسليم",
   },
 } as const;
 
@@ -313,19 +292,29 @@ export default function WorkspaceClient() {
     setLoaded(true);
   }, []);
 
-  const completedDate = useMemo(() => formatDate(record?.completedAt || "", language), [record?.completedAt, language]);
+  const completedDate = useMemo(
+    () => formatDate(record?.completedAt || "", language),
+    [record?.completedAt, language],
+  );
+
   const progress = record ? progressRecord || makeDefaultProgress(record) : null;
   const currentPhase = progress ? clampPhase(progress.currentPhase) : 1;
-  const phaseIndex = currentPhase - 1;
-  const currentPhaseCopy = t.phases[phaseIndex];
+  const currentPhaseCopy = t.phases[currentPhase - 1];
   const latestUpdate = progress?.latestUpdate || t.latestFallback;
   const nextPhase = currentPhase < 5 ? t.phases[currentPhase] : null;
   const nextMilestone = progress?.nextMilestone || nextPhase?.[1] || t.statusComplete;
+
   const activities = useMemo<ProgressActivity[]>(() => {
     if (!record) return [];
     if (progress?.activity?.length) return progress.activity;
-    return [{ id: "request-completed", title: t.activityRequest, detail: t.activityRequestDetail, at: record.completedAt }];
+    return [{
+      id: "request-completed",
+      title: t.activityRequest,
+      detail: t.activityRequestDetail,
+      at: record.completedAt,
+    }];
   }, [record, progress?.activity, t.activityRequest, t.activityRequestDetail]);
+
   const projectFiles = progress?.files || [];
 
   const statusLabel = progress?.status === "complete"
@@ -337,8 +326,15 @@ export default function WorkspaceClient() {
         : t.statusReady;
 
   const defaultAction: ProgressAction = currentPhase === 1
-    ? { required: true, title: t.actionDefaultTitle, detail: t.actionDefaultBody, label: t.actionDefaultLabel, href: "/chat" }
+    ? {
+        required: true,
+        title: t.actionDefaultTitle,
+        detail: t.actionDefaultBody,
+        label: t.actionDefaultLabel,
+        href: "/chat",
+      }
     : { required: false };
+
   const clientAction = progress?.actionNeeded || defaultAction;
 
   async function copyRequestId() {
@@ -350,7 +346,9 @@ export default function WorkspaceClient() {
     } catch {}
   }
 
-  if (!loaded) return <main className="workspace-page ref-page"><div className="workspace-loading" /></main>;
+  if (!loaded) {
+    return <main className="workspace-page ref-page"><div className="workspace-loading" /></main>;
+  }
 
   return (
     <main className="workspace-page ref-page">
@@ -382,189 +380,217 @@ export default function WorkspaceClient() {
         </section>
       ) : progress ? (
         <>
-          <section className="workspace-tracking">
+          <section className="workspace-status-section">
             <div className="ref-shell">
-              <div className="workspace-tracking-head">
+              <div className="workspace-section-eyebrow">
                 <p className="workspace-kicker">{t.tracking}</p>
                 <span>{record.requestId}</span>
               </div>
 
-              <div className="workspace-tracking-grid">
-                <article className="workspace-stage-card">
-                  <div className="workspace-stage-top">
-                    <div>
-                      <span>{t.stage}</span>
-                      <h2>{currentPhaseCopy[1]}</h2>
-                    </div>
-                    <span className={`workspace-live-status is-${progress.status}`}><i />{statusLabel}</span>
-                  </div>
+              <div className="workspace-status-main">
+                <div className="workspace-status-copy">
+                  <span>{t.stage}</span>
+                  <h2>{currentPhaseCopy[1]}</h2>
                   <p>{currentPhaseCopy[2]}</p>
-                  <div className="workspace-stage-meter" aria-label={`${t.phase} ${currentPhase} / 5`}>
-                    {t.phases.map((phase, index) => {
-                      const number = index + 1;
-                      const state = progress.status === "complete" && currentPhase === 5
-                        ? "done"
-                        : number < currentPhase
-                          ? "done"
-                          : number === currentPhase
-                            ? "current"
-                            : "upcoming";
-                      return <div key={phase[0]} className={`is-${state}`}><i /><span>{phase[0]}</span></div>;
-                    })}
-                  </div>
-                  <div className="workspace-stage-foot">
-                    <span>{t.phase} {String(currentPhase).padStart(2, "0")} / 05</span>
-                    <span>{t.lastUpdated}: {formatDate(progress.updatedAt, language)}</span>
-                  </div>
-                </article>
+                </div>
 
-                <div className="workspace-tracking-side">
-                  <article>
-                    <span>{t.latest}</span>
-                    <h3>{latestUpdate}</h3>
-                    <small>{formatDate(progress.updatedAt, language)}</small>
-                  </article>
-                  <article>
-                    <span>{t.nextMilestone}</span>
-                    <h3>{nextMilestone}</h3>
-                    <small>{progress.nextMilestoneDate ? formatDate(progress.nextMilestoneDate, language) : t.milestonePending}</small>
-                  </article>
-                  <article className={clientAction.required ? "needs-action" : "no-action"}>
-                    <span>{t.action}</span>
-                    <h3>{clientAction.required ? clientAction.title || t.actionDefaultTitle : t.noAction}</h3>
-                    <p>{clientAction.required ? clientAction.detail || t.actionDefaultBody : t.noActionBody}</p>
-                    {clientAction.required && clientAction.href && <Link href={clientAction.href}>{clientAction.label || t.actionDefaultLabel} →</Link>}
-                  </article>
+                <div className="workspace-status-side">
+                  <span className={"workspace-live-status is-" + progress.status}><i />{statusLabel}</span>
+                  <strong>{String(currentPhase).padStart(2, "0")} / 05</strong>
                 </div>
               </div>
-            </div>
-          </section>
 
-          <section className="workspace-flow">
-            <div className="ref-shell">
-              <div className="workspace-section-head">
-                <p className="workspace-kicker">{t.progress}</p>
-                <span>{t.current}: {String(currentPhase).padStart(2, "0")}</span>
-              </div>
-              <div className="workspace-flow-grid workspace-flow-tracking">
-                {t.phases.map(([n, title, description], index) => {
+              <div className="workspace-progress-line" aria-label={t.phase + " " + currentPhase + " / 5"}>
+                {t.phases.map((phase, index) => {
                   const number = index + 1;
-                  const isDone = progress.status === "complete" && currentPhase === 5 ? number <= 5 : number < currentPhase;
-                  const isCurrent = !isDone && number === currentPhase;
-                  const stateLabel = isDone ? t.phaseDone : isCurrent ? t.phaseCurrent : t.phaseUpcoming;
+                  const state = progress.status === "complete" && currentPhase === 5
+                    ? "done"
+                    : number < currentPhase
+                      ? "done"
+                      : number === currentPhase
+                        ? "current"
+                        : "upcoming";
+
                   return (
-                    <article key={n} className={`${isDone ? "is-done" : ""} ${isCurrent ? "is-current" : ""}`}>
-                      <div className="workspace-phase-label"><span>{n}</span><b>{stateLabel}</b></div>
+                    <div key={phase[0]} className={"is-" + state}>
                       <i />
-                      <h3>{title}</h3>
-                      <p>{description}</p>
-                    </article>
+                      <span>{phase[0]}</span>
+                    </div>
                   );
                 })}
               </div>
+
+              <div className="workspace-status-meta">
+                <div>
+                  <span>{t.latest}</span>
+                  <strong>{latestUpdate}</strong>
+                  <small>{formatDate(progress.updatedAt, language)}</small>
+                </div>
+                <div>
+                  <span>{t.nextMilestone}</span>
+                  <strong>{nextMilestone}</strong>
+                  <small>{progress.nextMilestoneDate ? formatDate(progress.nextMilestoneDate, language) : t.milestonePending}</small>
+                </div>
+                <div>
+                  <span>{t.lastUpdated}</span>
+                  <strong>{formatDate(progress.updatedAt, language)}</strong>
+                  <small>{t.phase} {String(currentPhase).padStart(2, "0")} / 05</small>
+                </div>
+              </div>
+
+              <div className={clientAction.required ? "workspace-action is-required" : "workspace-action"}>
+                <div>
+                  <span>{clientAction.required ? t.action : t.noAction}</span>
+                  <h3>{clientAction.required ? clientAction.title || t.actionDefaultTitle : t.noActionBody}</h3>
+                </div>
+                {clientAction.required && clientAction.href && (
+                  <Link href={clientAction.href}>{clientAction.label || t.actionDefaultLabel} →</Link>
+                )}
+              </div>
             </div>
           </section>
 
-          <section className="workspace-workstream">
-            <div className="ref-shell workspace-workstream-grid">
-              <article className="workspace-activity-card">
-                <p className="workspace-kicker">{t.activity}</p>
-                <h2>{t.activityTitle}</h2>
-                <div className="workspace-activity-list">
-                  {activities.map((item, index) => (
-                    <div key={item.id || `${item.at}-${index}`}>
-                      <i />
-                      <div>
-                        <span>{formatDate(item.at, language)}</span>
-                        <strong>{item.title}</strong>
-                        {item.detail && <p>{item.detail}</p>}
+          <section className="workspace-timeline-section">
+            <div className="ref-shell">
+              <div className="workspace-section-heading">
+                <div>
+                  <p className="workspace-kicker">{t.progress}</p>
+                  <h2>{currentPhaseCopy[1]}</h2>
+                </div>
+                <span>{t.current}: {String(currentPhase).padStart(2, "0")}</span>
+              </div>
+
+              <div className="workspace-timeline">
+                {t.phases.map(([n, title], index) => {
+                  const number = index + 1;
+                  const isDone = progress.status === "complete" && currentPhase === 5 ? number <= 5 : number < currentPhase;
+                  const isCurrent = !isDone && number === currentPhase;
+
+                  return (
+                    <div key={n} className={isDone ? "is-done" : isCurrent ? "is-current" : ""}>
+                      <div className="workspace-timeline-node">
+                        <i />
+                        <b>{n}</b>
                       </div>
+                      <span>{title}</span>
+                    </div>
+                  );
+                })}
+              </div>
+
+              <p className="workspace-current-description">{currentPhaseCopy[2]}</p>
+            </div>
+          </section>
+
+          <section className="workspace-activity-section">
+            <div className="ref-shell">
+              <div className="workspace-section-heading">
+                <div>
+                  <p className="workspace-kicker">{t.activity}</p>
+                  <h2>{t.activityTitle}</h2>
+                </div>
+              </div>
+
+              <div className="workspace-activity-list">
+                {activities.map((item, index) => (
+                  <div key={item.id || item.at + "-" + index}>
+                    <i />
+                    <span>{formatDate(item.at, language)}</span>
+                    <strong>{item.title}</strong>
+                    {item.detail && <p>{item.detail}</p>}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          <section className="workspace-files-section" id="files">
+            <div className="ref-shell">
+              <div className="workspace-section-heading">
+                <div>
+                  <p className="workspace-kicker">{t.filesReview}</p>
+                  <h2>{t.filesReviewTitle}</h2>
+                </div>
+              </div>
+
+              {projectFiles.length ? (
+                <div className="workspace-file-list">
+                  {projectFiles.map(file => (
+                    <div key={file.id}>
+                      <div>
+                        <strong>{file.name}</strong>
+                        {file.detail && <p>{file.detail}</p>}
+                        {file.updatedAt && <small>{formatDate(file.updatedAt, language)}</small>}
+                      </div>
+                      <span className={"file-status is-" + file.status}>{fileStatusLabel(file.status, t)}</span>
+                      {file.href && <a href={file.href} target="_blank" rel="noreferrer">↗</a>}
                     </div>
                   ))}
                 </div>
-              </article>
-
-              <article className="workspace-files-card">
-                <p className="workspace-kicker">{t.filesReview}</p>
-                <h2>{t.filesReviewTitle}</h2>
-                {projectFiles.length ? (
-                  <div className="workspace-file-list">
-                    {projectFiles.map(file => (
-                      <div key={file.id}>
-                        <div>
-                          <strong>{file.name}</strong>
-                          {file.detail && <p>{file.detail}</p>}
-                          {file.updatedAt && <small>{formatDate(file.updatedAt, language)}</small>}
-                        </div>
-                        <span className={`file-status is-${file.status}`}>{fileStatusLabel(file.status, t)}</span>
-                        {file.href && <a href={file.href} target="_blank" rel="noreferrer">↗</a>}
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="workspace-files-empty">
-                    <span>—</span>
-                    <strong>{t.filesEmpty}</strong>
-                    <p>{t.filesEmptyBody}</p>
-                  </div>
-                )}
-              </article>
+              ) : (
+                <div className="workspace-files-empty">
+                  <span>—</span>
+                  <strong>{t.filesEmpty}</strong>
+                  <p>{t.filesEmptyBody}</p>
+                </div>
+              )}
             </div>
           </section>
 
-          <section className="workspace-overview">
-            <div className="ref-shell workspace-overview-grid">
-              <article className="workspace-request-card">
-                <div className="workspace-card-top">
-                  <div><p className="workspace-kicker">{t.request}</p><h2>{t.requestReady}</h2></div>
-                  <span className="workspace-status"><i />{t.completed}</span>
-                </div>
+          <section className="workspace-brief-section">
+            <div className="ref-shell">
+              <details className="workspace-brief">
+                <summary>
+                  <div>
+                    <p className="workspace-kicker">{t.brief}</p>
+                    <h2>{t.briefTitle}</h2>
+                    <div className="workspace-brief-preview">
+                      <span>{serviceLabels[record.project.service]?.[language] || translate(record.project.service)}</span>
+                      <span>{record.customer.company || record.customer.name || "—"}</span>
+                    </div>
+                  </div>
+                  <span className="workspace-brief-toggle">{t.viewBrief} +</span>
+                </summary>
 
-                <div className="workspace-request-id">
-                  <div><span>{t.reference}</span><strong>{record.requestId}</strong></div>
-                  <button type="button" onClick={copyRequestId}>{copied ? t.copied : t.copyId}</button>
-                </div>
+                <div className="workspace-brief-content">
+                  <div className="workspace-brief-reference">
+                    <div>
+                      <span>{t.request}</span>
+                      <strong>{record.requestId}</strong>
+                    </div>
+                    <button type="button" onClick={copyRequestId}>{copied ? t.copied : t.copyId}</button>
+                  </div>
 
-                <div className="workspace-request-meta">
-                  <div><span>{t.service}</span><strong>{serviceLabels[record.project.service]?.[language] || translate(record.project.service)}</strong></div>
-                  <div><span>{t.customer}</span><strong>{record.customer.name || "—"}</strong></div>
-                  <div><span>{t.company}</span><strong>{record.customer.company || "—"}</strong></div>
-                  <div><span>{t.contact}</span><strong>{translate(record.customer.preferredContact || "—")}</strong></div>
-                  <div><span>{t.goal}</span><strong>{translate(record.project.goal || "—")}</strong></div>
-                  <div><span>{t.timing}</span><strong>{translate(record.scope.timing || "—")}</strong></div>
-                  <div><span>{t.budget}</span><strong>{translate(record.scope.budget || "—")}</strong></div>
-                  <div><span>{t.idea}</span><strong>{record.project.idea || "—"}</strong></div>
-                </div>
+                  <div className="workspace-brief-grid">
+                    <div><span>{t.service}</span><strong>{serviceLabels[record.project.service]?.[language] || translate(record.project.service)}</strong></div>
+                    <div><span>{t.customer}</span><strong>{record.customer.name || "—"}</strong></div>
+                    <div><span>{t.company}</span><strong>{record.customer.company || "—"}</strong></div>
+                    <div><span>{t.contact}</span><strong>{translate(record.customer.preferredContact || "—")}</strong></div>
+                    <div><span>{t.goal}</span><strong>{translate(record.project.goal || "—")}</strong></div>
+                    <div><span>{t.timing}</span><strong>{translate(record.scope.timing || "—")}</strong></div>
+                    <div><span>{t.budget}</span><strong>{translate(record.scope.budget || "—")}</strong></div>
+                    <div className="is-wide"><span>{t.idea}</span><strong>{record.project.idea || "—"}</strong></div>
+                  </div>
 
-                <div className="workspace-request-foot">
-                  <span>{completedDate}</span>
-                  <Link href="/start">{t.newRequest} →</Link>
+                  <div className="workspace-brief-foot">
+                    <span>{completedDate}</span>
+                    <Link href="/start">{t.newRequest} →</Link>
+                  </div>
                 </div>
-              </article>
-
-              <aside className="workspace-next-card">
-                <p className="workspace-kicker">{t.next}</p>
-                <h2>{t.nextTitle}</h2>
-                <p>{t.nextBody}</p>
-                <div>
-                  <Link className="ref-btn primary" href="/chat">{t.chat} ↗</Link>
-                  <Link className="ref-btn ghost" href="/how-we-work">{t.process}</Link>
-                </div>
-              </aside>
+              </details>
             </div>
           </section>
 
-          <section className="workspace-tools">
-            <div className="ref-shell workspace-tools-grid">
-              <article>
-                <span>01</span><p className="workspace-kicker">{t.messages}</p><h3>{t.messagesTitle}</h3><p>{t.messagesBody}</p><Link href="/chat">{t.chat} →</Link>
-              </article>
-              <article>
-                <span>02</span><p className="workspace-kicker">{t.files}</p><h3>{t.filesTitle}</h3><p>{t.filesBody}</p><b>—</b>
-              </article>
-              <article className={currentPhase < 5 ? "is-locked" : ""}>
-                <span>03</span><p className="workspace-kicker">{t.handover}</p><h3>{t.handoverTitle}</h3><p>{t.handoverBody}</p><b>{currentPhase < 5 ? t.handoverLocked : "✓"}</b>
-              </article>
+          <section className="workspace-tools-section">
+            <div className="ref-shell">
+              <p className="workspace-kicker">{t.tools}</p>
+              <nav className="workspace-tools-line" aria-label={t.tools}>
+                <Link href="/chat"><span>01</span>{t.conversation}<b>↗</b></Link>
+                <a href="#files"><span>02</span>{t.files}<b>↓</b></a>
+                <div className={currentPhase < 5 ? "is-locked" : ""}>
+                  <span>03</span>{t.handover}<b>{currentPhase < 5 ? t.handoverLocked : "✓"}</b>
+                </div>
+              </nav>
             </div>
           </section>
         </>
@@ -586,7 +612,10 @@ function formatDate(value: string, language: "ar" | "en") {
   }
 }
 
-function fileStatusLabel(status: ProgressFile["status"], t: (typeof copy)["en"] | (typeof copy)["ar"]) {
+function fileStatusLabel(
+  status: ProgressFile["status"],
+  t: (typeof copy)["en"] | (typeof copy)["ar"],
+) {
   if (status === "approved") return t.fileApproved;
   if (status === "review") return t.fileReview;
   if (status === "ready") return t.fileReady;
