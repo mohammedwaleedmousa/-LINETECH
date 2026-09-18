@@ -1,5 +1,29 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
-<!-- Content source: Project information stays within the user device boundary; sharing is a separate controlled path. -->
-<defs><linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="680" y2="800"><stop stop-color="#e0edff" stop-opacity=".75"/><stop offset=".55" stop-color="#78afff" stop-opacity=".85"/><stop offset="1" stop-color="#3882f6" stop-opacity=".2"/></linearGradient></defs>
-<g stroke="url(#ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="200" y="170" width="390" height="440" rx="4" opacity="0.75"/><rect x="245" y="220" width="300" height="340" rx="4" opacity="0.27"/><rect x="285" y="280" width="180" height="46" rx="4" opacity="0.55"/><path d="M305 298h115" opacity="0.45"/><rect x="285" y="355" width="180" height="46" rx="4" opacity="0.55"/><path d="M305 373h115" opacity="0.45"/><rect x="285" y="430" width="180" height="46" rx="4" opacity="0.55"/><path d="M305 448h115" opacity="0.45"/><path d="M70 370H160M630 370H735" opacity="0.4"/><circle cx="160" cy="370" r="4" fill="#a8ccff" stroke="none"/><circle cx="160" cy="370" r="11" opacity=".25"/><circle cx="630" cy="370" r="4" fill="#a8ccff" stroke="none"/><circle cx="630" cy="370" r="11" opacity=".25"/><path d="M590 300V235M590 505V445" opacity="1"/><path d="M180 640H610" opacity="0.2"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Content source: Privacy — project information stays inside a clear boundary while controlled sharing follows a separate path. -->
+  <defs>
+    <linearGradient id="route" x1="760" y1="0" x2="1580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8BBBF7" stop-opacity="0"/>
+      <stop offset=".22" stop-color="#A8CDFF" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#D9EAFF" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#6FAAF4" stop-opacity=".26"/>
+    </linearGradient>
+    <filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <path d="M770 450 C900 450 1000 450 1088 450" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".64"/>
+  <path d="M770 450 C900 450 1000 450 1088 450" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="9.6s" begin="0s" repeatCount="indefinite"/>
+  </path>
+   <circle cx="1180" cy="450" r="78" stroke="#9CC6FB" stroke-width="1.1" opacity=".24"/>
+   <circle cx="1180" cy="450" r="50" stroke="#DCEEFF" stroke-width="1" opacity=".11"/>
+   <circle cx="1180" cy="450" r="3.5" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1180" cy="450" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/>
+   
+  <path d="M1272 450 C1380 450 1470 414 1570 360" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".72"/>
+  <path d="M1272 450 C1380 450 1470 414 1570 360" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="9.2s" begin="-2s" repeatCount="indefinite"/>
+  </path>
+   <path d="M1180 528 C1260 604 1360 628 1490 620" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".13"/>
 </svg>
