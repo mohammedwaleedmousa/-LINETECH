@@ -1,5 +1,22 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
-<!-- Content source: Questions and responses form paired open lines, reflecting the FAQ content. -->
-<defs><linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="680" y2="800"><stop stop-color="#e0edff" stop-opacity=".75"/><stop offset=".55" stop-color="#78afff" stop-opacity=".85"/><stop offset="1" stop-color="#3882f6" stop-opacity=".2"/></linearGradient></defs>
-<g stroke="url(#ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M250 160H80V252H120V276L147 252H330V190" opacity="0.75"/><path d="M106 190h150" opacity="0.45"/><path d="M106 214h97.5" opacity="0.45"/><path d="M525 345H355V437H395V461L422 437H605V375" opacity="0.75"/><path d="M381 375h150" opacity="0.45"/><path d="M381 399h97.5" opacity="0.45"/><path d="M330 220H420V300M355 400H240V340" opacity="0.3"/><circle cx="420" cy="300" r="4" fill="#a8ccff" stroke="none"/><circle cx="420" cy="300" r="11" opacity=".25"/><circle cx="240" cy="340" r="4" fill="#a8ccff" stroke="none"/><circle cx="240" cy="340" r="11" opacity=".25"/><path d="M120 590H590" opacity="0.2"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Content source: FAQ — questions and answers alternate along one calm conversation path. -->
+  <defs>
+    <linearGradient id="route" x1="760" y1="0" x2="1580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8BBBF7" stop-opacity="0"/>
+      <stop offset=".22" stop-color="#A8CDFF" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#D9EAFF" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#6FAAF4" stop-opacity=".26"/>
+    </linearGradient>
+    <filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  
+  <path d="M800 300 C930 300 956 418 1080 418 C1210 418 1234 548 1360 548 C1460 548 1510 490 1570 442" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".68"/>
+  <path d="M800 300 C930 300 956 418 1080 418 C1210 418 1234 548 1360 548 C1460 548 1510 490 1570 442" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="10.8s" begin="0s" repeatCount="indefinite"/>
+  </path>
+   <path d="M820 350 C944 350 970 468 1090 468 C1210 468 1240 598 1360 598" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".15"/>
+   <circle cx="1080" cy="418" r="3.2" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1080" cy="418" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/><circle cx="1360" cy="548" r="3.2" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1360" cy="548" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/>
 </svg>
