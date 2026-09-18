@@ -1,5 +1,24 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" fill="none">
-<!-- Content source: Two sides align around an agreed scope, responsibilities and handover. -->
-<defs><linearGradient id="ink" gradientUnits="userSpaceOnUse" x1="120" y1="0" x2="680" y2="800"><stop stop-color="#e0edff" stop-opacity=".75"/><stop offset=".55" stop-color="#78afff" stop-opacity=".85"/><stop offset="1" stop-color="#3882f6" stop-opacity=".2"/></linearGradient></defs>
-<g stroke="url(#ink)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="150" y="160" width="260" height="400" rx="4" opacity="0.5"/><rect x="370" y="230" width="260" height="400" rx="4" opacity="0.7"/><path d="M180 215h150" opacity="0.45"/><path d="M180 239h97.5" opacity="0.45"/><path d="M180 263h150" opacity="0.45"/><path d="M180 287h97.5" opacity="0.45"/><path d="M180 311h150" opacity="0.45"/><path d="M405 295h165" opacity="0.45"/><path d="M405 319h107.25" opacity="0.45"/><path d="M405 343h165" opacity="0.45"/><path d="M405 367h107.25" opacity="0.45"/><path d="M405 391h165" opacity="0.45"/><path d="M150 605H330M450 180H630" opacity="0.3"/><path d="M320 485L358 523L430 451" opacity="1"/><circle cx="390" cy="560" r="3" fill="#a8ccff" stroke="none"/><circle cx="390" cy="560" r="10" opacity=".25"/></g>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" fill="none" preserveAspectRatio="xMidYMid slice">
+  <!-- Content source: Terms — responsibilities from both sides align at an agreed scope and continue together toward handover. -->
+  <defs>
+    <linearGradient id="route" x1="760" y1="0" x2="1580" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8BBBF7" stop-opacity="0"/>
+      <stop offset=".22" stop-color="#A8CDFF" stop-opacity=".22"/>
+      <stop offset=".58" stop-color="#D9EAFF" stop-opacity=".62"/>
+      <stop offset="1" stop-color="#6FAAF4" stop-opacity=".26"/>
+    </linearGradient>
+    <filter id="softGlow" x="-200%" y="-200%" width="500%" height="500%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <path d="M790 300 C930 310 1020 370 1160 448" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".22"/>
+   <path d="M790 600 C930 590 1020 526 1160 448" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".22"/>
+   <circle cx="1160" cy="448" r="3.6" fill="#F4FAFF" opacity=".88" filter="url(#softGlow)"/><circle cx="1160" cy="448" r="13" stroke="#78AEF0" stroke-width="1" opacity=".10"/>
+   
+  <path d="M1160 448 C1300 448 1430 448 1570 448" stroke="url(#route)" stroke-width="1.35" stroke-linecap="round" opacity=".80"/>
+  <path d="M1160 448 C1300 448 1430 448 1570 448" stroke="#ECF6FF" stroke-width="1.05" stroke-linecap="round" opacity=".34" stroke-dasharray="38 680">
+    <animate attributeName="stroke-dashoffset" from="720" to="-80" dur="9.2s" begin="0s" repeatCount="indefinite"/>
+  </path>
+   <path d="M1210 485 C1340 500 1450 500 1570 486" stroke="#87B8F4" stroke-width="1.1" stroke-linecap="round" opacity=".12"/>
 </svg>
