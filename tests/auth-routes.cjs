@@ -81,6 +81,7 @@ assert.ok(nav.includes('"Logout"'));
 assert.ok(nav.includes('"تسجيل خروج"'));
 
 const login = read("app/login/LoginForm.tsx");
+assert.ok(login.includes('window.location.assign(next && next.startsWith("/") ? next : "/workspace")'));
 for (const endpoint of [
   "/api/auth/login",
   "/api/auth/signup",
