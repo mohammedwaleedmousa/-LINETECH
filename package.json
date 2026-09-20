@@ -12,7 +12,8 @@
     "test:backend": "node tests/backend-schema.cjs",
     "qa": "npm run build && npm run test:localization && npm run test:routes && npm run test:backend && npm run test:auth && npm run test:worker",
     "test:auth": "node tests/auth-routes.cjs",
-    "test:worker": "node tests/worker-syntax.cjs"
+    "test:worker": "node tests/worker-syntax.cjs",
+    "smoke:prod": "node tests/production-smoke.cjs"
   },
   "dependencies": {
     "next": "15.5.2",
