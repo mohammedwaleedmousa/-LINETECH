@@ -120,7 +120,11 @@ export async function rateLimitAllowed(limiter:RateLimitBinding|undefined,key:st
   try {
     const result=await limiter.limit({key:await hashedRateLimitKey(key)});
     return Boolean(result.success);
-  } catch {
+  } catch(error) {
+    console.warn(JSON.stringify({
+      event:"rate_limiter_unavailable",
+      message:error instanceof Error ? error.message : "Unknown rate limiter error",
+    }));
     // Fail open if Cloudflare's limiter binding is temporarily unavailable.
     return true;
   }
