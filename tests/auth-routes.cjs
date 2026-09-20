@@ -74,6 +74,12 @@ for (const endpoint of [
   assert.ok(admin.includes(endpoint), `Worker admin API is missing ${endpoint}`);
 }
 
+const nav = read("app/SiteNav.tsx");
+assert.ok(nav.includes("/api/auth/session"));
+assert.ok(nav.includes("/api/auth/logout"));
+assert.ok(nav.includes('"Logout"'));
+assert.ok(nav.includes('"تسجيل خروج"'));
+
 const login = read("app/login/LoginForm.tsx");
 for (const endpoint of [
   "/api/auth/login",
