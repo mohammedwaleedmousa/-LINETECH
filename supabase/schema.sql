@@ -275,22 +275,16 @@ using (
   or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy project_requests_insert_owner
+create policy project_requests_admin_insert
 on public.project_requests for insert
 to authenticated
-with check (owner_id = (select auth.uid()));
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
-create policy project_requests_update_owner_or_admin
+create policy project_requests_admin_update
 on public.project_requests for update
 to authenticated
-using (
-  owner_id = (select auth.uid())
-  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
-)
-with check (
-  owner_id = (select auth.uid())
-  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
-);
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Projects
 create policy projects_select_client_member_or_admin
@@ -492,7 +486,23 @@ using (
   or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 )
 with check (
-  sender_id = (select auth.uid())
+  (
+    sender_id = (select auth.uid())
+    and exists (
+      select 1
+      from public.conversations c
+      join public.projects p on p.id = c.project_id
+      where c.id = messages.conversation_id
+        and (
+          p.client_id = (select auth.uid())
+          or exists (
+            select 1 from public.project_members pm
+            where pm.project_id = p.id
+              and pm.user_id = (select auth.uid())
+          )
+        )
+    )
+  )
   or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
@@ -606,4 +616,6 @@ grant select, insert, update, delete on public.conversations to authenticated;
 grant select, insert, update on public.messages to authenticated;
 grant select, insert, update, delete on public.message_attachments to authenticated;
 grant select, insert, update, delete on public.handover_items to authenticated;
-grant select, insert, update, delete on public.notifications to authenticated;
+grant select on public.notifications to authenticated;
+grant update (read_at) on public.notifications to authenticated;
+grant insert, delete on public.notifications to authenticated;
