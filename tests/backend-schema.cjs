@@ -51,6 +51,21 @@ assert.ok(
 );
 
 assert.ok(
+  schema.includes("revoke all on table") && schema.includes("from anon"),
+  "Backend schema must explicitly revoke LINETECH table access from anon."
+);
+
+assert.ok(
+  !schema.includes("project_members_select_self_project_or_admin"),
+  "Project member RLS must not reintroduce the recursive projects/project_members policy."
+);
+
+assert.ok(
+  schema.includes("project_members_select_self_or_admin"),
+  "Non-recursive project member read policy must be present."
+);
+
+assert.ok(
   schema.includes("grant usage on schema public to authenticated"),
   "Authenticated Data API access must be explicit."
 );
