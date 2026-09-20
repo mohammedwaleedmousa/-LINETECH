@@ -13,6 +13,7 @@ const budgets = ["Need guidance", "Small focused project", "Medium project", "La
 const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
 const finderStorageKey = "linetech-service-finder-v1";
 const requestDraftKey = "linetech-project-request-draft-v1";
+const requestSubmissionKey = "linetech-project-submission-key-v1";
 
 type FinderAnswerIds = Partial<Record<"outcome" | "priority" | "stage", string>>;
 type StoredFinderState = {
@@ -237,6 +238,7 @@ export default function ProjectIntake() {
   const [budget, setBudget] = useState("Need guidance");
   const [timing, setTiming] = useState("Flexible");
   const [notes, setNotes] = useState("");
+  const submissionKeyRef = useRef("");
 
   useEffect(() => {
     try {
@@ -359,10 +361,23 @@ export default function ProjectIntake() {
     setActionStatus("");
 
     try {
+      let submissionKey = submissionKeyRef.current;
+      if (!submissionKey) {
+        try {
+          submissionKey = window.sessionStorage.getItem(requestSubmissionKey) || "";
+        } catch {}
+      }
+      if (!submissionKey) {
+        submissionKey = window.crypto.randomUUID();
+        submissionKeyRef.current = submissionKey;
+        try { window.sessionStorage.setItem(requestSubmissionKey, submissionKey); } catch {}
+      }
+
       const response = await fetch("/api/project-request", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
+          submissionKey,
           name,
           company,
           contact,
@@ -429,7 +444,11 @@ export default function ProjectIntake() {
       setRequestId(id);
       setCompletedAt(timestamp);
       setCompleted(true);
-      try { window.sessionStorage.removeItem(requestDraftKey); } catch {}
+      try {
+        window.sessionStorage.removeItem(requestDraftKey);
+        window.sessionStorage.removeItem(requestSubmissionKey);
+      } catch {}
+      submissionKeyRef.current = "";
       requestAnimationFrame(() => document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" }));
     } catch {
       setActionStatus(copy.storageError);
