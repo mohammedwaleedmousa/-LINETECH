@@ -160,6 +160,8 @@ async function chooseCustomSelect(index, optionIndex = 0) {
 const buttonContaining = text => [...document.querySelectorAll('button')]
   .find(element => element.textContent.includes(text));
 
+const localizationStage = process.env.LOCALIZATION_STAGE || 'all';
+
 (async () => {
   assert.equal(translate('Step 4 of 4', 'ar'), 'الخطوة 4 من 4');
   assert.equal(translate('Review request', 'ar'), 'مراجعة الطلب');
@@ -167,6 +169,11 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
     translate('تم تسليم الطلب إلى LINETECH', 'ar'),
     'تم تسليم الطلب إلى لاين تك'
   );
+
+  if (localizationStage === 'static') {
+    console.log('PASS: localization static translation stage');
+    return;
+  }
 
   const Bridge = require('../app/LanguageBridge.tsx').default;
   const Nav = require('../app/SiteNav.tsx').default;
@@ -178,6 +185,12 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.ok(document.body.textContent.includes('الخدمات'));
   assert.ok(document.body.textContent.includes('المحادثة'));
   assert.ok(document.body.textContent.includes('تسجيل الدخول'));
+
+  if (localizationStage === 'nav') {
+    console.log('PASS: localization nav stage');
+    await act(async () => root.unmount());
+    return;
+  }
 
   await click(document.querySelector('.search-trigger'));
   await fill(document.querySelector('.site-search-field input'), 'فلامنجو');
@@ -224,6 +237,12 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await click(buttonContaining('Copy request details'));
   assert.ok(copied.includes('Project type：Web Development'));
 
+  if (localizationStage === 'intake') {
+    console.log('PASS: localization intake stage');
+    await act(async () => root.unmount());
+    return;
+  }
+
   // Login UI bilingual behavior.
   const Login = require('../app/login/LoginForm.tsx').default;
   await act(async () => setLanguage('ar'));
@@ -233,6 +252,12 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await click(buttonContaining('تسجيل الدخول'));
   await click(buttonContaining('نسيت كلمة المرور'));
   assert.ok(document.body.textContent.includes('استعد حسابك.'));
+
+  if (localizationStage === 'login') {
+    console.log('PASS: localization login stage');
+    await act(async () => root.unmount());
+    return;
+  }
 
   // Chat keeps client-authored message text exact while chrome remains localized.
   const Chat = require('../app/chat/ChatWorkspace.tsx').default;
