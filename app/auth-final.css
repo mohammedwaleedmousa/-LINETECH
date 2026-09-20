@@ -50,3 +50,28 @@ html[dir="rtl"] .login-inline-action{text-align:center}
   .login-form input[type="text"],.login-form input[type="email"],.login-form input[type="password"]{font-size:16px}
   .login-password-toggle{height:34px;font-size:11px}
 }
+
+/* Login page: auth card is the primary focus. */
+.login-shell.login-shell-auth-only{
+  grid-template-columns:minmax(0,520px);
+  justify-content:center;
+  gap:0;
+  padding:56px 0;
+}
+.login-shell-auth-only .login-card{
+  width:100%;
+  max-width:520px;
+  justify-self:stretch;
+}
+@media(max-width:900px){
+  .login-shell.login-shell-auth-only{
+    width:min(560px,calc(100% - 32px));
+    padding:42px 0 52px;
+  }
+}
+@media(max-width:620px){
+  .login-shell.login-shell-auth-only{
+    width:calc(100% - 24px);
+    padding:24px 0 34px;
+  }
+}
