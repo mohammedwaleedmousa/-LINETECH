@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "../Localized";
 
-type Mode = "login" | "signup" | "forgot";
+type Mode = "login" | "signup" | "forgot" | "reset";
 
 const copy = {
   en: {
@@ -39,12 +40,21 @@ const copy = {
     terms: "Terms",
     privacy: "Privacy Policy",
     and: "and",
-    recoverButton: "Prepare recovery",
+    recoverButton: "Send recovery email",
+    resetButton: "Update password",
+    resetTitle: "Choose a new password.",
+    resetLead: "Enter and confirm your new password to finish account recovery.",
     back: "← Back to sign in",
-    note: "Account access is not active yet. Details entered on this page are not submitted or stored.",
-    loginReady: "Account access is not active yet, so no credentials were submitted.",
-    signupReady: "Account creation is not active yet, so no account was created or stored.",
-    recoveryReady: "Account recovery is not active yet, so no recovery email was sent.",
+    note: "Your account credentials are handled securely through LINETECH Auth.",
+    loginReady: "Signed in successfully.",
+    signupReady: "Account created successfully.",
+    signupConfirm: "Account created. Check your email to confirm your address before signing in.",
+    recoveryReady: "If an account exists for this email, a recovery message has been sent.",
+    resetReady: "Password updated successfully.",
+    loginError: "Unable to sign in with those details.",
+    signupError: "Unable to create the account. Check the details and try again.",
+    recoveryError: "Unable to prepare account recovery right now.",
+    resetError: "Unable to update the password. Open the recovery link again and retry.",
     mismatch: "Passwords do not match.",
     short: "Use at least 8 characters for the password.",
     workspace: "Open Client Workspace",
@@ -81,12 +91,21 @@ const copy = {
     terms: "الشروط",
     privacy: "سياسة الخصوصية",
     and: "و",
-    recoverButton: "تجهيز الاستعادة",
+    recoverButton: "إرسال رسالة الاستعادة",
+    resetButton: "تحديث كلمة المرور",
+    resetTitle: "اختر كلمة مرور جديدة.",
+    resetLead: "أدخل كلمة المرور الجديدة وأكدها لإكمال استعادة الحساب.",
     back: "العودة إلى تسجيل الدخول →",
-    note: "الوصول إلى الحساب غير مفعّل حاليًا. البيانات المدخلة في هذه الصفحة لا يتم إرسالها أو حفظها.",
-    loginReady: "الوصول إلى الحساب غير مفعّل حاليًا، لذلك لم يتم إرسال بيانات الدخول.",
-    signupReady: "إنشاء الحساب غير مفعّل حاليًا، لذلك لم يتم إنشاء أو حفظ حساب.",
-    recoveryReady: "استعادة الحساب غير مفعّلة حاليًا، لذلك لم يتم إرسال رسالة استعادة.",
+    note: "يتم التعامل مع بيانات حسابك بشكل آمن عبر نظام مصادقة لاين تك.",
+    loginReady: "تم تسجيل الدخول بنجاح.",
+    signupReady: "تم إنشاء الحساب بنجاح.",
+    signupConfirm: "تم إنشاء الحساب. تحقق من بريدك الإلكتروني لتأكيد العنوان قبل تسجيل الدخول.",
+    recoveryReady: "إذا كان هناك حساب بهذا البريد، فقد تم إرسال رسالة الاستعادة.",
+    resetReady: "تم تحديث كلمة المرور بنجاح.",
+    loginError: "تعذر تسجيل الدخول بهذه البيانات.",
+    signupError: "تعذر إنشاء الحساب. راجع البيانات وحاول مرة أخرى.",
+    recoveryError: "تعذر تجهيز استعادة الحساب حاليًا.",
+    resetError: "تعذر تحديث كلمة المرور. افتح رابط الاستعادة من جديد وحاول مرة أخرى.",
     mismatch: "كلمتا المرور غير متطابقتين.",
     short: "استخدم 8 أحرف على الأقل لكلمة المرور.",
     workspace: "افتح مساحة العميل",
@@ -96,11 +115,13 @@ const copy = {
 export default function LoginForm(){
   const language = useLanguage();
   const t = copy[language];
+  const router = useRouter();
   const [mode,setMode]=useState<Mode>("login");
   const [message,setMessage]=useState("");
   const [password,setPassword]=useState("");
   const [confirmPassword,setConfirmPassword]=useState("");
   const [showPassword,setShowPassword]=useState(false);
+  const [submitting,setSubmitting]=useState(false);
 
   function switchMode(next:Mode){
     setMode(next);
@@ -110,13 +131,47 @@ export default function LoginForm(){
     setShowPassword(false);
   }
 
-  function handleSubmit(event:FormEvent<HTMLFormElement>){
+  useEffect(()=>{
+    const hash = new URLSearchParams(window.location.hash.replace(/^#/, ""));
+    const accessToken = hash.get("access_token");
+    const refreshToken = hash.get("refresh_token");
+    const expiresIn = Number(hash.get("expires_in") || "3600");
+    const search = new URLSearchParams(window.location.search);
+    const isRecovery = hash.get("type") === "recovery" || search.get("recovery") === "1";
+
+    if(!accessToken || !refreshToken) return;
+
+    void (async()=>{
+      const response = await fetch("/api/auth/session",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({accessToken,refreshToken,expiresIn}),
+      });
+
+      if(!response.ok){
+        setMessage(isRecovery ? t.resetError : t.loginError);
+        return;
+      }
+
+      window.history.replaceState({}, "", window.location.pathname + window.location.search);
+      if(isRecovery){
+        switchMode("reset");
+      }else{
+        router.replace("/workspace");
+        router.refresh();
+      }
+    })();
+  },[router,language]);
+
+  async function handleSubmit(event:FormEvent<HTMLFormElement>){
     event.preventDefault();
-    if(mode==="forgot"){
-      setMessage(t.recoveryReady);
-      return;
-    }
-    if(mode==="signup"){
+    if(submitting) return;
+
+    const form = new FormData(event.currentTarget);
+    const email = String(form.get("email") || "").trim();
+    setMessage("");
+
+    if(mode==="signup" || mode==="reset"){
       if(password.length < 8){
         setMessage(t.short);
         return;
@@ -125,24 +180,107 @@ export default function LoginForm(){
         setMessage(t.mismatch);
         return;
       }
-      setMessage(t.signupReady);
-      return;
     }
-    setMessage(t.loginReady);
+
+    setSubmitting(true);
+    try{
+      if(mode==="forgot"){
+        const response = await fetch("/api/auth/recover",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({email}),
+        });
+        setMessage(response.ok ? t.recoveryReady : t.recoveryError);
+        return;
+      }
+
+      if(mode==="reset"){
+        const response = await fetch("/api/auth/update-password",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({password}),
+        });
+        if(!response.ok){
+          setMessage(t.resetError);
+          return;
+        }
+        setMessage(t.resetReady);
+        router.replace("/workspace");
+        router.refresh();
+        return;
+      }
+
+      if(mode==="signup"){
+        const response = await fetch("/api/auth/signup",{
+          method:"POST",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({
+            fullName:String(form.get("name") || "").trim(),
+            company:String(form.get("company") || "").trim(),
+            email,
+            password,
+          }),
+        });
+        const result = await response.json().catch(()=>({}));
+        if(!response.ok){
+          setMessage(t.signupError);
+          return;
+        }
+        if(result.needsEmailConfirmation){
+          setMessage(t.signupConfirm);
+          return;
+        }
+        setMessage(t.signupReady);
+        router.replace("/workspace");
+        router.refresh();
+        return;
+      }
+
+      const response = await fetch("/api/auth/login",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({
+          email,
+          password,
+          remember:form.get("remember")==="on",
+        }),
+      });
+
+      if(!response.ok){
+        setMessage(t.loginError);
+        return;
+      }
+
+      setMessage(t.loginReady);
+      const next = new URLSearchParams(window.location.search).get("next");
+      router.replace(next && next.startsWith("/") ? next : "/workspace");
+      router.refresh();
+    }catch{
+      setMessage(
+        mode==="signup" ? t.signupError :
+        mode==="forgot" ? t.recoveryError :
+        mode==="reset" ? t.resetError :
+        t.loginError
+      );
+    }finally{
+      setSubmitting(false);
+    }
   }
 
   const isForgot = mode === "forgot";
+  const isReset = mode === "reset";
+
 
   return <div className="account-access">
-    {!isForgot && <div className="account-switch" role="tablist" aria-label={t.accountAction}>
+    {!isForgot && !isReset && <div className="account-switch" role="tablist" aria-label={t.accountAction}>
       <button type="button" role="tab" aria-selected={mode==="login"} className={mode==="login"?"active":""} onClick={()=>switchMode("login")}>{t.signIn}</button>
       <button type="button" role="tab" aria-selected={mode==="signup"} className={mode==="signup"?"active":""} onClick={()=>switchMode("signup")}>{t.create}</button>
     </div>}
 
     <div className="account-mode-head">
       <span>{mode==="login"?t.clientAccess:mode==="signup"?t.newAccount:t.recovery}</span>
-      <h2>{mode==="login"?t.welcome:mode==="signup"?t.createTitle:t.recoverTitle}</h2>
-      <p>{mode==="login"?t.loginLead:mode==="signup"?t.signupLead:t.recoverLead}</p>
+      <h2>{mode==="login"?t.welcome:mode==="signup"?t.createTitle:mode==="reset"?t.resetTitle:t.recoverTitle}</h2>
+      <p>{mode==="login"?t.loginLead:mode==="signup"?t.signupLead:mode==="reset"?t.resetLead:t.recoverLead}</p>
     </div>
 
     <form className="login-form" onSubmit={handleSubmit}>
@@ -151,18 +289,18 @@ export default function LoginForm(){
         <label><span>{t.company}</span><input type="text" name="company" autoComplete="organization" placeholder={t.optional}/></label>
       </>}
 
-      <label><span>{t.email}</span><input type="email" name="email" autoComplete="email" placeholder={t.emailPlaceholder} required/></label>
+      {!isReset&&<label><span>{t.email}</span><input type="email" name="email" autoComplete="email" placeholder={t.emailPlaceholder} required/></label>}
 
       {!isForgot&&<label><span>{t.password}</span><div className="login-password-field"><input type={showPassword?"text":"password"} name="password" value={password} onChange={event=>setPassword(event.target.value)} autoComplete={mode==="login"?"current-password":"new-password"} placeholder={mode==="login"?t.enterPassword:t.createPassword} required/><button type="button" className="login-password-toggle" onClick={()=>setShowPassword(value=>!value)}>{showPassword?t.hide:t.show}</button></div></label>}
 
-      {mode==="signup"&&<label><span>{t.confirmPassword}</span><input type={showPassword?"text":"password"} name="confirmPassword" value={confirmPassword} onChange={event=>setConfirmPassword(event.target.value)} autoComplete="new-password" placeholder={t.repeatPassword} required/></label>}
+      {(mode==="signup"||mode==="reset")&&<label><span>{t.confirmPassword}</span><input type={showPassword?"text":"password"} name="confirmPassword" value={confirmPassword} onChange={event=>setConfirmPassword(event.target.value)} autoComplete="new-password" placeholder={t.repeatPassword} required/></label>}
 
       {mode==="login"?<div className="login-options">
         <label className="login-remember"><input type="checkbox" name="remember"/><span>{t.remember}</span></label>
         <button className="login-forgot" type="button" onClick={()=>switchMode("forgot")}>{t.forgot}</button>
       </div>:mode==="signup"?<label className="signup-terms"><input type="checkbox" required/><span>{t.agree} <Link href="/terms">{t.terms}</Link> {t.and} <Link href="/privacy">{t.privacy}</Link>.</span></label>:null}
 
-      <button className="login-submit" type="submit">{mode==="login"?t.signIn:mode==="signup"?t.create:t.recoverButton} <span>→</span></button>
+      <button className="login-submit" type="submit" disabled={submitting}>{mode==="login"?t.signIn:mode==="signup"?t.create:mode==="reset"?t.resetButton:t.recoverButton} <span>→</span></button>
       {isForgot&&<button className="login-inline-action" type="button" onClick={()=>switchMode("login")}>{t.back}</button>}
       <p className="login-ui-note">{t.note}</p>
       {message&&<div className="login-feedback-wrap" role="status"><p className="login-feedback">{message}</p><Link href="/workspace">{t.workspace} →</Link></div>}
