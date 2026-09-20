@@ -84,9 +84,22 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
   }
 
   if(path==="/api/admin/project" && request.method==="PATCH") {
+    if(requestTooLarge(request,64*1024)) return json({ok:false},413,admin.setCookies);
     const data=await request.json().catch(()=>({})) as Record<string,any>;
-    const projectId=String(data.projectId||"").trim();
+    const projectId=boundedText(data.projectId,100);
     if(!projectId) return json({ok:false},400,admin.setCookies);
+
+    const textFields={
+      latestUpdate:boundedText(data.latestUpdate,5000),
+      dueDate:boundedText(data.dueDate,40),
+      nextActionTitle:boundedText(data.nextActionTitle,300),
+      nextActionBody:boundedText(data.nextActionBody,3000),
+      activityTitle:boundedText(data.activityTitle,300),
+      activityDetail:boundedText(data.activityDetail,3000),
+      notificationTitle:boundedText(data.notificationTitle,300),
+      notificationBody:boundedText(data.notificationBody,3000),
+    };
+    if(Object.values(textFields).some(value=>value===null)) return json({ok:false},413,admin.setCookies);
 
     const cr=await restFetch(env,`/projects?select=*&id=eq.${encodeURIComponent(projectId)}&limit=1`,admin.accessToken);
     const currentRows=await safeJson(cr) as Row[]|null;
@@ -103,10 +116,10 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       if(phase<1||phase>5) return json({ok:false},400,admin.setCookies);
       update.phase=phase;
     }
-    if(data.latestUpdate!==undefined) update.latest_update=data.latestUpdate||null;
-    if(data.dueDate!==undefined) update.due_date=data.dueDate||null;
-    if(data.nextActionTitle!==undefined) update.next_action_title=data.nextActionTitle||null;
-    if(data.nextActionBody!==undefined) update.next_action_body=data.nextActionBody||null;
+    if(data.latestUpdate!==undefined) update.latest_update=textFields.latestUpdate||null;
+    if(data.dueDate!==undefined) update.due_date=textFields.dueDate||null;
+    if(data.nextActionTitle!==undefined) update.next_action_title=textFields.nextActionTitle||null;
+    if(data.nextActionBody!==undefined) update.next_action_body=textFields.nextActionBody||null;
     if(data.nextActionRequired!==undefined) update.next_action_required=Boolean(data.nextActionRequired);
 
     let project=current;
@@ -126,13 +139,13 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       });
     }
 
-    if(String(data.activityTitle||"").trim()) {
+    if(textFields.activityTitle) {
       await restFetch(env,"/project_activity",admin.accessToken,{
         method:"POST",
         body:JSON.stringify({
           project_id:projectId,actor_id:admin.user.id,event_type:"project_update",
-          title:String(data.activityTitle).trim(),
-          detail:String(data.activityDetail||"").trim()||null,
+          title:textFields.activityTitle,
+          detail:textFields.activityDetail||null,
         }),
       });
     }
@@ -142,8 +155,8 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         method:"POST",
         body:JSON.stringify({
           user_id:current.client_id,project_id:projectId,
-          title:String(data.notificationTitle||data.activityTitle||"Project updated").trim(),
-          body:String(data.notificationBody||data.activityDetail||"").trim()||null,
+          title:textFields.notificationTitle||textFields.activityTitle||"Project updated",
+          body:textFields.notificationBody||textFields.activityDetail||null,
         }),
       });
     }
@@ -210,15 +223,20 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
   }
 
   if(path==="/api/admin/files" && request.method==="PATCH") {
+    if(requestTooLarge(request,32*1024)) return json({ok:false},413,admin.setCookies);
     const data=await request.json().catch(()=>({})) as Record<string,any>;
-    const fileId=String(data.fileId||"").trim();
+    const fileId=boundedText(data.fileId,100);
     if(!fileId) return json({ok:false},400,admin.setCookies);
     const update:Record<string,unknown>={};
     if(data.status!==undefined) {
       if(!fileStatuses.has(String(data.status))) return json({ok:false},400,admin.setCookies);
       update.status=data.status;
     }
-    if(data.detail!==undefined) update.detail=String(data.detail||"").trim()||null;
+    if(data.detail!==undefined) {
+      const detail=boundedText(data.detail,1000);
+      if(detail===null) return json({ok:false},413,admin.setCookies);
+      update.detail=detail||null;
+    }
     if(!Object.keys(update).length) return json({ok:false},400,admin.setCookies);
 
     const response=await restFetch(env,`/project_files?id=eq.${encodeURIComponent(fileId)}&select=*`,admin.accessToken,{
@@ -242,13 +260,16 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     }
 
     if(request.method==="POST") {
+      if(requestTooLarge(request,64*1024)) return json({ok:false},413,admin.setCookies);
       const data=await request.json().catch(()=>({})) as Record<string,any>;
-      const projectId=String(data.projectId||"").trim();
-      const title=String(data.title||"").trim();
+      const projectId=boundedText(data.projectId,100);
+      const title=boundedText(data.title,300);
+      const description=boundedText(data.description,5000);
+      if(projectId===null||title===null||description===null) return json({ok:false},413,admin.setCookies);
       if(!projectId||!title) return json({ok:false},400,admin.setCookies);
       const response=await restFetch(env,"/handover_items?select=*",admin.accessToken,{
         method:"POST",headers:{Prefer:"return=representation"},
-        body:JSON.stringify({project_id:projectId,title,description:String(data.description||"").trim()||null}),
+        body:JSON.stringify({project_id:projectId,title,description:description||null}),
       });
       const rows=await safeJson(response) as Row[]|null;
       return response.ok&&Array.isArray(rows)&&rows[0]
@@ -257,16 +278,22 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     }
 
     if(request.method==="PATCH") {
+      if(requestTooLarge(request,64*1024)) return json({ok:false},413,admin.setCookies);
       const data=await request.json().catch(()=>({})) as Record<string,any>;
-      const itemId=String(data.itemId||"").trim();
+      const itemId=boundedText(data.itemId,100);
       if(!itemId) return json({ok:false},400,admin.setCookies);
       const update:Record<string,unknown>={};
       if(data.title!==undefined) {
-        const title=String(data.title||"").trim();
+        const title=boundedText(data.title,300);
+        if(title===null) return json({ok:false},413,admin.setCookies);
         if(!title) return json({ok:false},400,admin.setCookies);
         update.title=title;
       }
-      if(data.description!==undefined) update.description=String(data.description||"").trim()||null;
+      if(data.description!==undefined) {
+        const description=boundedText(data.description,5000);
+        if(description===null) return json({ok:false},413,admin.setCookies);
+        update.description=description||null;
+      }
       if(data.completed!==undefined) {
         update.completed=Boolean(data.completed);
         update.completed_at=data.completed?new Date().toISOString():null;
@@ -331,8 +358,10 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     }
 
     if(request.method==="POST") {
+      if(requestTooLarge(request,32*1024)) return json({ok:false},413,admin.setCookies);
       const data=await request.json().catch(()=>({})) as Record<string,any>;
-      const text=String(data.text||"").trim();
+      const text=boundedText(data.text,5000);
+      if(text===null) return json({ok:false},413,admin.setCookies);
       if(!text) return json({ok:false},400,admin.setCookies);
 
       const response=await restFetch(env,"/messages?select=*",admin.accessToken,{
