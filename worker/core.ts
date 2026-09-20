@@ -1,7 +1,18 @@
+export type RateLimitBinding = {
+  limit(input: { key: string }): Promise<{ success: boolean }>;
+};
+
 export type Env = {
   ASSETS: { fetch(request: Request): Promise<Response> };
   SUPABASE_URL: string;
   SUPABASE_PUBLISHABLE_KEY: string;
+  AUTH_LOGIN_RATE_LIMITER: RateLimitBinding;
+  AUTH_SIGNUP_RATE_LIMITER: RateLimitBinding;
+  AUTH_RECOVER_RATE_LIMITER: RateLimitBinding;
+  AUTH_PASSWORD_RATE_LIMITER: RateLimitBinding;
+  PROJECT_REQUEST_RATE_LIMITER: RateLimitBinding;
+  CHAT_RATE_LIMITER: RateLimitBinding;
+  UPLOAD_RATE_LIMITER: RateLimitBinding;
 };
 
 export type AuthUser = {
@@ -91,6 +102,38 @@ export function json(data:unknown,status=200,cookies:string[] = []) {
   const response = new Response(JSON.stringify(data),{
     status,
     headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"},
+  });
+  return withCookies(response,cookies);
+}
+
+
+async function hashedRateLimitKey(value:string) {
+  const bytes=new TextEncoder().encode(value);
+  const digest=await crypto.subtle.digest("SHA-256",bytes);
+  return Array.from(new Uint8Array(digest))
+    .map(byte=>byte.toString(16).padStart(2,"0"))
+    .join("");
+}
+
+export async function rateLimitAllowed(limiter:RateLimitBinding|undefined,key:string) {
+  if(!limiter) return true;
+  try {
+    const result=await limiter.limit({key:await hashedRateLimitKey(key)});
+    return Boolean(result.success);
+  } catch {
+    // Fail open if Cloudflare's limiter binding is temporarily unavailable.
+    return true;
+  }
+}
+
+export function rateLimitResponse(cookies:string[] = []) {
+  const response=new Response(JSON.stringify({ok:false,rateLimited:true}),{
+    status:429,
+    headers:{
+      "Content-Type":"application/json; charset=utf-8",
+      "Cache-Control":"no-store",
+      "Retry-After":"60",
+    },
   });
   return withCookies(response,cookies);
 }
