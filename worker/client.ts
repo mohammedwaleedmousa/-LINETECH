@@ -33,11 +33,11 @@ async function latestProject(env:Env,session:ResolvedSession) {
   return {project,conversation:Array.isArray(conversations)?conversations[0]:null};
 }
 
-function mapMessage(row:Row,userId:string) {
+function mapMessage(row:Row) {
   const attachment=Array.isArray(row.message_attachments)?row.message_attachments[0]:null;
   return {
     id:row.id,
-    sender:row.sender_id===userId?"client":"company",
+    sender:row.sender_role==="company"?"company":"client",
     kind:row.kind,
     text:row.deleted_at?undefined:row.text||undefined,
     src:attachment?.id && !row.deleted_at
@@ -183,7 +183,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       if(!response.ok) return json({ok:false},response.status,session.setCookies);
       return json({
         ok:true,
-        messages:Array.isArray(rows)?rows.map(row=>mapMessage(row,String(session.user.id))):[],
+        messages:Array.isArray(rows)?rows.map(row=>mapMessage(row)):[],
       },200,session.setCookies);
     }
 
@@ -199,6 +199,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         body:JSON.stringify({
           conversation_id:context.conversation.id,
           sender_id:session.user.id,
+          sender_role:"client",
           kind:"text",
           text,
         }),
@@ -206,7 +207,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       const rows=await safeJson(response) as Row[]|null;
       const row=Array.isArray(rows)?rows[0]:null;
       return response.ok && row
-        ? json({ok:true,message:mapMessage({...row,message_attachments:[]},String(session.user.id))},200,session.setCookies)
+        ? json({ok:true,message:mapMessage({...row,message_attachments:[]})},200,session.setCookies)
         : json({ok:false},response.ok?500:response.status,session.setCookies);
     }
 
@@ -218,7 +219,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
       const response=await restFetch(
         env,
-        `/messages?id=eq.${encodeURIComponent(id)}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&select=*`,
+        `/messages?id=eq.${encodeURIComponent(id)}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&sender_role=eq.client&select=*`,
         session.accessToken,
         {
           method:"PATCH",
@@ -229,7 +230,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       const rows=await safeJson(response) as Row[]|null;
       const row=Array.isArray(rows)?rows[0]:null;
       return response.ok && row
-        ? json({ok:true,message:mapMessage({...row,message_attachments:[]},String(session.user.id))},200,session.setCookies)
+        ? json({ok:true,message:mapMessage({...row,message_attachments:[]})},200,session.setCookies)
         : json({ok:false},response.ok?404:response.status,session.setCookies);
     }
 
@@ -247,7 +248,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
       const response=await restFetch(
         env,
-        `/messages?id=eq.${encodeURIComponent(id)}&sender_id=eq.${encodeURIComponent(String(session.user.id))}`,
+        `/messages?id=eq.${encodeURIComponent(id)}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&sender_role=eq.client`,
         session.accessToken,
         {method:"PATCH",body:JSON.stringify({text:null,deleted_at:new Date().toISOString()})},
       );
@@ -304,6 +305,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       body:JSON.stringify({
         conversation_id:context.conversation.id,
         sender_id:session.user.id,
+        sender_role:"client",
         kind,
         text:null,
       }),
