@@ -251,10 +251,8 @@ export default function LoginForm(){
         return;
       }
 
-      setMessage(t.loginReady);
       const next = new URLSearchParams(window.location.search).get("next");
-      router.replace(next && next.startsWith("/") ? next : "/workspace");
-      router.refresh();
+      window.location.assign(next && next.startsWith("/") ? next : "/workspace");
     }catch{
       setMessage(
         mode==="signup" ? t.signupError :
