@@ -36,18 +36,6 @@ Object.defineProperty(global, 'navigator', {
   configurable: true,
 });
 
-Object.defineProperty(window, 'crypto', {
-  value: {
-    ...(window.crypto || {}),
-    getRandomValues: array => {
-      for (let i = 0; i < array.length; i += 1) array[i] = 123456789 + i;
-      return array;
-    },
-    randomUUID: () => '11111111-2222-4333-8444-555555555555',
-  },
-  configurable: true,
-});
-
 global.fetch = async (input, init = {}) => {
   const url = typeof input === 'string' ? input : String(input?.url || input);
   const method = String(init.method || 'GET').toUpperCase();
@@ -244,12 +232,12 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.ok(document.body.textContent.includes('أنشئ مساحة عملك.'));
   await click(buttonContaining('تسجيل الدخول'));
   await click(buttonContaining('نسيت كلمة المرور'));
-  assert.ok(document.body.textContent.includes('استعادة كلمة المرور'));
+  assert.ok(document.body.textContent.includes('استعد حسابك.'));
 
   // Chat keeps client-authored message text exact while chrome remains localized.
   const Chat = require('../app/chat/ChatWorkspace.tsx').default;
   await render(Bridge, Chat);
-  assert.ok(document.body.textContent.includes('المحادثات'));
+  assert.ok(document.body.textContent.includes('محادثة المشروع'));
   await fill(document.querySelector('.chat-composer textarea'), 'Exact user message 123');
   await click(document.querySelector('.chat-send'));
   await act(async () => Promise.resolve());
