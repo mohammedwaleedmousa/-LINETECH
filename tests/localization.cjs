@@ -275,6 +275,13 @@ const localizationStage = process.env.LOCALIZATION_STAGE || 'all';
   await click(document.querySelector('.desktop-language'));
   assert.equal(document.documentElement.dir, 'ltr');
   assert.ok(document.body.textContent.includes('Your project request is ready.'));
+
+  if (localizationStage === 'language-en') {
+    console.log('PASS: localization English switch stage');
+    await act(async () => root.unmount());
+    return;
+  }
+
   await click(buttonContaining('Copy request details'));
   assert.ok(copied.includes('Project type：Web Development'));
 
