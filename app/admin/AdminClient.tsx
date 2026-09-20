@@ -299,7 +299,7 @@ export default function AdminClient() {
               <div><strong>Phase {detail.project.phase}/5</strong><span>{detail.project.status}</span></div>
             </div>
 
-            <form className="admin-card admin-update-form" onSubmit={saveProject}>
+            <form key={detail.project.id} className="admin-card admin-update-form" onSubmit={saveProject}>
               <div className="admin-card-title"><span>01</span><strong>Project control</strong></div>
               <div className="admin-grid two">
                 <label>Status<select name="status" defaultValue={detail.project.status}>
