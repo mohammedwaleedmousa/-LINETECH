@@ -6,6 +6,8 @@ import {
   getAuthUser,
   json,
   parseCookies,
+  rateLimitAllowed,
+  rateLimitResponse,
   refreshSession,
   resolveSession,
   safeJson,
@@ -22,6 +24,9 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const email=String(data.email||"").trim().toLowerCase();
     const password=String(data.password||"");
     if(!email || !password) return json({ok:false},400);
+    if(!(await rateLimitAllowed(env.AUTH_LOGIN_RATE_LIMITER,`login:${email}`))) {
+      return rateLimitResponse();
+    }
 
     const response=await authFetch(env,"/token?grant_type=password",{
       method:"POST",
@@ -39,6 +44,9 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const email=String(data.email||"").trim().toLowerCase();
     const password=String(data.password||"");
     if(!fullName || !email || password.length<8) return json({ok:false},400);
+    if(!(await rateLimitAllowed(env.AUTH_SIGNUP_RATE_LIMITER,`signup:${email}`))) {
+      return rateLimitResponse();
+    }
 
     const redirectTo=new URL("/login",request.url).toString();
     const response=await authFetch(
@@ -67,6 +75,9 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const data=await body(request);
     const email=String(data.email||"").trim().toLowerCase();
     if(email) {
+      if(!(await rateLimitAllowed(env.AUTH_RECOVER_RATE_LIMITER,`recover:${email}`))) {
+        return rateLimitResponse();
+      }
       const redirectTo=new URL("/login",request.url).toString();
       await authFetch(
         env,
@@ -111,6 +122,12 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const data=await body(request);
     const password=String(data.password||"");
     if(password.length<8) return json({ok:false},400,session.setCookies);
+    if(!(await rateLimitAllowed(
+      env.AUTH_PASSWORD_RATE_LIMITER,
+      `password:${String(session.user.id||"unknown")}`,
+    ))) {
+      return rateLimitResponse(session.setCookies);
+    }
 
     const response=await authFetch(env,"/user",{
       method:"PUT",
