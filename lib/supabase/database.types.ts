@@ -276,37 +276,46 @@ export type Database = {
         Row: {
           category: Database["public"]["Enums"]["project_file_category"]
           created_at: string
+          detail: string | null
           file_name: string
           file_size: number | null
           id: string
           mime_type: string | null
           project_id: string
+          status: string
           storage_bucket: string
           storage_path: string
+          updated_at: string
           uploader_id: string | null
         }
         Insert: {
           category?: Database["public"]["Enums"]["project_file_category"]
           created_at?: string
+          detail?: string | null
           file_name: string
           file_size?: number | null
           id?: string
           mime_type?: string | null
           project_id: string
+          status?: string
           storage_bucket?: string
           storage_path: string
+          updated_at?: string
           uploader_id?: string | null
         }
         Update: {
           category?: Database["public"]["Enums"]["project_file_category"]
           created_at?: string
+          detail?: string | null
           file_name?: string
           file_size?: number | null
           id?: string
           mime_type?: string | null
           project_id?: string
+          status?: string
           storage_bucket?: string
           storage_path?: string
+          updated_at?: string
           uploader_id?: string | null
         }
         Relationships: [
@@ -484,7 +493,25 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      submit_project_request: {
+        Args: {
+          p_audience: string
+          p_budget: string
+          p_company: string
+          p_contact: string
+          p_features: string
+          p_goal: string
+          p_idea: string
+          p_name: string
+          p_notes: string
+          p_preferred_contact: string
+          p_reference_links: string
+          p_service: string
+          p_stage: string
+          p_timing: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       message_kind: "text" | "image" | "audio" | "document"
