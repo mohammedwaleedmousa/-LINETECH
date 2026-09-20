@@ -22,6 +22,10 @@ assert.match(wrangler, /"\/api\/\*"/);
 assert.match(wrangler, /"\/workspace\*"/);
 assert.match(wrangler, /"\/chat\*"/);
 
+const workerIndex = read("worker/index.ts");
+assert.match(workerIndex, /request\.headers\.get\("Origin"\)/);
+assert.match(workerIndex, /origin!==url\.origin/);
+
 const core = read("worker/core.ts");
 assert.match(core, /HttpOnly/);
 assert.match(core, /Secure/);
