@@ -4,6 +4,8 @@ import {
   encodeObjectPath,
   formatTime,
   json,
+  rateLimitAllowed,
+  rateLimitResponse,
   restFetch,
   resolveSession,
   safeJson,
@@ -57,6 +59,12 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
   if(path==="/api/project-request" && request.method==="POST") {
     const session=await requireSession(request,env);
     if(!session) return json({ok:false,authRequired:true},401);
+    if(!(await rateLimitAllowed(
+      env.PROJECT_REQUEST_RATE_LIMITER,
+      `project-request:${String(session.user.id||"unknown")}`,
+    ))) {
+      return rateLimitResponse(session.setCookies);
+    }
 
     const data=await request.json().catch(()=>({})) as Record<string,any>;
     const required=["name","contact","preferredContact","service","stage","goal","idea"];
@@ -188,6 +196,12 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     }
 
     if(request.method==="POST") {
+      if(!(await rateLimitAllowed(
+        env.CHAT_RATE_LIMITER,
+        `chat:${String(session.user.id||"unknown")}`,
+      ))) {
+        return rateLimitResponse(session.setCookies);
+      }
       const data=await request.json().catch(()=>({})) as Record<string,any>;
       const text=String(data.text||"").trim();
       if(!text) return json({ok:false},400,session.setCookies);
@@ -212,6 +226,12 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     }
 
     if(request.method==="PATCH") {
+      if(!(await rateLimitAllowed(
+        env.CHAT_RATE_LIMITER,
+        `chat:${String(session.user.id||"unknown")}`,
+      ))) {
+        return rateLimitResponse(session.setCookies);
+      }
       const data=await request.json().catch(()=>({})) as Record<string,any>;
       const id=String(data.messageId||"").trim();
       const text=String(data.text||"").trim();
@@ -235,6 +255,12 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     }
 
     if(request.method==="DELETE") {
+      if(!(await rateLimitAllowed(
+        env.CHAT_RATE_LIMITER,
+        `chat:${String(session.user.id||"unknown")}`,
+      ))) {
+        return rateLimitResponse(session.setCookies);
+      }
       const data=await request.json().catch(()=>({})) as Record<string,any>;
       const id=String(data.messageId||"").trim();
       if(!id) return json({ok:false},400,session.setCookies);
@@ -274,6 +300,12 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     if(!session) return json({ok:false},401);
     const context=await latestProject(env,session);
     if(!context.project?.id || !context.conversation?.id) return json({ok:false},409,session.setCookies);
+    if(!(await rateLimitAllowed(
+      env.UPLOAD_RATE_LIMITER,
+      `upload:${String(session.user.id||"unknown")}`,
+    ))) {
+      return rateLimitResponse(session.setCookies);
+    }
 
     const form=await request.formData();
     const file=form.get("file");
