@@ -197,6 +197,12 @@ const localizationStage = process.env.LOCALIZATION_STAGE || 'all';
   assert.ok(document.querySelector('.site-search-results').textContent.includes('فلامنجو بارك'));
   await click(document.querySelector('.site-search-topline button'));
 
+  if (localizationStage === 'search') {
+    console.log('PASS: localization search stage');
+    await act(async () => root.unmount());
+    return;
+  }
+
   await fill(document.querySelector('input[placeholder="اسمك الكامل"]'), 'محمد');
   const contactInput = [...document.querySelectorAll('.intake-step input')]
     .find(input => input.type === 'text' && input.value === '' && input.placeholder !== 'اختياري');
@@ -207,6 +213,12 @@ const localizationStage = process.env.LOCALIZATION_STAGE || 'all';
   await click(document.querySelector('.intake-nav-end .button'));
   assert.ok(document.body.textContent.includes('ما الذي يجب أن يتحول إلى واقع؟'));
 
+  if (localizationStage === 'step1') {
+    console.log('PASS: localization step1 stage');
+    await act(async () => root.unmount());
+    return;
+  }
+
   // Step 2: choose the first available stage and goal.
   await chooseCustomSelect(0, 0);
   await chooseCustomSelect(1, 0);
@@ -214,9 +226,21 @@ const localizationStage = process.env.LOCALIZATION_STAGE || 'all';
   await click(document.querySelector('.intake-nav .button'));
   assert.ok(document.body.textContent.includes('كيف نحدد الخطوة الأولى؟'));
 
+  if (localizationStage === 'step2') {
+    console.log('PASS: localization step2 stage');
+    await act(async () => root.unmount());
+    return;
+  }
+
   // Step 3 -> final review. Review wording appears only on the final step.
   await click(document.querySelector('.intake-step .intake-nav .button'));
   assert.ok(document.body.textContent.includes('راجع طلبك قبل إتمامه.'));
+
+  if (localizationStage === 'scope') {
+    console.log('PASS: localization scope stage');
+    await act(async () => root.unmount());
+    return;
+  }
 
   // Step 4 -> complete the request.
   await click(document.querySelector('.request-confirm input'));
@@ -226,10 +250,22 @@ const localizationStage = process.env.LOCALIZATION_STAGE || 'all';
   assert.match(document.querySelector('.request-reference strong').textContent, /^LT-\d{6}-\d{4}$/);
   assert.ok(document.body.textContent.includes('طلب مشروعك جاهز.'));
 
+  if (localizationStage === 'complete') {
+    console.log('PASS: localization complete stage');
+    await act(async () => root.unmount());
+    return;
+  }
+
   await click(buttonContaining('انسخ تفاصيل الطلب'));
   assert.ok(copied.includes('نوع المشروع：تطوير الويب'));
   assert.ok(copied.includes('موقع لشركتي'));
   assert.ok(!copied.includes('Project type'));
+
+  if (localizationStage === 'copy-ar') {
+    console.log('PASS: localization Arabic copy stage');
+    await act(async () => root.unmount());
+    return;
+  }
 
   await click(document.querySelector('.desktop-language'));
   assert.equal(document.documentElement.dir, 'ltr');
