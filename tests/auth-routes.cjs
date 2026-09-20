@@ -69,6 +69,7 @@ for (const endpoint of [
   "/api/admin/files",
   "/api/admin/handover",
   "/api/admin/chat",
+  "/api/admin/users",
   "/api/admin/members",
 ]) {
   assert.ok(admin.includes(endpoint), `Worker admin API is missing ${endpoint}`);
@@ -120,6 +121,8 @@ for (const endpoint of [
   "/api/admin/files",
   "/api/admin/handover",
   "/api/admin/chat",
+  "/api/admin/users",
+  "/api/admin/members",
 ]) {
   assert.ok(adminClient.includes(endpoint), `Admin UI is not wired to ${endpoint}`);
 }
