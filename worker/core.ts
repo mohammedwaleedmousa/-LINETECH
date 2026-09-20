@@ -160,6 +160,7 @@ export async function resolveSession(request:Request,env:Env):Promise<ResolvedSe
     if(!checked.response.ok || !checked.payload?.id) return null;
     user=checked.payload;
   }
+  if(!user?.id) return null;
 
   return {
     accessToken:refreshed.access_token,
