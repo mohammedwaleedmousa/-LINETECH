@@ -57,6 +57,7 @@ const copy = {
     resetError: "Unable to update the password. Open the recovery link again and retry.",
     mismatch: "Passwords do not match.",
     short: "Use at least 8 characters for the password.",
+    rateLimited: "Too many attempts. Wait one minute and try again.",
     workspace: "Open Client Workspace",
   },
   ar: {
@@ -108,6 +109,7 @@ const copy = {
     resetError: "تعذر تحديث كلمة المرور. افتح رابط الاستعادة من جديد وحاول مرة أخرى.",
     mismatch: "كلمتا المرور غير متطابقتين.",
     short: "استخدم 8 أحرف على الأقل لكلمة المرور.",
+    rateLimited: "محاولات كثيرة جدًا. انتظر دقيقة ثم حاول مرة أخرى.",
     workspace: "افتح مساحة العميل",
   },
 } as const;
@@ -190,6 +192,10 @@ export default function LoginForm(){
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify({email}),
         });
+        if(response.status===429){
+          setMessage(t.rateLimited);
+          return;
+        }
         setMessage(response.ok ? t.recoveryReady : t.recoveryError);
         return;
       }
@@ -200,6 +206,10 @@ export default function LoginForm(){
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify({password}),
         });
+        if(response.status===429){
+          setMessage(t.rateLimited);
+          return;
+        }
         if(!response.ok){
           setMessage(t.resetError);
           return;
@@ -222,6 +232,10 @@ export default function LoginForm(){
           }),
         });
         const result = await response.json().catch(()=>({}));
+        if(response.status===429){
+          setMessage(t.rateLimited);
+          return;
+        }
         if(!response.ok){
           setMessage(t.signupError);
           return;
@@ -246,6 +260,10 @@ export default function LoginForm(){
         }),
       });
 
+      if(response.status===429){
+        setMessage(t.rateLimited);
+        return;
+      }
       if(!response.ok){
         setMessage(t.loginError);
         return;
