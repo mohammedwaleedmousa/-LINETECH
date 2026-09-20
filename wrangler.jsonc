@@ -16,5 +16,10 @@
       "/workspace*",
       "/chat*"
     ]
+  },
+  "secrets": {
+    "required": [
+      "SUPABASE_PUBLISHABLE_KEY"
+    ]
   }
 }
