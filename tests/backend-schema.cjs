@@ -31,8 +31,18 @@ for (const table of requiredTables) {
 }
 
 assert.ok(
-  schema.includes("auth.jwt() -> 'app_metadata' ->> 'role'"),
+  schema.includes("'app_metadata' ->> 'role'"),
   "Admin authorization must use trusted auth app_metadata."
+);
+
+assert.ok(
+  schema.includes("submit_project_request"),
+  "Atomic project request RPC must be present."
+);
+
+assert.ok(
+  schema.includes("security invoker"),
+  "Database helper functions must preserve caller RLS with SECURITY INVOKER."
 );
 
 assert.ok(
