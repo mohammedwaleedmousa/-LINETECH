@@ -2,6 +2,7 @@ import {
   type Env,
   type AuthSession,
   authFetch,
+  boundedText,
   clearCookies,
   getAuthUser,
   json,
@@ -9,6 +10,7 @@ import {
   rateLimitAllowed,
   rateLimitResponse,
   refreshSession,
+  requestTooLarge,
   resolveSession,
   safeJson,
   sessionCookies,
@@ -20,9 +22,12 @@ async function body(request:Request) {
 
 export async function handleAuth(request:Request,env:Env,path:string):Promise<Response|null> {
   if(path==="/api/auth/login" && request.method==="POST") {
+    if(requestTooLarge(request,16*1024)) return json({ok:false},413);
     const data=await body(request);
-    const email=String(data.email||"").trim().toLowerCase();
+    const emailRaw=boundedText(data.email,320);
     const password=String(data.password||"");
+    if(emailRaw===null || password.length>1024) return json({ok:false},413);
+    const email=(emailRaw||"").toLowerCase();
     if(!email || !password) return json({ok:false},400);
     if(!(await rateLimitAllowed(env.AUTH_LOGIN_RATE_LIMITER,`login:${email}`))) {
       return rateLimitResponse();
@@ -38,11 +43,17 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
   }
 
   if(path==="/api/auth/signup" && request.method==="POST") {
+    if(requestTooLarge(request,16*1024)) return json({ok:false},413);
     const data=await body(request);
-    const fullName=String(data.fullName||"").trim();
-    const company=String(data.company||"").trim() || null;
-    const email=String(data.email||"").trim().toLowerCase();
+    const fullName=boundedText(data.fullName,120);
+    const companyValue=boundedText(data.company,160);
+    const emailRaw=boundedText(data.email,320);
     const password=String(data.password||"");
+    if(fullName===null || companyValue===null || emailRaw===null || password.length>1024) {
+      return json({ok:false},413);
+    }
+    const company=companyValue||null;
+    const email=(emailRaw||"").toLowerCase();
     if(!fullName || !email || password.length<8) return json({ok:false},400);
     if(!(await rateLimitAllowed(env.AUTH_SIGNUP_RATE_LIMITER,`signup:${email}`))) {
       return rateLimitResponse();
@@ -74,8 +85,11 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
   }
 
   if(path==="/api/auth/recover" && request.method==="POST") {
+    if(requestTooLarge(request,8*1024)) return json({ok:false},413);
     const data=await body(request);
-    const email=String(data.email||"").trim().toLowerCase();
+    const emailRaw=boundedText(data.email,320);
+    if(emailRaw===null) return json({ok:false},413);
+    const email=(emailRaw||"").toLowerCase();
     if(email) {
       if(!(await rateLimitAllowed(env.AUTH_RECOVER_RATE_LIMITER,`recover:${email}`))) {
         return rateLimitResponse();
@@ -103,9 +117,11 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
   }
 
   if(path==="/api/auth/session" && request.method==="POST") {
+    if(requestTooLarge(request,32*1024)) return json({ok:false},413);
     const data=await body(request);
     const accessToken=String(data.accessToken||"");
     const refreshToken=String(data.refreshToken||"");
+    if(accessToken.length>12*1024 || refreshToken.length>12*1024) return json({ok:false},413);
     if(!accessToken || !refreshToken) return json({ok:false},400);
 
     const verified=await getAuthUser(env,accessToken);
@@ -123,8 +139,10 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
   if(path==="/api/auth/update-password" && request.method==="POST") {
     const session=await resolveSession(request,env);
     if(!session) return json({ok:false},401);
+    if(requestTooLarge(request,8*1024)) return json({ok:false},413,session.setCookies);
     const data=await body(request);
     const password=String(data.password||"");
+    if(password.length>1024) return json({ok:false},413,session.setCookies);
     if(password.length<8) return json({ok:false},400,session.setCookies);
     if(!(await rateLimitAllowed(
       env.AUTH_PASSWORD_RATE_LIMITER,
