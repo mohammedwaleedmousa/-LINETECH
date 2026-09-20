@@ -279,3 +279,104 @@ export function withSecurityHeaders(response:Response,request:Request,requestId?
     headers,
   });
 }
+
+
+export type UploadKind = "image" | "audio" | "document" | "admin";
+
+const IMAGE_MIMES=new Set(["image/jpeg","image/png","image/gif","image/webp"]);
+const AUDIO_MIMES=new Set(["audio/webm","audio/ogg","audio/mp4","audio/mpeg","audio/wav","audio/x-wav"]);
+const DOCUMENT_MIMES=new Set([
+  "application/pdf",
+  "text/plain",
+  "text/csv",
+  "application/zip",
+  "application/x-zip-compressed",
+  "application/msword",
+  "application/vnd.ms-excel",
+  "application/vnd.ms-powerpoint",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  "application/vnd.openxmlformats-officedocument.presentationml.presentation",
+]);
+const BLOCKED_EXTENSIONS=new Set([
+  "exe","dll","msi","bat","cmd","com","scr","ps1","sh","apk","app","jar",
+  "html","htm","xhtml","js","mjs","cjs","svg",
+]);
+
+function extensionOf(name:string) {
+  const clean=name.trim().toLowerCase();
+  const index=clean.lastIndexOf(".");
+  return index>=0 ? clean.slice(index+1) : "";
+}
+
+function starts(bytes:Uint8Array,signature:number[]) {
+  return signature.every((value,index)=>bytes[index]===value);
+}
+
+async function signatureMatches(file:File,mime:string) {
+  const bytes=new Uint8Array(await file.slice(0,32).arrayBuffer());
+  const ascii=new TextDecoder("latin1").decode(bytes);
+
+  if(mime==="image/jpeg") return starts(bytes,[0xff,0xd8,0xff]);
+  if(mime==="image/png") return starts(bytes,[0x89,0x50,0x4e,0x47,0x0d,0x0a,0x1a,0x0a]);
+  if(mime==="image/gif") return ascii.startsWith("GIF87a") || ascii.startsWith("GIF89a");
+  if(mime==="image/webp") return ascii.startsWith("RIFF") && ascii.slice(8,12)==="WEBP";
+  if(mime==="application/pdf") return ascii.startsWith("%PDF");
+  if(mime==="application/zip" || mime==="application/x-zip-compressed"
+    || mime.startsWith("application/vnd.openxmlformats-officedocument.")) {
+    return starts(bytes,[0x50,0x4b,0x03,0x04]) || starts(bytes,[0x50,0x4b,0x05,0x06]) || starts(bytes,[0x50,0x4b,0x07,0x08]);
+  }
+  if(mime==="application/msword" || mime==="application/vnd.ms-excel" || mime==="application/vnd.ms-powerpoint") {
+    return starts(bytes,[0xd0,0xcf,0x11,0xe0,0xa1,0xb1,0x1a,0xe1]);
+  }
+  if(mime==="audio/webm") return starts(bytes,[0x1a,0x45,0xdf,0xa3]);
+  if(mime==="audio/ogg") return ascii.startsWith("OggS");
+  if(mime==="audio/mp4") return ascii.slice(4,8)==="ftyp";
+  if(mime==="audio/mpeg") return ascii.startsWith("ID3") || (bytes[0]===0xff && (bytes[1]&0xe0)===0xe0);
+  if(mime==="audio/wav" || mime==="audio/x-wav") return ascii.startsWith("RIFF") && ascii.slice(8,12)==="WAVE";
+
+  // Plain text and CSV do not have stable magic bytes. Reject NUL bytes to avoid obvious binary payloads.
+  if(mime==="text/plain" || mime==="text/csv") return !bytes.includes(0);
+
+  return false;
+}
+
+export async function validateUpload(file:File,kind:UploadKind) {
+  const mime=(file.type||"application/octet-stream").toLowerCase().split(";")[0].trim();
+  const extension=extensionOf(file.name||"");
+  if(!file.size || file.size<1) return {ok:false as const,status:400};
+  if(BLOCKED_EXTENSIONS.has(extension)) return {ok:false as const,status:415};
+
+  const limits:Record<UploadKind,number>={
+    image:10*1024*1024,
+    audio:15*1024*1024,
+    document:5*1024*1024,
+    admin:25*1024*1024,
+  };
+  if(file.size>limits[kind]) return {ok:false as const,status:413};
+
+  const allowed=kind==="image"
+    ? IMAGE_MIMES.has(mime)
+    : kind==="audio"
+      ? AUDIO_MIMES.has(mime)
+      : kind==="document"
+        ? DOCUMENT_MIMES.has(mime)
+        : IMAGE_MIMES.has(mime) || AUDIO_MIMES.has(mime) || DOCUMENT_MIMES.has(mime);
+
+  if(!allowed) return {ok:false as const,status:415};
+  if(!(await signatureMatches(file,mime))) return {ok:false as const,status:415};
+
+  return {ok:true as const,status:200,mime};
+}
+
+export function requestTooLarge(request:Request,maxBytes:number) {
+  const raw=request.headers.get("Content-Length");
+  if(!raw) return false;
+  const size=Number(raw);
+  return Number.isFinite(size) && size>maxBytes;
+}
+
+export function boundedText(value:unknown,max:number) {
+  const text=String(value??"").trim();
+  return text.length<=max ? text : null;
+}
