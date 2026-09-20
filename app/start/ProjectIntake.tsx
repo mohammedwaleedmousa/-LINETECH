@@ -12,6 +12,7 @@ const preferredContacts = ["WhatsApp", "Email", "Call", "Either"] as const;
 const budgets = ["Need guidance", "Small focused project", "Medium project", "Large project"];
 const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
 const finderStorageKey = "linetech-service-finder-v1";
+const requestDraftKey = "linetech-project-request-draft-v1";
 
 type FinderAnswerIds = Partial<Record<"outcome" | "priority" | "stage", string>>;
 type StoredFinderState = {
@@ -44,12 +45,12 @@ const requestCopy = {
     back: "← Back to scope",
     doneKicker: "REQUEST COMPLETE",
     doneTitle: "Your project request is ready.",
-    doneBody: "The request has been completed and saved on this device with a reference number. The next step is handing the request to LINETECH through your chosen communication channel.",
+    doneBody: "Your project request has been saved to your LINETECH workspace with a reference number. You can now follow its status and continue in the project conversation.",
     requestId: "Request ID",
     status: "Status",
-    statusValue: "Completed locally",
+    statusValue: "Submitted",
     nextStep: "Next step",
-    nextStepValue: "Share with LINETECH",
+    nextStepValue: "Track in Workspace",
     contactMethod: "Preferred contact",
     share: "Share request with LINETECH",
     copy: "Copy request details",
@@ -58,7 +59,7 @@ const requestCopy = {
     shareDone: "The request was shared through the channel you selected.",
     copyDone: "Request details copied. Paste them into your LINETECH conversation.",
     copyError: "Your browser blocked clipboard access. Use Share instead.",
-    storageError: "The request is complete, but this browser could not save the local record.",
+    storageError: "LINETECH could not save the request. Please try again.",
   },
   ar: {
     steps: ["بياناتك", "المشروع", "النطاق", "المراجعة"],
@@ -83,12 +84,12 @@ const requestCopy = {
     back: "العودة إلى النطاق →",
     doneKicker: "تم إتمام الطلب",
     doneTitle: "طلب مشروعك جاهز.",
-    doneBody: "تم إتمام الطلب وحفظه على هذا الجهاز مع رقم مرجعي. الخطوة التالية هي تسليم الطلب إلى LINETECH عبر قناة التواصل التي تختارها.",
+    doneBody: "تم حفظ طلب مشروعك داخل مساحة عملك في لاين تك مع رقم مرجعي. يمكنك الآن متابعة حالته والاستمرار في محادثة المشروع.",
     requestId: "رقم الطلب",
     status: "الحالة",
-    statusValue: "مكتمل محليًا",
+    statusValue: "تم الإرسال",
     nextStep: "الخطوة التالية",
-    nextStepValue: "مشاركته مع LINETECH",
+    nextStepValue: "متابعته في مساحة العميل",
     contactMethod: "طريقة التواصل المفضلة",
     share: "شارك الطلب مع LINETECH",
     copy: "انسخ تفاصيل الطلب",
@@ -97,7 +98,7 @@ const requestCopy = {
     shareDone: "تمت مشاركة الطلب عبر القناة التي اخترتها.",
     copyDone: "تم نسخ تفاصيل الطلب. الصقها في محادثتك مع LINETECH.",
     copyError: "المتصفح منع الوصول إلى الحافظة. استخدم المشاركة بدلًا من ذلك.",
-    storageError: "تم إكمال الطلب، لكن المتصفح لم يتمكن من حفظ السجل المحلي.",
+    storageError: "تعذر على لاين تك حفظ الطلب. حاول مرة أخرى.",
   },
 } as const;
 
@@ -236,6 +237,29 @@ export default function ProjectIntake() {
   const [notes, setNotes] = useState("");
 
   useEffect(() => {
+    try {
+      const rawDraft = window.sessionStorage.getItem(requestDraftKey);
+      if (rawDraft) {
+        const draft = JSON.parse(rawDraft) as Record<string, unknown>;
+        if (typeof draft.name === "string") setName(draft.name);
+        if (typeof draft.company === "string") setCompany(draft.company);
+        if (typeof draft.contact === "string") setContact(draft.contact);
+        if (typeof draft.preferredContact === "string") setPreferredContact(draft.preferredContact);
+        if (typeof draft.service === "string") setService(draft.service);
+        if (typeof draft.stage === "string") setStage(draft.stage);
+        if (typeof draft.goal === "string") setGoal(draft.goal);
+        if (typeof draft.idea === "string") setIdea(draft.idea);
+        if (typeof draft.audience === "string") setAudience(draft.audience);
+        if (typeof draft.features === "string") setFeatures(draft.features);
+        if (typeof draft.references === "string") setReferences(draft.references);
+        if (typeof draft.budget === "string") setBudget(draft.budget);
+        if (typeof draft.timing === "string") setTiming(draft.timing);
+        if (typeof draft.notes === "string") setNotes(draft.notes);
+        if (typeof draft.step === "number") setStep(Math.min(4, Math.max(1, Math.round(draft.step))));
+        if (draft.confirmed === true) setConfirmed(true);
+      }
+    } catch {}
+
     const params = new URLSearchParams(window.location.search);
     const value = params.get("service") || "";
     const fromFinder = params.get("source") === "finder";
@@ -355,6 +379,26 @@ export default function ProjectIntake() {
       });
 
       if (response.status === 401) {
+        try {
+          window.sessionStorage.setItem(requestDraftKey, JSON.stringify({
+            step: 4,
+            confirmed,
+            name,
+            company,
+            contact,
+            preferredContact,
+            service,
+            stage,
+            goal,
+            idea,
+            audience,
+            features,
+            references,
+            budget,
+            timing,
+            notes,
+          }));
+        } catch {}
         window.location.assign("/login?next=/start");
         return;
       }
@@ -378,6 +422,7 @@ export default function ProjectIntake() {
       setRequestId(id);
       setCompletedAt(timestamp);
       setCompleted(true);
+      try { window.sessionStorage.removeItem(requestDraftKey); } catch {}
       requestAnimationFrame(() => document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" }));
     } catch {
       setActionStatus(copy.storageError);
