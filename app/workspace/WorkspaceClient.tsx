@@ -600,9 +600,13 @@ export default function WorkspaceClient() {
               <nav className="workspace-tools-line" aria-label={t.tools}>
                 <Link href="/chat"><span>01</span>{t.conversation}<b>↗</b></Link>
                 <a href="#files"><span>02</span>{t.files}<b>↓</b></a>
-                <div className={currentPhase < 5 ? "is-locked" : ""}>
-                  <span>03</span>{t.handover}<b>{currentPhase < 5 ? t.handoverLocked : "✓"}</b>
-                </div>
+                {currentPhase < 5 ? (
+                  <div className="is-locked">
+                    <span>03</span>{t.handover}<b>{t.handoverLocked}</b>
+                  </div>
+                ) : (
+                  <Link href="/handover"><span>03</span>{t.handover}<b>✓</b></Link>
+                )}
               </nav>
             </div>
           </section>
