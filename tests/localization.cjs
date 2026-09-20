@@ -36,6 +36,18 @@ Object.defineProperty(global, 'navigator', {
   configurable: true,
 });
 
+Object.defineProperty(window, 'crypto', {
+  value: {
+    ...(window.crypto || {}),
+    getRandomValues: array => {
+      for (let i = 0; i < array.length; i += 1) array[i] = 123456789 + i;
+      return array;
+    },
+    randomUUID: () => '11111111-2222-4333-8444-555555555555',
+  },
+  configurable: true,
+});
+
 global.fetch = async (input, init = {}) => {
   const url = typeof input === 'string' ? input : String(input?.url || input);
   const method = String(init.method || 'GET').toUpperCase();
