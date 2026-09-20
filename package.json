@@ -10,10 +10,11 @@
     "test:localization": "node tests/localization.cjs",
     "test:routes": "node tests/routes.cjs",
     "test:backend": "node tests/backend-schema.cjs",
-    "qa": "npm run build && npm run test:localization && npm run test:routes && npm run test:backend && npm run test:auth && npm run test:worker",
+    "qa": "npm run build && npm run test:localization && npm run test:routes",
     "test:auth": "node tests/auth-routes.cjs",
     "test:worker": "node tests/worker-syntax.cjs",
-    "smoke:prod": "node tests/production-smoke.cjs"
+    "smoke:prod": "node tests/production-smoke.cjs",
+    "prebuild": "npm run test:backend && npm run test:auth && npm run test:worker"
   },
   "dependencies": {
     "next": "15.5.2",
