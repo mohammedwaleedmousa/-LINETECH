@@ -327,34 +327,63 @@ export default function ProjectIntake() {
     await copyBrief();
   }
 
-  function completeRequest() {
+  async function completeRequest() {
     if (!confirmed || completing) return;
     setCompleting(true);
     setActionStatus("");
 
-    const id = createRequestId();
-    const timestamp = new Date().toISOString();
-    const record = {
-      requestId: id,
-      completedAt: timestamp,
-      status: "completed-locally",
-      source: finderLoaded ? "service-finder" : "direct",
-      customer: { name, company, contact, preferredContact },
-      project: { service, stage, goal, idea, audience, features, references },
-      scope: { budget, timing, notes },
-    };
-
     try {
-      localStorage.setItem("linetech-project-request-v1", JSON.stringify(record));
+      const response = await fetch("/api/project-request", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          company,
+          contact,
+          preferredContact,
+          service,
+          stage,
+          goal,
+          idea,
+          audience,
+          features,
+          references,
+          budget,
+          timing,
+          notes,
+        }),
+      });
+
+      if (response.status === 401) {
+        window.location.assign("/login?next=/start");
+        return;
+      }
+
+      const result = await response.json().catch(() => null) as {
+        ok?: boolean;
+        data?: {
+          reference_number?: string;
+          submitted_at?: string;
+        };
+      } | null;
+
+      if (!response.ok || !result?.ok || !result.data?.reference_number) {
+        setActionStatus(copy.storageError);
+        return;
+      }
+
+      const id = result.data.reference_number;
+      const timestamp = result.data.submitted_at || new Date().toISOString();
+
+      setRequestId(id);
+      setCompletedAt(timestamp);
+      setCompleted(true);
+      requestAnimationFrame(() => document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" }));
     } catch {
       setActionStatus(copy.storageError);
+    } finally {
+      setCompleting(false);
     }
-
-    setRequestId(id);
-    setCompletedAt(timestamp);
-    setCompleted(true);
-    setCompleting(false);
-    requestAnimationFrame(() => document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" }));
   }
 
   function editRequest() {
