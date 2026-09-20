@@ -133,6 +133,24 @@ assert.ok(
   "Message kind/text shape constraint must remain enforced."
 );
 
+assert.ok(
+  schema.includes("submission_key uuid") &&
+  schema.includes("project_requests_owner_submission_key_uidx"),
+  "Project request idempotency key and unique index must remain enforced."
+);
+
+assert.ok(
+  schema.includes("p_submission_key uuid") &&
+  schema.includes("'idempotent_replay'"),
+  "Project request RPC must remain idempotent."
+);
+
+assert.ok(
+  schema.includes("drop function if exists public.submit_project_request") &&
+  schema.includes("uuid,text,text,text,text,text,text,text,text,text,text,text,text,text,text"),
+  "Legacy non-idempotent project request RPC must remain removed."
+);
+
 console.log(
   `PASS: ${requiredTables.length} LINETECH backend tables are defined with RLS and authenticated-only grants`
 );
