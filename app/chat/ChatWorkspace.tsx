@@ -471,7 +471,7 @@ export default function ChatWorkspace(){
     <aside className="chat-sidebar">
       <div className="chat-sidebar-head">
         <div><span className="chat-eyebrow">LINETECH</span><h1>Chats</h1></div>
-        <button type="button" className="chat-new" onClick={clearPreview} aria-label="Reset device conversation">＋</button>
+        <button type="button" className="chat-new" onClick={clearPreview} aria-label="Refresh project conversation">＋</button>
       </div>
 
       <div className="chat-search-box" aria-hidden="true"><span>⌕</span><p>Search or start new chat</p></div>
