@@ -299,7 +299,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
           const attachment=Array.isArray(row.message_attachments)?row.message_attachments[0]:null;
           return {
             id:row.id,
-            sender:row.sender_id===admin.user.id?"company":"client",
+            sender:row.sender_role==="company"?"company":"client",
             kind:row.kind,
             text:row.deleted_at?undefined:row.text||undefined,
             src:attachment?.id&&!row.deleted_at
@@ -328,6 +328,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         body:JSON.stringify({
           conversation_id:conversation.id,
           sender_id:admin.user.id,
+          sender_role:"company",
           kind:"text",
           text,
         }),
