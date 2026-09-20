@@ -18,6 +18,12 @@ for (const name of [
 
 global.IS_REACT_ACT_ENVIRONMENT = true;
 global.requestAnimationFrame = fn => { fn(); return 0; };
+if (typeof dom.window.crypto.randomUUID !== 'function') {
+  Object.defineProperty(dom.window.crypto, 'randomUUID', {
+    value: () => '11111111-2222-4333-8444-555555555555',
+    configurable: true,
+  });
+}
 HTMLElement.prototype.scrollIntoView = () => {};
 HTMLElement.prototype.scrollTo = () => {};
 
