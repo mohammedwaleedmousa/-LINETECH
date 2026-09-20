@@ -40,7 +40,7 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const password=String(data.password||"");
     if(!fullName || !email || password.length<8) return json({ok:false},400);
 
-    const redirectTo=new URL("/login?confirmed=1",request.url).toString();
+    const redirectTo=new URL("/login",request.url).toString();
     const response=await authFetch(env,"/signup",{
       method:"POST",
       body:JSON.stringify({
@@ -63,7 +63,7 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const data=await body(request);
     const email=String(data.email||"").trim().toLowerCase();
     if(email) {
-      const redirectTo=new URL("/login?recovery=1",request.url).toString();
+      const redirectTo=new URL("/login",request.url).toString();
       await authFetch(env,"/recover",{
         method:"POST",
         body:JSON.stringify({email,redirect_to:redirectTo}),
