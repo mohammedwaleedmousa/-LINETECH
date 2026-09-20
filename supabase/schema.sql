@@ -1181,3 +1181,30 @@ with check (
   )
   or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
 );
+
+-- Authenticated role least-privilege table grants.
+revoke all on table
+  public.profiles,
+  public.project_requests,
+  public.projects,
+  public.project_members,
+  public.project_activity,
+  public.project_files,
+  public.conversations,
+  public.messages,
+  public.message_attachments,
+  public.handover_items,
+  public.notifications
+from authenticated;
+
+grant select, insert, update on public.profiles to authenticated;
+grant select, insert, update on public.project_requests to authenticated;
+grant select, insert, update on public.projects to authenticated;
+grant select, insert, update, delete on public.project_members to authenticated;
+grant select, insert on public.project_activity to authenticated;
+grant select, insert, update on public.project_files to authenticated;
+grant select, insert on public.conversations to authenticated;
+grant select, insert, update on public.messages to authenticated;
+grant select, insert on public.message_attachments to authenticated;
+grant select, insert, update on public.handover_items to authenticated;
+grant select, insert, update on public.notifications to authenticated;
