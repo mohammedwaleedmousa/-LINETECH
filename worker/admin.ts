@@ -1,6 +1,7 @@
 import {
   type Env,
   encodeObjectPath,
+  formatTime,
   json,
   requireAdmin,
   restFetch,
@@ -264,6 +265,183 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       return response.ok&&Array.isArray(rows)&&rows[0]
         ? json({ok:true,item:rows[0]},200,admin.setCookies)
         : json({ok:false},response.ok?404:response.status,admin.setCookies);
+    }
+  }
+
+  if(path==="/api/admin/chat") {
+    const url=new URL(request.url);
+    const projectId=url.searchParams.get("projectId");
+    if(!projectId) return json({ok:false},400,admin.setCookies);
+
+    const conversationResponse=await restFetch(
+      env,
+      `/conversations?select=id,project_id&project_id=eq.${encodeURIComponent(projectId)}&limit=1`,
+      admin.accessToken,
+    );
+    const conversations=await safeJson(conversationResponse) as Row[]|null;
+    const conversation=Array.isArray(conversations)?conversations[0]:null;
+    if(!conversationResponse.ok||!conversation) {
+      return json({ok:false},conversationResponse.ok?404:conversationResponse.status,admin.setCookies);
+    }
+
+    if(request.method==="GET") {
+      const response=await restFetch(
+        env,
+        `/messages?select=*,message_attachments(*)&conversation_id=eq.${encodeURIComponent(conversation.id)}&order=created_at.asc`,
+        admin.accessToken,
+      );
+      const rows=await safeJson(response) as Row[]|null;
+      if(!response.ok) return json({ok:false},response.status,admin.setCookies);
+
+      return json({
+        ok:true,
+        messages:(Array.isArray(rows)?rows:[]).map(row=>{
+          const attachment=Array.isArray(row.message_attachments)?row.message_attachments[0]:null;
+          return {
+            id:row.id,
+            sender:row.sender_id===admin.user.id?"company":"client",
+            kind:row.kind,
+            text:row.deleted_at?undefined:row.text||undefined,
+            src:attachment?.id&&!row.deleted_at
+              ? `/api/files/download?attachmentId=${encodeURIComponent(attachment.id)}`
+              : undefined,
+            fileName:attachment?.file_name||undefined,
+            fileSize:attachment?.file_size??undefined,
+            fileType:attachment?.mime_type||undefined,
+            duration:attachment?.duration_seconds??undefined,
+            edited:Boolean(row.edited_at),
+            deleted:Boolean(row.deleted_at),
+            time:formatTime(row.created_at),
+          };
+        }),
+      },200,admin.setCookies);
+    }
+
+    if(request.method==="POST") {
+      const data=await request.json().catch(()=>({})) as Record<string,any>;
+      const text=String(data.text||"").trim();
+      if(!text) return json({ok:false},400,admin.setCookies);
+
+      const response=await restFetch(env,"/messages?select=*",admin.accessToken,{
+        method:"POST",
+        headers:{Prefer:"return=representation"},
+        body:JSON.stringify({
+          conversation_id:conversation.id,
+          sender_id:admin.user.id,
+          kind:"text",
+          text,
+        }),
+      });
+      const rows=await safeJson(response) as Row[]|null;
+      const message=Array.isArray(rows)?rows[0]:null;
+      if(!response.ok||!message) {
+        return json({ok:false},response.status||500,admin.setCookies);
+      }
+
+      const projectResponse=await restFetch(
+        env,
+        `/projects?select=client_id&id=eq.${encodeURIComponent(projectId)}&limit=1`,
+        admin.accessToken,
+      );
+      const projects=await safeJson(projectResponse) as Row[]|null;
+      const project=Array.isArray(projects)?projects[0]:null;
+      if(project?.client_id) {
+        await restFetch(env,"/notifications",admin.accessToken,{
+          method:"POST",
+          body:JSON.stringify({
+            user_id:project.client_id,
+            project_id:projectId,
+            title:"New project message",
+            body:text.slice(0,180),
+          }),
+        });
+      }
+
+      return json({
+        ok:true,
+        message:{
+          id:message.id,
+          sender:"company",
+          kind:"text",
+          text:message.text,
+          edited:false,
+          deleted:false,
+          time:formatTime(message.created_at),
+        },
+      },200,admin.setCookies);
+    }
+  }
+
+  if(path==="/api/admin/members") {
+    const url=new URL(request.url);
+    const projectId=url.searchParams.get("projectId");
+
+    if(request.method==="GET") {
+      if(!projectId) return json({ok:false},400,admin.setCookies);
+      const response=await restFetch(
+        env,
+        `/project_members?select=*&project_id=eq.${encodeURIComponent(projectId)}&order=created_at.asc`,
+        admin.accessToken,
+      );
+      const rows=await safeJson(response) as Row[]|null;
+      if(!response.ok) return json({ok:false},response.status,admin.setCookies);
+
+      const members=Array.isArray(rows)?rows:[];
+      const ids=[...new Set(members.map(item=>item.user_id).filter(Boolean))];
+      let profiles:Row[]=[];
+      if(ids.length) {
+        const profileResponse=await restFetch(
+          env,
+          `/profiles?select=*&id=in.(${encodeURIComponent(ids.join(","))})`,
+          admin.accessToken,
+        );
+        const payload=await safeJson(profileResponse);
+        if(profileResponse.ok&&Array.isArray(payload)) profiles=payload as Row[];
+      }
+      const profileMap=new Map(profiles.map(item=>[item.id,item]));
+      return json({
+        ok:true,
+        members:members.map(member=>({
+          ...member,
+          profile:profileMap.get(member.user_id)||null,
+        })),
+      },200,admin.setCookies);
+    }
+
+    if(request.method==="POST") {
+      const data=await request.json().catch(()=>({})) as Record<string,any>;
+      const targetProjectId=String(data.projectId||"").trim();
+      const userId=String(data.userId||"").trim();
+      const memberRole=String(data.memberRole||"staff").trim()||"staff";
+      if(!targetProjectId||!userId) return json({ok:false},400,admin.setCookies);
+
+      const response=await restFetch(env,"/project_members?on_conflict=project_id,user_id&select=*",admin.accessToken,{
+        method:"POST",
+        headers:{Prefer:"resolution=merge-duplicates,return=representation"},
+        body:JSON.stringify({
+          project_id:targetProjectId,
+          user_id:userId,
+          member_role:memberRole,
+        }),
+      });
+      const rows=await safeJson(response) as Row[]|null;
+      return response.ok&&Array.isArray(rows)&&rows[0]
+        ? json({ok:true,member:rows[0]},200,admin.setCookies)
+        : json({ok:false},response.status||500,admin.setCookies);
+    }
+
+    if(request.method==="DELETE") {
+      const targetProjectId=url.searchParams.get("projectId");
+      const userId=url.searchParams.get("userId");
+      if(!targetProjectId||!userId) return json({ok:false},400,admin.setCookies);
+
+      const response=await restFetch(
+        env,
+        `/project_members?project_id=eq.${encodeURIComponent(targetProjectId)}&user_id=eq.${encodeURIComponent(userId)}`,
+        admin.accessToken,
+        {method:"DELETE"},
+      );
+      return json({ok:response.ok},response.ok?200:response.status,admin.setCookies);
     }
   }
 
