@@ -66,6 +66,18 @@ assert.ok(
 );
 
 assert.ok(
+  schema.includes("sender_role") &&
+  schema.includes("sender_role in ('client', 'company')"),
+  "Messages must distinguish client and company sender roles."
+);
+
+assert.ok(
+  schema.includes("sender_role = 'company'") &&
+  schema.includes("'app_metadata' ->> 'role') = 'admin'"),
+  "Only admins may persist company-authored chat messages."
+);
+
+assert.ok(
   schema.includes("grant usage on schema public to authenticated"),
   "Authenticated Data API access must be explicit."
 );
