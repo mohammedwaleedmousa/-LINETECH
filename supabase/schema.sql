@@ -1106,3 +1106,78 @@ revoke execute on function public.submit_project_request(
 grant execute on function public.submit_project_request(
   text,text,text,text,text,text,text,text,text,text,text,text,text,text
 ) to authenticated;
+
+-- Message sender role hardening (client vs LINETECH company).
+alter table public.messages
+  add column if not exists sender_role text not null default 'client';
+
+alter table public.messages
+  drop constraint if exists messages_sender_role_check;
+
+alter table public.messages
+  add constraint messages_sender_role_check
+  check (sender_role in ('client', 'company'));
+
+drop policy if exists messages_insert_conversation_access on public.messages;
+create policy messages_insert_conversation_access
+on public.messages for insert
+to authenticated
+with check (
+  sender_id = (select auth.uid())
+  and (
+    sender_role = 'client'
+    or (
+      sender_role = 'company'
+      and ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+    )
+  )
+  and (
+    exists (
+      select 1
+      from public.conversations c
+      join public.projects p on p.id = c.project_id
+      where c.id = messages.conversation_id
+        and (
+          p.client_id = (select auth.uid())
+          or exists (
+            select 1
+            from public.project_members pm
+            where pm.project_id = p.id
+              and pm.user_id = (select auth.uid())
+          )
+        )
+    )
+    or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  )
+);
+
+drop policy if exists messages_update_own_or_admin on public.messages;
+create policy messages_update_own_or_admin
+on public.messages for update
+to authenticated
+using (
+  sender_id = (select auth.uid())
+  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+)
+with check (
+  (
+    sender_id = (select auth.uid())
+    and sender_role = 'client'
+    and exists (
+      select 1
+      from public.conversations c
+      join public.projects p on p.id = c.project_id
+      where c.id = messages.conversation_id
+        and (
+          p.client_id = (select auth.uid())
+          or exists (
+            select 1
+            from public.project_members pm
+            where pm.project_id = p.id
+              and pm.user_id = (select auth.uid())
+          )
+        )
+    )
+  )
+  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+);
