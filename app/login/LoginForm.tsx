@@ -7,6 +7,17 @@ import { useLanguage } from "../Localized";
 
 type Mode = "login" | "signup" | "forgot" | "reset";
 
+function safeInternalNext(value:string|null) {
+  if(!value || !value.startsWith("/") || value.startsWith("//")) return "/workspace";
+  try {
+    const parsed=new URL(value,window.location.origin);
+    if(parsed.origin!==window.location.origin) return "/workspace";
+    return parsed.pathname+parsed.search+parsed.hash;
+  } catch {
+    return "/workspace";
+  }
+}
+
 const copy = {
   en: {
     signIn: "Sign in",
@@ -59,6 +70,7 @@ const copy = {
     short: "Use at least 8 characters for the password.",
     rateLimited: "Too many attempts. Wait one minute and try again.",
     workspace: "Open Client Workspace",
+    confirmedReady: "Email confirmed. You can sign in now.",
   },
   ar: {
     signIn: "تسجيل الدخول",
@@ -111,6 +123,7 @@ const copy = {
     short: "استخدم 8 أحرف على الأقل لكلمة المرور.",
     rateLimited: "محاولات كثيرة جدًا. انتظر دقيقة ثم حاول مرة أخرى.",
     workspace: "افتح مساحة العميل",
+    confirmedReady: "تم تأكيد البريد الإلكتروني. يمكنك تسجيل الدخول الآن.",
   },
 } as const;
 
@@ -140,8 +153,13 @@ export default function LoginForm(){
     const expiresIn = Number(hash.get("expires_in") || "3600");
     const search = new URLSearchParams(window.location.search);
     const isRecovery = hash.get("type") === "recovery" || search.get("recovery") === "1";
+    const isConfirmed = search.get("confirmed") === "1";
 
-    if(!accessToken || !refreshToken) return;
+    if(!accessToken || !refreshToken){
+      if(isRecovery) switchMode("reset");
+      else if(isConfirmed) setMessage(t.confirmedReady);
+      return;
+    }
 
     void (async()=>{
       const response = await fetch("/api/auth/session",{
@@ -270,7 +288,7 @@ export default function LoginForm(){
       }
 
       const next = new URLSearchParams(window.location.search).get("next");
-      window.location.assign(next && next.startsWith("/") ? next : "/workspace");
+      window.location.assign(safeInternalNext(next));
     }catch{
       setMessage(
         mode==="signup" ? t.signupError :
