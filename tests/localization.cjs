@@ -36,6 +36,11 @@ Object.defineProperty(global, 'navigator', {
   configurable: true,
 });
 
+window.sessionStorage.setItem(
+  'linetech-project-submission-key-v1',
+  '11111111-2222-4333-8444-555555555555'
+);
+
 global.fetch = async (input, init = {}) => {
   const url = typeof input === 'string' ? input : String(input?.url || input);
   const method = String(init.method || 'GET').toUpperCase();
