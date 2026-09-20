@@ -282,7 +282,7 @@ const localizationStage = process.env.LOCALIZATION_STAGE || 'all';
     return;
   }
 
-  await click(buttonContaining('Copy request details'));
+  await click(document.querySelector('.request-finish-actions .brief-share:not(.request-edit-button)'));
   assert.ok(copied.includes('Project type：Web Development'));
 
   if (localizationStage === 'intake') {
