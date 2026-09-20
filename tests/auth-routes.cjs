@@ -96,5 +96,27 @@ assert.ok(read("app/start/ProjectIntake.tsx").includes("/api/project-request"));
 assert.ok(read("app/workspace/WorkspaceClient.tsx").includes("/api/workspace"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/messages"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/upload"));
+assert.ok(read("app/handover/HandoverClient.tsx").includes("/api/handover"));
+assert.ok(read("app/workspace/WorkspaceClient.tsx").includes('href="/handover"'));
+
+for (const file of [
+  "app/admin/page.tsx",
+  "app/admin/AdminClient.tsx",
+  "app/handover/page.tsx",
+  "app/handover/HandoverClient.tsx",
+]) {
+  assert.ok(fs.existsSync(path.join(root, file)), `Missing protected workspace file: ${file}`);
+}
+
+const adminClient = read("app/admin/AdminClient.tsx");
+for (const endpoint of [
+  "/api/admin/projects",
+  "/api/admin/project",
+  "/api/admin/files",
+  "/api/admin/handover",
+  "/api/admin/chat",
+]) {
+  assert.ok(adminClient.includes(endpoint), `Admin UI is not wired to ${endpoint}`);
+}
 
 console.log("PASS: LINETECH Worker backend routes, secure cookies and frontend wiring are present");
