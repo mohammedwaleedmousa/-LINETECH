@@ -266,7 +266,7 @@ export default function TermsPage() {
               <p className="ref-kicker">{t.contactLabel}</p>
               <h2>{t.contactTitle}</h2>
               <p>{t.contactText}</p>
-              <a className="terms-contact-link" href="/contact">
+              <a className="terms-contact-link" href="/start">
                 {t.contactCta}<span aria-hidden="true">→</span>
               </a>
             </section>
