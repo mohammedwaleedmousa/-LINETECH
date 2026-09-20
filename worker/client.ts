@@ -237,12 +237,33 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       const data=await request.json().catch(()=>({})) as Record<string,any>;
       const id=String(data.messageId||"").trim();
       if(!id) return json({ok:false},400,session.setCookies);
+
+      const attachmentResponse=await restFetch(
+        env,
+        `/message_attachments?select=storage_bucket,storage_path&message_id=eq.${encodeURIComponent(id)}`,
+        session.accessToken,
+      );
+      const attachments=await safeJson(attachmentResponse) as Row[]|null;
+
       const response=await restFetch(
         env,
         `/messages?id=eq.${encodeURIComponent(id)}&sender_id=eq.${encodeURIComponent(String(session.user.id))}`,
         session.accessToken,
         {method:"PATCH",body:JSON.stringify({text:null,deleted_at:new Date().toISOString()})},
       );
+
+      if(response.ok && attachmentResponse.ok && Array.isArray(attachments)) {
+        await Promise.all(attachments.map(attachment=>{
+          if(!attachment?.storage_bucket || !attachment?.storage_path) return Promise.resolve(null);
+          return storageFetch(
+            env,
+            `/object/${encodeURIComponent(String(attachment.storage_bucket))}/${encodeObjectPath(String(attachment.storage_path))}`,
+            session.accessToken,
+            {method:"DELETE"},
+          ).catch(()=>null);
+        }));
+      }
+
       return json({ok:response.ok},response.ok?200:response.status,session.setCookies);
     }
   }

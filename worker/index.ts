@@ -15,6 +15,16 @@ export default {
     const path=normalized(url.pathname);
 
     try {
+      if(path.startsWith("/api/") && !["GET","HEAD","OPTIONS"].includes(request.method)) {
+        const origin=request.headers.get("Origin");
+        if(origin && origin!==url.origin) {
+          return new Response(JSON.stringify({ok:false}),{
+            status:403,
+            headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"},
+          });
+        }
+      }
+
       if(path.startsWith("/api/auth/")) {
         const response=await handleAuth(request,env,path);
         return response || new Response("Not found",{status:404});
