@@ -92,6 +92,10 @@ for (const limiter of [
 ]) {
   assert.ok(auth.includes(limiter), `Auth route is not wired to ${limiter}`);
 }
+assert.ok(auth.includes('requestTooLarge(request,16*1024)'));
+assert.ok(auth.includes('requestTooLarge(request,32*1024)'));
+assert.ok(auth.includes('boundedText(data.email,320)'));
+assert.ok(auth.includes('password.length>1024'));
 assert.ok(auth.includes('/logout?scope=local'));
 assert.ok(auth.includes('/logout?scope=others'));
 
