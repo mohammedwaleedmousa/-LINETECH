@@ -445,7 +445,7 @@ export default function ProjectIntake() {
       <label className="form-wide"><span>Anything else we should know?</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} placeholder="Constraints, preferences, deadlines or context." rows={4}/></label>
       <div className="brief-summary"><div><span>Service</span><strong>{service||"—"}</strong></div><div><span>Stage</span><strong>{stage||"—"}</strong></div><div><span>Goal</span><strong>{goal||"—"}</strong></div><div><span>Timing</span><strong>{timing}</strong></div></div>
       <ScopePreview service={service} stage={stage} goal={goal} budget={budget} timing={timing} />
-      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button><button className="button button-light" type="button" onClick={()=>changeStep(4)}>Review request <span>→</span></button></div>
+      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button><button className="button button-light" type="button" onClick={()=>changeStep(4)}>Continue <span>→</span></button></div>
     </section>}
 
     {!completed && step===4 && <section className="intake-step intake-review-step">
