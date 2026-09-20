@@ -34,6 +34,7 @@ const qaCopy: Record<string, string> = {
   "Synced with your workspace": "متزامنة مع مساحة عملك",
   "Project conversation": "محادثة المشروع",
   "Refresh project conversation": "تحديث محادثة المشروع",
+  "Too many actions. Wait one minute and try again.": "محاولات كثيرة جدًا. انتظر دقيقة ثم حاول مرة أخرى.",
   "PROJECT WORKSPACE": "مساحة المشروع",
   "Messages, photos, documents and voice notes are securely connected to this project.": "الرسائل والصور والمستندات والرسائل الصوتية مرتبطة بهذا المشروع بأمان.",
   "This conversation is connected to your LINETECH workspace.": "هذه المحادثة مرتبطة بمساحة عملك في لاين تك.",
