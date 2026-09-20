@@ -227,6 +227,10 @@ export default function ChatWorkspace(){
           body:JSON.stringify({messageId:editingId,text}),
         });
         const payload = await response.json().catch(()=>null) as {ok?:boolean;message?:ChatMessage}|null;
+        if(response.status===429){
+          setNotice("Too many actions. Wait one minute and try again.");
+          return;
+        }
         if(!response.ok || !payload?.ok || !payload.message){
           setNotice("Message could not be edited.");
           return;
@@ -245,6 +249,10 @@ export default function ChatWorkspace(){
         body:JSON.stringify({text}),
       });
       const payload = await response.json().catch(()=>null) as {ok?:boolean;message?:ChatMessage}|null;
+      if(response.status===429){
+        setNotice("Too many actions. Wait one minute and try again.");
+        return;
+      }
       if(!response.ok || !payload?.ok || !payload.message){
         setNotice("Message could not be sent.");
         return;
@@ -293,6 +301,10 @@ export default function ChatWorkspace(){
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({messageId}),
       });
+      if(response.status===429){
+        setNotice("Too many actions. Wait one minute and try again.");
+        return;
+      }
       if(!response.ok){
         setNotice("Message could not be deleted.");
         return;
@@ -323,6 +335,7 @@ export default function ChatWorkspace(){
 
     const response = await fetch("/api/chat/upload",{method:"POST",body:form});
     const payload = await response.json().catch(()=>null) as {ok?:boolean;message?:ChatMessage}|null;
+    if(response.status===429) throw new Error("RATE_LIMITED");
     if(!response.ok || !payload?.ok || !payload.message) throw new Error("Upload failed");
     mergeMessage(payload.message);
     return payload.message;
@@ -341,7 +354,11 @@ export default function ChatWorkspace(){
         const upload = new File([blob],file.name,{type:blob.type || "image/jpeg"});
         await uploadChatFile(upload,"image");
         setNotice("");
-      }catch{
+      }catch(error){
+        if(error instanceof Error && error.message==="RATE_LIMITED"){
+          setNotice("Too many actions. Wait one minute and try again.");
+          break;
+        }
         setNotice("This image could not be uploaded.");
       }
     }
@@ -361,7 +378,11 @@ export default function ChatWorkspace(){
       try{
         await uploadChatFile(file,"document");
         setNotice("");
-      }catch{
+      }catch(error){
+        if(error instanceof Error && error.message==="RATE_LIMITED"){
+          setNotice("Too many actions. Wait one minute and try again.");
+          break;
+        }
         setNotice(`${file.name} could not be uploaded.`);
       }
     }
@@ -415,8 +436,12 @@ export default function ChatWorkspace(){
           const file = new File([blob],`voice-${Date.now()}.${extension}`,{type:blob.type || "audio/webm"});
           await uploadChatFile(file,"audio",recordingSecondsRef.current);
           setNotice("");
-        }catch{
-          setNotice("Voice note could not be uploaded.");
+        }catch(error){
+          if(error instanceof Error && error.message==="RATE_LIMITED"){
+            setNotice("Too many actions. Wait one minute and try again.");
+          }else{
+            setNotice("Voice note could not be uploaded.");
+          }
         }
         recordingSecondsRef.current = 0;
         setRecordingSeconds(0);
