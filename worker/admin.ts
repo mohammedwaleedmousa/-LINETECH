@@ -1,13 +1,16 @@
 import {
   type Env,
+  boundedText,
   encodeObjectPath,
   formatTime,
   json,
+  requestTooLarge,
   requireAdmin,
   restFetch,
   safeJson,
   safeName,
   storageFetch,
+  validateUpload,
 } from "./core";
 
 type Row=Record<string,any>;
@@ -148,16 +151,18 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
   }
 
   if(path==="/api/admin/files" && request.method==="POST") {
+    if(requestTooLarge(request,26*1024*1024)) return json({ok:false},413,admin.setCookies);
     const form=await request.formData();
     const file=form.get("file");
     const projectId=String(form.get("projectId")||"").trim();
     const category=String(form.get("category")||"other");
     const status=String(form.get("status")||"ready");
-    const detail=String(form.get("detail")||"").trim();
-    if(!(file instanceof File)||!projectId||!categories.has(category)||!fileStatuses.has(status)) {
+    const detail=boundedText(form.get("detail"),1000);
+    if(!(file instanceof File)||!projectId||!categories.has(category)||!fileStatuses.has(status)||detail===null) {
       return json({ok:false},400,admin.setCookies);
     }
-    if(file.size<=0||file.size>25*1024*1024) return json({ok:false},413,admin.setCookies);
+    const validated=await validateUpload(file,"admin");
+    if(!validated.ok) return json({ok:false},validated.status,admin.setCookies);
 
     const pr=await restFetch(env,`/projects?select=*&id=eq.${encodeURIComponent(projectId)}&limit=1`,admin.accessToken);
     const projects=await safeJson(pr) as Row[]|null;
@@ -167,7 +172,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     const objectPath=`${projectId}/${crypto.randomUUID()}-${safeName(file.name)}`;
     const upload=await storageFetch(env,`/object/project-files/${encodeObjectPath(objectPath)}`,admin.accessToken,{
       method:"POST",
-      headers:{"Content-Type":file.type||"application/octet-stream","x-upsert":"false"},
+      headers:{"Content-Type":validated.mime,"x-upsert":"false"},
       body:file,
     });
     if(!upload.ok) return json({ok:false},upload.status,admin.setCookies);
@@ -177,13 +182,21 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       body:JSON.stringify({
         project_id:projectId,uploader_id:admin.user.id,category,
         storage_bucket:"project-files",storage_path:objectPath,
-        file_name:file.name||safeName(file.name),mime_type:file.type||"application/octet-stream",
+        file_name:file.name||safeName(file.name),mime_type:validated.mime,
         file_size:file.size,status,detail:detail||null,
       }),
     });
     const rows=await safeJson(mr) as Row[]|null;
     const record=Array.isArray(rows)?rows[0]:null;
-    if(!mr.ok||!record) return json({ok:false},mr.status||500,admin.setCookies);
+    if(!mr.ok||!record) {
+      await storageFetch(
+        env,
+        `/object/project-files/${encodeObjectPath(objectPath)}`,
+        admin.accessToken,
+        {method:"DELETE"},
+      ).catch(()=>null);
+      return json({ok:false},mr.status||500,admin.setCookies);
+    }
 
     await Promise.all([
       restFetch(env,"/project_activity",admin.accessToken,{method:"POST",body:JSON.stringify({
