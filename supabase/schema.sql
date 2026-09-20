@@ -685,6 +685,21 @@ grant select on public.notifications to authenticated;
 grant update (read_at) on public.notifications to authenticated;
 grant insert, delete on public.notifications to authenticated;
 
+-- No LINETECH Data API table is exposed to unauthenticated clients.
+revoke all on table
+  public.profiles,
+  public.project_requests,
+  public.projects,
+  public.project_members,
+  public.project_activity,
+  public.project_files,
+  public.conversations,
+  public.messages,
+  public.message_attachments,
+  public.handover_items,
+  public.notifications
+from anon;
+
 -- LINETECH auth profile bootstrap and private project storage
 
 create schema if not exists private;
