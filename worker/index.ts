@@ -1,5 +1,5 @@
 import type { Env } from "./core";
-import { clearCookies, resolveSession, withCookies } from "./core";
+import { authFetch, clearCookies, json, resolveSession, withCookies } from "./core";
 import { handleAuth } from "./auth";
 import { handleClientApi } from "./client";
 import { handleAdminApi } from "./admin";
@@ -15,6 +15,13 @@ export default {
     const path=normalized(url.pathname);
 
     try {
+      if(path==="/api/health" && request.method==="GET") {
+        const upstream=await authFetch(env,"/health",{method:"GET"});
+        return upstream.ok
+          ? json({ok:true,backend:"linetech-worker",supabaseAuth:true})
+          : json({ok:false,backend:"linetech-worker",supabaseAuth:false},503);
+      }
+
       if(path.startsWith("/api/") && !["GET","HEAD","OPTIONS"].includes(request.method)) {
         const origin=request.headers.get("Origin");
         if(origin && origin!==url.origin) {
