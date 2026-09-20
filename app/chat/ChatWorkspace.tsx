@@ -56,7 +56,6 @@ const initialMessages: ChatMessage[] = [
   },
 ];
 
-const storageKey = "linetech-chat-preview-v3";
 
 function currentTime(){
   return new Intl.DateTimeFormat("en", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
@@ -162,22 +161,36 @@ export default function ChatWorkspace(){
   const timerRef = useRef<number | null>(null);
   const recordingSecondsRef = useRef(0);
 
-  useEffect(()=>{
+  async function loadMessages(silent = false){
     try{
-      const saved = window.localStorage.getItem(storageKey);
-      if(saved){
-        const parsed = JSON.parse(saved) as ChatMessage[];
-        if(Array.isArray(parsed) && parsed.length) setMessages(parsed);
+      const response = await fetch("/api/chat/messages", { cache: "no-store" });
+      if(response.status === 401){
+        window.location.assign("/login?next=/chat");
+        return;
       }
-    }catch{}
+
+      const payload = await response.json().catch(()=>null) as {
+        ok?: boolean;
+        messages?: ChatMessage[];
+      } | null;
+
+      if(response.ok && payload?.ok && Array.isArray(payload.messages)){
+        setMessages([...initialMessages, ...payload.messages]);
+      }else if(!silent){
+        setNotice("Conversation could not be loaded.");
+      }
+    }catch{
+      if(!silent) setNotice("Conversation could not be loaded.");
+    }
+  }
+
+  useEffect(()=>{
+    void loadMessages();
+    const timer = window.setInterval(()=>void loadMessages(true), 5000);
+    return ()=>window.clearInterval(timer);
   },[]);
 
   useEffect(()=>{
-    try{
-      window.localStorage.setItem(storageKey, JSON.stringify(messages));
-    }catch{
-      setNotice("This browser could not keep the full media item after refresh.");
-    }
     requestAnimationFrame(()=>{
       const node = listRef.current;
       if(node) node.scrollTo({ top: node.scrollHeight, behavior: "smooth" });
@@ -208,33 +221,57 @@ export default function ChatWorkspace(){
     return message.text || "Message";
   }
 
-  function pushClientMessage(message: Omit<ChatMessage,"id"|"sender"|"time">){
-    setMessages(current=>[...current,{
-      ...message,
-      id:`client-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
-      sender:"client",
-      time:currentTime(),
-    }]);
-    setNotice("Saved on this device.");
+  function mergeMessage(message:ChatMessage){
+    setMessages(current=>{
+      const without = current.filter(item=>item.id!==message.id);
+      return [...without,message];
+    });
     setActionMessageId(null);
     setEmojiOpen(false);
   }
 
-  function sendMessage(event?:FormEvent<HTMLFormElement>){
+  async function sendMessage(event?:FormEvent<HTMLFormElement>){
     event?.preventDefault();
     const text = draft.trim();
     if(!text) return;
 
-    if(editingId){
-      setMessages(current=>current.map(message=>message.id===editingId && message.kind==="text" && !message.deleted ? {...message,text,edited:true} : message));
-      setEditingId(null);
-      setDraft("");
-      setNotice("Message edited on this device.");
-      return;
-    }
+    try{
+      if(editingId){
+        const response = await fetch("/api/chat/messages",{
+          method:"PATCH",
+          headers:{"Content-Type":"application/json"},
+          body:JSON.stringify({messageId:editingId,text}),
+        });
+        const payload = await response.json().catch(()=>null) as {ok?:boolean;message?:ChatMessage}|null;
+        if(!response.ok || !payload?.ok || !payload.message){
+          setNotice("Message could not be edited.");
+          return;
+        }
 
-    pushClientMessage({kind:"text",text});
-    setDraft("");
+        setMessages(current=>current.map(message=>message.id===editingId ? payload.message! : message));
+        setEditingId(null);
+        setDraft("");
+        setNotice("Message edited.");
+        return;
+      }
+
+      const response = await fetch("/api/chat/messages",{
+        method:"POST",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({text}),
+      });
+      const payload = await response.json().catch(()=>null) as {ok?:boolean;message?:ChatMessage}|null;
+      if(!response.ok || !payload?.ok || !payload.message){
+        setNotice("Message could not be sent.");
+        return;
+      }
+
+      mergeMessage(payload.message);
+      setDraft("");
+      setNotice("");
+    }catch{
+      setNotice("Message could not be sent.");
+    }
   }
 
   function handleComposerKeyDown(event:KeyboardEvent<HTMLTextAreaElement>){
@@ -265,19 +302,46 @@ export default function ChatWorkspace(){
     setDraft("");
   }
 
-  function deleteForEveryone(messageId:string){
-    setMessages(current=>current.map(message=>message.id===messageId ? {
-      ...message,
-      deleted:true,
-      text:undefined,
-      src:undefined,
-      fileName:undefined,
-      fileSize:undefined,
-      fileType:undefined,
-    } : message));
-    if(editingId===messageId) cancelEdit();
-    setActionMessageId(null);
-    setNotice("Message removed from this device.");
+  async function deleteForEveryone(messageId:string){
+    try{
+      const response = await fetch("/api/chat/messages",{
+        method:"DELETE",
+        headers:{"Content-Type":"application/json"},
+        body:JSON.stringify({messageId}),
+      });
+      if(!response.ok){
+        setNotice("Message could not be deleted.");
+        return;
+      }
+
+      setMessages(current=>current.map(message=>message.id===messageId ? {
+        ...message,
+        deleted:true,
+        text:undefined,
+        src:undefined,
+        fileName:undefined,
+        fileSize:undefined,
+        fileType:undefined,
+      } : message));
+      if(editingId===messageId) cancelEdit();
+      setActionMessageId(null);
+      setNotice("Message deleted.");
+    }catch{
+      setNotice("Message could not be deleted.");
+    }
+  }
+
+  async function uploadChatFile(file:File, kind:"image"|"audio"|"document", duration?:number){
+    const form = new FormData();
+    form.append("file",file);
+    form.append("kind",kind);
+    if(typeof duration === "number") form.append("duration",String(duration));
+
+    const response = await fetch("/api/chat/upload",{method:"POST",body:form});
+    const payload = await response.json().catch(()=>null) as {ok?:boolean;message?:ChatMessage}|null;
+    if(!response.ok || !payload?.ok || !payload.message) throw new Error("Upload failed");
+    mergeMessage(payload.message);
+    return payload.message;
   }
 
   async function addImages(files: FileList | File[]){
@@ -289,9 +353,12 @@ export default function ChatWorkspace(){
     for(const file of images){
       try{
         const src = await compressImage(file);
-        pushClientMessage({kind:"image",src,fileName:file.name,fileSize:file.size,fileType:file.type});
+        const blob = await (await fetch(src)).blob();
+        const upload = new File([blob],file.name,{type:blob.type || "image/jpeg"});
+        await uploadChatFile(upload,"image");
+        setNotice("");
       }catch{
-        setNotice("This image could not be opened.");
+        setNotice("This image could not be uploaded.");
       }
     }
     if(imageInputRef.current) imageInputRef.current.value = "";
@@ -304,14 +371,14 @@ export default function ChatWorkspace(){
     setEmojiOpen(false);
     for(const file of documents){
       if(file.size > 5 * 1024 * 1024){
-        setNotice(`${file.name} is larger than 5 MB. Choose a smaller document for this device conversation.`);
+        setNotice(`${file.name} is larger than 5 MB. Choose a smaller document.`);
         continue;
       }
       try{
-        const src = await readBlobAsDataUrl(file);
-        pushClientMessage({kind:"document",src,fileName:file.name,fileSize:file.size,fileType:file.type || "application/octet-stream"});
+        await uploadChatFile(file,"document");
+        setNotice("");
       }catch{
-        setNotice(`${file.name} could not be opened.`);
+        setNotice(`${file.name} could not be uploaded.`);
       }
     }
     if(documentInputRef.current) documentInputRef.current.value = "";
@@ -360,10 +427,12 @@ export default function ChatWorkspace(){
         chunksRef.current = [];
         if(!blob.size) return;
         try{
-          const src = await readBlobAsDataUrl(blob);
-          pushClientMessage({kind:"audio",src,duration:recordingSecondsRef.current});
+          const extension = blob.type.includes("ogg") ? "ogg" : blob.type.includes("mp4") ? "m4a" : "webm";
+          const file = new File([blob],`voice-${Date.now()}.${extension}`,{type:blob.type || "audio/webm"});
+          await uploadChatFile(file,"audio",recordingSecondsRef.current);
+          setNotice("");
         }catch{
-          setNotice("Voice note could not be prepared.");
+          setNotice("Voice note could not be uploaded.");
         }
         recordingSecondsRef.current = 0;
         setRecordingSeconds(0);
@@ -394,14 +463,13 @@ export default function ChatWorkspace(){
   }
 
   function clearPreview(){
-    setMessages(initialMessages);
     setEditingId(null);
     setDraft("");
     setAttachmentsOpen(false);
     setEmojiOpen(false);
     setActionMessageId(null);
-    try{ window.localStorage.removeItem(storageKey); }catch{}
-    setNotice("Conversation reset on this device.");
+    setNotice("");
+    void loadMessages();
   }
 
   function onDrop(event:React.DragEvent<HTMLDivElement>){
