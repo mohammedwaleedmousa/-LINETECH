@@ -1,17 +1,10 @@
 name: LINETECH QA
 
 on:
-  push:
-    branches:
-      - main
   workflow_dispatch:
 
 permissions:
   contents: read
-
-concurrency:
-  group: linetech-qa-${{ github.ref }}
-  cancel-in-progress: true
 
 jobs:
   qa:
