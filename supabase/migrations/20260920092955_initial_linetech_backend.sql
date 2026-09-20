@@ -188,13 +188,6 @@ create index project_activity_project_id_created_at_idx on public.project_activi
 create index project_files_project_id_created_at_idx on public.project_files(project_id, created_at desc);
 create index messages_conversation_id_created_at_idx on public.messages(conversation_id, created_at);
 create index notifications_user_id_created_at_idx on public.notifications(user_id, created_at desc);
-create index project_members_user_id_idx on public.project_members(user_id);
-create index project_activity_actor_id_idx on public.project_activity(actor_id);
-create index project_files_uploader_id_idx on public.project_files(uploader_id);
-create index messages_sender_id_idx on public.messages(sender_id);
-create index message_attachments_message_id_idx on public.message_attachments(message_id);
-create index handover_items_project_id_idx on public.handover_items(project_id);
-create index notifications_project_id_idx on public.notifications(project_id);
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -250,7 +243,7 @@ on public.profiles for select
 to authenticated
 using (
   (select auth.uid()) = id
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 create policy profiles_update_own_or_admin
@@ -258,11 +251,11 @@ on public.profiles for update
 to authenticated
 using (
   (select auth.uid()) = id
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 )
 with check (
   (select auth.uid()) = id
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 create policy profiles_insert_own_or_admin
@@ -270,7 +263,7 @@ on public.profiles for insert
 to authenticated
 with check (
   (select auth.uid()) = id
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 -- Project requests
@@ -279,19 +272,19 @@ on public.project_requests for select
 to authenticated
 using (
   owner_id = (select auth.uid())
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 create policy project_requests_admin_insert
 on public.project_requests for insert
 to authenticated
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 create policy project_requests_admin_update
 on public.project_requests for update
 to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Projects
 create policy projects_select_client_member_or_admin
@@ -305,24 +298,14 @@ using (
     where pm.project_id = projects.id
       and pm.user_id = (select auth.uid())
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy projects_admin_insert
-on public.projects for insert
+create policy projects_admin_write
+on public.projects for all
 to authenticated
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy projects_admin_update
-on public.projects for update
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy projects_admin_delete
-on public.projects for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Project members
 create policy project_members_select_self_project_or_admin
@@ -336,24 +319,14 @@ using (
     where p.id = project_members.project_id
       and p.client_id = (select auth.uid())
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy project_members_admin_insert
-on public.project_members for insert
+create policy project_members_admin_write
+on public.project_members for all
 to authenticated
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy project_members_admin_update
-on public.project_members for update
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy project_members_admin_delete
-on public.project_members for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Project activity
 create policy project_activity_select_project_access
@@ -373,24 +346,14 @@ using (
         )
       )
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy project_activity_admin_insert
-on public.project_activity for insert
+create policy project_activity_admin_write
+on public.project_activity for all
 to authenticated
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy project_activity_admin_update
-on public.project_activity for update
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy project_activity_admin_delete
-on public.project_activity for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Files metadata
 create policy project_files_select_project_access
@@ -410,7 +373,7 @@ using (
         )
       )
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 create policy project_files_insert_project_access
@@ -432,20 +395,15 @@ with check (
           )
         )
     )
-    or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+    or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
   )
 );
 
-create policy project_files_admin_update
-on public.project_files for update
+create policy project_files_admin_update_delete
+on public.project_files for all
 to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy project_files_admin_delete
-on public.project_files for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Conversations
 create policy conversations_select_project_access
@@ -465,24 +423,14 @@ using (
         )
       )
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy conversations_admin_insert
-on public.conversations for insert
+create policy conversations_admin_write
+on public.conversations for all
 to authenticated
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy conversations_admin_update
-on public.conversations for update
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy conversations_admin_delete
-on public.conversations for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Messages
 create policy messages_select_conversation_access
@@ -503,7 +451,7 @@ using (
         )
       )
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 create policy messages_insert_conversation_access
@@ -526,7 +474,7 @@ with check (
           )
         )
     )
-    or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+    or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
   )
 );
 
@@ -535,7 +483,7 @@ on public.messages for update
 to authenticated
 using (
   sender_id = (select auth.uid())
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 )
 with check (
   (
@@ -555,7 +503,7 @@ with check (
         )
     )
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 -- Message attachments
@@ -578,7 +526,7 @@ using (
         )
       )
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 create policy message_attachments_insert_own_message
@@ -591,19 +539,14 @@ with check (
     where m.id = message_attachments.message_id
       and m.sender_id = (select auth.uid())
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy message_attachments_admin_update
-on public.message_attachments for update
+create policy message_attachments_admin_update_delete
+on public.message_attachments for all
 to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy message_attachments_admin_delete
-on public.message_attachments for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Handover
 create policy handover_items_select_project_access
@@ -623,24 +566,14 @@ using (
         )
       )
   )
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy handover_items_admin_insert
-on public.handover_items for insert
+create policy handover_items_admin_write
+on public.handover_items for all
 to authenticated
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy handover_items_admin_update
-on public.handover_items for update
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin')
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy handover_items_admin_delete
-on public.handover_items for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Notifications
 create policy notifications_select_own_or_admin
@@ -648,7 +581,7 @@ on public.notifications for select
 to authenticated
 using (
   user_id = (select auth.uid())
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
 create policy notifications_update_own_or_admin
@@ -656,22 +589,18 @@ on public.notifications for update
 to authenticated
 using (
   user_id = (select auth.uid())
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 )
 with check (
   user_id = (select auth.uid())
-  or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
+  or (select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin'
 );
 
-create policy notifications_admin_insert
-on public.notifications for insert
+create policy notifications_admin_insert_delete
+on public.notifications for all
 to authenticated
-with check (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
-
-create policy notifications_admin_delete
-on public.notifications for delete
-to authenticated
-using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
+using ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin')
+with check ((select auth.jwt() -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Data API privileges.
 -- Supabase no longer guarantees that newly created tables are automatically
