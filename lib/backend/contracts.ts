@@ -25,6 +25,7 @@ export const projectStatuses = [
 ] as const;
 
 export const messageKinds = ["text", "image", "audio", "document"] as const;
+export const messageSenderRoles = ["client", "company"] as const;
 
 export const projectFileCategories = [
   "brief",
@@ -37,6 +38,7 @@ export const projectFileCategories = [
 export type ProjectRequestStatus = (typeof projectRequestStatuses)[number];
 export type ProjectStatus = (typeof projectStatuses)[number];
 export type MessageKind = (typeof messageKinds)[number];
+export type MessageSenderRole = (typeof messageSenderRoles)[number];
 export type ProjectFileCategory = (typeof projectFileCategories)[number];
 
 export type ISODateTime = string;
@@ -126,6 +128,7 @@ export interface MessageRecord {
   id: UUID;
   conversationId: UUID;
   senderId: UUID;
+  senderRole: MessageSenderRole;
   kind: MessageKind;
   text: string | null;
   editedAt: ISODateTime | null;
