@@ -60,6 +60,7 @@ const requestCopy = {
     copyDone: "Request details copied. Paste them into your LINETECH conversation.",
     copyError: "Your browser blocked clipboard access. Use Share instead.",
     storageError: "LINETECH could not save the request. Please try again.",
+    rateLimited: "Too many project requests. Wait one minute and try again.",
   },
   ar: {
     steps: ["بياناتك", "المشروع", "النطاق", "المراجعة"],
@@ -99,6 +100,7 @@ const requestCopy = {
     copyDone: "تم نسخ تفاصيل الطلب. الصقها في محادثتك مع LINETECH.",
     copyError: "المتصفح منع الوصول إلى الحافظة. استخدم المشاركة بدلًا من ذلك.",
     storageError: "تعذر على لاين تك حفظ الطلب. حاول مرة أخرى.",
+    rateLimited: "تم إرسال طلبات كثيرة جدًا. انتظر دقيقة ثم حاول مرة أخرى.",
   },
 } as const;
 
@@ -400,6 +402,11 @@ export default function ProjectIntake() {
           }));
         } catch {}
         window.location.assign("/login?next=/start");
+        return;
+      }
+
+      if (response.status === 429) {
+        setActionStatus(copy.rateLimited);
         return;
       }
 
