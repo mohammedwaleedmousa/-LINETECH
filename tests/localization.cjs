@@ -30,6 +30,57 @@ Object.defineProperty(global, 'navigator', {
   configurable: true,
 });
 
+global.fetch = async (input, init = {}) => {
+  const url = typeof input === 'string' ? input : String(input?.url || input);
+  const method = String(init.method || 'GET').toUpperCase();
+
+  if (url === '/api/project-request' && method === 'POST') {
+    return {
+      ok: true,
+      status: 200,
+      json: async () => ({
+        ok: true,
+        data: {
+          reference_number: 'LT-260920-1234',
+          submitted_at: '2026-09-20T10:00:00.000Z',
+        },
+      }),
+    };
+  }
+
+  if (url === '/api/chat/messages' && method === 'GET') {
+    return {
+      ok: true,
+      status: 200,
+      json: async () => ({ ok: true, messages: [] }),
+    };
+  }
+
+  if (url === '/api/chat/messages' && method === 'POST') {
+    const body = JSON.parse(String(init.body || '{}'));
+    return {
+      ok: true,
+      status: 200,
+      json: async () => ({
+        ok: true,
+        message: {
+          id: 'message-test-1',
+          sender: 'client',
+          kind: 'text',
+          text: body.text,
+          time: '12:00',
+        },
+      }),
+    };
+  }
+
+  return {
+    ok: false,
+    status: 404,
+    json: async () => ({ ok: false }),
+  };
+};
+
 for (const ext of ['.ts', '.tsx']) {
   require.extensions[ext] = (module, filename) => module._compile(
     ts.transpileModule(fs.readFileSync(filename, 'utf8'), {
@@ -151,6 +202,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   // Step 4 -> complete the request.
   await click(document.querySelector('.request-confirm input'));
   await click(document.querySelector('.request-complete-button'));
+  await act(async () => Promise.resolve());
   assert.ok(document.querySelector('.request-complete-panel'));
   assert.match(document.querySelector('.request-reference strong').textContent, /^LT-\d{6}-\d{4}$/);
   assert.ok(document.body.textContent.includes('طلب مشروعك جاهز.'));
@@ -182,6 +234,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.ok(document.body.textContent.includes('المحادثات'));
   await fill(document.querySelector('.chat-composer textarea'), 'Exact user message 123');
   await click(document.querySelector('.chat-send'));
+  await act(async () => Promise.resolve());
   assert.equal(
     document.querySelector('.chat-message-row.client p').textContent,
     'Exact user message 123'
