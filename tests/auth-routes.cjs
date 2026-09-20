@@ -58,6 +58,11 @@ assert.doesNotMatch(core, /service_role|sb_secret_/i);
 assert.ok(core.includes("rateLimitAllowed"));
 assert.ok(core.includes("rateLimitResponse"));
 assert.ok(core.includes("Retry-After"));
+assert.ok(core.includes("validateUpload"));
+assert.ok(core.includes("signatureMatches"));
+assert.ok(core.includes("BLOCKED_EXTENSIONS"));
+assert.ok(core.includes("requestTooLarge"));
+assert.ok(core.includes("boundedText"));
 for (const header of [
   "Content-Security-Policy",
   "Strict-Transport-Security",
@@ -160,8 +165,17 @@ assert.ok(read("app/start/ProjectIntake.tsx").includes("/api/project-request"));
 assert.ok(read("app/workspace/WorkspaceClient.tsx").includes("/api/workspace"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/messages"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/upload"));
+assert.ok(client.includes('validateUpload(file,kind)'));
+assert.ok(client.includes('requestTooLarge(request,64*1024)'));
+assert.ok(client.includes('boundedText(data.text,5000)'));
+assert.ok(client.includes('/object/project-files/'));
+assert.ok(client.includes('{method:"DELETE"}'));
 assert.ok(client.includes('sender_role:"client"'));
 assert.ok(client.includes("sender_role=eq.client"));
+assert.ok(admin.includes('validateUpload(file,"admin")'));
+assert.ok(admin.includes('requestTooLarge(request,26*1024*1024)'));
+assert.ok(admin.includes('requestTooLarge(request,64*1024)'));
+assert.ok(admin.includes('boundedText(data.text,5000)'));
 assert.ok(admin.includes('sender_role:"company"'));
 assert.ok(admin.includes('row.sender_role==="company"'));
 
