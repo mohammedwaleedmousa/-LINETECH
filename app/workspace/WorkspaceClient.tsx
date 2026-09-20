@@ -259,37 +259,50 @@ export default function WorkspaceClient() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    try {
-      const raw = window.localStorage.getItem("linetech-project-request-v1");
-      if (raw) {
-        const parsed = JSON.parse(raw) as RequestRecord;
-        setRecord(parsed);
+    let cancelled = false;
 
-        const progressRaw = window.localStorage.getItem(progressStorageKey);
-        if (progressRaw) {
-          const parsedProgress = JSON.parse(progressRaw) as ProjectProgress;
-          if (parsedProgress?.requestId === parsed.requestId) {
-            setProgressRecord({
-              ...parsedProgress,
-              currentPhase: clampPhase(parsedProgress.currentPhase),
-              status: parsedProgress.status || "ready",
-              updatedAt: parsedProgress.updatedAt || parsed.completedAt,
-              activity: Array.isArray(parsedProgress.activity) ? parsedProgress.activity : [],
-              files: Array.isArray(parsedProgress.files) ? parsedProgress.files : [],
-            });
-          } else {
-            const fallback = makeDefaultProgress(parsed);
-            setProgressRecord(fallback);
-            window.localStorage.setItem(progressStorageKey, JSON.stringify(fallback));
-          }
-        } else {
-          const fallback = makeDefaultProgress(parsed);
-          setProgressRecord(fallback);
-          window.localStorage.setItem(progressStorageKey, JSON.stringify(fallback));
+    void (async () => {
+      try {
+        const response = await fetch("/api/workspace", { cache: "no-store" });
+        if (response.status === 401) {
+          window.location.assign("/login?next=/workspace");
+          return;
         }
+
+        const payload = await response.json().catch(() => null) as {
+          ok?: boolean;
+          record?: RequestRecord | null;
+          progress?: ProjectProgress | null;
+        } | null;
+
+        if (cancelled || !response.ok || !payload?.ok) return;
+
+        setRecord(payload.record || null);
+        if (payload.record) {
+          const fallback = makeDefaultProgress(payload.record);
+          const progress = payload.progress
+            ? {
+                ...payload.progress,
+                currentPhase: clampPhase(payload.progress.currentPhase),
+                status: payload.progress.status || "ready",
+                updatedAt: payload.progress.updatedAt || payload.record.completedAt,
+                activity: Array.isArray(payload.progress.activity) ? payload.progress.activity : [],
+                files: Array.isArray(payload.progress.files) ? payload.progress.files : [],
+              }
+            : fallback;
+          setProgressRecord(progress);
+        } else {
+          setProgressRecord(null);
+        }
+      } catch {
+      } finally {
+        if (!cancelled) setLoaded(true);
       }
-    } catch {}
-    setLoaded(true);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const completedDate = useMemo(
