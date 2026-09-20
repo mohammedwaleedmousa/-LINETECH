@@ -66,7 +66,7 @@ export interface ProjectRequestRecord {
   audience: string | null;
   idea: string;
   features: string | null;
-  references: string | null;
+  referenceLinks: string | null;
   budget: string | null;
   timing: string | null;
   notes: string | null;
