@@ -138,6 +138,12 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
       headers:{Authorization:`Bearer ${session.accessToken}`},
       body:JSON.stringify({password}),
     });
+    if(response.ok) {
+      await authFetch(env,"/logout?scope=others",{
+        method:"POST",
+        headers:{Authorization:`Bearer ${session.accessToken}`},
+      }).catch(()=>null);
+    }
     return json({ok:response.ok},response.ok?200:response.status,session.setCookies);
   }
 
@@ -145,7 +151,7 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const cookies=parseCookies(request);
     const accessToken=cookies["linetech-access-token"];
     if(accessToken) {
-      await authFetch(env,"/logout",{
+      await authFetch(env,"/logout?scope=local",{
         method:"POST",
         headers:{Authorization:`Bearer ${accessToken}`},
       }).catch(()=>null);
