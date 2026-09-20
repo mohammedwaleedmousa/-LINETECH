@@ -1,0 +1,42 @@
+name: Bootstrap Supabase Dependencies
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/bootstrap-supabase-deps.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: npm
+
+      - name: Install pinned Supabase packages
+        run: npm install --save-exact @supabase/ssr@0.12.7 @supabase/supabase-js@2.116.0
+
+      - name: Run LINETECH QA
+        run: npm run qa
+
+      - name: Commit dependency lockfile
+        run: |
+          git config user.name "LINETECH CI"
+          git config user.email "actions@users.noreply.github.com"
+          git add package.json package-lock.json
+          if git diff --cached --quiet; then
+            echo "No dependency changes to commit."
+            exit 0
+          fi
+          git commit -m "Install Supabase client dependencies"
+          git push
