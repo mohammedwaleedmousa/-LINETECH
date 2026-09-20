@@ -325,17 +325,11 @@ to authenticated
 using (((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin');
 
 -- Project members
-create policy project_members_select_self_project_or_admin
+create policy project_members_select_self_or_admin
 on public.project_members for select
 to authenticated
 using (
   user_id = (select auth.uid())
-  or exists (
-    select 1
-    from public.projects p
-    where p.id = project_members.project_id
-      and p.client_id = (select auth.uid())
-  )
   or ((select auth.jwt()) -> 'app_metadata' ->> 'role') = 'admin'
 );
 
