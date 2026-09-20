@@ -23,7 +23,7 @@ type StoredFinderState = {
 const requestCopy = {
   en: {
     steps: ["About you", "Project", "Scope", "Review"],
-    localNote: "Your project information stays on this device during the frontend phase. Completing the request creates a local request record; it is not sent to a server yet.",
+    localNote: "Your project details stay in this form while you prepare the request. When you complete it, LINETECH securely saves the request to your account workspace.",
     finderKicker: "SERVICE FINDER SAVED",
     finderTitle: "Your recommendation is already connected.",
     finderBody: "We kept the recommended service and used your previous answers to prefill the project stage and main goal where they clearly match. You only need to add the details we do not know yet.",
@@ -62,7 +62,7 @@ const requestCopy = {
   },
   ar: {
     steps: ["بياناتك", "المشروع", "النطاق", "المراجعة"],
-    localNote: "تبقى معلومات مشروعك على هذا الجهاز خلال مرحلة الواجهة الأمامية. إتمام الطلب ينشئ سجلًا محليًا للطلب، ولا يرسله إلى الخادم بعد.",
+    localNote: "تبقى تفاصيل مشروعك في هذا النموذج أثناء تجهيز الطلب. عند إتمامه، تحفظ لاين تك الطلب بأمان داخل مساحة حسابك.",
     finderKicker: "تم حفظ نتيجة موجّه الخدمات",
     finderTitle: "نتيجتك مرتبطة بالفعل بطلب المشروع.",
     finderBody: "احتفظنا بالخدمة المقترحة واستخدمنا إجاباتك السابقة لتعبئة مرحلة المشروع والهدف الرئيسي تلقائيًا عندما يكون الربط واضحًا. أكمل فقط التفاصيل التي لا نعرفها بعد.",
