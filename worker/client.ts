@@ -355,6 +355,33 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     return withCookies(new Response(stored.body,{status:200,headers}),session.setCookies);
   }
 
+  if(path==="/api/handover" && request.method==="GET") {
+    const session=await requireSession(request,env);
+    if(!session) return json({ok:false},401);
+
+    const context=await latestProject(env,session);
+    if(!context.project?.id) {
+      return json({ok:true,locked:true,items:[]},200,session.setCookies);
+    }
+
+    const phase=Number(context.project.phase||1);
+    const status=String(context.project.status||"");
+    const unlocked=phase>=5 || status==="completed";
+    if(!unlocked) {
+      return json({ok:true,locked:true,items:[]},200,session.setCookies);
+    }
+
+    const response=await restFetch(
+      env,
+      `/handover_items?select=*&project_id=eq.${encodeURIComponent(context.project.id)}&order=created_at.asc`,
+      session.accessToken,
+    );
+    const rows=await safeJson(response);
+    return response.ok
+      ? json({ok:true,locked:false,items:Array.isArray(rows)?rows:[]},200,session.setCookies)
+      : json({ok:false},response.status,session.setCookies);
+  }
+
   if(path==="/api/notifications") {
     const session=await requireSession(request,env);
     if(!session) return json({ok:false},401);
