@@ -71,6 +71,12 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
     if(requestTooLarge(request,64*1024)) return json({ok:false},413,session.setCookies);
     const data=await request.json().catch(()=>({})) as Record<string,any>;
+    const submissionKey=boundedText(data.submissionKey,36);
+    if(
+      !submissionKey
+      || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(submissionKey)
+    ) return json({ok:false},400,session.setCookies);
+
     const fields={
       name:boundedText(data.name,120),
       company:boundedText(data.company,160),
@@ -95,6 +101,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       method:"POST",
       headers:{Prefer:"return=representation"},
       body:JSON.stringify({
+        p_submission_key:submissionKey,
         p_name:fields.name,
         p_company:fields.company,
         p_contact:fields.contact,
