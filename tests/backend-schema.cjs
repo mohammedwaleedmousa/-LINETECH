@@ -93,6 +93,27 @@ assert.ok(
   "Backend schema must not grant ALL privileges on public tables."
 );
 
+assert.ok(
+  schema.includes("messages_text_len") &&
+  schema.includes("char_length(text) <= 5000"),
+  "Message length constraint must remain in the canonical schema."
+);
+
+assert.ok(
+  schema.includes("project_files_file_size_range") &&
+  schema.includes("file_size <= 26214400") &&
+  schema.includes("message_attachments_file_size_range") &&
+  schema.includes("file_size <= 15728640"),
+  "File size constraints must remain in the canonical schema."
+);
+
+assert.ok(
+  schema.includes("project_requests_idea_len") &&
+  schema.includes("char_length(idea) <= 5000") &&
+  schema.includes("projects_phase_range"),
+  "Project request and project phase bounds must remain enforced."
+);
+
 console.log(
   `PASS: ${requiredTables.length} LINETECH backend tables are defined with RLS and authenticated-only grants`
 );
