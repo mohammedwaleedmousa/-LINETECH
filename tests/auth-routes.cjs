@@ -61,6 +61,8 @@ assert.ok(workerIndexHealth.includes("/api/health"));
 assert.ok(workerIndexHealth.includes("/health"));
 
 const auth = read("worker/auth.ts");
+assert.ok(auth.includes('redirectUrl.searchParams.set("confirmed","1")'));
+assert.ok(auth.includes('redirectUrl.searchParams.set("recovery","1")'));
 for (const limiter of [
   "AUTH_LOGIN_RATE_LIMITER",
   "AUTH_SIGNUP_RATE_LIMITER",
@@ -120,7 +122,11 @@ assert.ok(nav.includes('"Logout"'));
 assert.ok(nav.includes('"تسجيل خروج"'));
 
 const login = read("app/login/LoginForm.tsx");
-assert.ok(login.includes('window.location.assign(next && next.startsWith("/") ? next : "/workspace")'));
+assert.ok(login.includes("safeInternalNext"));
+assert.ok(login.includes('value.startsWith("//")'));
+assert.ok(login.includes("window.location.assign(safeInternalNext(next))"));
+assert.ok(login.includes('search.get("confirmed") === "1"'));
+assert.ok(login.includes('search.get("recovery") === "1"'));
 for (const endpoint of [
   "/api/auth/login",
   "/api/auth/signup",
