@@ -66,7 +66,7 @@ create table public.project_requests (
   audience text,
   idea text not null,
   features text,
-  references text,
+  reference_links text,
   budget text,
   timing text,
   notes text,
