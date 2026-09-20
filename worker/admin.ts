@@ -373,6 +373,18 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     }
   }
 
+  if(path==="/api/admin/users" && request.method==="GET") {
+    const response=await restFetch(
+      env,
+      "/profiles?select=id,full_name,company,created_at&order=created_at.asc&limit=500",
+      admin.accessToken,
+    );
+    const rows=await safeJson(response);
+    return response.ok
+      ? json({ok:true,users:Array.isArray(rows)?rows:[]},200,admin.setCookies)
+      : json({ok:false},response.status,admin.setCookies);
+  }
+
   if(path==="/api/admin/members") {
     const url=new URL(request.url);
     const projectId=url.searchParams.get("projectId");
