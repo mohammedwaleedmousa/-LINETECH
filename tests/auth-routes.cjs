@@ -18,13 +18,20 @@ for (const file of [
 const wrangler = read("wrangler.jsonc");
 assert.match(wrangler, /"main"\s*:\s*"\.\/worker\/index\.ts"/);
 assert.match(wrangler, /"binding"\s*:\s*"ASSETS"/);
-assert.match(wrangler, /"\/api\/\*"/);
-assert.match(wrangler, /"\/workspace\*"/);
-assert.match(wrangler, /"\/chat\*"/);
+assert.match(wrangler, /"run_worker_first"\s*:\s*true/);
+assert.match(wrangler, /"observability"\s*:\s*\{/);
+assert.match(wrangler, /"enabled"\s*:\s*true/);
+assert.match(wrangler, /"head_sampling_rate"\s*:\s*1/);
 
 const workerIndex = read("worker/index.ts");
 assert.match(workerIndex, /request\.headers\.get\("Origin"\)/);
 assert.match(workerIndex, /origin!==url\.origin/);
+assert.ok(workerIndex.includes('path==="/admin"'));
+assert.ok(workerIndex.includes('app_metadata?.role!=="admin"'));
+assert.ok(workerIndex.includes('path==="/handover"'));
+assert.ok(workerIndex.includes("withSecurityHeaders"));
+assert.ok(workerIndex.includes('event:"request"'));
+assert.ok(workerIndex.includes('event:"worker_error"'));
 
 const core = read("worker/core.ts");
 assert.match(core, /HttpOnly/);
@@ -35,6 +42,19 @@ assert.doesNotMatch(core, /service_role|sb_secret_/i);
 assert.ok(core.includes("rateLimitAllowed"));
 assert.ok(core.includes("rateLimitResponse"));
 assert.ok(core.includes("Retry-After"));
+for (const header of [
+  "Content-Security-Policy",
+  "Strict-Transport-Security",
+  "X-Frame-Options",
+  "X-Content-Type-Options",
+  "Referrer-Policy",
+  "Permissions-Policy",
+  "Cross-Origin-Opener-Policy",
+  "Cross-Origin-Resource-Policy",
+  "X-Request-ID",
+]) {
+  assert.ok(core.includes(header), `Missing security response header: ${header}`);
+}
 
 const workerIndexHealth = read("worker/index.ts");
 assert.ok(workerIndexHealth.includes("/api/health"));
