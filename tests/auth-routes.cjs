@@ -71,6 +71,9 @@ for (const limiter of [
 ]) {
   assert.ok(auth.includes(limiter), `Auth route is not wired to ${limiter}`);
 }
+assert.ok(auth.includes('/logout?scope=local'));
+assert.ok(auth.includes('/logout?scope=others'));
+
 for (const endpoint of [
   "/api/auth/login",
   "/api/auth/signup",
