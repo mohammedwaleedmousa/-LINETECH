@@ -32,12 +32,23 @@ assert.match(core, /Secure/);
 assert.match(core, /SameSite=Lax/);
 assert.match(core, /SUPABASE_PUBLISHABLE_KEY/);
 assert.doesNotMatch(core, /service_role|sb_secret_/i);
+assert.ok(core.includes("rateLimitAllowed"));
+assert.ok(core.includes("rateLimitResponse"));
+assert.ok(core.includes("Retry-After"));
 
 const workerIndexHealth = read("worker/index.ts");
 assert.ok(workerIndexHealth.includes("/api/health"));
 assert.ok(workerIndexHealth.includes("/health"));
 
 const auth = read("worker/auth.ts");
+for (const limiter of [
+  "AUTH_LOGIN_RATE_LIMITER",
+  "AUTH_SIGNUP_RATE_LIMITER",
+  "AUTH_RECOVER_RATE_LIMITER",
+  "AUTH_PASSWORD_RATE_LIMITER",
+]) {
+  assert.ok(auth.includes(limiter), `Auth route is not wired to ${limiter}`);
+}
 for (const endpoint of [
   "/api/auth/login",
   "/api/auth/signup",
@@ -50,6 +61,13 @@ for (const endpoint of [
 }
 
 const client = read("worker/client.ts");
+for (const limiter of [
+  "PROJECT_REQUEST_RATE_LIMITER",
+  "CHAT_RATE_LIMITER",
+  "UPLOAD_RATE_LIMITER",
+]) {
+  assert.ok(client.includes(limiter), `Client route is not wired to ${limiter}`);
+}
 for (const endpoint of [
   "/api/project-request",
   "/api/workspace",
