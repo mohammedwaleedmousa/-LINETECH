@@ -263,7 +263,76 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
     'Exact user message 123'
   );
 
-  console.log('PASS: current Arabic/RTL nav, search, four-step request completion, login and chat flows');
+  // Signed-in navbar notification center: load, open and mark one notification as read.
+  let notificationPatched = false;
+  global.fetch = async (input, init = {}) => {
+    const url = typeof input === 'string' ? input : String(input?.url || input);
+    const method = String(init.method || 'GET').toUpperCase();
+
+    if (url === '/api/auth/session' && method === 'GET') {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({ ok: true, user: { id: 'client-test-1' } }),
+      };
+    }
+
+    if (url === '/api/notifications' && method === 'GET') {
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          ok: true,
+          notifications: [{
+            id: 'notification-test-1',
+            title: 'تحديث المشروع',
+            body: 'تم تجهيز النطاق للمراجعة.',
+            project_id: 'project-test-1',
+            read_at: null,
+            created_at: '2026-09-20T12:00:00.000Z',
+          }],
+        }),
+      };
+    }
+
+    if (url === '/api/notifications' && method === 'PATCH') {
+      const body = JSON.parse(String(init.body || '{}'));
+      assert.equal(body.notificationId, 'notification-test-1');
+      notificationPatched = true;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          ok: true,
+          notification: {
+            id: 'notification-test-1',
+            read_at: '2026-09-20T12:05:00.000Z',
+          },
+        }),
+      };
+    }
+
+    return {
+      ok: false,
+      status: 404,
+      json: async () => ({ ok: false }),
+    };
+  };
+
+  await act(async () => setLanguage('ar'));
+  await render(Bridge, Nav);
+  await act(async () => new Promise(resolve => setTimeout(resolve, 0)));
+  assert.ok(document.querySelector('.notification-trigger'));
+  assert.ok(document.querySelector('.notification-badge'));
+  await click(document.querySelector('.notification-trigger'));
+  assert.ok(document.body.textContent.includes('تحديث المشروع'));
+  await click(document.querySelector('.notification-item'));
+  await act(async () => Promise.resolve());
+  assert.equal(notificationPatched, true);
+  assert.equal(document.querySelector('.notification-item.is-unread'), null);
+  assert.equal(document.querySelector('.notification-badge'), null);
+
+  console.log('PASS: current Arabic/RTL nav, search, request completion, login, chat and notification flows');
   await act(async () => root.unmount());
 })().catch(error => {
   console.error(error);
