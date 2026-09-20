@@ -39,23 +39,7 @@ function Icon({name,size=18}:{name:IconName;size?:number}){
   return <svg {...common}><path d="M12 3v12M7 10l5 5 5-5M5 20h14"/></svg>;
 }
 
-const initialMessages: ChatMessage[] = [
-  {
-    id: "company-welcome",
-    sender: "company",
-    kind: "text",
-    text: "Welcome to LINETECH. Send your project questions, files or voice notes here and keep the conversation in one place.",
-    time: "09:00",
-  },
-  {
-    id: "company-context",
-    sender: "company",
-    kind: "text",
-    text: "This workspace keeps your project conversation together. Messages created here are saved on this device in the current version.",
-    time: "09:01",
-  },
-];
-
+const initialMessages: ChatMessage[] = [];
 
 function currentTime(){
   return new Intl.DateTimeFormat("en", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
@@ -500,7 +484,7 @@ export default function ChatWorkspace(){
         </button>
       </div>
 
-      <div className="chat-sidebar-foot"><span className="chat-status-dot"/><div><strong>Device conversation</strong><small>Messages stay on this device</small></div></div>
+      <div className="chat-sidebar-foot"><span className="chat-status-dot"/><div><strong>Project conversation</strong><small>Synced with your workspace</small></div></div>
     </aside>
 
     <div className={`chat-main ${dragging?"is-dragging":""}`} onDragEnter={event=>{event.preventDefault();setDragging(true)}} onDragOver={event=>event.preventDefault()} onDragLeave={event=>{if(event.currentTarget===event.target)setDragging(false)}} onDrop={onDrop}>
@@ -509,10 +493,10 @@ export default function ChatWorkspace(){
         <div className="chat-header-actions"><button type="button" aria-label="Search conversation">⌕</button><button type="button" aria-label="Conversation menu"><Icon name="more"/></button></div>
       </header>
 
-      <div className="chat-preview-banner"><span>DEVICE MODE</span><p>Messages, photos, documents and voice notes in this conversation are saved on this device.</p></div>
+      <div className="chat-preview-banner"><span>PROJECT WORKSPACE</span><p>Messages, photos, documents and voice notes are securely connected to this project.</p></div>
 
       <div className="chat-messages" ref={listRef}>
-        <div className="chat-encryption-note">This conversation is stored on this device.</div>
+        <div className="chat-encryption-note">This conversation is connected to your LINETECH workspace.</div>
         <div className="chat-day"><span>TODAY</span></div>
         {messages.map(message=><div key={message.id} className={`chat-message-row ${message.sender}`}>
           <div className={`chat-bubble ${message.deleted?"deleted":message.kind}`}>
@@ -534,7 +518,7 @@ export default function ChatWorkspace(){
                 <a href={message.src} download={message.fileName || "document"} aria-label="Download document"><Icon name="download" size={17}/></a>
               </div>}
             </>}
-            <span className="chat-message-meta">{message.edited&&!message.deleted?<em>edited</em>:null}{message.time}{message.sender === "client" && !message.deleted ? <b aria-label="Saved on this device">✓✓</b> : null}</span>
+            <span className="chat-message-meta">{message.edited&&!message.deleted?<em>edited</em>:null}{message.time}{message.sender === "client" && !message.deleted ? <b aria-label="Saved to project workspace">✓✓</b> : null}</span>
           </div>
         </div>)}
       </div>
