@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Localized, { useLanguage, setLanguage } from "./Localized";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 const items = [
@@ -45,7 +45,10 @@ function GlobeIcon(){
 
 export default function SiteNav() {
   const pathname = usePathname();
+  const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [signedIn, setSignedIn] = useState(false);
+  const [authChecked, setAuthChecked] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
   const language = useLanguage();
@@ -56,6 +59,26 @@ export default function SiteNav() {
     setSearchOpen(false);
     setQuery("");
   }, [pathname]);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    void (async () => {
+      try {
+        const response = await fetch("/api/auth/session", { cache: "no-store" });
+        if (!cancelled) setSignedIn(response.ok);
+      } catch {
+        if (!cancelled) setSignedIn(false);
+      } finally {
+        if (!cancelled) setAuthChecked(true);
+      }
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [pathname]);
+
 
   useEffect(() => {
     if (!searchOpen) return;
@@ -81,12 +104,28 @@ export default function SiteNav() {
   const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
   const workspaceLabel = language === "ar" ? "مساحة العمل" : "Workspace";
   const loginLabel = language === "ar" ? "تسجيل الدخول" : "Login";
+  const logoutLabel = language === "ar" ? "تسجيل خروج" : "Logout";
   const startLabel = language === "ar" ? "ابدأ خطك" : "Start Your Line";
 
   function toggleLanguage(){
     const next:SiteLanguage = language === "ar" ? "en" : "ar";
     setLanguage(next);
   }
+
+  async function logout(event: React.MouseEvent<HTMLAnchorElement>){
+    event.preventDefault();
+    if (!signedIn) return;
+
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } finally {
+      setSignedIn(false);
+      setOpen(false);
+      router.replace("/");
+      router.refresh();
+    }
+  }
+
 
   return (
     <Localized><>
@@ -105,7 +144,9 @@ export default function SiteNav() {
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
           <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>
           <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>
-          <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>{loginLabel} <span>↗</span></Link>
+          {authChecked && signedIn
+            ? <Link className="nav-login desktop-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
+            : <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>{loginLabel} <span>↗</span></Link>}
           <button className={`mobile-menu-button ${open ? "open" : ""}`} type="button" aria-label="Toggle navigation" aria-expanded={open} aria-controls="mobile-navigation" onClick={() => { setSearchOpen(false); setOpen(v => !v); }}><i/><i/></button>
         </div>
       </header>
@@ -120,7 +161,9 @@ export default function SiteNav() {
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>
         <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>
-        <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>{loginLabel} <span>↗</span></Link>
+        {authChecked && signedIn
+          ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
+          : <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>{loginLabel} <span>↗</span></Link>}
       </div>
 
       {searchOpen && (
