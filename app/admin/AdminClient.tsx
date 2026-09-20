@@ -50,6 +50,10 @@ export default function AdminClient() {
   const [handover, setHandover] = useState<Json[]>([]);
   const [handoverTitle, setHandoverTitle] = useState("");
   const [handoverDescription, setHandoverDescription] = useState("");
+  const [users, setUsers] = useState<Json[]>([]);
+  const [members, setMembers] = useState<Json[]>([]);
+  const [memberUserId, setMemberUserId] = useState("");
+  const [memberRole, setMemberRole] = useState("staff");
 
   const selected = useMemo(
     () => projects.find(project => project.id === selectedId) || null,
@@ -70,6 +74,15 @@ export default function AdminClient() {
     setSelectedId(current => current || rows[0]?.id || "");
   }, []);
 
+  const loadUsers = useCallback(async () => {
+    const response = await fetch("/api/admin/users", { cache: "no-store" });
+    const payload = await readJson(response);
+    if (!response.ok || !payload?.ok) throw new Error("Could not load users.");
+    const rows = Array.isArray(payload.users) ? payload.users : [];
+    setUsers(rows);
+    setMemberUserId(current => current || rows[0]?.id || "");
+  }, []);
+
   const loadProject = useCallback(async (projectId: string) => {
     if (!projectId) {
       setDetail(null);
@@ -77,18 +90,20 @@ export default function AdminClient() {
       setHandover([]);
       return;
     }
-    const [projectResponse, chatResponse, handoverResponse] = await Promise.all([
+    const [projectResponse, chatResponse, handoverResponse, membersResponse] = await Promise.all([
       fetch(`/api/admin/project?projectId=${encodeURIComponent(projectId)}`, { cache: "no-store" }),
       fetch(`/api/admin/chat?projectId=${encodeURIComponent(projectId)}`, { cache: "no-store" }),
       fetch(`/api/admin/handover?projectId=${encodeURIComponent(projectId)}`, { cache: "no-store" }),
+      fetch(`/api/admin/members?projectId=${encodeURIComponent(projectId)}`, { cache: "no-store" }),
     ]);
-    const [projectPayload, chatPayload, handoverPayload] = await Promise.all([
-      readJson(projectResponse), readJson(chatResponse), readJson(handoverResponse),
+    const [projectPayload, chatPayload, handoverPayload, membersPayload] = await Promise.all([
+      readJson(projectResponse), readJson(chatResponse), readJson(handoverResponse), readJson(membersResponse),
     ]);
     if (!projectResponse.ok || !projectPayload?.ok) throw new Error("Could not load project.");
     setDetail(projectPayload as unknown as ProjectDetail);
     setChat(chatResponse.ok && chatPayload?.ok && Array.isArray(chatPayload.messages) ? chatPayload.messages : []);
     setHandover(handoverResponse.ok && handoverPayload?.ok && Array.isArray(handoverPayload.items) ? handoverPayload.items : []);
+    setMembers(membersResponse.ok && membersPayload?.ok && Array.isArray(membersPayload.members) ? membersPayload.members : []);
   }, []);
 
   useEffect(() => {
@@ -110,7 +125,7 @@ export default function AdminClient() {
           return;
         }
         if (!cancelled) setAuthorized(true);
-        await loadProjects();
+        await Promise.all([loadProjects(), loadUsers()]);
       } catch {
         if (!cancelled) setError("Admin workspace could not be loaded.");
       } finally {
@@ -118,7 +133,7 @@ export default function AdminClient() {
       }
     })();
     return () => { cancelled = true; };
-  }, [loadProjects]);
+  }, [loadProjects, loadUsers]);
 
   useEffect(() => {
     if (!authorized || !selectedId) return;
@@ -251,6 +266,55 @@ export default function AdminClient() {
       await loadProject(selectedId);
     } catch {
       setError("Handover item could not be updated.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+
+  async function addMember(event: FormEvent) {
+    event.preventDefault();
+    if (!selectedId || !memberUserId) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const response = await fetch("/api/admin/members", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          projectId: selectedId,
+          userId: memberUserId,
+          memberRole: memberRole.trim() || "staff",
+        }),
+      });
+      const payload = await readJson(response);
+      if (!response.ok || !payload?.ok) throw new Error();
+      setNotice("Project member updated.");
+      await loadProject(selectedId);
+    } catch {
+      setError("Project member could not be updated.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
+  async function removeMember(userId: string) {
+    if (!selectedId || !userId) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const response = await fetch(
+        `/api/admin/members?projectId=${encodeURIComponent(selectedId)}&userId=${encodeURIComponent(userId)}`,
+        { method: "DELETE" },
+      );
+      const payload = await readJson(response);
+      if (!response.ok || !payload?.ok) throw new Error();
+      setNotice("Project member removed.");
+      await loadProject(selectedId);
+    } catch {
+      setError("Project member could not be removed.");
     } finally {
       setBusy(false);
     }
@@ -393,6 +457,35 @@ export default function AdminClient() {
                 </div>
               </section>
             </div>
+
+            <section className="admin-card">
+              <div className="admin-card-title"><span>06</span><strong>Team access</strong></div>
+              <form className="admin-stack" onSubmit={addMember}>
+                <div className="admin-grid two">
+                  <select value={memberUserId} onChange={event => setMemberUserId(event.target.value)} required>
+                    <option value="" disabled>Select account</option>
+                    {users.map(user => (
+                      <option key={user.id} value={user.id}>
+                        {user.full_name || user.id}{user.company ? ` · ${user.company}` : ""}
+                      </option>
+                    ))}
+                  </select>
+                  <input value={memberRole} onChange={event => setMemberRole(event.target.value)} placeholder="staff" />
+                </div>
+                <button className="admin-secondary" type="submit" disabled={busy || !memberUserId}>Add / update member</button>
+              </form>
+              <div className="admin-list">
+                {members.length ? members.map(member => (
+                  <div className="admin-member" key={member.user_id}>
+                    <div>
+                      <strong>{member.profile?.full_name || member.user_id}</strong>
+                      <p>{member.member_role || "staff"}{member.profile?.company ? ` · ${member.profile.company}` : ""}</p>
+                    </div>
+                    <button type="button" onClick={() => removeMember(String(member.user_id))} disabled={busy}>Remove</button>
+                  </div>
+                )) : <p className="admin-empty">No additional project members.</p>}
+              </div>
+            </section>
           </>}
         </section>
       </div>
