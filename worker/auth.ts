@@ -48,7 +48,9 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
       return rateLimitResponse();
     }
 
-    const redirectTo=new URL("/login",request.url).toString();
+    const redirectUrl=new URL("/login",request.url);
+    redirectUrl.searchParams.set("confirmed","1");
+    const redirectTo=redirectUrl.toString();
     const response=await authFetch(
       env,
       `/signup?redirect_to=${encodeURIComponent(redirectTo)}`,
@@ -78,7 +80,9 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
       if(!(await rateLimitAllowed(env.AUTH_RECOVER_RATE_LIMITER,`recover:${email}`))) {
         return rateLimitResponse();
       }
-      const redirectTo=new URL("/login",request.url).toString();
+      const redirectUrl=new URL("/login",request.url);
+      redirectUrl.searchParams.set("recovery","1");
+      const redirectTo=redirectUrl.toString();
       await authFetch(
         env,
         `/recover?redirect_to=${encodeURIComponent(redirectTo)}`,
