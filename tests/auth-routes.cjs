@@ -96,6 +96,11 @@ assert.ok(read("app/start/ProjectIntake.tsx").includes("/api/project-request"));
 assert.ok(read("app/workspace/WorkspaceClient.tsx").includes("/api/workspace"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/messages"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/upload"));
+assert.ok(client.includes('sender_role:"client"'));
+assert.ok(client.includes("sender_role=eq.client"));
+assert.ok(admin.includes('sender_role:"company"'));
+assert.ok(admin.includes('row.sender_role==="company"'));
+
 assert.ok(read("app/handover/HandoverClient.tsx").includes("/api/handover"));
 assert.ok(read("app/workspace/WorkspaceClient.tsx").includes('href="/handover"'));
 
