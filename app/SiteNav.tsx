@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Localized, { useLanguage, setLanguage } from "./Localized";
 import { usePathname, useRouter } from "next/navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
@@ -39,6 +39,33 @@ const searchItems = [
 
 type SiteLanguage = "ar" | "en";
 
+type ClientNotification = {
+  id: string;
+  title: string;
+  body?: string | null;
+  project_id?: string | null;
+  read_at?: string | null;
+  created_at: string;
+};
+
+function BellIcon(){
+  return <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9"/><path d="M10 21h4"/></svg>;
+}
+
+function formatNotificationTime(value: string, language: SiteLanguage){
+  if (!value) return "";
+  try {
+    return new Intl.DateTimeFormat(language === "ar" ? "ar-YE" : "en", {
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+    }).format(new Date(value));
+  } catch {
+    return "";
+  }
+}
+
 function GlobeIcon(){
   return <svg className="language-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.5 4 5.5 4 9s-1.4 6.5-4 9c-2.6-2.5-4-5.5-4-9s1.4-6.5 4-9z"/></svg>;
 }
@@ -51,12 +78,17 @@ export default function SiteNav() {
   const [authChecked, setAuthChecked] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
+  const [notifications, setNotifications] = useState<ClientNotification[]>([]);
+  const [notificationsOpen, setNotificationsOpen] = useState(false);
+  const [notificationsLoading, setNotificationsLoading] = useState(false);
   const language = useLanguage();
   const inputRef = useRef<HTMLInputElement>(null);
+  const notificationRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setOpen(false);
     setSearchOpen(false);
+    setNotificationsOpen(false);
     setQuery("");
   }, [pathname]);
 
@@ -79,6 +111,45 @@ export default function SiteNav() {
     };
   }, [pathname]);
 
+
+  const loadNotifications = useCallback(async () => {
+    setNotificationsLoading(true);
+    try {
+      const response = await fetch("/api/notifications", { cache: "no-store" });
+      if (!response.ok) return;
+      const payload = await response.json().catch(() => null) as {
+        ok?: boolean;
+        notifications?: ClientNotification[];
+      } | null;
+      if (payload?.ok && Array.isArray(payload.notifications)) {
+        setNotifications(payload.notifications);
+      }
+    } catch {
+    } finally {
+      setNotificationsLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!signedIn) {
+      setNotifications([]);
+      setNotificationsOpen(false);
+      return;
+    }
+    void loadNotifications();
+  }, [signedIn, pathname, loadNotifications]);
+
+  useEffect(() => {
+    if (!notificationsOpen) return;
+    const onPointerDown = (event: MouseEvent) => {
+      const target = event.target as Node | null;
+      if (target && notificationRef.current && !notificationRef.current.contains(target)) {
+        setNotificationsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onPointerDown);
+    return () => document.removeEventListener("mousedown", onPointerDown);
+  }, [notificationsOpen]);
 
   useEffect(() => {
     if (!searchOpen) return;
@@ -106,6 +177,11 @@ export default function SiteNav() {
   const loginLabel = language === "ar" ? "تسجيل الدخول" : "Login";
   const logoutLabel = language === "ar" ? "تسجيل خروج" : "Logout";
   const startLabel = language === "ar" ? "ابدأ خطك" : "Start Your Line";
+  const notificationsLabel = language === "ar" ? "الإشعارات" : "Notifications";
+  const noNotificationsLabel = language === "ar" ? "لا توجد إشعارات حتى الآن." : "No notifications yet.";
+  const unreadLabel = language === "ar" ? "غير مقروء" : "unread";
+  const workspaceNotificationsLabel = language === "ar" ? "فتح مساحة العمل" : "Open workspace";
+  const unreadCount = notifications.filter(item => !item.read_at).length;
 
   function toggleLanguage(){
     const next:SiteLanguage = language === "ar" ? "en" : "ar";
@@ -120,10 +196,43 @@ export default function SiteNav() {
       await fetch("/api/auth/logout", { method: "POST" });
     } finally {
       setSignedIn(false);
+      setNotifications([]);
+      setNotificationsOpen(false);
       setOpen(false);
       router.replace("/");
       router.refresh();
     }
+  }
+
+  async function markNotificationRead(notification: ClientNotification){
+    if (notification.read_at) return;
+    try {
+      const response = await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ notificationId: notification.id }),
+      });
+      const payload = await response.json().catch(() => null) as {
+        ok?: boolean;
+        notification?: { read_at?: string | null };
+      } | null;
+      if (!response.ok || !payload?.ok) return;
+      const readAt = payload.notification?.read_at || new Date().toISOString();
+      setNotifications(current => current.map(item =>
+        item.id === notification.id ? { ...item, read_at: readAt } : item
+      ));
+    } catch {
+    }
+  }
+
+  function toggleNotifications(){
+    setSearchOpen(false);
+    setOpen(false);
+    setNotificationsOpen(current => {
+      const next = !current;
+      if (next) void loadNotifications();
+      return next;
+    });
   }
 
 
@@ -141,7 +250,53 @@ export default function SiteNav() {
         </nav>
         <div className="ref-nav-end">
           <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "ENG" : "العربية"}</button>
-          <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
+          <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setNotificationsOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
+          {authChecked && signedIn && (
+            <div className={`notification-center ${notificationsOpen ? "open" : ""}`} ref={notificationRef}>
+              <button
+                className="notification-trigger"
+                type="button"
+                aria-label={unreadCount ? `${notificationsLabel}: ${unreadCount}` : notificationsLabel}
+                aria-expanded={notificationsOpen}
+                onClick={toggleNotifications}
+              >
+                <BellIcon/>
+                {unreadCount > 0 && <span className="notification-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}
+              </button>
+              {notificationsOpen && (
+                <div className="notification-panel" role="dialog" aria-label={notificationsLabel}>
+                  <div className="notification-panel-head">
+                    <strong>{notificationsLabel}</strong>
+                    <span>{unreadCount ? `${unreadCount} ${unreadLabel}` : "—"}</span>
+                  </div>
+                  <div className="notification-list">
+                    {notificationsLoading && !notifications.length ? (
+                      <p className="notification-loading">•••</p>
+                    ) : notifications.length ? notifications.slice(0, 12).map(notification => (
+                      <button
+                        type="button"
+                        key={notification.id}
+                        className={`notification-item ${notification.read_at ? "" : "is-unread"}`}
+                        onClick={() => void markNotificationRead(notification)}
+                      >
+                        <i aria-hidden="true"/>
+                        <span>
+                          <strong data-no-translate>{notification.title}</strong>
+                          {notification.body && <p data-no-translate>{notification.body}</p>}
+                          <small>{formatNotificationTime(notification.created_at, language)}</small>
+                        </span>
+                      </button>
+                    )) : (
+                      <p className="notification-empty">{noNotificationsLabel}</p>
+                    )}
+                  </div>
+                  <Link className="notification-panel-foot" href="/workspace" onClick={() => setNotificationsOpen(false)}>
+                    {workspaceNotificationsLabel}<span>→</span>
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
           <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>
           <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>
           {authChecked && signedIn
