@@ -114,6 +114,25 @@ assert.ok(
   "Project request and project phase bounds must remain enforced."
 );
 
+assert.ok(
+  schema.includes("project_files_bucket_fixed") &&
+  schema.includes("project_files_mime_allowed") &&
+  schema.includes("project_files_path_safe"),
+  "Project file metadata integrity constraints must remain enforced."
+);
+
+assert.ok(
+  schema.includes("message_attachments_bucket_fixed") &&
+  schema.includes("message_attachments_mime_allowed") &&
+  schema.includes("message_attachments_path_safe"),
+  "Message attachment metadata integrity constraints must remain enforced."
+);
+
+assert.ok(
+  schema.includes("messages_content_shape"),
+  "Message kind/text shape constraint must remain enforced."
+);
+
 console.log(
   `PASS: ${requiredTables.length} LINETECH backend tables are defined with RLS and authenticated-only grants`
 );
