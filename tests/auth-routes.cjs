@@ -18,10 +18,26 @@ for (const file of [
 const wrangler = read("wrangler.jsonc");
 assert.match(wrangler, /"main"\s*:\s*"\.\/worker\/index\.ts"/);
 assert.match(wrangler, /"binding"\s*:\s*"ASSETS"/);
-assert.match(wrangler, /"run_worker_first"\s*:\s*true/);
+for (const route of ["/api/*","/workspace*","/chat*","/admin*","/handover*"]) {
+  assert.ok(wrangler.includes(route), `Missing Worker-first route: ${route}`);
+}
 assert.match(wrangler, /"observability"\s*:\s*\{/);
 assert.match(wrangler, /"enabled"\s*:\s*true/);
 assert.match(wrangler, /"head_sampling_rate"\s*:\s*1/);
+
+const staticHeaders = read("public/_headers");
+for (const header of [
+  "Content-Security-Policy",
+  "Strict-Transport-Security",
+  "X-Frame-Options",
+  "X-Content-Type-Options",
+  "Referrer-Policy",
+  "Permissions-Policy",
+  "Cross-Origin-Opener-Policy",
+  "Cross-Origin-Resource-Policy",
+]) {
+  assert.ok(staticHeaders.includes(header), `Missing static security header: ${header}`);
+}
 
 const workerIndex = read("worker/index.ts");
 assert.match(workerIndex, /request\.headers\.get\("Origin"\)/);
