@@ -148,6 +148,10 @@ assert.ok(nav.includes("/api/auth/session"));
 assert.ok(nav.includes("/api/auth/logout"));
 assert.ok(nav.includes('"Logout"'));
 assert.ok(nav.includes('"تسجيل خروج"'));
+assert.ok(nav.includes("/api/notifications"));
+assert.ok(nav.includes("notification-trigger"));
+assert.ok(nav.includes("notificationId"));
+assert.ok(nav.includes('method: "PATCH"'));
 
 const login = read("app/login/LoginForm.tsx");
 assert.ok(login.includes("safeInternalNext"));
