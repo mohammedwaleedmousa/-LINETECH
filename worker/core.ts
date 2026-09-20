@@ -235,3 +235,43 @@ export function formatTime(value:string) {
     return new Intl.DateTimeFormat("en",{hour:"2-digit",minute:"2-digit",hour12:false,timeZone:"Asia/Aden"}).format(new Date(value));
   } catch { return ""; }
 }
+
+
+const CONTENT_SECURITY_POLICY = [
+  "default-src 'self'",
+  "base-uri 'self'",
+  "object-src 'none'",
+  "frame-ancestors 'none'",
+  "form-action 'self'",
+  "script-src 'self' 'unsafe-inline'",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob:",
+  "font-src 'self' data:",
+  "media-src 'self' blob:",
+  "connect-src 'self'",
+  "worker-src 'self' blob:",
+  "manifest-src 'self'",
+  "upgrade-insecure-requests",
+].join("; ");
+
+export function withSecurityHeaders(response:Response,request:Request,requestId?:string) {
+  const headers=new Headers(response.headers);
+  headers.set("Content-Security-Policy",CONTENT_SECURITY_POLICY);
+  headers.set("X-Frame-Options","DENY");
+  headers.set("X-Content-Type-Options","nosniff");
+  headers.set("Referrer-Policy","strict-origin-when-cross-origin");
+  headers.set("Permissions-Policy","camera=(), geolocation=(), payment=(), usb=(), microphone=(self)");
+  headers.set("Cross-Origin-Opener-Policy","same-origin");
+  headers.set("Cross-Origin-Resource-Policy","same-origin");
+  headers.set("X-XSS-Protection","0");
+  if(new URL(request.url).protocol==="https:") {
+    headers.set("Strict-Transport-Security","max-age=31536000");
+  }
+  if(requestId) headers.set("X-Request-ID",requestId);
+
+  return new Response(response.body,{
+    status:response.status,
+    statusText:response.statusText,
+    headers,
+  });
+}
