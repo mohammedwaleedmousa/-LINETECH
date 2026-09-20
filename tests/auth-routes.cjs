@@ -33,6 +33,10 @@ assert.match(core, /SameSite=Lax/);
 assert.match(core, /SUPABASE_PUBLISHABLE_KEY/);
 assert.doesNotMatch(core, /service_role|sb_secret_/i);
 
+const workerIndexHealth = read("worker/index.ts");
+assert.ok(workerIndexHealth.includes("/api/health"));
+assert.ok(workerIndexHealth.includes("/health"));
+
 const auth = read("worker/auth.ts");
 for (const endpoint of [
   "/api/auth/login",
