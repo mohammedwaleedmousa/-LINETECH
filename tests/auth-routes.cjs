@@ -49,6 +49,7 @@ for (const endpoint of [
   "/api/chat/upload",
   "/api/files/download",
   "/api/notifications",
+  "/api/handover",
 ]) {
   assert.ok(client.includes(endpoint), `Worker client API is missing ${endpoint}`);
 }
@@ -59,6 +60,8 @@ for (const endpoint of [
   "/api/admin/project",
   "/api/admin/files",
   "/api/admin/handover",
+  "/api/admin/chat",
+  "/api/admin/members",
 ]) {
   assert.ok(admin.includes(endpoint), `Worker admin API is missing ${endpoint}`);
 }
