@@ -195,8 +195,8 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await click(document.querySelector('.intake-nav .button'));
   assert.ok(document.body.textContent.includes('كيف نحدد الخطوة الأولى؟'));
 
-  // Step 3 -> review.
-  await click(buttonContaining('مراجعة الطلب'));
+  // Step 3 -> final review. Review wording appears only on the final step.
+  await click(document.querySelector('.intake-step .intake-nav .button'));
   assert.ok(document.body.textContent.includes('راجع طلبك قبل إتمامه.'));
 
   // Step 4 -> complete the request.
