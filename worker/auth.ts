@@ -41,14 +41,18 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     if(!fullName || !email || password.length<8) return json({ok:false},400);
 
     const redirectTo=new URL("/login",request.url).toString();
-    const response=await authFetch(env,"/signup",{
-      method:"POST",
-      body:JSON.stringify({
-        email,password,
-        data:{full_name:fullName,company},
-        email_redirect_to:redirectTo,
-      }),
-    });
+    const response=await authFetch(
+      env,
+      `/signup?redirect_to=${encodeURIComponent(redirectTo)}`,
+      {
+        method:"POST",
+        body:JSON.stringify({
+          email,
+          password,
+          data:{full_name:fullName,company},
+        }),
+      },
+    );
     const payload=await safeJson(response);
     if(!response.ok) return json({ok:false},400);
     const hasSession=Boolean(payload?.access_token && payload?.refresh_token);
@@ -64,10 +68,14 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const email=String(data.email||"").trim().toLowerCase();
     if(email) {
       const redirectTo=new URL("/login",request.url).toString();
-      await authFetch(env,"/recover",{
-        method:"POST",
-        body:JSON.stringify({email,redirect_to:redirectTo}),
-      }).catch(()=>null);
+      await authFetch(
+        env,
+        `/recover?redirect_to=${encodeURIComponent(redirectTo)}`,
+        {
+          method:"POST",
+          body:JSON.stringify({email}),
+        },
+      ).catch(()=>null);
     }
     return json({ok:true});
   }
