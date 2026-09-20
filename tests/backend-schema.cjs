@@ -82,6 +82,17 @@ assert.ok(
   "Authenticated Data API access must be explicit."
 );
 
+assert.ok(
+  schema.includes("from authenticated") &&
+  schema.includes("grant select, insert, update on public.messages to authenticated"),
+  "Authenticated table grants must be explicitly least-privilege."
+);
+
+assert.ok(
+  !/grant\s+all(?:\s+privileges)?\s+on\s+(?:table\s+)?public\./.test(schema),
+  "Backend schema must not grant ALL privileges on public tables."
+);
+
 console.log(
   `PASS: ${requiredTables.length} LINETECH backend tables are defined with RLS and authenticated-only grants`
 );
