@@ -1,6 +1,7 @@
 import {
   type Env,
   type ResolvedSession,
+  boundedText,
   encodeObjectPath,
   formatTime,
   json,
@@ -8,9 +9,11 @@ import {
   rateLimitResponse,
   restFetch,
   resolveSession,
+  requestTooLarge,
   safeJson,
   safeName,
   storageFetch,
+  validateUpload,
   withCookies,
 } from "./core";
 
@@ -66,28 +69,46 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       return rateLimitResponse(session.setCookies);
     }
 
+    if(requestTooLarge(request,64*1024)) return json({ok:false},413,session.setCookies);
     const data=await request.json().catch(()=>({})) as Record<string,any>;
-    const required=["name","contact","preferredContact","service","stage","goal","idea"];
-    if(required.some(key=>!String(data[key]||"").trim())) return json({ok:false},400,session.setCookies);
+    const fields={
+      name:boundedText(data.name,120),
+      company:boundedText(data.company,160),
+      contact:boundedText(data.contact,200),
+      preferredContact:boundedText(data.preferredContact,40),
+      service:boundedText(data.service,100),
+      stage:boundedText(data.stage,100),
+      goal:boundedText(data.goal,200),
+      audience:boundedText(data.audience,1000),
+      idea:boundedText(data.idea,5000),
+      features:boundedText(data.features,5000),
+      references:boundedText(data.references,3000),
+      budget:boundedText(data.budget,100),
+      timing:boundedText(data.timing,120),
+      notes:boundedText(data.notes,5000),
+    };
+    if(Object.values(fields).some(value=>value===null)) return json({ok:false},413,session.setCookies);
+    const required=["name","contact","preferredContact","service","stage","goal","idea"] as const;
+    if(required.some(key=>!fields[key])) return json({ok:false},400,session.setCookies);
 
     const response=await restFetch(env,"/rpc/submit_project_request",session.accessToken,{
       method:"POST",
       headers:{Prefer:"return=representation"},
       body:JSON.stringify({
-        p_name:String(data.name).trim(),
-        p_company:String(data.company||"").trim(),
-        p_contact:String(data.contact).trim(),
-        p_preferred_contact:String(data.preferredContact).trim(),
-        p_service:String(data.service).trim(),
-        p_stage:String(data.stage).trim(),
-        p_goal:String(data.goal).trim(),
-        p_audience:String(data.audience||"").trim(),
-        p_idea:String(data.idea).trim(),
-        p_features:String(data.features||"").trim(),
-        p_reference_links:String(data.references||"").trim(),
-        p_budget:String(data.budget||"").trim(),
-        p_timing:String(data.timing||"").trim(),
-        p_notes:String(data.notes||"").trim(),
+        p_name:fields.name,
+        p_company:fields.company,
+        p_contact:fields.contact,
+        p_preferred_contact:fields.preferredContact,
+        p_service:fields.service,
+        p_stage:fields.stage,
+        p_goal:fields.goal,
+        p_audience:fields.audience,
+        p_idea:fields.idea,
+        p_features:fields.features,
+        p_reference_links:fields.references,
+        p_budget:fields.budget,
+        p_timing:fields.timing,
+        p_notes:fields.notes,
       }),
     });
     const payload=await safeJson(response);
@@ -202,8 +223,10 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       ))) {
         return rateLimitResponse(session.setCookies);
       }
+      if(requestTooLarge(request,32*1024)) return json({ok:false},413,session.setCookies);
       const data=await request.json().catch(()=>({})) as Record<string,any>;
-      const text=String(data.text||"").trim();
+      const text=boundedText(data.text,5000);
+      if(text===null) return json({ok:false},413,session.setCookies);
       if(!text) return json({ok:false},400,session.setCookies);
       if(!context.conversation?.id) return json({ok:false},409,session.setCookies);
 
@@ -232,9 +255,11 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       ))) {
         return rateLimitResponse(session.setCookies);
       }
+      if(requestTooLarge(request,32*1024)) return json({ok:false},413,session.setCookies);
       const data=await request.json().catch(()=>({})) as Record<string,any>;
       const id=String(data.messageId||"").trim();
-      const text=String(data.text||"").trim();
+      const text=boundedText(data.text,5000);
+      if(text===null) return json({ok:false},413,session.setCookies);
       if(!id||!text) return json({ok:false},400,session.setCookies);
 
       const response=await restFetch(
@@ -307,15 +332,17 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       return rateLimitResponse(session.setCookies);
     }
 
+    if(requestTooLarge(request,16*1024*1024)) return json({ok:false},413,session.setCookies);
     const form=await request.formData();
     const file=form.get("file");
     if(!(file instanceof File)) return json({ok:false},400,session.setCookies);
-    if(file.size<=0 || file.size>25*1024*1024) return json({ok:false},413,session.setCookies);
 
     const kindValue=String(form.get("kind")||"");
     const kind=kindValue==="image"||kindValue==="audio"||kindValue==="document"
       ? kindValue
       : file.type.startsWith("image/")?"image":file.type.startsWith("audio/")?"audio":"document";
+    const validated=await validateUpload(file,kind);
+    if(!validated.ok) return json({ok:false},validated.status,session.setCookies);
     const duration=Number(form.get("duration")||"0");
     const objectPath=`${context.project.id}/${crypto.randomUUID()}-${safeName(file.name||kind)}`;
 
@@ -325,7 +352,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       session.accessToken,
       {
         method:"POST",
-        headers:{"Content-Type":file.type||"application/octet-stream","x-upsert":"false"},
+        headers:{"Content-Type":validated.mime,"x-upsert":"false"},
         body:file,
       },
     );
@@ -344,7 +371,15 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     });
     const messages=await safeJson(mr) as Row[]|null;
     const message=Array.isArray(messages)?messages[0]:null;
-    if(!mr.ok||!message) return json({ok:false},mr.status||500,session.setCookies);
+    if(!mr.ok||!message) {
+      await storageFetch(
+        env,
+        `/object/project-files/${encodeObjectPath(objectPath)}`,
+        session.accessToken,
+        {method:"DELETE"},
+      ).catch(()=>null);
+      return json({ok:false},mr.status||500,session.setCookies);
+    }
 
     const ar=await restFetch(env,"/message_attachments?select=*",session.accessToken,{
       method:"POST",
@@ -354,14 +389,30 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         storage_bucket:"project-files",
         storage_path:objectPath,
         file_name:file.name||safeName(file.name),
-        mime_type:file.type||"application/octet-stream",
+        mime_type:validated.mime,
         file_size:file.size,
         duration_seconds:kind==="audio"&&Number.isFinite(duration)?Math.max(0,Math.round(duration)):null,
       }),
     });
     const attachments=await safeJson(ar) as Row[]|null;
     const attachment=Array.isArray(attachments)?attachments[0]:null;
-    if(!ar.ok||!attachment) return json({ok:false},ar.status||500,session.setCookies);
+    if(!ar.ok||!attachment) {
+      await Promise.all([
+        storageFetch(
+          env,
+          `/object/project-files/${encodeObjectPath(objectPath)}`,
+          session.accessToken,
+          {method:"DELETE"},
+        ).catch(()=>null),
+        restFetch(
+          env,
+          `/messages?id=eq.${encodeURIComponent(String(message.id))}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&sender_role=eq.client`,
+          session.accessToken,
+          {method:"PATCH",body:JSON.stringify({deleted_at:new Date().toISOString()})},
+        ).catch(()=>null),
+      ]);
+      return json({ok:false},ar.status||500,session.setCookies);
+    }
 
     return json({ok:true,message:{
       id:message.id,sender:"client",kind,
@@ -406,7 +457,11 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     const headers=new Headers();
     headers.set("Content-Type",row.mime_type||stored.headers.get("Content-Type")||"application/octet-stream");
     headers.set("Cache-Control","private, no-store");
-    if(row.file_name) headers.set("Content-Disposition",`inline; filename*=UTF-8''${encodeURIComponent(String(row.file_name))}`);
+    if(row.file_name) {
+      const mime=String(row.mime_type||"").toLowerCase();
+      const disposition=mime.startsWith("image/")||mime.startsWith("audio/") ? "inline" : "attachment";
+      headers.set("Content-Disposition",`${disposition}; filename*=UTF-8''${encodeURIComponent(String(row.file_name))}`);
+    }
     return withCookies(new Response(stored.body,{status:200,headers}),session.setCookies);
   }
 
