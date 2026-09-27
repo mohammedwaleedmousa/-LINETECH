@@ -44,6 +44,8 @@ type ClientNotification = {
   title: string;
   body?: string | null;
   project_id?: string | null;
+  action_kind?: "project_update" | "message" | "file" | "handover" | null;
+  destination?: string | null;
   read_at?: string | null;
   created_at: string;
 };
@@ -64,6 +66,36 @@ function formatNotificationTime(value: string, language: SiteLanguage){
   } catch {
     return "";
   }
+}
+
+function safeNotificationDestination(value?: string | null){
+  const raw=String(value||"/workspace").trim();
+  if(!raw.startsWith("/") || raw.startsWith("//")) return "/workspace";
+  try {
+    const parsed=new URL(raw,"https://linetech.local");
+    if(parsed.origin!=="https://linetech.local") return "/workspace";
+    return parsed.pathname+parsed.search+parsed.hash;
+  } catch {
+    return "/workspace";
+  }
+}
+
+function notificationKindLabel(kind: ClientNotification["action_kind"], language: SiteLanguage){
+  const labels = {
+    en: {
+      project_update: "PROJECT UPDATE",
+      message: "PROJECT MESSAGE",
+      file: "PROJECT FILE",
+      handover: "HANDOVER",
+    },
+    ar: {
+      project_update: "تحديث المشروع",
+      message: "رسالة المشروع",
+      file: "ملف المشروع",
+      handover: "التسليم",
+    },
+  } as const;
+  return labels[language][kind || "project_update"];
 }
 
 function GlobeIcon(){
@@ -136,7 +168,18 @@ export default function SiteNav() {
       setNotificationsOpen(false);
       return;
     }
+
     void loadNotifications();
+    const timer = window.setInterval(() => void loadNotifications(), 15000);
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") void loadNotifications();
+    };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
   }, [signedIn, pathname, loadNotifications]);
 
   useEffect(() => {
@@ -181,6 +224,7 @@ export default function SiteNav() {
   const noNotificationsLabel = language === "ar" ? "لا توجد إشعارات حتى الآن." : "No notifications yet.";
   const unreadLabel = language === "ar" ? "غير مقروء" : "unread";
   const workspaceNotificationsLabel = language === "ar" ? "فتح مساحة العمل" : "Open workspace";
+  const markAllLabel = language === "ar" ? "تحديد الكل كمقروء" : "Mark all read";
   const unreadCount = notifications.filter(item => !item.read_at).length;
 
   function toggleLanguage(){
@@ -206,23 +250,42 @@ export default function SiteNav() {
 
   async function markNotificationRead(notification: ClientNotification){
     if (notification.read_at) return;
+    const optimisticReadAt = new Date().toISOString();
+    setNotifications(current => current.map(item =>
+      item.id === notification.id ? { ...item, read_at: optimisticReadAt } : item
+    ));
     try {
       const response = await fetch("/api/notifications", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ notificationId: notification.id }),
       });
-      const payload = await response.json().catch(() => null) as {
-        ok?: boolean;
-        notification?: { read_at?: string | null };
-      } | null;
-      if (!response.ok || !payload?.ok) return;
-      const readAt = payload.notification?.read_at || new Date().toISOString();
-      setNotifications(current => current.map(item =>
-        item.id === notification.id ? { ...item, read_at: readAt } : item
-      ));
+      if (!response.ok) void loadNotifications();
     } catch {
+      void loadNotifications();
     }
+  }
+
+  async function markAllNotificationsRead(){
+    if (!unreadCount) return;
+    const readAt = new Date().toISOString();
+    setNotifications(current => current.map(item => item.read_at ? item : { ...item, read_at: readAt }));
+    try {
+      const response = await fetch("/api/notifications", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ markAll: true }),
+      });
+      if (!response.ok) void loadNotifications();
+    } catch {
+      void loadNotifications();
+    }
+  }
+
+  function openNotification(notification: ClientNotification){
+    void markNotificationRead(notification);
+    setNotificationsOpen(false);
+    router.push(safeNotificationDestination(notification.destination));
   }
 
   function toggleNotifications(){
@@ -266,8 +329,11 @@ export default function SiteNav() {
               {notificationsOpen && (
                 <div className="notification-panel" role="dialog" aria-label={notificationsLabel}>
                   <div className="notification-panel-head">
-                    <strong>{notificationsLabel}</strong>
-                    <span>{unreadCount ? `${unreadCount} ${unreadLabel}` : "—"}</span>
+                    <div>
+                      <strong>{notificationsLabel}</strong>
+                      <span>{unreadCount ? `${unreadCount} ${unreadLabel}` : "—"}</span>
+                    </div>
+                    {unreadCount > 0 && <button type="button" onClick={() => void markAllNotificationsRead()}>{markAllLabel}</button>}
                   </div>
                   <div className="notification-list">
                     {notificationsLoading && !notifications.length ? (
@@ -277,13 +343,14 @@ export default function SiteNav() {
                         type="button"
                         key={notification.id}
                         className={`notification-item ${notification.read_at ? "" : "is-unread"}`}
-                        onClick={() => void markNotificationRead(notification)}
+                        onClick={() => openNotification(notification)}
                       >
                         <i aria-hidden="true"/>
                         <span>
+                          <em>{notificationKindLabel(notification.action_kind, language)}</em>
                           <strong data-no-translate>{notification.title}</strong>
                           {notification.body && <p data-no-translate>{notification.body}</p>}
-                          <small>{formatNotificationTime(notification.created_at, language)}</small>
+                          <small>{formatNotificationTime(notification.created_at, language)} · {language === "ar" ? "فتح" : "Open"} →</small>
                         </span>
                       </button>
                     )) : (
