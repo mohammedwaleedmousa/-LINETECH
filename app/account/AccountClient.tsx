@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { FormEvent, useEffect, useMemo, useState } from "react";
 import { useLanguage } from "../Localized";
-import "./account.css";
 
 type AccountData = {
   id: string;
