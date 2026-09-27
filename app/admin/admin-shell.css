@@ -62,3 +62,14 @@ body:has(.admin-shell){background:#04070a}
   .admin-kpi-grid article{padding:17px 13px}.admin-kpi-grid article strong{font-size:28px}
   .admin-client-directory-grid{grid-template-columns:1fr}
 }
+
+.admin-app-main .admin-page{padding-top:52px}
+.admin-app-main .admin-header,.admin-app-main .admin-layout,.admin-app-main .admin-feedback,.admin-app-main .admin-state{width:min(1500px,calc(100% - 84px))}
+@media(max-width:900px){
+  .admin-app-main .admin-page{padding-top:30px}
+  .admin-app-main .admin-header,.admin-app-main .admin-layout,.admin-app-main .admin-feedback,.admin-app-main .admin-state{width:calc(100% - 40px)}
+}
+@media(max-width:620px){
+  .admin-app-main .admin-page{padding-top:24px}
+  .admin-app-main .admin-header,.admin-app-main .admin-layout,.admin-app-main .admin-feedback,.admin-app-main .admin-state{width:calc(100% - 28px)}
+}
