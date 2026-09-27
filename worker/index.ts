@@ -32,6 +32,8 @@ function shouldLogRequest(request:Request,path:string,status:number) {
     || path.startsWith("/chat/")
     || path==="/handover"
     || path.startsWith("/handover/")
+    || path==="/account"
+    || path.startsWith("/account/")
     || request.headers.get("Sec-Fetch-Mode")==="navigate"
     || status>=400;
 }
@@ -103,6 +105,7 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
     path==="/workspace" || path.startsWith("/workspace/")
     || path==="/chat" || path.startsWith("/chat/")
     || path==="/handover" || path.startsWith("/handover/")
+    || path==="/account" || path.startsWith("/account/")
   ) {
     const session=await resolveSession(request,env);
     if(!session) {
