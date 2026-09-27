@@ -44,6 +44,10 @@ assert.match(workerIndex, /request\.headers\.get\("Origin"\)/);
 assert.match(workerIndex, /origin!==url\.origin/);
 assert.ok(workerIndex.includes('path==="/admin"'));
 assert.ok(workerIndex.includes('app_metadata?.role!=="admin"'));
+assert.ok(workerIndex.includes('path==="/admin/login"'));
+assert.ok(workerIndex.includes("adminLoginRedirect"));
+assert.ok(workerIndex.includes('app_metadata?.role==="admin"'));
+assert.ok(workerIndex.includes('new URL("/admin",request.url)'));
 assert.ok(workerIndex.includes('path==="/handover"'));
 assert.ok(workerIndex.includes("withSecurityHeaders"));
 assert.ok(workerIndex.includes('event:"request"'));
@@ -84,6 +88,7 @@ assert.ok(workerIndexHealth.includes("/health"));
 const auth = read("worker/auth.ts");
 assert.ok(auth.includes('redirectUrl.searchParams.set("confirmed","1")'));
 assert.ok(auth.includes('redirectUrl.searchParams.set("recovery","1")'));
+assert.ok(auth.includes('data.admin===true?"/admin/login":"/login"'));
 for (const limiter of [
   "AUTH_LOGIN_RATE_LIMITER",
   "AUTH_SIGNUP_RATE_LIMITER",
@@ -173,6 +178,9 @@ assert.ok(nav.includes("setInterval"));
 assert.ok(nav.includes("visibilitychange"));
 assert.ok(nav.includes('href="/account"'));
 assert.ok(nav.includes("Account Settings"));
+assert.ok(nav.includes('authRole === "admin"'));
+assert.ok(nav.includes('href="/admin"'));
+assert.ok(nav.includes('item.href !== "/chat"'));
 assert.ok(client.includes("data.markAll===true"));
 assert.ok(client.includes('"/notifications?read_at=is.null&select=id,read_at"'));
 
@@ -283,6 +291,10 @@ const adminClients = read("app/admin/ClientsClient.tsx");
 const adminTeam = read("app/admin/TeamClient.tsx");
 for (const file of [
   "app/admin/layout.tsx",
+  "app/admin/login/page.tsx",
+  "app/admin/login/AdminLoginClient.tsx",
+  "app/admin/account/page.tsx",
+  "app/admin/account/AdminAccountClient.tsx",
   "app/admin/projects/page.tsx",
   "app/admin/clients/page.tsx",
   "app/admin/team/page.tsx",
@@ -292,6 +304,9 @@ for (const file of [
 assert.ok(adminShell.includes('href: "/admin/projects"'));
 assert.ok(adminShell.includes('href: "/admin/clients"'));
 assert.ok(adminShell.includes('href: "/admin/team"'));
+assert.ok(adminShell.includes('href: "/admin/account"'));
+assert.ok(adminShell.includes('pathname === "/admin/login"'));
+assert.ok(adminShell.includes('window.location.assign("/admin/login")'));
 assert.ok(adminDashboard.includes("/api/admin/projects"));
 assert.ok(adminDashboard.includes("/api/admin/users"));
 assert.ok(adminClients.includes("/api/admin/projects"));
@@ -340,6 +355,20 @@ for (const endpoint of [
 ]) {
   assert.ok(adminClient.includes(endpoint), `Admin UI is not wired to ${endpoint}`);
 }
+
+const siteSurface = read("app/SiteSurface.tsx");
+const adminLoginClient = read("app/admin/login/AdminLoginClient.tsx");
+const adminAccountClient = read("app/admin/account/AdminAccountClient.tsx");
+assert.ok(siteSurface.includes('pathname === "/admin"'));
+assert.ok(siteSurface.includes("if (admin) return"));
+assert.ok(adminLoginClient.includes("/api/auth/login"));
+assert.ok(adminLoginClient.includes("/api/auth/session"));
+assert.ok(adminLoginClient.includes('app_metadata?.role !== "admin"'));
+assert.ok(adminLoginClient.includes("safeAdminNext"));
+assert.ok(adminAccountClient.includes("/api/account"));
+assert.ok(adminAccountClient.includes("/api/account/email"));
+assert.ok(adminAccountClient.includes("/api/auth/update-password"));
+assert.ok(adminAccountClient.includes("/api/auth/logout-others"));
 
 const accountClient = read("app/account/AccountClient.tsx");
 assert.ok(accountClient.includes("/api/account"));
