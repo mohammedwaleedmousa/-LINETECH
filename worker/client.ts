@@ -538,7 +538,27 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     }
 
     if(request.method==="PATCH") {
+      if(requestTooLarge(request,8*1024)) return json({ok:false},413,session.setCookies);
       const data=await request.json().catch(()=>({})) as Record<string,any>;
+      const readAt=new Date().toISOString();
+
+      if(data.markAll===true) {
+        const response=await restFetch(
+          env,
+          "/notifications?read_at=is.null&select=id,read_at",
+          session.accessToken,
+          {
+            method:"PATCH",
+            headers:{Prefer:"return=representation"},
+            body:JSON.stringify({read_at:readAt}),
+          },
+        );
+        const rows=await safeJson(response) as Row[]|null;
+        return response.ok
+          ? json({ok:true,notifications:Array.isArray(rows)?rows:[]},200,session.setCookies)
+          : json({ok:false},response.status,session.setCookies);
+      }
+
       const id=String(data.notificationId||"").trim();
       if(!id) return json({ok:false},400,session.setCookies);
       const response=await restFetch(
@@ -548,7 +568,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         {
           method:"PATCH",
           headers:{Prefer:"return=representation"},
-          body:JSON.stringify({read_at:new Date().toISOString()}),
+          body:JSON.stringify({read_at:readAt}),
         },
       );
       const rows=await safeJson(response) as Row[]|null;
