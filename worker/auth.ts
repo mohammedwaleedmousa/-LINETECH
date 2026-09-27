@@ -164,7 +164,7 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
       if(!(await rateLimitAllowed(env.AUTH_RECOVER_RATE_LIMITER,`recover:${email}`))) {
         return rateLimitResponse();
       }
-      const redirectUrl=new URL("/login",request.url);
+      const redirectUrl=new URL(data.admin===true?"/admin/login":"/login",request.url);
       redirectUrl.searchParams.set("recovery","1");
       const redirectTo=redirectUrl.toString();
       await authFetch(
