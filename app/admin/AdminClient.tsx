@@ -138,6 +138,15 @@ export default function AdminClient() {
     setMembers(membersResponse.ok && membersPayload?.ok && Array.isArray(membersPayload.members) ? membersPayload.members : []);
   }, []);
 
+  const loadAdminChat = useCallback(async (projectId: string) => {
+    if (!projectId) return;
+    const response = await fetch(`/api/admin/chat?projectId=${encodeURIComponent(projectId)}`, { cache: "no-store" });
+    const payload = await readJson(response);
+    if (response.ok && payload?.ok && Array.isArray(payload.messages)) {
+      setChat(payload.messages);
+    }
+  }, []);
+
   const refreshAdmin = useCallback(async () => {
     setRefreshing(true);
     setError("");
@@ -189,6 +198,19 @@ export default function AdminClient() {
     setError("");
     void loadProject(selectedId).catch(() => setError("Project details could not be loaded."));
   }, [authorized, selectedId, loadProject]);
+
+  useEffect(() => {
+    if (!authorized || !selectedId) return;
+    const timer = window.setInterval(() => void loadAdminChat(selectedId), 5000);
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") void loadAdminChat(selectedId);
+    };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", refreshWhenVisible);
+    };
+  }, [authorized, selectedId, loadAdminChat]);
 
   useEffect(() => () => {
     if (recordingTimerRef.current) window.clearInterval(recordingTimerRef.current);
