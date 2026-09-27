@@ -1,11 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import SiteNav from "./SiteNav";
-import SiteFooter from "./SiteFooter";
-import LanguageBridge from "./LanguageBridge";
-import HomeMotion from "./HomeMotion";
-import ServicesMotion from "./ServicesMotion";
-import NavigationFeedback from "./NavigationFeedback";
-import HomeSplash from "./HomeSplash";
+import SiteSurface from "./SiteSurface";
 import "./globals.css";
 import "./inner.css";
 import "./polish.css";
@@ -150,14 +144,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <script dangerouslySetInnerHTML={{ __html: homeSplashBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: languageBootstrapScript }} />
         <script dangerouslySetInnerHTML={{ __html: scrollRestorationScript }} />
-        <LanguageBridge />
-        <NavigationFeedback />
-        <HomeMotion />
-        <ServicesMotion />
-        <HomeSplash />
-        <SiteNav />
-        {children}
-        <SiteFooter />
+        <SiteSurface>{children}</SiteSurface>
       </body>
     </html>
   );
