@@ -20,6 +20,18 @@ async function body(request:Request) {
   try { return await request.json() as Record<string,any>; } catch { return {}; }
 }
 
+function safeReturnPath(value:unknown) {
+  const raw=String(value||"").trim();
+  if(!raw || !raw.startsWith("/") || raw.startsWith("//")) return "/workspace";
+  try {
+    const parsed=new URL(raw,"https://linetech.local");
+    if(parsed.origin!=="https://linetech.local") return "/workspace";
+    return parsed.pathname+parsed.search+parsed.hash;
+  } catch {
+    return "/workspace";
+  }
+}
+
 export async function handleAuth(request:Request,env:Env,path:string):Promise<Response|null> {
 
   if(path==="/api/auth/request-code" && request.method==="POST") {
@@ -109,6 +121,7 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     }
     const company=companyValue||null;
     const email=(emailRaw||"").toLowerCase();
+    const next=safeReturnPath(data.next);
     if(!fullName || !email || password.length<8) return json({ok:false},400);
     if(!(await rateLimitAllowed(env.AUTH_SIGNUP_RATE_LIMITER,`signup:${email}`))) {
       return rateLimitResponse();
@@ -116,6 +129,7 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
 
     const redirectUrl=new URL("/login",request.url);
     redirectUrl.searchParams.set("confirmed","1");
+    redirectUrl.searchParams.set("next",next);
     const redirectTo=redirectUrl.toString();
     const response=await authFetch(
       env,
