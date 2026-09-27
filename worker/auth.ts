@@ -10,6 +10,7 @@ import {
   rateLimitAllowed,
   rateLimitResponse,
   refreshSession,
+  restFetch,
   requestTooLarge,
   resolveSession,
   safeJson,
@@ -203,6 +204,156 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
       user:verified.payload,
     };
     return json({ok:true},200,sessionCookies(session,true));
+  }
+
+  if(path==="/api/account" && request.method==="GET") {
+    const session=await resolveSession(request,env);
+    if(!session) return json({ok:false},401,clearCookies());
+
+    const response=await restFetch(
+      env,
+      `/profiles?select=id,full_name,company,phone,created_at,updated_at&id=eq.${encodeURIComponent(String(session.user.id))}&limit=1`,
+      session.accessToken,
+    );
+    const rows=await safeJson(response) as Record<string,any>[]|null;
+    if(!response.ok) return json({ok:false},response.status,session.setCookies);
+    const profile=Array.isArray(rows)?rows[0]||null:null;
+
+    return json({
+      ok:true,
+      account:{
+        id:session.user.id,
+        email:session.user.email||"",
+        emailConfirmedAt:session.user.email_confirmed_at||session.user.confirmed_at||null,
+        createdAt:session.user.created_at||profile?.created_at||null,
+        lastSignInAt:session.user.last_sign_in_at||null,
+        role:session.user.app_metadata?.role||"client",
+        profile:{
+          fullName:profile?.full_name||session.user.user_metadata?.full_name||"",
+          company:profile?.company||session.user.user_metadata?.company||"",
+          phone:profile?.phone||session.user.user_metadata?.phone||"",
+          updatedAt:profile?.updated_at||null,
+        },
+      },
+    },200,session.setCookies);
+  }
+
+  if(path==="/api/account" && request.method==="PATCH") {
+    const session=await resolveSession(request,env);
+    if(!session) return json({ok:false},401,clearCookies());
+    if(requestTooLarge(request,16*1024)) return json({ok:false},413,session.setCookies);
+
+    const data=await body(request);
+    const fullName=boundedText(data.fullName,120);
+    const company=boundedText(data.company,160);
+    const phone=boundedText(data.phone,50);
+    if(fullName===null||company===null||phone===null) return json({ok:false},413,session.setCookies);
+    if(!fullName) return json({ok:false},400,session.setCookies);
+
+    const update={
+      full_name:fullName,
+      company:company||null,
+      phone:phone||null,
+    };
+    let response=await restFetch(
+      env,
+      `/profiles?id=eq.${encodeURIComponent(String(session.user.id))}&select=*`,
+      session.accessToken,
+      {
+        method:"PATCH",
+        headers:{Prefer:"return=representation"},
+        body:JSON.stringify(update),
+      },
+    );
+    let rows=await safeJson(response) as Record<string,any>[]|null;
+    let profile=Array.isArray(rows)?rows[0]:null;
+
+    if(response.ok && !profile) {
+      response=await restFetch(env,"/profiles?select=*",session.accessToken,{
+        method:"POST",
+        headers:{Prefer:"return=representation"},
+        body:JSON.stringify({id:session.user.id,...update}),
+      });
+      rows=await safeJson(response) as Record<string,any>[]|null;
+      profile=Array.isArray(rows)?rows[0]:null;
+    }
+    if(!response.ok||!profile) {
+      return json({ok:false},response.ok?500:response.status,session.setCookies);
+    }
+
+    await authFetch(env,"/user",{
+      method:"PUT",
+      headers:{Authorization:`Bearer ${session.accessToken}`},
+      body:JSON.stringify({data:{full_name:fullName,company:company||null,phone:phone||null}}),
+    }).catch(()=>null);
+
+    return json({
+      ok:true,
+      profile:{
+        fullName:profile.full_name||"",
+        company:profile.company||"",
+        phone:profile.phone||"",
+        updatedAt:profile.updated_at||null,
+      },
+    },200,session.setCookies);
+  }
+
+  if(path==="/api/account/email" && request.method==="POST") {
+    const session=await resolveSession(request,env);
+    if(!session) return json({ok:false},401,clearCookies());
+    if(requestTooLarge(request,8*1024)) return json({ok:false},413,session.setCookies);
+
+    const data=await body(request);
+    const emailRaw=boundedText(data.email,320);
+    if(emailRaw===null) return json({ok:false},413,session.setCookies);
+    const email=(emailRaw||"").trim().toLowerCase();
+    if(!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      return json({ok:false},400,session.setCookies);
+    }
+    if(email===String(session.user.email||"").toLowerCase()) {
+      return json({ok:true,unchanged:true,email},200,session.setCookies);
+    }
+    if(!(await rateLimitAllowed(
+      env.AUTH_PASSWORD_RATE_LIMITER,
+      `email-change:${String(session.user.id||"unknown")}`,
+    ))) {
+      return rateLimitResponse(session.setCookies);
+    }
+
+    const response=await authFetch(env,"/user",{
+      method:"PUT",
+      headers:{Authorization:`Bearer ${session.accessToken}`},
+      body:JSON.stringify({email}),
+    });
+    const payload=await safeJson(response);
+    if(!response.ok) {
+      return json({ok:false},response.status===429?429:400,session.setCookies);
+    }
+
+    return json({
+      ok:true,
+      unchanged:false,
+      email:payload?.email||session.user.email||"",
+      pendingEmail:payload?.new_email||email,
+      needsConfirmation:Boolean(payload?.new_email || payload?.email!==email),
+    },200,session.setCookies);
+  }
+
+  if(path==="/api/auth/logout-others" && request.method==="POST") {
+    const session=await resolveSession(request,env);
+    if(!session) return json({ok:false},401,clearCookies());
+    if(!(await rateLimitAllowed(
+      env.AUTH_PASSWORD_RATE_LIMITER,
+      `logout-others:${String(session.user.id||"unknown")}`,
+    ))) {
+      return rateLimitResponse(session.setCookies);
+    }
+
+    const response=await authFetch(env,"/logout?scope=others",{
+      method:"POST",
+      headers:{Authorization:`Bearer ${session.accessToken}`},
+    });
+    return json({ok:response.ok},response.ok?200:response.status,session.setCookies);
   }
 
   if(path==="/api/auth/update-password" && request.method==="POST") {
