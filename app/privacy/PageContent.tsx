@@ -26,6 +26,7 @@ const copy = {
     storageRows: [
       ["Language preference", "Browser storage + preference cookie", "Remember Arabic or English across visits.", "Until removed or the preference expires."],
       ["Account session", "Secure HttpOnly cookies", "Keep an authenticated session and refresh it securely.", "Short-lived access session; refresh session may persist when “Remember me” is selected."],
+      ["Pending project draft", "Temporary browser storage", "Preserve an unfinished project request while you sign in or confirm your email, including across a new browser tab on the same device.", "Up to 24 hours, and removed sooner after successful submission."],
       ["Project & workspace records", "Supabase database", "Store requests, project status, activity, handover items and workspace information linked to the client account.", "For as long as reasonably needed for the project, business records, security or legal obligations."],
       ["Chat & project files", "Supabase database + private storage", "Store project messages, notifications, images, documents, audio and delivery files.", "For as long as reasonably needed for communication, delivery, handover, security or required records."],
     ],
@@ -50,7 +51,7 @@ const copy = {
         id: "local-storage",
         number: "03",
         title: "Storage, sessions and browser preferences",
-        text: "LINETECH uses browser storage for limited preferences such as language or temporary service-discovery context. Authenticated project data is stored in the backend rather than being limited to one browser. Signed-in sessions use Secure, HttpOnly, SameSite cookies so the website can maintain and refresh authenticated access without exposing session tokens to normal page scripts.",
+        text: "LINETECH uses browser storage for limited preferences such as language, temporary service-discovery context and a short-lived project-request draft during sign-in or email confirmation. Pending project drafts are kept for up to 24 hours and removed after successful submission. Authenticated project data is stored in the backend rather than being limited to one browser. Signed-in sessions use Secure, HttpOnly, SameSite cookies so the website can maintain and refresh authenticated access without exposing session tokens to normal page scripts.",
       },
       {
         id: "technical-data",
@@ -123,6 +124,7 @@ const copy = {
     storageRows: [
       ["تفضيل اللغة", "تخزين المتصفح + ملف تفضيل", "تذكر اختيار العربية أو الإنجليزية بين الزيارات.", "حتى الحذف أو انتهاء مدة التفضيل."],
       ["جلسة الحساب", "ملفات ارتباط آمنة HttpOnly", "الحفاظ على جلسة تسجيل الدخول وتجديدها بصورة آمنة.", "جلسة الوصول قصيرة؛ وقد تستمر جلسة التجديد عند اختيار «تذكرني»."],
+      ["مسودة مشروع معلّقة", "تخزين مؤقت في المتصفح", "الحفاظ على طلب المشروع غير المكتمل أثناء تسجيل الدخول أو تأكيد البريد، بما في ذلك عند فتح رابط التأكيد في تبويب جديد على الجهاز نفسه.", "حتى 24 ساعة، وتُحذف قبل ذلك بعد نجاح إرسال الطلب."],
       ["المشروع ومساحة العميل", "قاعدة بيانات Supabase", "حفظ الطلب وحالة المشروع والنشاط وعناصر التسليم وبيانات مساحة العميل المرتبطة بالحساب.", "طالما كانت مطلوبة بشكل معقول لتنفيذ المشروع أو سجلات العمل أو الأمان أو الالتزامات النظامية."],
       ["المحادثات وملفات المشروع", "قاعدة بيانات Supabase + تخزين خاص", "حفظ الرسائل والتنبيهات والصور والمستندات والصوت وملفات التسليم.", "طالما كانت مطلوبة بشكل معقول للتواصل أو التنفيذ أو التسليم أو الأمان أو حفظ السجلات."],
     ],
@@ -147,7 +149,7 @@ const copy = {
         id: "local-storage",
         number: "03",
         title: "التخزين والجلسات وتفضيلات المتصفح",
-        text: "تستخدم لاين تك تخزين المتصفح لتفضيلات محدودة مثل اللغة أو سياق مؤقت لاكتشاف الخدمة. أما بيانات المشروع بعد تسجيل الدخول فتُحفظ في النظام الخلفي ولا تكون محصورة بمتصفح واحد. وتستخدم جلسات تسجيل الدخول ملفات ارتباط Secure وHttpOnly وSameSite للحفاظ على الوصول الموثّق وتجديده دون تعريض رموز الجلسة لسكربتات الصفحة العادية.",
+        text: "تستخدم لاين تك تخزين المتصفح لتفضيلات محدودة مثل اللغة أو سياق مؤقت لاكتشاف الخدمة، وكذلك لمسودة طلب مشروع قصيرة الأجل أثناء تسجيل الدخول أو تأكيد البريد. تُحفظ المسودة المعلّقة لمدة تصل إلى 24 ساعة وتُحذف بعد نجاح إرسال الطلب. أما بيانات المشروع بعد تسجيل الدخول فتُحفظ في النظام الخلفي ولا تكون محصورة بمتصفح واحد. وتستخدم جلسات تسجيل الدخول ملفات ارتباط Secure وHttpOnly وSameSite للحفاظ على الوصول الموثّق وتجديده دون تعريض رموز الجلسة لسكربتات الصفحة العادية.",
       },
       {
         id: "technical-data",
