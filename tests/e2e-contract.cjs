@@ -24,6 +24,10 @@ for (const endpoint of [
 }
 assert.ok(auth.includes("sessionCookies"));
 assert.ok(auth.includes("refreshSession") || read("worker/core.ts").includes("refreshSession"));
+assert.ok(auth.includes('path==="/api/account"'));
+assert.ok(auth.includes('path==="/api/account/email"'));
+assert.ok(auth.includes('path==="/api/auth/logout-others"'));
+assert.ok(auth.includes("/profiles?select="));
 
 // 2) Project intake -> atomic request/project/conversation bootstrap.
 assert.ok(intake.includes("/api/project-request"));
