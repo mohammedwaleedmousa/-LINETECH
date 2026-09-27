@@ -46,6 +46,14 @@ export default function AdminShell({ children }: { children: ReactNode }) {
 
   const active = (href: string) => href === "/admin" ? pathname === "/admin" : pathname === href || pathname.startsWith(`${href}/`);
 
+  async function signOut() {
+    try {
+      await fetch("/api/auth/logout", { method: "POST" });
+    } finally {
+      window.location.assign("/admin/login");
+    }
+  }
+
   if (isLogin) return <>{children}</>;
 
   if (checking) {
@@ -75,6 +83,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         <div className="admin-app-sidebar-foot">
           <Link href="/admin/account">Admin account <span>↗</span></Link>
           <Link href="/">Open website <span>↗</span></Link>
+          <button type="button" onClick={() => void signOut()}>Sign out <span>↗</span></button>
         </div>
       </aside>
 
