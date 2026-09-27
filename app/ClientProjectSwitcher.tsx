@@ -8,6 +8,8 @@ type ClientProject = {
   title: string;
   status: string;
   phase: number;
+  referenceNumber?: string;
+  company?: string;
   updatedAt?: string;
   dueDate?: string;
 };
@@ -71,7 +73,7 @@ export default function ClientProjectSwitcher({ currentProjectId, className = ""
         >
           {projects.map(project => (
             <option key={project.id} value={project.id}>
-              {project.title} · {phaseLabel} {project.phase}/5 · {project.status}
+              {project.title}{project.referenceNumber ? ` · ${project.referenceNumber}` : ""} · {phaseLabel} {project.phase}/5
             </option>
           ))}
         </select>
