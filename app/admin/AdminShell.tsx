@@ -30,7 +30,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       try {
         const response = await fetch("/api/auth/session", { cache: "no-store" });
         if (response.status === 401) {
-          window.location.assign(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+          window.location.assign(`/admin/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`);
           return;
         }
         const payload = await response.json().catch(() => null) as {
