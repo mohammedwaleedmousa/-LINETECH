@@ -183,7 +183,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       status:mapStatus(project.status),
       updatedAt:project.updated_at||project.created_at||pr.submitted_at,
       latestUpdate:project.latest_update||undefined,
-      nextMilestone:project.next_action_title||undefined,
+      nextMilestone:undefined,
       nextMilestoneDate:project.due_date||undefined,
       actionNeeded:{
         required:Boolean(project.next_action_required),
