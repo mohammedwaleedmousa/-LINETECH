@@ -1,0 +1,25 @@
+.client-project-switcher{display:grid;gap:8px;min-width:min(100%,360px)}
+.client-project-switcher>span{color:#617487;font-size:8px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.client-project-switcher-control{position:relative;min-width:0}
+.client-project-switcher-control select{
+  width:100%;
+  min-height:42px;
+  appearance:none;
+  -webkit-appearance:none;
+  padding:0 38px 0 12px;
+  border:1px solid rgba(255,255,255,.12);
+  border-radius:10px;
+  background:#09111a;
+  color:#dce6ef;
+  font:inherit;
+  font-size:11px;
+  outline:none;
+  cursor:pointer;
+}
+html[dir="rtl"] .client-project-switcher-control select{padding:0 12px 0 38px}
+.client-project-switcher-control select:focus{border-color:rgba(78,145,228,.62);box-shadow:0 0 0 3px rgba(56,130,246,.08)}
+.client-project-switcher-control i{position:absolute;inset-inline-end:13px;top:50%;transform:translateY(-52%);color:#7591ad;font-size:12px;font-style:normal;pointer-events:none}
+@media(max-width:620px){
+  .client-project-switcher{width:100%;min-width:0}
+  .client-project-switcher-control select{min-height:46px;font-size:16px}
+}
