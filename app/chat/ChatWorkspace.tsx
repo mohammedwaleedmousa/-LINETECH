@@ -1,6 +1,7 @@
 "use client";
 
 import Localized from "../Localized";
+import ClientProjectSwitcher from "../ClientProjectSwitcher";
 
 import { ChangeEvent, FormEvent, KeyboardEvent, useEffect, useMemo, useRef, useState } from "react";
 
@@ -43,6 +44,12 @@ const initialMessages: ChatMessage[] = [];
 
 function currentTime(){
   return new Intl.DateTimeFormat("en", { hour: "2-digit", minute: "2-digit", hour12: false }).format(new Date());
+}
+
+function currentProjectSuffix(){
+  if(typeof window === "undefined") return "";
+  const project = new URLSearchParams(window.location.search).get("project") || "";
+  return /^[0-9a-f-]{36}$/i.test(project) ? `?project=${encodeURIComponent(project)}` : "";
 }
 
 function formatDuration(seconds = 0){
@@ -127,6 +134,7 @@ export default function ChatWorkspace(){
   const [messages,setMessages] = useState<ChatMessage[]>(initialMessages);
   const [draft,setDraft] = useState("");
   const [notice,setNotice] = useState("");
+  const [currentProjectId,setCurrentProjectId] = useState<string | null>(null);
   const [recording,setRecording] = useState(false);
   const [recordingSeconds,setRecordingSeconds] = useState(0);
   const [dragging,setDragging] = useState(false);
@@ -147,18 +155,20 @@ export default function ChatWorkspace(){
 
   async function loadMessages(silent = false){
     try{
-      const response = await fetch("/api/chat/messages", { cache: "no-store" });
+      const response = await fetch(`/api/chat/messages${currentProjectSuffix()}`, { cache: "no-store" });
       if(response.status === 401){
-        window.location.assign("/login?next=/chat");
+        window.location.assign(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`);
         return;
       }
 
       const payload = await response.json().catch(()=>null) as {
         ok?: boolean;
+        projectId?: string | null;
         messages?: ChatMessage[];
       } | null;
 
       if(response.ok && payload?.ok && Array.isArray(payload.messages)){
+        setCurrentProjectId(payload.projectId || null);
         setMessages([...initialMessages, ...payload.messages]);
       }else if(!silent){
         setNotice("Conversation could not be loaded.");
@@ -221,7 +231,7 @@ export default function ChatWorkspace(){
 
     try{
       if(editingId){
-        const response = await fetch("/api/chat/messages",{
+        const response = await fetch(`/api/chat/messages${currentProjectSuffix()}`,{
           method:"PATCH",
           headers:{"Content-Type":"application/json"},
           body:JSON.stringify({messageId:editingId,text}),
@@ -243,7 +253,7 @@ export default function ChatWorkspace(){
         return;
       }
 
-      const response = await fetch("/api/chat/messages",{
+      const response = await fetch(`/api/chat/messages${currentProjectSuffix()}`,{
         method:"POST",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({text}),
@@ -296,7 +306,7 @@ export default function ChatWorkspace(){
 
   async function deleteForEveryone(messageId:string){
     try{
-      const response = await fetch("/api/chat/messages",{
+      const response = await fetch(`/api/chat/messages${currentProjectSuffix()}`,{
         method:"DELETE",
         headers:{"Content-Type":"application/json"},
         body:JSON.stringify({messageId}),
@@ -333,7 +343,7 @@ export default function ChatWorkspace(){
     form.append("kind",kind);
     if(typeof duration === "number") form.append("duration",String(duration));
 
-    const response = await fetch("/api/chat/upload",{method:"POST",body:form});
+    const response = await fetch(`/api/chat/upload${currentProjectSuffix()}`,{method:"POST",body:form});
     const payload = await response.json().catch(()=>null) as {ok?:boolean;message?:ChatMessage}|null;
     if(response.status===429) throw new Error("RATE_LIMITED");
     if(!response.ok || !payload?.ok || !payload.message) throw new Error("Upload failed");
@@ -498,6 +508,8 @@ export default function ChatWorkspace(){
         <div><span className="chat-eyebrow">LINETECH</span><h1>Chats</h1></div>
         <button type="button" className="chat-new" onClick={clearPreview} aria-label="Refresh project conversation">＋</button>
       </div>
+
+      <ClientProjectSwitcher currentProjectId={currentProjectId} className="chat-project-switcher" />
 
       <div className="chat-search-box" aria-hidden="true"><span>⌕</span><p>Search or start new chat</p></div>
 
