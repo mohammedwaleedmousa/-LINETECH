@@ -181,7 +181,14 @@ assert.ok(projectIntake.includes("/api/project-request"));
 assert.ok(projectIntake.includes("linetech-project-submission-key-v1"));
 assert.ok(projectIntake.includes("window.crypto.randomUUID()"));
 assert.ok(projectIntake.includes("submissionKey,"));
-assert.ok(read("app/workspace/WorkspaceClient.tsx").includes("/api/workspace"));
+const workspaceClient = read("app/workspace/WorkspaceClient.tsx");
+assert.ok(workspaceClient.includes("/api/workspace"));
+assert.ok(workspaceClient.includes("loadWorkspace"));
+assert.ok(workspaceClient.includes("visibilitychange"));
+assert.ok(workspaceClient.includes("loadError"));
+assert.ok(workspaceClient.includes("handoverUnlocked"));
+assert.ok(workspaceClient.includes("localizeWorkspaceText"));
+assert.ok(client.includes("nextMilestone:undefined"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/messages"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/upload"));
 assert.ok(client.includes('validateUpload(file,kind)'));
@@ -201,7 +208,7 @@ assert.ok(admin.includes('sender_role:"company"'));
 assert.ok(admin.includes('row.sender_role==="company"'));
 
 assert.ok(read("app/handover/HandoverClient.tsx").includes("/api/handover"));
-assert.ok(read("app/workspace/WorkspaceClient.tsx").includes('href="/handover"'));
+assert.ok(workspaceClient.includes('href="/handover"'));
 
 for (const file of [
   "app/admin/page.tsx",
