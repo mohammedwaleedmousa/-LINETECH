@@ -146,6 +146,20 @@ assert.ok(
 );
 
 assert.ok(
+  schema.includes("notifications_action_kind_allowed") ||
+  (
+    schema.includes("action_kind text not null default 'project_update'") &&
+    schema.includes("destination text not null default '/workspace'")
+  ),
+  "Notifications must retain a safe action kind and internal destination."
+);
+
+assert.ok(
+  schema.includes("notifications_user_unread_created_at_idx"),
+  "Unread notification lookup index must remain present."
+);
+
+assert.ok(
   schema.includes("drop function if exists public.submit_project_request") &&
   schema.includes("uuid,text,text,text,text,text,text,text,text,text,text,text,text,text,text"),
   "Legacy non-idempotent project request RPC must remain removed."
