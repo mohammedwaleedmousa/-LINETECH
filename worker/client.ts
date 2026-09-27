@@ -478,25 +478,51 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
     const context=await latestProject(env,session);
     if(!context.project?.id) {
-      return json({ok:true,locked:true,items:[]},200,session.setCookies);
+      return json({ok:true,locked:true,items:[],files:[]},200,session.setCookies);
     }
 
     const phase=Number(context.project.phase||1);
     const status=String(context.project.status||"");
     const unlocked=phase>=5 || status==="completed";
     if(!unlocked) {
-      return json({ok:true,locked:true,items:[]},200,session.setCookies);
+      return json({ok:true,locked:true,items:[],files:[]},200,session.setCookies);
     }
 
-    const response=await restFetch(
-      env,
-      `/handover_items?select=*&project_id=eq.${encodeURIComponent(context.project.id)}&order=created_at.asc`,
-      session.accessToken,
-    );
-    const rows=await safeJson(response);
-    return response.ok
-      ? json({ok:true,locked:false,items:Array.isArray(rows)?rows:[]},200,session.setCookies)
-      : json({ok:false},response.status,session.setCookies);
+    const [itemsResponse,filesResponse]=await Promise.all([
+      restFetch(
+        env,
+        `/handover_items?select=*&project_id=eq.${encodeURIComponent(context.project.id)}&order=created_at.asc`,
+        session.accessToken,
+      ),
+      restFetch(
+        env,
+        `/project_files?select=*&project_id=eq.${encodeURIComponent(context.project.id)}&category=in.(handover,deliverable)&status=in.(ready,approved)&order=updated_at.desc`,
+        session.accessToken,
+      ),
+    ]);
+    const [itemsPayload,filesPayload]=await Promise.all([
+      safeJson(itemsResponse),
+      safeJson(filesResponse),
+    ]);
+    if(!itemsResponse.ok||!filesResponse.ok) {
+      return json({ok:false},!itemsResponse.ok?itemsResponse.status:filesResponse.status,session.setCookies);
+    }
+
+    const files=Array.isArray(filesPayload)?filesPayload.map((file:Row)=>({
+      id:file.id,
+      name:file.file_name,
+      category:file.category,
+      status:file.status,
+      detail:file.detail||undefined,
+      updatedAt:file.updated_at||file.created_at,
+      href:`/api/files/download?fileId=${encodeURIComponent(file.id)}`,
+    })):[];
+    return json({
+      ok:true,
+      locked:false,
+      items:Array.isArray(itemsPayload)?itemsPayload:[],
+      files,
+    },200,session.setCookies);
   }
 
   if(path==="/api/notifications") {
