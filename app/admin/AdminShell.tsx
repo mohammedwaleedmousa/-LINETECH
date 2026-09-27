@@ -9,6 +9,7 @@ const nav = [
   { href: "/admin/projects", label: "Projects", index: "02" },
   { href: "/admin/clients", label: "Clients", index: "03" },
   { href: "/admin/team", label: "Team & Accounts", index: "04" },
+  { href: "/admin/account", label: "Admin Account", index: "05" },
 ];
 
 export default function AdminShell({ children }: { children: ReactNode }) {
@@ -16,7 +17,14 @@ export default function AdminShell({ children }: { children: ReactNode }) {
   const [checking, setChecking] = useState(true);
   const [authorized, setAuthorized] = useState(false);
 
+  const isLogin = pathname === "/admin/login";
+
   useEffect(() => {
+    if (isLogin) {
+      setChecking(false);
+      setAuthorized(false);
+      return;
+    }
     let cancelled = false;
     void (async () => {
       try {
@@ -34,9 +42,11 @@ export default function AdminShell({ children }: { children: ReactNode }) {
       }
     })();
     return () => { cancelled = true; };
-  }, []);
+  }, [isLogin]);
 
   const active = (href: string) => href === "/admin" ? pathname === "/admin" : pathname === href || pathname.startsWith(`${href}/`);
+
+  if (isLogin) return <>{children}</>;
 
   if (checking) {
     return <main className="admin-shell admin-shell-state"><div><span>LINETECH / ADMIN</span><strong>Checking admin access…</strong></div></main>;
@@ -63,7 +73,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         </nav>
 
         <div className="admin-app-sidebar-foot">
-          <Link href="/account">Account settings <span>↗</span></Link>
+          <Link href="/admin/account">Admin account <span>↗</span></Link>
           <Link href="/">Open website <span>↗</span></Link>
         </div>
       </aside>
