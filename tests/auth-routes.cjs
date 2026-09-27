@@ -144,6 +144,7 @@ for (const endpoint of [
 const admin = read("worker/admin.ts");
 for (const endpoint of [
   "/api/admin/projects",
+  "/api/admin/client",
   "/api/admin/project",
   "/api/admin/files",
   "/api/admin/handover",
@@ -282,6 +283,13 @@ assert.ok(adminClient.includes("projectStatusFilter"));
 assert.ok(adminClient.includes("refreshAdmin"));
 assert.ok(adminClient.includes("updateProjectFile"));
 assert.ok(adminClient.includes("Client request"));
+assert.ok(adminClient.includes("Client profile"));
+assert.ok(adminClient.includes("loadClient"));
+assert.ok(adminClient.includes("/api/admin/client"));
+assert.ok(adminClient.includes("Latest client timeline"));
+assert.ok(admin.includes('path==="/api/admin/client"'));
+assert.ok(admin.includes("messageCount"));
+assert.ok(admin.includes("activeProjects"));
 assert.ok(adminClient.includes("loadAdminChat"));
 assert.ok(adminClient.includes("visibilitychange"));
 assert.ok(adminClient.includes("setInterval"));
