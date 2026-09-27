@@ -37,6 +37,9 @@ assert.ok(schema.includes("insert into public.projects"));
 assert.ok(schema.includes("insert into public.conversations"));
 
 // 3) Workspace reads project state, activity and project files.
+assert.ok(client.includes('path==="/api/projects"'));
+assert.ok(client.includes("requestedProjectId"));
+assert.ok(client.includes("projectContext"));
 assert.ok(workspace.includes("/api/workspace"));
 for (const table of ["project_requests","projects","project_activity","project_files"]) {
   assert.ok(client.includes(`/${table}?`), `Workspace API is not reading ${table}`);
@@ -73,8 +76,8 @@ assert.ok(admin.includes("notifications"));
 assert.ok(admin.includes("next_action_required"));
 assert.ok(admin.includes("file_status_updated"));
 assert.ok(admin.includes('action_kind:"message"'));
-assert.ok(admin.includes('destination:"/chat"'));
-assert.ok(admin.includes('destination:"/handover"'));
+assert.ok(admin.includes('clientProjectPath("/chat",projectId)'));
+assert.ok(admin.includes('clientProjectPath("/handover",projectId)'));
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
