@@ -98,9 +98,16 @@ assert.ok(auth.includes('boundedText(data.email,320)'));
 assert.ok(auth.includes('password.length>1024'));
 assert.ok(auth.includes('/logout?scope=local'));
 assert.ok(auth.includes('/logout?scope=others'));
+assert.ok(auth.includes('"/otp"'));
+assert.ok(auth.includes('create_user:false'));
+assert.ok(auth.includes('"/verify"'));
+assert.ok(auth.includes('type:"email"'));
+assert.ok(auth.includes('/^\\d{6}$/'));
 
 for (const endpoint of [
   "/api/auth/login",
+  "/api/auth/request-code",
+  "/api/auth/verify-code",
   "/api/auth/signup",
   "/api/auth/recover",
   "/api/auth/session",
@@ -159,8 +166,14 @@ assert.ok(login.includes('value.startsWith("//")'));
 assert.ok(login.includes("window.location.assign(safeInternalNext(next))"));
 assert.ok(login.includes('search.get("confirmed") === "1"'));
 assert.ok(login.includes('search.get("recovery") === "1"'));
+assert.ok(login.includes('"email" | "code"'));
+assert.ok(login.includes('autoComplete="one-time-code"'));
+assert.ok(login.includes('pattern="[0-9]{6}"'));
+assert.ok(login.includes('"/api/auth/request-code"'));
+assert.ok(login.includes('"/api/auth/verify-code"'));
 for (const endpoint of [
-  "/api/auth/login",
+  "/api/auth/request-code",
+  "/api/auth/verify-code",
   "/api/auth/signup",
   "/api/auth/recover",
   "/api/auth/session",
