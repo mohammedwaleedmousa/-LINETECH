@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import Localized, { useLanguage, useTranslation } from "../Localized";
 import { useEffect, useMemo, useRef, useState } from "react";
 import ScopePreview from "./ScopePreview";
@@ -61,7 +62,12 @@ const requestCopy = {
     copyDone: "Request details copied. Paste them into your LINETECH conversation.",
     copyError: "Your browser blocked clipboard access. Use Share instead.",
     storageError: "LINETECH could not save the request. Please try again.",
+    invalidRequest: "Review the required project details and try again.",
+    requestTooLarge: "Some project details are too long. Shorten the longest fields and try again.",
+    serviceUnavailable: "The project service is temporarily unavailable. Your draft is still here — try again shortly.",
     rateLimited: "Too many project requests. Wait one minute and try again.",
+    openWorkspace: "Open Client Workspace",
+    openChat: "Open Project Chat",
   },
   ar: {
     steps: ["بياناتك", "المشروع", "النطاق", "المراجعة"],
@@ -101,7 +107,12 @@ const requestCopy = {
     copyDone: "تم نسخ تفاصيل الطلب. الصقها في محادثتك مع LINETECH.",
     copyError: "المتصفح منع الوصول إلى الحافظة. استخدم المشاركة بدلًا من ذلك.",
     storageError: "تعذر على لاين تك حفظ الطلب. حاول مرة أخرى.",
+    invalidRequest: "راجع بيانات المشروع المطلوبة ثم حاول مرة أخرى.",
+    requestTooLarge: "بعض تفاصيل المشروع طويلة جدًا. اختصر الحقول الأطول ثم حاول مرة أخرى.",
+    serviceUnavailable: "خدمة المشاريع غير متاحة مؤقتًا. مسودة طلبك ما زالت محفوظة — حاول بعد قليل.",
     rateLimited: "تم إرسال طلبات كثيرة جدًا. انتظر دقيقة ثم حاول مرة أخرى.",
+    openWorkspace: "افتح مساحة العميل",
+    openChat: "افتح محادثة المشروع",
   },
 } as const;
 
@@ -288,6 +299,28 @@ export default function ProjectIntake() {
     } catch {}
   }, []);
 
+  useEffect(() => {
+    let cancelled = false;
+    void (async () => {
+      try {
+        const response = await fetch("/api/auth/session", { cache: "no-store" });
+        if (!response.ok) return;
+        const payload = await response.json().catch(() => null) as {
+          user?: {
+            email?: string;
+            user_metadata?: { full_name?: string; company?: string };
+          };
+        } | null;
+        if (cancelled || !payload?.user) return;
+        const user = payload.user;
+        setName(current => current || user.user_metadata?.full_name || "");
+        setCompany(current => current || user.user_metadata?.company || "");
+        setContact(current => current || user.email || "");
+      } catch {}
+    })();
+    return () => { cancelled = true; };
+  }, []);
+
   const canStep1 = Boolean(name.trim() && contact.trim() && service);
   const canStep2 = Boolean(stage && goal && idea.trim());
 
@@ -422,6 +455,18 @@ export default function ProjectIntake() {
 
       if (response.status === 429) {
         setActionStatus(copy.rateLimited);
+        return;
+      }
+      if (response.status === 413) {
+        setActionStatus(copy.requestTooLarge);
+        return;
+      }
+      if (response.status === 400) {
+        setActionStatus(copy.invalidRequest);
+        return;
+      }
+      if (response.status === 503) {
+        setActionStatus(copy.serviceUnavailable);
         return;
       }
 
@@ -560,7 +605,8 @@ export default function ProjectIntake() {
       {actionStatus && <p className="brief-action-status" role="status">{actionStatus}</p>}
 
       <div className="brief-actions request-finish-actions">
-        <button className="button button-light" type="button" onClick={shareBrief}>{copy.share} <span>↗</span></button>
+        <Link className="button button-light" href="/workspace">{copy.openWorkspace} <span>→</span></Link>
+        <Link className="brief-share request-chat-link" href="/chat">{copy.openChat} <span>→</span></Link>
         <button className="brief-share" type="button" onClick={copyBrief}>{copied ? copy.copied : copy.copy} <span>→</span></button>
         <button className="brief-share request-edit-button" type="button" onClick={editRequest}>{copy.edit}</button>
       </div>
