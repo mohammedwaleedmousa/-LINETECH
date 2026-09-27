@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 import { useLanguage } from "../Localized";
 
 type Mode = "login" | "signup" | "forgot" | "reset";
-type LoginStep = "email" | "code";
 
 function safeInternalNext(value:string|null) {
   if(!value || !value.startsWith("/") || value.startsWith("//")) return "/workspace";
@@ -30,7 +29,7 @@ const copy = {
     welcome: "Welcome back.",
     createTitle: "Create your workspace.",
     recoverTitle: "Recover your account.",
-    loginLead: "Enter your email and we’ll send a 6-digit verification code. No password needed.",
+    loginLead: "Enter your account details to continue.",
     signupLead: "Prepare your LINETECH client access with the details below.",
     recoverLead: "Enter your email address to prepare the recovery step.",
     fullName: "Full name",
@@ -72,17 +71,6 @@ const copy = {
     rateLimited: "Too many attempts. Wait one minute and try again.",
     workspace: "Open Client Workspace",
     confirmedReady: "Email confirmed. You can sign in now.",
-    sendCode: "Send verification code",
-    verificationCode: "Verification code",
-    codePlaceholder: "000000",
-    codeTitle: "Check your email.",
-    codeLead: "Enter the 6-digit code we sent to your email address.",
-    codeSent: "A 6-digit verification code has been sent to your email.",
-    verifyCode: "Verify & sign in",
-    invalidCode: "The code is incorrect or has expired. Request a new code and try again.",
-    resendCode: "Resend code",
-    changeEmail: "Change email",
-    codeHint: "The code is one-time use and expires shortly.",
   },
   ar: {
     signIn: "تسجيل الدخول",
@@ -94,7 +82,7 @@ const copy = {
     welcome: "مرحبًا بعودتك.",
     createTitle: "أنشئ مساحة عملك.",
     recoverTitle: "استعد حسابك.",
-    loginLead: "أدخل بريدك الإلكتروني وسنرسل لك رمز تحقق من 6 أرقام. لا تحتاج إلى كلمة مرور.",
+    loginLead: "أدخل بيانات حسابك للمتابعة.",
     signupLead: "جهّز وصولك إلى مساحة عميل لاين تك من خلال البيانات التالية.",
     recoverLead: "أدخل بريدك الإلكتروني لتجهيز خطوة الاستعادة.",
     fullName: "الاسم الكامل",
@@ -136,17 +124,6 @@ const copy = {
     rateLimited: "محاولات كثيرة جدًا. انتظر دقيقة ثم حاول مرة أخرى.",
     workspace: "افتح مساحة العميل",
     confirmedReady: "تم تأكيد البريد الإلكتروني. يمكنك تسجيل الدخول الآن.",
-    sendCode: "إرسال رمز التحقق",
-    verificationCode: "رمز التحقق",
-    codePlaceholder: "000000",
-    codeTitle: "تحقق من بريدك.",
-    codeLead: "أدخل رمز التحقق المكوّن من 6 أرقام الذي أرسلناه إلى بريدك الإلكتروني.",
-    codeSent: "تم إرسال رمز تحقق من 6 أرقام إلى بريدك الإلكتروني.",
-    verifyCode: "تأكيد الرمز وتسجيل الدخول",
-    invalidCode: "الرمز غير صحيح أو انتهت صلاحيته. اطلب رمزًا جديدًا وحاول مرة أخرى.",
-    resendCode: "إعادة إرسال الرمز",
-    changeEmail: "تغيير البريد",
-    codeHint: "الرمز صالح للاستخدام مرة واحدة وتنتهي صلاحيته بعد وقت قصير.",
   },
 } as const;
 
@@ -155,9 +132,6 @@ export default function LoginForm(){
   const t = copy[language];
   const router = useRouter();
   const [mode,setMode]=useState<Mode>("login");
-  const [loginStep,setLoginStep]=useState<LoginStep>("email");
-  const [loginEmail,setLoginEmail]=useState("");
-  const [otpCode,setOtpCode]=useState("");
   const [message,setMessage]=useState("");
   const [password,setPassword]=useState("");
   const [confirmPassword,setConfirmPassword]=useState("");
@@ -166,9 +140,6 @@ export default function LoginForm(){
 
   function switchMode(next:Mode){
     setMode(next);
-    setLoginStep("email");
-    setLoginEmail("");
-    setOtpCode("");
     setMessage("");
     setPassword("");
     setConfirmPassword("");
@@ -297,39 +268,14 @@ export default function LoginForm(){
         return;
       }
 
-      if(loginStep==="email"){
-        const response = await fetch("/api/auth/request-code",{
-          method:"POST",
-          headers:{"Content-Type":"application/json"},
-          body:JSON.stringify({email}),
-        });
-
-        if(response.status===429){
-          setMessage(t.rateLimited);
-          return;
-        }
-        if(!response.ok){
-          setMessage(t.loginError);
-          return;
-        }
-
-        setLoginEmail(email);
-        setOtpCode("");
-        setLoginStep("code");
-        setMessage(t.codeSent);
-        return;
-      }
-
-      const code=otpCode.replace(/\s+/g,"");
-      if(!/^\d{6}$/.test(code)){
-        setMessage(t.invalidCode);
-        return;
-      }
-
-      const response = await fetch("/api/auth/verify-code",{
+      const response = await fetch("/api/auth/login",{
         method:"POST",
         headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email:loginEmail,code}),
+        body:JSON.stringify({
+          email,
+          password,
+          remember:form.get("remember")==="on",
+        }),
       });
 
       if(response.status===429){
@@ -337,7 +283,7 @@ export default function LoginForm(){
         return;
       }
       if(!response.ok){
-        setMessage(t.invalidCode);
+        setMessage(t.loginError);
         return;
       }
 
@@ -355,28 +301,6 @@ export default function LoginForm(){
     }
   }
 
-  async function resendLoginCode(){
-    if(submitting || !loginEmail) return;
-    setSubmitting(true);
-    setMessage("");
-    try{
-      const response=await fetch("/api/auth/request-code",{
-        method:"POST",
-        headers:{"Content-Type":"application/json"},
-        body:JSON.stringify({email:loginEmail}),
-      });
-      if(response.status===429){
-        setMessage(t.rateLimited);
-        return;
-      }
-      setMessage(response.ok?t.codeSent:t.loginError);
-    }catch{
-      setMessage(t.loginError);
-    }finally{
-      setSubmitting(false);
-    }
-  }
-
   const isForgot = mode === "forgot";
   const isReset = mode === "reset";
 
@@ -389,8 +313,8 @@ export default function LoginForm(){
 
     <div className="account-mode-head">
       <span>{mode==="login"?t.clientAccess:mode==="signup"?t.newAccount:t.recovery}</span>
-      <h2>{mode==="login"&&loginStep==="code"?t.codeTitle:mode==="login"?t.welcome:mode==="signup"?t.createTitle:mode==="reset"?t.resetTitle:t.recoverTitle}</h2>
-      <p>{mode==="login"&&loginStep==="code"?t.codeLead:mode==="login"?t.loginLead:mode==="signup"?t.signupLead:mode==="reset"?t.resetLead:t.recoverLead}</p>
+      <h2>{mode==="login"?t.welcome:mode==="signup"?t.createTitle:mode==="reset"?t.resetTitle:t.recoverTitle}</h2>
+      <p>{mode==="login"?t.loginLead:mode==="signup"?t.signupLead:mode==="reset"?t.resetLead:t.recoverLead}</p>
     </div>
 
     <form className="login-form" onSubmit={handleSubmit}>
@@ -399,22 +323,18 @@ export default function LoginForm(){
         <label><span>{t.company}</span><input type="text" name="company" autoComplete="organization" placeholder={t.optional}/></label>
       </>}
 
-      {!isReset&&!(mode==="login"&&loginStep==="code")&&<label><span>{t.email}</span><input type="email" name="email" autoComplete="email" placeholder={t.emailPlaceholder} required/></label>}
+      {!isReset&&<label><span>{t.email}</span><input type="email" name="email" autoComplete="email" placeholder={t.emailPlaceholder} required/></label>}
 
-      {mode==="login"&&loginStep==="code"&&<>
-        <div className="login-code-destination"><span>{t.email}</span><strong>{loginEmail}</strong></div>
-        <label><span>{t.verificationCode}</span><input className="login-otp-code" type="text" inputMode="numeric" name="code" autoComplete="one-time-code" pattern="[0-9]{6}" maxLength={6} value={otpCode} onChange={event=>setOtpCode(event.target.value.replace(/\D/g,"").slice(0,6))} placeholder={t.codePlaceholder} required/></label>
-        <p className="login-code-hint">{t.codeHint}</p>
-      </>}
-
-      {!isForgot&&mode!=="login"&&<label><span>{t.password}</span><div className="login-password-field"><input type={showPassword?"text":"password"} name="password" value={password} onChange={event=>setPassword(event.target.value)} autoComplete="new-password" placeholder={t.createPassword} required/><button type="button" className="login-password-toggle" onClick={()=>setShowPassword(value=>!value)}>{showPassword?t.hide:t.show}</button></div></label>}
+      {!isForgot&&<label><span>{t.password}</span><div className="login-password-field"><input type={showPassword?"text":"password"} name="password" value={password} onChange={event=>setPassword(event.target.value)} autoComplete={mode==="login"?"current-password":"new-password"} placeholder={mode==="login"?t.enterPassword:t.createPassword} required/><button type="button" className="login-password-toggle" onClick={()=>setShowPassword(value=>!value)}>{showPassword?t.hide:t.show}</button></div></label>}
 
       {(mode==="signup"||mode==="reset")&&<label><span>{t.confirmPassword}</span><input type={showPassword?"text":"password"} name="confirmPassword" value={confirmPassword} onChange={event=>setConfirmPassword(event.target.value)} autoComplete="new-password" placeholder={t.repeatPassword} required/></label>}
 
-      {mode==="signup"?<label className="signup-terms"><input type="checkbox" required/><span>{t.agree} <Link href="/terms">{t.terms}</Link> {t.and} <Link href="/privacy">{t.privacy}</Link>.</span></label>:null}
+      {mode==="login"?<div className="login-options">
+        <label className="login-remember"><input type="checkbox" name="remember"/><span>{t.remember}</span></label>
+        <button className="login-forgot" type="button" onClick={()=>switchMode("forgot")}>{t.forgot}</button>
+      </div>:mode==="signup"?<label className="signup-terms"><input type="checkbox" required/><span>{t.agree} <Link href="/terms">{t.terms}</Link> {t.and} <Link href="/privacy">{t.privacy}</Link>.</span></label>:null}
 
-      <button className="login-submit" type="submit" disabled={submitting}>{mode==="login"?(loginStep==="code"?t.verifyCode:t.sendCode):mode==="signup"?t.create:mode==="reset"?t.resetButton:t.recoverButton} <span>→</span></button>
-      {mode==="login"&&loginStep==="code"&&<div className="login-code-actions"><button className="login-inline-action" type="button" disabled={submitting} onClick={()=>void resendLoginCode()}>{t.resendCode}</button><button className="login-inline-action" type="button" disabled={submitting} onClick={()=>{setLoginStep("email");setOtpCode("");setMessage("");}}>{t.changeEmail}</button></div>}
+      <button className="login-submit" type="submit" disabled={submitting}>{mode==="login"?t.signIn:mode==="signup"?t.create:mode==="reset"?t.resetButton:t.recoverButton} <span>→</span></button>
       {isForgot&&<button className="login-inline-action" type="button" onClick={()=>switchMode("login")}>{t.back}</button>}
       <p className="login-ui-note">{t.note}</p>
       {message&&<div className="login-feedback-wrap" role="status"><p className="login-feedback">{message}</p><Link href="/workspace">{t.workspace} →</Link></div>}
