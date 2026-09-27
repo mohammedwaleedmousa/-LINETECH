@@ -12,7 +12,7 @@ body:has(.admin-shell){background:#04070a}
 .admin-app-nav a span{font-size:8px;color:#526678}.admin-app-nav a strong{font-size:11px;font-weight:560}.admin-app-nav a b{opacity:0;font-size:10px}
 .admin-app-nav a:hover,.admin-app-nav a.is-active{border-color:#1a3045;background:#09131d;color:#e3edf6}.admin-app-nav a.is-active span{color:#6ea8f8}.admin-app-nav a.is-active b{opacity:1;color:#6ea8f8}
 .admin-app-sidebar-foot{margin-top:auto;display:grid;gap:8px;padding:20px 8px 0;border-top:1px solid #172431}
-.admin-app-sidebar-foot a{display:flex;justify-content:space-between;color:#738596;text-decoration:none;font-size:10px}.admin-app-sidebar-foot a:hover{color:#b9d4f4}
+.admin-app-sidebar-foot a,.admin-app-sidebar-foot button{display:flex;justify-content:space-between;width:100%;padding:0;border:0;background:transparent;color:#738596;text-decoration:none;font:inherit;font-size:10px;text-align:left;cursor:pointer}.admin-app-sidebar-foot a:hover,.admin-app-sidebar-foot button:hover{color:#b9d4f4}
 .admin-app-main{min-width:0}
 .admin-shell-state{display:flex;align-items:center;justify-content:center}.admin-shell-state>div{display:grid;gap:8px;max-width:480px;padding:30px}.admin-shell-state span{color:#6ea8f8;font-size:9px;letter-spacing:.16em}.admin-shell-state strong{font-size:28px}.admin-shell-state p{color:#8191a0}
 
