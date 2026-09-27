@@ -45,10 +45,48 @@
 }
 
 @media(max-width:560px){
- .process-center{padding:46px 0 48px}
- .process-center-head h2{font-size:32px}
- .process-center-grid{grid-template-columns:1fr}
- .process-center-card,.process-center-card:nth-child(odd),.process-center-card:nth-child(-n+2){border-left:0;border-top:1px solid #202831;min-height:auto;padding:28px 0}
- .process-center-card:first-child{border-top:0}
- .process-center-card p{max-width:260px}
+ .process-center{padding:48px 0 52px}
+ .process-center-shell{width:calc(100% - 32px)}
+ .process-center-head{text-align:start;max-width:none;margin:0 0 32px}
+ .process-center-head>p{margin:0 0 14px;gap:10px;font-size:10px;letter-spacing:.18em}
+ .process-center-head>p span{width:34px;background:#667585}
+ .process-center-head h2{font-size:clamp(32px,9.5vw,38px);line-height:1.08;letter-spacing:-.035em}
+ .process-center-head .ref-button{margin-top:22px!important;min-height:44px!important;padding:11px 16px!important;font-size:12px!important}
+ .process-center-grid{display:flex;flex-direction:column;gap:10px;border:0}
+ .process-center-card,
+ .process-center-card:nth-child(odd),
+ .process-center-card:nth-child(-n+2){
+   display:grid;
+   grid-template-columns:50px minmax(0,1fr);
+   grid-template-rows:auto auto;
+   column-gap:16px;
+   align-items:start;
+   min-height:0;
+   padding:19px 18px;
+   text-align:start;
+   border:1px solid #1d2833;
+   border-radius:12px;
+   background:linear-gradient(145deg,rgba(10,16,23,.96),rgba(6,10,15,.98));
+ }
+ .process-center-card:first-child{border:1px solid #1d2833}
+ .process-center-num{
+   grid-row:1/3;
+   align-self:stretch;
+   display:flex;
+   flex-direction:column;
+   align-items:center;
+   justify-content:flex-start;
+   gap:10px;
+   margin:2px 0 0;
+   font-size:14px;
+   font-variant-numeric:tabular-nums;
+ }
+ .process-center-num i{
+   width:1px;
+   height:100%;
+   min-height:42px;
+   background:linear-gradient(180deg,#617080,rgba(97,112,128,.08));
+ }
+ .process-center-card h3{font-size:20px;line-height:1.25;margin:0 0 7px}
+ .process-center-card p{font-size:13px;line-height:1.7;margin:0;max-width:none;color:#98a4b0}
 }
