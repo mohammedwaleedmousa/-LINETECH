@@ -23,18 +23,29 @@ async function requireSession(request:Request,env:Env) {
   return resolveSession(request,env);
 }
 
-async function latestProject(env:Env,session:ResolvedSession) {
-  const p=await restFetch(env,"/projects?select=*&order=created_at.desc&limit=1",session.accessToken);
+function requestedProjectId(request:Request) {
+  const value=new URL(request.url).searchParams.get("project")||"";
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(value)
+    ? value
+    : "";
+}
+
+async function projectContext(request:Request,env:Env,session:ResolvedSession) {
+  const requestedId=requestedProjectId(request);
+  const projectPath=requestedId
+    ? `/projects?select=*&id=eq.${encodeURIComponent(requestedId)}&limit=1`
+    : "/projects?select=*&order=created_at.desc&limit=1";
+  const p=await restFetch(env,projectPath,session.accessToken);
   const rows=await safeJson(p) as Row[]|null;
   const project=Array.isArray(rows)?rows[0]:null;
   if(!project?.id) return {project:null,conversation:null};
 
-  const c=await restFetch(
+  const conversationResponse=await restFetch(
     env,
     `/conversations?select=id,project_id&project_id=eq.${encodeURIComponent(project.id)}&limit=1`,
     session.accessToken,
   );
-  const conversations=await safeJson(c) as Row[]|null;
+  const conversations=await safeJson(conversationResponse) as Row[]|null;
   return {project,conversation:Array.isArray(conversations)?conversations[0]:null};
 }
 
@@ -59,6 +70,31 @@ function mapMessage(row:Row) {
 }
 
 export async function handleClientApi(request:Request,env:Env,path:string):Promise<Response|null> {
+  if(path==="/api/projects" && request.method==="GET") {
+    const session=await requireSession(request,env);
+    if(!session) return json({ok:false},401);
+
+    const response=await restFetch(
+      env,
+      "/projects?select=id,title,status,phase,updated_at,due_date,request_id&order=created_at.desc&limit=100",
+      session.accessToken,
+    );
+    const rows=await safeJson(response) as Row[]|null;
+    if(!response.ok) return json({ok:false},response.status,session.setCookies);
+
+    return json({
+      ok:true,
+      projects:(Array.isArray(rows)?rows:[]).map(project=>({
+        id:project.id,
+        title:project.title||"Project",
+        status:project.status||"planned",
+        phase:Number(project.phase||1),
+        updatedAt:project.updated_at||undefined,
+        dueDate:project.due_date||undefined,
+      })),
+    },200,session.setCookies);
+  }
+
   if(path==="/api/project-request" && request.method==="POST") {
     const session=await requireSession(request,env);
     if(!session) return json({ok:false,authRequired:true},401);
@@ -128,34 +164,35 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     const session=await requireSession(request,env);
     if(!session) return json({ok:false},401);
 
-    const rr=await restFetch(env,"/project_requests?select=*&order=submitted_at.desc&limit=1",session.accessToken);
-    const requestRows=await safeJson(rr) as Row[]|null;
-    if(!rr.ok) return json({ok:false},rr.status,session.setCookies);
-    const pr=Array.isArray(requestRows)?requestRows[0]:null;
-    if(!pr) return json({ok:true,record:null,progress:null},200,session.setCookies);
+    const context=await projectContext(request,env,session);
+    const project=context.project;
+    if(!project?.id) {
+      return json({ok:true,projectId:null,record:null,progress:null},200,session.setCookies);
+    }
 
-    const pp=await restFetch(
-      env,
-      `/projects?select=*&request_id=eq.${encodeURIComponent(pr.id)}&limit=1`,
-      session.accessToken,
-    );
-    const projectRows=await safeJson(pp) as Row[]|null;
-    if(!pp.ok) return json({ok:false},pp.status,session.setCookies);
-    const project=Array.isArray(projectRows)?projectRows[0]:null;
+    let pr:Row|null=null;
+    if(project.request_id) {
+      const requestResponse=await restFetch(
+        env,
+        `/project_requests?select=*&id=eq.${encodeURIComponent(project.request_id)}&limit=1`,
+        session.accessToken,
+      );
+      const requestRows=await safeJson(requestResponse) as Row[]|null;
+      if(!requestResponse.ok) return json({ok:false},requestResponse.status,session.setCookies);
+      pr=Array.isArray(requestRows)?requestRows[0]:null;
+    }
 
     let activity:Row[]=[];
     let files:Row[]=[];
-    if(project?.id) {
-      const [ar,fr]=await Promise.all([
-        restFetch(env,`/project_activity?select=*&project_id=eq.${encodeURIComponent(project.id)}&order=created_at.desc&limit=20`,session.accessToken),
-        restFetch(env,`/project_files?select=*&project_id=eq.${encodeURIComponent(project.id)}&order=updated_at.desc&limit=50`,session.accessToken),
-      ]);
-      const [ap,fp]=await Promise.all([safeJson(ar),safeJson(fr)]);
-      if(ar.ok && Array.isArray(ap)) activity=ap as Row[];
-      if(fr.ok && Array.isArray(fp)) files=fp as Row[];
-    }
+    const [activityResponse,filesResponse]=await Promise.all([
+      restFetch(env,`/project_activity?select=*&project_id=eq.${encodeURIComponent(project.id)}&order=created_at.desc&limit=20`,session.accessToken),
+      restFetch(env,`/project_files?select=*&project_id=eq.${encodeURIComponent(project.id)}&order=updated_at.desc&limit=50`,session.accessToken),
+    ]);
+    const [activityPayload,filesPayload]=await Promise.all([safeJson(activityResponse),safeJson(filesResponse)]);
+    if(activityResponse.ok && Array.isArray(activityPayload)) activity=activityPayload as Row[];
+    if(filesResponse.ok && Array.isArray(filesPayload)) files=filesPayload as Row[];
 
-    const record={
+    const record=pr?{
       requestId:pr.reference_number,
       completedAt:pr.submitted_at,
       status:pr.status,
@@ -164,10 +201,17 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         preferredContact:pr.preferred_contact||"",
       },
       project:{
-        service:pr.service||"",stage:pr.stage||"",goal:pr.goal||"",idea:pr.idea||"",
+        service:pr.service||project.title||"",stage:pr.stage||"",goal:pr.goal||"",idea:pr.idea||"",
         audience:pr.audience||"",features:pr.features||"",references:pr.reference_links||"",
       },
       scope:{budget:pr.budget||"",timing:pr.timing||"",notes:pr.notes||""},
+    }:{
+      requestId:String(project.id),
+      completedAt:project.created_at||project.updated_at||new Date().toISOString(),
+      status:project.status||"planned",
+      customer:{name:"",company:"",contact:"",preferredContact:""},
+      project:{service:project.title||"Project",stage:"",goal:"",idea:"",audience:"",features:"",references:""},
+      scope:{budget:"",timing:"",notes:""},
     };
 
     const mapStatus=(value:string)=>{
@@ -177,11 +221,11 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       return "ready";
     };
 
-    const progress=project?{
-      requestId:pr.reference_number,
+    const progress={
+      requestId:record.requestId,
       currentPhase:Number(project.phase||1),
       status:mapStatus(project.status),
-      updatedAt:project.updated_at||project.created_at||pr.submitted_at,
+      updatedAt:project.updated_at||project.created_at||record.completedAt,
       latestUpdate:project.latest_update||undefined,
       nextMilestone:undefined,
       nextMilestoneDate:project.due_date||undefined,
@@ -190,7 +234,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         title:project.next_action_title||undefined,
         detail:project.next_action_body||undefined,
         label:project.next_action_required?"Open project chat":undefined,
-        href:project.next_action_required?"/chat":undefined,
+        href:project.next_action_required?`/chat?project=${encodeURIComponent(project.id)}`:undefined,
       },
       activity:activity.map(item=>({id:item.id,title:item.title,detail:item.detail||undefined,at:item.created_at})),
       files:files.map(file=>({
@@ -198,15 +242,15 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         updatedAt:file.updated_at||file.created_at,
         href:`/api/files/download?fileId=${encodeURIComponent(file.id)}`,
       })),
-    }:null;
+    };
 
-    return json({ok:true,record,progress},200,session.setCookies);
+    return json({ok:true,projectId:project.id,record,progress},200,session.setCookies);
   }
 
   if(path==="/api/chat/messages") {
     const session=await requireSession(request,env);
     if(!session) return json({ok:false},401);
-    const context=await latestProject(env,session);
+    const context=await projectContext(request,env,session);
 
     if(request.method==="GET") {
       if(!context.conversation) return json({ok:true,messages:[]},200,session.setCookies);
@@ -330,7 +374,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
   if(path==="/api/chat/upload" && request.method==="POST") {
     const session=await requireSession(request,env);
     if(!session) return json({ok:false},401);
-    const context=await latestProject(env,session);
+    const context=await projectContext(request,env,session);
     if(!context.project?.id || !context.conversation?.id) return json({ok:false},409,session.setCookies);
     if(!(await rateLimitAllowed(
       env.UPLOAD_RATE_LIMITER,
@@ -476,7 +520,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     const session=await requireSession(request,env);
     if(!session) return json({ok:false},401);
 
-    const context=await latestProject(env,session);
+    const context=await projectContext(request,env,session);
     if(!context.project?.id) {
       return json({ok:true,locked:true,items:[],files:[]},200,session.setCookies);
     }
