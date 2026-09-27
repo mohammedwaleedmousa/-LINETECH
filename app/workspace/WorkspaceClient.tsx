@@ -2,7 +2,7 @@
 
 import ContentHeroArt from "../ContentHeroArt";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLanguage, useTranslation } from "../Localized";
 import "./workspace.css";
 import "./workspace-tracking.css";
@@ -72,8 +72,6 @@ type ProjectProgress = {
   files?: ProgressFile[];
 };
 
-const progressStorageKey = "linetech-project-progress-v1";
-
 const serviceLabels: Record<string, { en: string; ar: string }> = {
   "Web Development": { en: "Web Development", ar: "تطوير المواقع" },
   "E-commerce & Systems": { en: "E-commerce & Systems", ar: "التجارة الإلكترونية والأنظمة" },
@@ -87,10 +85,10 @@ const copy = {
     kicker: "CLIENT WORKSPACE",
     title: "One place for the project line.",
     lead: "Follow the project without the noise. See the current stage, the latest change and what comes next.",
-    local: "Your project request and progress stay connected here.",
+    local: "Your account keeps the project, conversation and files connected across devices.",
     noRequestCode: "00 / NO REQUEST",
-    noRequestTitle: "No project request on this device yet.",
-    noRequestBody: "Complete a project request first. Once it is finished, this workspace will use it as the starting point for your project view.",
+    noRequestTitle: "No project request is linked to this account yet.",
+    noRequestBody: "Complete a project request first. Once submitted, its status, conversation, files and handover will stay connected to this account.",
     start: "Start project request",
     finder: "Find the right service",
     tracking: "PROJECT STATUS",
@@ -156,15 +154,20 @@ const copy = {
     files: "Files",
     handover: "Handover",
     handoverLocked: "Available at handover",
+    refresh: "Refresh status",
+    refreshing: "Refreshing…",
+    loadErrorTitle: "We couldn’t load your workspace.",
+    loadErrorBody: "Your project data was not changed. Check the connection and try again.",
+    retry: "Try again",
   },
   ar: {
     kicker: "مساحة العميل",
     title: "مكان واحد لمسار المشروع.",
     lead: "تابع مشروعك بدون ضوضاء. اعرف المرحلة الحالية، آخر ما تغير، وما الذي يأتي بعدها.",
-    local: "طلب المشروع وتقدمه يبقيان مرتبطين هنا.",
+    local: "يربط حسابك المشروع والمحادثة والملفات معًا حتى عند استخدام جهاز آخر.",
     noRequestCode: "00 / لا يوجد طلب",
-    noRequestTitle: "لا يوجد طلب مشروع على هذا الجهاز حتى الآن.",
-    noRequestBody: "أكمل طلب مشروع أولًا. بعد إتمامه ستستخدم مساحة العميل هذا الطلب كنقطة بداية لعرض مشروعك.",
+    noRequestTitle: "لا يوجد طلب مشروع مرتبط بهذا الحساب حتى الآن.",
+    noRequestBody: "أكمل طلب مشروع أولًا. بعد إرساله ستبقى حالة المشروع والمحادثة والملفات والتسليم مرتبطة بهذا الحساب.",
     start: "ابدأ طلب المشروع",
     finder: "اعثر على الخدمة المناسبة",
     tracking: "حالة المشروع",
@@ -230,6 +233,11 @@ const copy = {
     files: "الملفات",
     handover: "التسليم",
     handoverLocked: "متاح عند التسليم",
+    refresh: "تحديث الحالة",
+    refreshing: "جارٍ التحديث…",
+    loadErrorTitle: "تعذر تحميل مساحة العميل.",
+    loadErrorBody: "لم تتغير بيانات مشروعك. تحقق من الاتصال ثم حاول مرة أخرى.",
+    retry: "إعادة المحاولة",
   },
 } as const;
 
@@ -256,54 +264,63 @@ export default function WorkspaceClient() {
   const [record, setRecord] = useState<RequestRecord | null>(null);
   const [progressRecord, setProgressRecord] = useState<ProjectProgress | null>(null);
   const [loaded, setLoaded] = useState(false);
+  const [loadError, setLoadError] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [copied, setCopied] = useState(false);
 
-  useEffect(() => {
-    let cancelled = false;
+  const loadWorkspace = useCallback(async (showRefreshing = false) => {
+    if (showRefreshing) setRefreshing(true);
+    setLoadError(false);
 
-    void (async () => {
-      try {
-        const response = await fetch("/api/workspace", { cache: "no-store" });
-        if (response.status === 401) {
-          window.location.assign("/login?next=/workspace");
-          return;
-        }
-
-        const payload = await response.json().catch(() => null) as {
-          ok?: boolean;
-          record?: RequestRecord | null;
-          progress?: ProjectProgress | null;
-        } | null;
-
-        if (cancelled || !response.ok || !payload?.ok) return;
-
-        setRecord(payload.record || null);
-        if (payload.record) {
-          const fallback = makeDefaultProgress(payload.record);
-          const progress = payload.progress
-            ? {
-                ...payload.progress,
-                currentPhase: clampPhase(payload.progress.currentPhase),
-                status: payload.progress.status || "ready",
-                updatedAt: payload.progress.updatedAt || payload.record.completedAt,
-                activity: Array.isArray(payload.progress.activity) ? payload.progress.activity : [],
-                files: Array.isArray(payload.progress.files) ? payload.progress.files : [],
-              }
-            : fallback;
-          setProgressRecord(progress);
-        } else {
-          setProgressRecord(null);
-        }
-      } catch {
-      } finally {
-        if (!cancelled) setLoaded(true);
+    try {
+      const response = await fetch("/api/workspace", { cache: "no-store" });
+      if (response.status === 401) {
+        window.location.assign("/login?next=/workspace");
+        return;
       }
-    })();
 
-    return () => {
-      cancelled = true;
-    };
+      const payload = await response.json().catch(() => null) as {
+        ok?: boolean;
+        record?: RequestRecord | null;
+        progress?: ProjectProgress | null;
+      } | null;
+
+      if (!response.ok || !payload?.ok) throw new Error("workspace_load_failed");
+
+      setRecord(payload.record || null);
+      if (payload.record) {
+        const fallback = makeDefaultProgress(payload.record);
+        const progress = payload.progress
+          ? {
+              ...payload.progress,
+              currentPhase: clampPhase(payload.progress.currentPhase),
+              status: payload.progress.status || "ready",
+              updatedAt: payload.progress.updatedAt || payload.record.completedAt,
+              activity: Array.isArray(payload.progress.activity) ? payload.progress.activity : [],
+              files: Array.isArray(payload.progress.files) ? payload.progress.files : [],
+            }
+          : fallback;
+        setProgressRecord(progress);
+      } else {
+        setProgressRecord(null);
+      }
+    } catch {
+      setLoadError(true);
+    } finally {
+      setLoaded(true);
+      setRefreshing(false);
+    }
   }, []);
+
+  useEffect(() => {
+    void loadWorkspace();
+
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") void loadWorkspace();
+    };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => document.removeEventListener("visibilitychange", refreshWhenVisible);
+  }, [loadWorkspace]);
 
   const completedDate = useMemo(
     () => formatDate(record?.completedAt || "", language),
@@ -313,7 +330,7 @@ export default function WorkspaceClient() {
   const progress = record ? progressRecord || makeDefaultProgress(record) : null;
   const currentPhase = progress ? clampPhase(progress.currentPhase) : 1;
   const currentPhaseCopy = t.phases[currentPhase - 1];
-  const latestUpdate = progress?.latestUpdate || t.latestFallback;
+  const latestUpdate = localizeWorkspaceText(progress?.latestUpdate, language, t.latestFallback);
   const nextPhase = currentPhase < 5 ? t.phases[currentPhase] : null;
   const nextMilestone = progress?.nextMilestone || nextPhase?.[1] || t.statusComplete;
 
@@ -349,6 +366,7 @@ export default function WorkspaceClient() {
     : { required: false };
 
   const clientAction = progress?.actionNeeded || defaultAction;
+  const handoverUnlocked = currentPhase >= 5 || progress?.status === "complete";
 
   async function copyRequestId() {
     if (!record?.requestId) return;
@@ -361,6 +379,23 @@ export default function WorkspaceClient() {
 
   if (!loaded) {
     return <main className="workspace-page ref-page"><div className="workspace-loading" /></main>;
+  }
+
+  if (loadError && !record) {
+    return (
+      <main className="workspace-page ref-page">
+        <section className="workspace-error-section">
+          <div className="ref-shell workspace-error-card">
+            <span>!</span>
+            <h1>{t.loadErrorTitle}</h1>
+            <p>{t.loadErrorBody}</p>
+            <button type="button" onClick={() => void loadWorkspace(true)} disabled={refreshing}>
+              {refreshing ? t.refreshing : t.retry}
+            </button>
+          </div>
+        </section>
+      </main>
+    );
   }
 
   return (
@@ -397,7 +432,12 @@ export default function WorkspaceClient() {
             <div className="ref-shell">
               <div className="workspace-section-eyebrow">
                 <p className="workspace-kicker">{t.tracking}</p>
-                <span>{record.requestId}</span>
+                <div className="workspace-section-eyebrow-actions">
+                  <span>{record.requestId}</span>
+                  <button type="button" onClick={() => void loadWorkspace(true)} disabled={refreshing}>
+                    {refreshing ? t.refreshing : t.refresh}
+                  </button>
+                </div>
               </div>
 
               <div className="workspace-status-main">
@@ -454,10 +494,13 @@ export default function WorkspaceClient() {
               <div className={clientAction.required ? "workspace-action is-required" : "workspace-action"}>
                 <div>
                   <span>{clientAction.required ? t.action : t.noAction}</span>
-                  <h3>{clientAction.required ? clientAction.title || t.actionDefaultTitle : t.noActionBody}</h3>
+                  <h3>{clientAction.required ? localizeWorkspaceText(clientAction.title, language, t.actionDefaultTitle) : t.noActionBody}</h3>
+                  {clientAction.required && (clientAction.detail || t.actionDefaultBody) && (
+                    <p>{localizeWorkspaceText(clientAction.detail, language, t.actionDefaultBody)}</p>
+                  )}
                 </div>
                 {clientAction.required && clientAction.href && (
-                  <Link href={clientAction.href}>{clientAction.label || t.actionDefaultLabel} →</Link>
+                  <Link href={clientAction.href}>{localizeWorkspaceText(clientAction.label, language, t.actionDefaultLabel)} →</Link>
                 )}
               </div>
             </div>
@@ -600,7 +643,7 @@ export default function WorkspaceClient() {
               <nav className="workspace-tools-line" aria-label={t.tools}>
                 <Link href="/chat"><span>01</span>{t.conversation}<b>↗</b></Link>
                 <a href="#files"><span>02</span>{t.files}<b>↓</b></a>
-                {currentPhase < 5 ? (
+                {!handoverUnlocked ? (
                   <div className="is-locked">
                     <span>03</span>{t.handover}<b>{t.handoverLocked}</b>
                   </div>
@@ -614,6 +657,35 @@ export default function WorkspaceClient() {
       ) : null}
     </main>
   );
+}
+
+function localizeWorkspaceText(
+  value: string | undefined,
+  language: "ar" | "en",
+  fallback: string,
+) {
+  if (!value) return fallback;
+
+  const known: Record<string, { en: string; ar: string }> = {
+    "Project request submitted.": {
+      en: "Project request submitted.",
+      ar: "تم إرسال طلب المشروع.",
+    },
+    "Move the completed request into the project conversation.": {
+      en: "Move the completed request into the project conversation.",
+      ar: "انقل الطلب المكتمل إلى محادثة المشروع.",
+    },
+    "Open project chat so the request can move into scope and proposal.": {
+      en: "Open project chat so the request can move into scope and proposal.",
+      ar: "افتح محادثة المشروع حتى ينتقل الطلب إلى تحديد النطاق والعرض.",
+    },
+    "Open project chat": {
+      en: "Open project chat",
+      ar: "افتح محادثة المشروع",
+    },
+  };
+
+  return known[value]?.[language] || value;
 }
 
 function formatDate(value: string, language: "ar" | "en") {
