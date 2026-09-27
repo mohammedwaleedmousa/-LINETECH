@@ -9,13 +9,17 @@ import HomeMotion from "./HomeMotion";
 import ServicesMotion from "./ServicesMotion";
 import NavigationFeedback from "./NavigationFeedback";
 import HomeSplash from "./HomeSplash";
+import ClientPortalShell from "./ClientPortalShell";
 
 export default function SiteSurface({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const admin = pathname === "/admin" || pathname.startsWith("/admin/");
+  const clientPortal = ["/workspace","/chat","/handover","/account"].some(
+    route => pathname === route || pathname.startsWith(`${route}/`)
+  );
 
   useEffect(() => {
-    document.body.dataset.surface = admin ? "admin" : "site";
+    document.body.dataset.surface = admin ? "admin" : clientPortal ? "client" : "site";
     if (admin) {
       document.documentElement.lang = "en";
       document.documentElement.dir = "ltr";
@@ -24,9 +28,18 @@ export default function SiteSurface({ children }: { children: ReactNode }) {
     return () => {
       delete document.body.dataset.surface;
     };
-  }, [admin]);
+  }, [admin, clientPortal]);
 
   if (admin) return <>{children}</>;
+
+  if (clientPortal) {
+    return (
+      <>
+        <LanguageBridge />
+        <ClientPortalShell>{children}</ClientPortalShell>
+      </>
+    );
+  }
 
   return (
     <>
