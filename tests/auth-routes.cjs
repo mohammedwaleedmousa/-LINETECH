@@ -126,6 +126,7 @@ for (const limiter of [
   assert.ok(client.includes(limiter), `Client route is not wired to ${limiter}`);
 }
 for (const endpoint of [
+  "/api/projects",
   "/api/project-request",
   "/api/workspace",
   "/api/chat/messages",
@@ -210,9 +211,18 @@ assert.ok(workspaceClient.includes("visibilitychange"));
 assert.ok(workspaceClient.includes("loadError"));
 assert.ok(workspaceClient.includes("handoverUnlocked"));
 assert.ok(workspaceClient.includes("localizeWorkspaceText"));
+assert.ok(workspaceClient.includes("ClientProjectSwitcher"));
+assert.ok(workspaceClient.includes("requestedProjectSuffix"));
+assert.ok(workspaceClient.includes('projectHref("/chat", currentProjectId)'));
+assert.ok(client.includes('path==="/api/projects"'));
 assert.ok(client.includes("nextMilestone:undefined"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/messages"));
-assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/upload"));
+const chatClient = read("app/chat/ChatWorkspace.tsx");
+assert.ok(chatClient.includes("/api/chat/messages"));
+assert.ok(chatClient.includes("/api/chat/upload"));
+assert.ok(chatClient.includes("ClientProjectSwitcher"));
+assert.ok(chatClient.includes("currentProjectSuffix"));
+assert.ok(chatClient.includes("currentProjectId"));
 assert.ok(client.includes('validateUpload(file,kind)'));
 assert.ok(client.includes('requestTooLarge(request,64*1024)'));
 assert.ok(client.includes('boundedText(data.submissionKey,36)'));
@@ -237,6 +247,9 @@ assert.ok(handoverClient.includes("/api/handover"));
 assert.ok(handoverClient.includes("files"));
 assert.ok(handoverClient.includes("loadHandover"));
 assert.ok(handoverClient.includes("visibilitychange"));
+assert.ok(handoverClient.includes("ClientProjectSwitcher"));
+assert.ok(handoverClient.includes("requestedProjectSuffix"));
+assert.ok(handoverClient.includes('projectHref("/workspace", currentProjectId)'));
 assert.ok(client.includes("category=in.(handover,deliverable)"));
 assert.ok(client.includes("status=in.(ready,approved)"));
 assert.ok(workspaceClient.includes('href="/handover"'));
@@ -268,9 +281,10 @@ assert.ok(adminClient.includes("/api/admin/chat/upload"));
 assert.ok(admin.includes("file_status_updated"));
 assert.ok(admin.includes("Project file updated"));
 assert.ok(admin.includes('action_kind:"message"'));
-assert.ok(admin.includes('destination:"/chat"'));
-assert.ok(admin.includes('destination:handoverReady?"/handover":"/workspace"'));
+assert.ok(admin.includes('clientProjectPath("/chat",projectId)'));
+assert.ok(admin.includes('clientProjectPath(handoverReady?"/handover":"/workspace",projectId)'));
 assert.ok(admin.includes('title:"Handover updated"'));
+assert.ok(admin.includes("clientProjectPath"));
 assert.ok(admin.includes('title:item.completed?"Handover item completed":"Handover updated"'));
 assert.ok(adminClient.includes('name="notifyClient" type="checkbox" defaultChecked'));
 for (const endpoint of [
