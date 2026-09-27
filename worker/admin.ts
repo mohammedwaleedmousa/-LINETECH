@@ -60,6 +60,146 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     }))},200,admin.setCookies);
   }
 
+  if(path==="/api/admin/client" && request.method==="GET") {
+    const userId=new URL(request.url).searchParams.get("userId")||"";
+    if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(userId)) {
+      return json({ok:false},400,admin.setCookies);
+    }
+
+    const [profileResponse,projectsResponse,requestsResponse,messagesResponse]=await Promise.all([
+      restFetch(
+        env,
+        `/profiles?select=id,full_name,company,phone,email,created_at,updated_at&id=eq.${encodeURIComponent(userId)}&limit=1`,
+        admin.accessToken,
+      ),
+      restFetch(
+        env,
+        `/projects?select=id,title,status,phase,updated_at,due_date,created_at,request_id&client_id=eq.${encodeURIComponent(userId)}&order=updated_at.desc&limit=100`,
+        admin.accessToken,
+      ),
+      restFetch(
+        env,
+        `/project_requests?select=id,reference_number,status,service,name,company,contact,submitted_at&owner_id=eq.${encodeURIComponent(userId)}&order=submitted_at.desc&limit=100`,
+        admin.accessToken,
+      ),
+      restFetch(
+        env,
+        `/messages?select=id,conversation_id,kind,text,created_at,deleted_at&sender_id=eq.${encodeURIComponent(userId)}&order=created_at.desc&limit=50`,
+        admin.accessToken,
+      ),
+    ]);
+
+    const [profileRows,projectRows,requestRows,messageRows]=await Promise.all([
+      safeJson(profileResponse) as Promise<Row[]|null>,
+      safeJson(projectsResponse) as Promise<Row[]|null>,
+      safeJson(requestsResponse) as Promise<Row[]|null>,
+      safeJson(messagesResponse) as Promise<Row[]|null>,
+    ]);
+
+    if(!profileResponse.ok||!projectsResponse.ok||!requestsResponse.ok||!messagesResponse.ok) {
+      const status=!profileResponse.ok
+        ? profileResponse.status
+        : !projectsResponse.ok
+          ? projectsResponse.status
+          : !requestsResponse.ok
+            ? requestsResponse.status
+            : messagesResponse.status;
+      return json({ok:false},status,admin.setCookies);
+    }
+
+    const profile=Array.isArray(profileRows)?profileRows[0]||null:null;
+    const projects=Array.isArray(projectRows)?projectRows:[];
+    const requests=Array.isArray(requestRows)?requestRows:[];
+    const messages=Array.isArray(messageRows)?messageRows:[];
+
+    const projectIds=projects.map(item=>String(item.id||"")).filter(Boolean);
+    let conversations:Row[]=[];
+    if(projectIds.length) {
+      const conversationResponse=await restFetch(
+        env,
+        `/conversations?select=id,project_id&project_id=in.(${encodeURIComponent(projectIds.join(","))})`,
+        admin.accessToken,
+      );
+      const conversationRows=await safeJson(conversationResponse);
+      if(conversationResponse.ok&&Array.isArray(conversationRows)) conversations=conversationRows as Row[];
+    }
+
+    const requestMap=new Map(requests.map(item=>[String(item.id),item]));
+    const conversationMap=new Map(conversations.map(item=>[String(item.id),String(item.project_id)]));
+    const projectMap=new Map(projects.map(item=>[String(item.id),item]));
+
+    const activity=[
+      ...messages.map(message=>{
+        const projectId=conversationMap.get(String(message.conversation_id))||null;
+        const project=projectId?projectMap.get(projectId):null;
+        return {
+          id:`message:${message.id}`,
+          type:"message",
+          projectId,
+          projectTitle:project?.title||"Project",
+          title:message.deleted_at?"Client deleted a message":"Client sent a message",
+          detail:message.deleted_at
+            ? null
+            : message.kind==="text"
+              ? String(message.text||"").slice(0,240)
+              : `Shared ${String(message.kind||"attachment")}`,
+          at:message.created_at,
+        };
+      }),
+      ...requests.map(item=>({
+        id:`request:${item.id}`,
+        type:"request",
+        projectId:projects.find(project=>String(project.request_id)===String(item.id))?.id||null,
+        projectTitle:item.service||"Project request",
+        title:"Project request submitted",
+        detail:item.reference_number||null,
+        at:item.submitted_at,
+      })),
+      ...projects.map(item=>({
+        id:`project:${item.id}`,
+        type:"project",
+        projectId:item.id,
+        projectTitle:item.title||"Project",
+        title:"Project record updated",
+        detail:`${item.status||"planned"} · Phase ${Number(item.phase||1)}/5`,
+        at:item.updated_at||item.created_at,
+      })),
+    ]
+      .filter(item=>item.at)
+      .sort((a,b)=>new Date(String(b.at)).getTime()-new Date(String(a.at)).getTime())
+      .slice(0,24);
+
+    const activeProjects=projects.filter(item=>!["completed","archived"].includes(String(item.status||""))).length;
+    const completedProjects=projects.filter(item=>String(item.status||"")==="completed").length;
+    const fallbackContact=requests.find(item=>String(item.contact||"").trim())?.contact||null;
+
+    return json({
+      ok:true,
+      client:{
+        id:userId,
+        fullName:profile?.full_name||requests[0]?.name||"Client",
+        company:profile?.company||requests[0]?.company||null,
+        email:profile?.email||null,
+        phone:profile?.phone||null,
+        contact:fallbackContact,
+        createdAt:profile?.created_at||requests.at(-1)?.submitted_at||null,
+        updatedAt:profile?.updated_at||null,
+      },
+      stats:{
+        projectCount:projects.length,
+        activeProjects,
+        completedProjects,
+        requestCount:requests.length,
+        messageCount:messages.length,
+      },
+      projects:projects.map(project=>({
+        ...project,
+        request:requestMap.get(String(project.request_id))||null,
+      })),
+      activity,
+    },200,admin.setCookies);
+  }
+
   if(path==="/api/admin/project" && request.method==="GET") {
     const projectId=new URL(request.url).searchParams.get("projectId");
     if(!projectId) return json({ok:false},400,admin.setCookies);
@@ -650,7 +790,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
           title:kind==="image"?"New project image":kind==="audio"?"New voice message":"New project file",
           body:file.name||undefined,
           action_kind:"message",
-          destination:"/chat",
+          destination:clientProjectPath("/chat",projectId),
         }),
       }).catch(()=>null);
     }
