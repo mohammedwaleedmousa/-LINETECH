@@ -74,24 +74,43 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     const session=await requireSession(request,env);
     if(!session) return json({ok:false},401);
 
-    const response=await restFetch(
-      env,
-      "/projects?select=id,title,status,phase,updated_at,due_date,request_id&order=created_at.desc&limit=100",
-      session.accessToken,
+    const [projectResponse,requestResponse]=await Promise.all([
+      restFetch(
+        env,
+        "/projects?select=id,title,status,phase,updated_at,due_date,request_id&order=created_at.desc&limit=100",
+        session.accessToken,
+      ),
+      restFetch(
+        env,
+        "/project_requests?select=id,reference_number,service,company&order=submitted_at.desc&limit=100",
+        session.accessToken,
+      ),
+    ]);
+    const [projectRows,requestRows]=await Promise.all([
+      safeJson(projectResponse) as Promise<Row[]|null>,
+      safeJson(requestResponse) as Promise<Row[]|null>,
+    ]);
+    if(!projectResponse.ok) return json({ok:false},projectResponse.status,session.setCookies);
+
+    const requestMap=new Map(
+      (Array.isArray(requestRows)?requestRows:[]).map(row=>[String(row.id),row]),
     );
-    const rows=await safeJson(response) as Row[]|null;
-    if(!response.ok) return json({ok:false},response.status,session.setCookies);
 
     return json({
       ok:true,
-      projects:(Array.isArray(rows)?rows:[]).map(project=>({
-        id:project.id,
-        title:project.title||"Project",
-        status:project.status||"planned",
-        phase:Number(project.phase||1),
-        updatedAt:project.updated_at||undefined,
-        dueDate:project.due_date||undefined,
-      })),
+      projects:(Array.isArray(projectRows)?projectRows:[]).map(project=>{
+        const projectRequest=project.request_id?requestMap.get(String(project.request_id)):null;
+        return {
+          id:project.id,
+          title:project.title||projectRequest?.service||"Project",
+          status:project.status||"planned",
+          phase:Number(project.phase||1),
+          referenceNumber:projectRequest?.reference_number||undefined,
+          company:projectRequest?.company||undefined,
+          updatedAt:project.updated_at||undefined,
+          dueDate:project.due_date||undefined,
+        };
+      }),
     },200,session.setCookies);
   }
 
