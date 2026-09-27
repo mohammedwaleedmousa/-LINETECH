@@ -144,3 +144,183 @@ html[dir="rtl"] .privacy-contact-link:hover span{transform:scaleX(-1) translateX
   .privacy-storage-scroll{width:calc(100% + 42px)}
   .privacy-contact{margin-top:38px!important;padding-top:34px!important}
 }
+
+
+/* Privacy mobile ownership — keep the policy readable on narrow screens. */
+@media(max-width:900px){
+  .page-privacy .privacy-content-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:42px!important;
+    width:calc(100% - 32px)!important;
+  }
+  .page-privacy .privacy-aside,
+  .page-privacy .privacy-prose{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+  }
+  .page-privacy .privacy-meta{
+    max-width:720px;
+  }
+}
+
+@media(max-width:620px){
+  .page-privacy{
+    overflow-x:hidden;
+    overflow-x:clip;
+  }
+
+  .page-privacy .legal-hero>.legal-hero-grid{
+    width:calc(100% - 28px)!important;
+  }
+
+  .page-privacy .legal-hero-copy{
+    padding-top:64px!important;
+    padding-bottom:34px!important;
+  }
+
+  .page-privacy .legal-hero-copy h1{
+    max-width:11ch!important;
+    font-size:clamp(42px,11.5vw,50px)!important;
+    line-height:1.12!important;
+  }
+
+  html[dir="rtl"] .page-privacy .legal-hero-copy h1{
+    line-height:1.22!important;
+  }
+
+  .page-privacy .legal-hero-copy>p:last-child{
+    max-width:34rem!important;
+    font-size:14px!important;
+    line-height:1.85!important;
+  }
+
+  .page-privacy .privacy-overview>.ref-shell,
+  .page-privacy .privacy-content-grid{
+    width:calc(100% - 28px)!important;
+  }
+
+  .page-privacy .privacy-overview article{
+    grid-template-columns:28px minmax(0,1fr)!important;
+    gap:12px!important;
+    padding:20px 0!important;
+  }
+
+  .page-privacy .privacy-overview strong{
+    font-size:11px!important;
+    line-height:1.55!important;
+    letter-spacing:.08em!important;
+  }
+
+  .page-privacy .privacy-overview p{
+    font-size:13px!important;
+    line-height:1.78!important;
+  }
+
+  .page-privacy .privacy-content{
+    padding:54px 0 68px!important;
+  }
+
+  .page-privacy .privacy-content-grid{
+    grid-template-columns:minmax(0,1fr)!important;
+    gap:38px!important;
+  }
+
+  .page-privacy .privacy-meta{
+    width:100%!important;
+    padding:0 0 28px!important;
+    border-bottom:1px solid rgba(255,255,255,.08)!important;
+  }
+
+  .page-privacy .privacy-meta h2{
+    font-size:26px!important;
+    line-height:1.2!important;
+  }
+
+  .page-privacy .privacy-meta>p:last-child{
+    max-width:none!important;
+    margin-bottom:0!important;
+    font-size:13px!important;
+    line-height:1.85!important;
+  }
+
+  .page-privacy .privacy-prose{
+    width:100%!important;
+    max-width:none!important;
+    min-width:0!important;
+  }
+
+  .page-privacy .privacy-section{
+    grid-template-columns:34px minmax(0,1fr)!important;
+    gap:14px!important;
+    width:100%!important;
+    min-width:0!important;
+    padding:0 0 34px!important;
+    margin:0 0 34px!important;
+    scroll-margin-top:92px!important;
+  }
+
+  .page-privacy .privacy-section>div{
+    min-width:0!important;
+  }
+
+  .page-privacy .privacy-section-number{
+    padding-top:4px!important;
+    font-size:10px!important;
+  }
+
+  .page-privacy .privacy-section h2{
+    max-width:none!important;
+    margin:0 0 12px!important;
+    font-size:23px!important;
+    line-height:1.28!important;
+    overflow-wrap:normal!important;
+    word-break:normal!important;
+  }
+
+  .page-privacy .privacy-section p{
+    max-width:none!important;
+    margin:0!important;
+    font-size:13.5px!important;
+    line-height:1.9!important;
+    overflow-wrap:break-word!important;
+  }
+
+  .page-privacy .privacy-storage{
+    width:100%!important;
+    margin:28px 0 0!important;
+    padding-top:26px!important;
+  }
+
+  html[dir="rtl"] .page-privacy .privacy-storage{
+    margin-right:0!important;
+    margin-left:0!important;
+  }
+
+  .page-privacy .privacy-storage-scroll{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:auto!important;
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .page-privacy .privacy-storage table{
+    min-width:680px!important;
+  }
+
+  .page-privacy .privacy-contact{
+    width:100%!important;
+    margin-top:40px!important;
+    padding-top:34px!important;
+  }
+
+  .page-privacy .privacy-contact h2{
+    font-size:28px!important;
+    line-height:1.25!important;
+  }
+
+  .page-privacy .privacy-contact>p:not(.ref-kicker){
+    font-size:13.5px!important;
+    line-height:1.85!important;
+  }
+}
