@@ -33,6 +33,7 @@ const searchItems = [
   { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website شروط نطاق دفعات اتفاق" },
   { title: "Chat", meta: "Client", href: "/chat", keywords: "chat messages conversation support client company project محادثة رسائل دعم عميل شركة" },
   { title: "Client Workspace", meta: "Client", href: "/workspace", keywords: "workspace project status files handover client مساحة العميل المشروع الحالة الملفات التسليم" },
+  { title: "Account Settings", meta: "Account", href: "/account", keywords: "account profile email password sessions settings client حساب ملف شخصي بريد كلمة مرور جلسات إعدادات" },
   { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace تسجيل دخول إنشاء حساب" },
   { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea تواصل ابدأ مشروع ملخص فكرة" },
 ] as const;
@@ -218,6 +219,7 @@ export default function SiteNav() {
   const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
   const workspaceLabel = language === "ar" ? "مساحة العمل" : "Workspace";
   const loginLabel = language === "ar" ? "تسجيل الدخول" : "Login";
+  const accountLabel = language === "ar" ? "الحساب" : "Account";
   const logoutLabel = language === "ar" ? "تسجيل خروج" : "Logout";
   const startLabel = language === "ar" ? "ابدأ خطك" : "Start Your Line";
   const notificationsLabel = language === "ar" ? "الإشعارات" : "Notifications";
@@ -366,6 +368,7 @@ export default function SiteNav() {
           )}
           <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>
           <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>
+          {authChecked && signedIn && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
           {authChecked && signedIn
             ? <Link className="nav-login desktop-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
             : <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>{loginLabel} <span>↗</span></Link>}
@@ -383,6 +386,7 @@ export default function SiteNav() {
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>
         <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>
+        {authChecked && signedIn && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
         {authChecked && signedIn
           ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
           : <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>{loginLabel} <span>↗</span></Link>}
