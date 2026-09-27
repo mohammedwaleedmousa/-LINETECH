@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 type Json = Record<string, any>;
 
@@ -57,6 +57,16 @@ export default function AdminClient() {
   const [projectQuery, setProjectQuery] = useState("");
   const [projectStatusFilter, setProjectStatusFilter] = useState("all");
   const [refreshing, setRefreshing] = useState(false);
+  const [chatUploading, setChatUploading] = useState(false);
+  const [recording, setRecording] = useState(false);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
+  const chatFileInputRef = useRef<HTMLInputElement>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const mediaChunksRef = useRef<Blob[]>([]);
+  const discardRecordingRef = useRef(false);
+  const recordingTimerRef = useRef<number | null>(null);
+  const recordingSecondsRef = useRef(0);
 
   const selected = useMemo(
     () => projects.find(project => project.id === selectedId) || null,
@@ -180,6 +190,11 @@ export default function AdminClient() {
     void loadProject(selectedId).catch(() => setError("Project details could not be loaded."));
   }, [authorized, selectedId, loadProject]);
 
+  useEffect(() => () => {
+    if (recordingTimerRef.current) window.clearInterval(recordingTimerRef.current);
+    mediaStreamRef.current?.getTracks().forEach(track => track.stop());
+  }, []);
+
   async function saveProject(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!detail?.project?.id) return;
@@ -262,6 +277,111 @@ export default function AdminClient() {
     } finally {
       setBusy(false);
     }
+  }
+
+  async function uploadAdminChatFile(file: File, kind?: "image" | "audio" | "document", duration?: number) {
+    if (!selectedId) return;
+    const resolvedKind = kind || (file.type.startsWith("image/") ? "image" : file.type.startsWith("audio/") ? "audio" : "document");
+    const form = new FormData();
+    form.append("projectId", selectedId);
+    form.append("file", file);
+    form.append("kind", resolvedKind);
+    if (typeof duration === "number") form.append("duration", String(duration));
+
+    setChatUploading(true);
+    setError("");
+    setNotice("");
+    try {
+      const response = await fetch("/api/admin/chat/upload", { method: "POST", body: form });
+      const payload = await readJson(response);
+      if (response.status === 429) throw new Error("Too many uploads. Wait a minute and try again.");
+      if (response.status === 413) throw new Error("This attachment is too large.");
+      if (response.status === 415) throw new Error("This file type is not supported.");
+      if (!response.ok || !payload?.ok) throw new Error("Attachment could not be sent.");
+      setNotice(resolvedKind === "audio" ? "Voice note sent." : "Attachment sent.");
+      await loadProject(selectedId);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Attachment could not be sent.");
+    } finally {
+      setChatUploading(false);
+    }
+  }
+
+  async function handleAdminChatFiles(event: ChangeEvent<HTMLInputElement>) {
+    const files = Array.from(event.target.files || []).slice(0, 4);
+    event.target.value = "";
+    for (const file of files) {
+      await uploadAdminChatFile(file);
+    }
+  }
+
+  async function startVoiceRecording() {
+    if (recording || chatUploading) return;
+    if (!navigator.mediaDevices?.getUserMedia || typeof MediaRecorder === "undefined") {
+      setError("Voice recording is not available in this browser.");
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const recorder = new MediaRecorder(stream);
+      mediaStreamRef.current = stream;
+      mediaRecorderRef.current = recorder;
+      mediaChunksRef.current = [];
+      discardRecordingRef.current = false;
+      recordingSecondsRef.current = 0;
+      setRecordingSeconds(0);
+
+      recorder.ondataavailable = event => {
+        if (event.data.size) mediaChunksRef.current.push(event.data);
+      };
+      recorder.onstop = async () => {
+        if (recordingTimerRef.current) {
+          window.clearInterval(recordingTimerRef.current);
+          recordingTimerRef.current = null;
+        }
+        mediaStreamRef.current?.getTracks().forEach(track => track.stop());
+        mediaStreamRef.current = null;
+        setRecording(false);
+
+        if (discardRecordingRef.current) {
+          mediaChunksRef.current = [];
+          recordingSecondsRef.current = 0;
+          setRecordingSeconds(0);
+          return;
+        }
+
+        const blob = new Blob(mediaChunksRef.current, { type: recorder.mimeType || "audio/webm" });
+        mediaChunksRef.current = [];
+        if (blob.size) {
+          const extension = blob.type.includes("ogg") ? "ogg" : blob.type.includes("mp4") ? "m4a" : "webm";
+          const file = new File([blob], `linetech-voice-${Date.now()}.${extension}`, { type: blob.type || "audio/webm" });
+          await uploadAdminChatFile(file, "audio", recordingSecondsRef.current);
+        }
+        recordingSecondsRef.current = 0;
+        setRecordingSeconds(0);
+      };
+
+      recorder.start(200);
+      setRecording(true);
+      setError("");
+      setNotice("");
+      recordingTimerRef.current = window.setInterval(() => {
+        recordingSecondsRef.current += 1;
+        setRecordingSeconds(recordingSecondsRef.current);
+      }, 1000);
+    } catch {
+      setError("Microphone permission is required to record a voice note.");
+    }
+  }
+
+  function stopVoiceRecording() {
+    discardRecordingRef.current = false;
+    if (mediaRecorderRef.current?.state !== "inactive") mediaRecorderRef.current?.stop();
+  }
+
+  function cancelVoiceRecording() {
+    discardRecordingRef.current = true;
+    if (mediaRecorderRef.current?.state !== "inactive") mediaRecorderRef.current?.stop();
   }
 
   async function addHandover(event: FormEvent) {
@@ -549,14 +669,39 @@ export default function AdminClient() {
                 <div className="admin-chat-log">
                   {chat.length ? chat.map(message => <div key={message.id} className={message.sender === "company" ? "is-company" : ""}>
                     <span>{message.sender === "company" ? "LINETECH" : "CLIENT"}</span>
-                    <p>{message.deleted ? "Message deleted." : message.text || message.fileName || message.kind}</p>
-                    {!message.deleted && message.src && <a className="admin-chat-attachment" href={message.src} target="_blank" rel="noreferrer">{message.fileName || "Open attachment"} ↗</a>}
+                    {message.deleted ? <p>Message deleted.</p> : <>
+                      {message.kind === "text" && <p>{message.text || ""}</p>}
+                      {message.kind === "image" && message.src && <a className="admin-chat-image" href={message.src} target="_blank" rel="noreferrer"><img src={message.src} alt={message.fileName || "Shared image"} /></a>}
+                      {message.kind === "audio" && message.src && <audio className="admin-chat-audio" src={message.src} controls preload="metadata" />}
+                      {message.kind === "document" && message.src && <a className="admin-chat-document" href={message.src} target="_blank" rel="noreferrer"><strong>{message.fileName || "Document"}</strong><span>Open ↗</span></a>}
+                      {!["text","image","audio","document"].includes(String(message.kind)) && <p>{message.text || message.fileName || message.kind}</p>}
+                    </>}
                     <small>{message.time || ""}</small>
                   </div>) : <p className="admin-empty">No messages yet.</p>}
                 </div>
+                <input
+                  ref={chatFileInputRef}
+                  className="admin-chat-file-input"
+                  type="file"
+                  multiple
+                  accept="image/jpeg,image/png,image/gif,image/webp,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.txt,.csv,.zip,audio/webm,audio/ogg,audio/mp4,audio/mpeg,audio/wav"
+                  onChange={handleAdminChatFiles}
+                />
+                <div className="admin-chat-tools">
+                  <button type="button" onClick={() => chatFileInputRef.current?.click()} disabled={busy || chatUploading || recording}>Attach file</button>
+                  {!recording ? (
+                    <button type="button" onClick={() => void startVoiceRecording()} disabled={busy || chatUploading}>Voice note</button>
+                  ) : (
+                    <div className="admin-recording">
+                      <span><i /> Recording {Math.floor(recordingSeconds / 60)}:{String(recordingSeconds % 60).padStart(2,"0")}</span>
+                      <button type="button" onClick={cancelVoiceRecording}>Cancel</button>
+                      <button type="button" onClick={stopVoiceRecording}>Send voice</button>
+                    </div>
+                  )}
+                </div>
                 <form className="admin-chat-form" onSubmit={sendMessage}>
                   <textarea value={chatDraft} onChange={event => setChatDraft(event.target.value)} rows={3} placeholder="Write to the client…" />
-                  <button className="admin-secondary" type="submit" disabled={busy || !chatDraft.trim()}>Send message</button>
+                  <button className="admin-secondary" type="submit" disabled={busy || chatUploading || recording || !chatDraft.trim()}>Send message</button>
                 </form>
               </section>
 
