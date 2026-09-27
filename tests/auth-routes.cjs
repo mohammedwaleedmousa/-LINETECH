@@ -144,6 +144,7 @@ for (const endpoint of [
   "/api/admin/files",
   "/api/admin/handover",
   "/api/admin/chat",
+  "/api/admin/chat/upload",
   "/api/admin/users",
   "/api/admin/members",
 ]) {
@@ -206,6 +207,9 @@ assert.ok(admin.includes('requestTooLarge(request,64*1024)'));
 assert.ok(admin.includes('boundedText(data.text,5000)'));
 assert.ok(admin.includes('sender_role:"company"'));
 assert.ok(admin.includes('row.sender_role==="company"'));
+assert.ok(admin.includes('admin-chat-upload:'));
+assert.ok(admin.includes('validateUpload(file,kind)'));
+assert.ok(admin.includes('duration_seconds:kind==="audio"'));
 
 assert.ok(read("app/handover/HandoverClient.tsx").includes("/api/handover"));
 assert.ok(workspaceClient.includes('href="/handover"'));
@@ -225,7 +229,12 @@ assert.ok(adminClient.includes("projectStatusFilter"));
 assert.ok(adminClient.includes("refreshAdmin"));
 assert.ok(adminClient.includes("updateProjectFile"));
 assert.ok(adminClient.includes("Client request"));
-assert.ok(adminClient.includes("admin-chat-attachment"));
+assert.ok(adminClient.includes("uploadAdminChatFile"));
+assert.ok(adminClient.includes("startVoiceRecording"));
+assert.ok(adminClient.includes("admin-chat-image"));
+assert.ok(adminClient.includes("admin-chat-audio"));
+assert.ok(adminClient.includes("admin-chat-document"));
+assert.ok(adminClient.includes("/api/admin/chat/upload"));
 assert.ok(admin.includes("file_status_updated"));
 assert.ok(admin.includes("Project file updated"));
 for (const endpoint of [
