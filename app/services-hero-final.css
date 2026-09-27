@@ -262,7 +262,7 @@ body:has(.page-services) .global-site-nav{
 
   .page-services>section:first-child [class*="heroActions"]{
     width:100%!important;
-    max-width:none!important;
+    max-width:340px!important;
     margin-top:30px!important;
     gap:12px!important;
   }
