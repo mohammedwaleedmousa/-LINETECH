@@ -320,15 +320,15 @@ export default function LoginForm(){
 
     <form className="login-form" onSubmit={handleSubmit}>
       {mode==="signup"&&<>
-        <label><span>{t.fullName}</span><input type="text" name="name" autoComplete="name" placeholder={t.namePlaceholder} required/></label>
-        <label><span>{t.company}</span><input type="text" name="company" autoComplete="organization" placeholder={t.optional}/></label>
+        <label><span>{t.fullName}</span><input type="text" name="name" autoComplete="name" maxLength={120} placeholder={t.namePlaceholder} required/></label>
+        <label><span>{t.company}</span><input type="text" name="company" autoComplete="organization" maxLength={160} placeholder={t.optional}/></label>
       </>}
 
-      {!isReset&&<label><span>{t.email}</span><input type="email" name="email" autoComplete="email" placeholder={t.emailPlaceholder} required/></label>}
+      {!isReset&&<label><span>{t.email}</span><input type="email" name="email" autoComplete="email" maxLength={320} autoCapitalize="none" spellCheck={false} placeholder={t.emailPlaceholder} required/></label>}
 
-      {!isForgot&&<label><span>{t.password}</span><div className="login-password-field"><input type={showPassword?"text":"password"} name="password" value={password} onChange={event=>setPassword(event.target.value)} autoComplete={mode==="login"?"current-password":"new-password"} placeholder={mode==="login"?t.enterPassword:t.createPassword} required/><button type="button" className="login-password-toggle" onClick={()=>setShowPassword(value=>!value)}>{showPassword?t.hide:t.show}</button></div></label>}
+      {!isForgot&&<label><span>{t.password}</span><div className="login-password-field"><input type={showPassword?"text":"password"} name="password" value={password} onChange={event=>setPassword(event.target.value)} autoComplete={mode==="login"?"current-password":"new-password"} minLength={mode==="login"?undefined:8} maxLength={1024} placeholder={mode==="login"?t.enterPassword:t.createPassword} required/><button type="button" className="login-password-toggle" onClick={()=>setShowPassword(value=>!value)}>{showPassword?t.hide:t.show}</button></div></label>}
 
-      {(mode==="signup"||mode==="reset")&&<label><span>{t.confirmPassword}</span><input type={showPassword?"text":"password"} name="confirmPassword" value={confirmPassword} onChange={event=>setConfirmPassword(event.target.value)} autoComplete="new-password" placeholder={t.repeatPassword} required/></label>}
+      {(mode==="signup"||mode==="reset")&&<label><span>{t.confirmPassword}</span><input type={showPassword?"text":"password"} name="confirmPassword" value={confirmPassword} onChange={event=>setConfirmPassword(event.target.value)} autoComplete="new-password" minLength={8} maxLength={1024} placeholder={t.repeatPassword} required/></label>}
 
       {mode==="login"?<div className="login-options">
         <label className="login-remember"><input type="checkbox" name="remember"/><span>{t.remember}</span></label>
