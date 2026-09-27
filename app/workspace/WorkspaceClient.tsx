@@ -4,6 +4,7 @@ import ContentHeroArt from "../ContentHeroArt";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLanguage, useTranslation } from "../Localized";
+import ClientProjectSwitcher from "../ClientProjectSwitcher";
 import "./workspace.css";
 import "./workspace-tracking.css";
 
@@ -257,6 +258,16 @@ function makeDefaultProgress(record: RequestRecord): ProjectProgress {
   };
 }
 
+function requestedProjectSuffix() {
+  if (typeof window === "undefined") return "";
+  const project = new URLSearchParams(window.location.search).get("project") || "";
+  return /^[0-9a-f-]{36}$/i.test(project) ? `?project=${encodeURIComponent(project)}` : "";
+}
+
+function projectHref(path: string, projectId?: string | null) {
+  return projectId ? `${path}?project=${encodeURIComponent(projectId)}` : path;
+}
+
 export default function WorkspaceClient() {
   const language = useLanguage();
   const translate = useTranslation();
@@ -267,26 +278,29 @@ export default function WorkspaceClient() {
   const [loadError, setLoadError] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
 
   const loadWorkspace = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
     setLoadError(false);
 
     try {
-      const response = await fetch("/api/workspace", { cache: "no-store" });
+      const response = await fetch(`/api/workspace${requestedProjectSuffix()}`, { cache: "no-store" });
       if (response.status === 401) {
-        window.location.assign("/login?next=/workspace");
+        window.location.assign(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`);
         return;
       }
 
       const payload = await response.json().catch(() => null) as {
         ok?: boolean;
+        projectId?: string | null;
         record?: RequestRecord | null;
         progress?: ProjectProgress | null;
       } | null;
 
       if (!response.ok || !payload?.ok) throw new Error("workspace_load_failed");
 
+      setCurrentProjectId(payload.projectId || null);
       setRecord(payload.record || null);
       if (payload.record) {
         const fallback = makeDefaultProgress(payload.record);
@@ -361,7 +375,7 @@ export default function WorkspaceClient() {
         title: t.actionDefaultTitle,
         detail: t.actionDefaultBody,
         label: t.actionDefaultLabel,
-        href: "/chat",
+        href: projectHref("/chat", currentProjectId),
       }
     : { required: false };
 
@@ -410,6 +424,7 @@ export default function WorkspaceClient() {
           <div className="workspace-hero-side">
             <p>{t.lead}</p>
             <span>{t.local}</span>
+            <ClientProjectSwitcher currentProjectId={currentProjectId} className="workspace-project-switcher" />
           </div>
         </div>
       </section>
@@ -641,14 +656,14 @@ export default function WorkspaceClient() {
             <div className="ref-shell">
               <p className="workspace-kicker">{t.tools}</p>
               <nav className="workspace-tools-line" aria-label={t.tools}>
-                <Link href="/chat"><span>01</span>{t.conversation}<b>↗</b></Link>
+                <Link href={projectHref("/chat", currentProjectId)}><span>01</span>{t.conversation}<b>↗</b></Link>
                 <a href="#files"><span>02</span>{t.files}<b>↓</b></a>
                 {!handoverUnlocked ? (
                   <div className="is-locked">
                     <span>03</span>{t.handover}<b>{t.handoverLocked}</b>
                   </div>
                 ) : (
-                  <Link href="/handover"><span>03</span>{t.handover}<b>✓</b></Link>
+                  <Link href={projectHref("/handover", currentProjectId)}><span>03</span>{t.handover}<b>✓</b></Link>
                 )}
               </nav>
             </div>
