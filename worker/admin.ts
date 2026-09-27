@@ -335,9 +335,32 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         body:JSON.stringify({project_id:projectId,title,description:description||null}),
       });
       const rows=await safeJson(response) as Row[]|null;
-      return response.ok&&Array.isArray(rows)&&rows[0]
-        ? json({ok:true,item:rows[0]},200,admin.setCookies)
-        : json({ok:false},response.status||500,admin.setCookies);
+      const item=response.ok&&Array.isArray(rows)?rows[0]:null;
+      if(!item) return json({ok:false},response.status||500,admin.setCookies);
+
+      const projectResponse=await restFetch(
+        env,
+        `/projects?select=client_id,status,phase&id=eq.${encodeURIComponent(projectId)}&limit=1`,
+        admin.accessToken,
+      );
+      const projectRows=await safeJson(projectResponse) as Row[]|null;
+      const project=Array.isArray(projectRows)?projectRows[0]:null;
+      const handoverOpen=project && (Number(project.phase||1)>=5 || String(project.status||"")==="completed");
+      if(handoverOpen && project.client_id) {
+        await restFetch(env,"/notifications",admin.accessToken,{
+          method:"POST",
+          body:JSON.stringify({
+            user_id:project.client_id,
+            project_id:projectId,
+            title:"Handover updated",
+            body:title,
+            action_kind:"handover",
+            destination:"/handover",
+          }),
+        }).catch(()=>null);
+      }
+
+      return json({ok:true,item},200,admin.setCookies);
     }
 
     if(request.method==="PATCH") {
@@ -365,9 +388,32 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         method:"PATCH",headers:{Prefer:"return=representation"},body:JSON.stringify(update),
       });
       const rows=await safeJson(response) as Row[]|null;
-      return response.ok&&Array.isArray(rows)&&rows[0]
-        ? json({ok:true,item:rows[0]},200,admin.setCookies)
-        : json({ok:false},response.ok?404:response.status,admin.setCookies);
+      const item=response.ok&&Array.isArray(rows)?rows[0]:null;
+      if(!item) return json({ok:false},response.ok?404:response.status,admin.setCookies);
+
+      const projectResponse=await restFetch(
+        env,
+        `/projects?select=client_id,status,phase&id=eq.${encodeURIComponent(String(item.project_id))}&limit=1`,
+        admin.accessToken,
+      );
+      const projectRows=await safeJson(projectResponse) as Row[]|null;
+      const project=Array.isArray(projectRows)?projectRows[0]:null;
+      const handoverOpen=project && (Number(project.phase||1)>=5 || String(project.status||"")==="completed");
+      if(handoverOpen && project.client_id) {
+        await restFetch(env,"/notifications",admin.accessToken,{
+          method:"POST",
+          body:JSON.stringify({
+            user_id:project.client_id,
+            project_id:item.project_id,
+            title:item.completed?"Handover item completed":"Handover updated",
+            body:item.title,
+            action_kind:"handover",
+            destination:"/handover",
+          }),
+        }).catch(()=>null);
+      }
+
+      return json({ok:true,item},200,admin.setCookies);
     }
   }
 
