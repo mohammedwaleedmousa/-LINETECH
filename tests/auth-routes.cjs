@@ -277,6 +277,27 @@ for (const file of [
   assert.ok(fs.existsSync(path.join(root, file)), `Missing protected workspace file: ${file}`);
 }
 
+const adminShell = read("app/admin/AdminShell.tsx");
+const adminDashboard = read("app/admin/DashboardClient.tsx");
+const adminClients = read("app/admin/ClientsClient.tsx");
+const adminTeam = read("app/admin/TeamClient.tsx");
+for (const file of [
+  "app/admin/layout.tsx",
+  "app/admin/projects/page.tsx",
+  "app/admin/clients/page.tsx",
+  "app/admin/team/page.tsx",
+]) {
+  assert.ok(fs.existsSync(path.join(root, file)), `Missing admin route file: ${file}`);
+}
+assert.ok(adminShell.includes('href: "/admin/projects"'));
+assert.ok(adminShell.includes('href: "/admin/clients"'));
+assert.ok(adminShell.includes('href: "/admin/team"'));
+assert.ok(adminDashboard.includes("/api/admin/projects"));
+assert.ok(adminDashboard.includes("/api/admin/users"));
+assert.ok(adminClients.includes("/api/admin/projects"));
+assert.ok(adminClients.includes("/api/admin/users"));
+assert.ok(adminTeam.includes("/api/admin/users"));
+
 const adminClient = read("app/admin/AdminClient.tsx");
 assert.ok(adminClient.includes("projectQuery"));
 assert.ok(adminClient.includes("projectStatusFilter"));
