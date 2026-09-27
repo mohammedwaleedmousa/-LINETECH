@@ -152,13 +152,17 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       });
     }
 
-    if(data.notifyClient) {
+    if(data.notifyClient && current.client_id) {
+      const handoverReady=Number(project.phase||1)>=5 || String(project.status||"")==="completed";
       await restFetch(env,"/notifications",admin.accessToken,{
         method:"POST",
         body:JSON.stringify({
-          user_id:current.client_id,project_id:projectId,
-          title:textFields.notificationTitle||textFields.activityTitle||"Project updated",
+          user_id:current.client_id,
+          project_id:projectId,
+          title:textFields.notificationTitle||textFields.activityTitle||(handoverReady?"Project handover ready":"Project updated"),
           body:textFields.notificationBody||textFields.activityDetail||null,
+          action_kind:handoverReady?"handover":"project_update",
+          destination:handoverReady?"/handover":"/workspace",
         }),
       });
     }
@@ -218,7 +222,14 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         project_id:projectId,actor_id:admin.user.id,event_type:"file_added",title:"Project file added",detail:file.name,
       })}),
       restFetch(env,"/notifications",admin.accessToken,{method:"POST",body:JSON.stringify({
-        user_id:project.client_id,project_id:projectId,title:"New project file",body:file.name,
+        user_id:project.client_id,
+        project_id:projectId,
+        title:(category==="handover"||category==="deliverable")?"New delivery file":"New project file",
+        body:file.name,
+        action_kind:(category==="handover"||category==="deliverable")?"handover":"file",
+        destination:(category==="handover"||category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
+          ? "/handover"
+          : "/workspace",
       })}),
     ]);
     return json({ok:true,file:{...record,href:`/api/files/download?fileId=${encodeURIComponent(record.id)}`}},200,admin.setCookies);
@@ -263,7 +274,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     if(data.status!==undefined && String(current.status)!==String(file.status)) {
       const projectResponse=await restFetch(
         env,
-        `/projects?select=client_id&id=eq.${encodeURIComponent(String(file.project_id))}&limit=1`,
+        `/projects?select=client_id,status,phase&id=eq.${encodeURIComponent(String(file.project_id))}&limit=1`,
         admin.accessToken,
       );
       const projectRows=await safeJson(projectResponse) as Row[]|null;
@@ -285,8 +296,12 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
               body:JSON.stringify({
                 user_id:project.client_id,
                 project_id:file.project_id,
-                title:"Project file updated",
+                title:(file.category==="handover"||file.category==="deliverable")?"Delivery file updated":"Project file updated",
                 body:`${file.file_name}: ${file.status}`,
+                action_kind:(file.category==="handover"||file.category==="deliverable")?"handover":"file",
+                destination:(file.category==="handover"||file.category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
+                  ? "/handover"
+                  : "/workspace",
               }),
             }).catch(()=>null)
           : Promise.resolve(null),
@@ -444,6 +459,8 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
             project_id:projectId,
             title:"New project message",
             body:text.slice(0,180),
+            action_kind:"message",
+            destination:"/chat",
           }),
         });
       }
@@ -576,6 +593,8 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
           project_id:projectId,
           title:kind==="image"?"New project image":kind==="audio"?"New voice message":"New project file",
           body:file.name||undefined,
+          action_kind:"message",
+          destination:"/chat",
         }),
       }).catch(()=>null);
     }
