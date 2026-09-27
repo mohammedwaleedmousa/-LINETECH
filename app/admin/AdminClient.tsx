@@ -15,6 +15,8 @@ type ProjectRow = {
   next_action_title?: string | null;
   next_action_body?: string | null;
   next_action_required?: boolean;
+  client_id?: string | null;
+  request_id?: string | null;
   request?: Json | null;
   client?: Json | null;
 };
@@ -25,6 +27,36 @@ type ProjectDetail = {
   activity?: Json[];
   files?: Json[];
   handover?: Json[];
+};
+
+type ClientOverview = {
+  client: {
+    id: string;
+    fullName: string;
+    company?: string | null;
+    email?: string | null;
+    phone?: string | null;
+    contact?: string | null;
+    createdAt?: string | null;
+    updatedAt?: string | null;
+  };
+  stats: {
+    projectCount: number;
+    activeProjects: number;
+    completedProjects: number;
+    requestCount: number;
+    messageCount: number;
+  };
+  projects: Array<ProjectRow & { request?: Json | null }>;
+  activity: Array<{
+    id: string;
+    type: string;
+    projectId?: string | null;
+    projectTitle?: string | null;
+    title: string;
+    detail?: string | null;
+    at?: string | null;
+  }>;
 };
 
 async function readJson(response: Response) {
@@ -57,6 +89,9 @@ export default function AdminClient() {
   const [projectQuery, setProjectQuery] = useState("");
   const [projectStatusFilter, setProjectStatusFilter] = useState("all");
   const [refreshing, setRefreshing] = useState(false);
+  const [clientOverview, setClientOverview] = useState<ClientOverview | null>(null);
+  const [clientLoading, setClientLoading] = useState(false);
+  const [clientOpen, setClientOpen] = useState(false);
   const [chatUploading, setChatUploading] = useState(false);
   const [recording, setRecording] = useState(false);
   const [recordingSeconds, setRecordingSeconds] = useState(0);
@@ -87,6 +122,8 @@ export default function AdminClient() {
         project.request?.company,
         project.client?.full_name,
         project.client?.company,
+        project.client?.email,
+        project.client?.phone,
       ].filter(Boolean).join(" ").toLowerCase();
       return haystack.includes(query);
     });
@@ -115,6 +152,24 @@ export default function AdminClient() {
     setMemberUserId(current => current || rows[0]?.id || "");
   }, []);
 
+  const loadClient = useCallback(async (userId: string) => {
+    if (!userId) {
+      setClientOverview(null);
+      return;
+    }
+    setClientLoading(true);
+    try {
+      const response = await fetch(`/api/admin/client?userId=${encodeURIComponent(userId)}`, { cache: "no-store" });
+      const payload = await readJson(response);
+      if (!response.ok || !payload?.ok || !payload.client) throw new Error();
+      setClientOverview(payload as unknown as ClientOverview);
+    } catch {
+      setClientOverview(null);
+    } finally {
+      setClientLoading(false);
+    }
+  }, []);
+
   const loadProject = useCallback(async (projectId: string) => {
     if (!projectId) {
       setDetail(null);
@@ -132,11 +187,15 @@ export default function AdminClient() {
       readJson(projectResponse), readJson(chatResponse), readJson(handoverResponse), readJson(membersResponse),
     ]);
     if (!projectResponse.ok || !projectPayload?.ok) throw new Error("Could not load project.");
-    setDetail(projectPayload as unknown as ProjectDetail);
+    const nextDetail = projectPayload as unknown as ProjectDetail;
+    setDetail(nextDetail);
+    const clientId = String(nextDetail.project?.client_id || "");
+    if (clientId) void loadClient(clientId);
+    else setClientOverview(null);
     setChat(chatResponse.ok && chatPayload?.ok && Array.isArray(chatPayload.messages) ? chatPayload.messages : []);
     setHandover(handoverResponse.ok && handoverPayload?.ok && Array.isArray(handoverPayload.items) ? handoverPayload.items : []);
     setMembers(membersResponse.ok && membersPayload?.ok && Array.isArray(membersPayload.members) ? membersPayload.members : []);
-  }, []);
+  }, [loadClient]);
 
   const loadAdminChat = useCallback(async (projectId: string) => {
     if (!projectId) return;
@@ -585,8 +644,81 @@ export default function AdminClient() {
                 <h2>{detail.project.title || detail.request?.service || "Project"}</h2>
                 <p>{detail.request?.name || "Client"}{detail.request?.company ? ` · ${detail.request.company}` : ""}</p>
               </div>
-              <div><strong>Phase {detail.project.phase}/5</strong><span>{detail.project.status}</span></div>
+              <div className="admin-project-head-actions">
+                <div><strong>Phase {detail.project.phase}/5</strong><span>{detail.project.status}</span></div>
+                <button type="button" onClick={() => setClientOpen(value => !value)} disabled={clientLoading}>
+                  {clientLoading ? "Loading client…" : clientOpen ? "Hide client profile" : "Client profile"}
+                </button>
+              </div>
             </div>
+
+            {clientOpen && (
+              <section className="admin-card admin-client-profile">
+                <div className="admin-card-title"><span>CL</span><strong>Client profile</strong></div>
+                {clientLoading && !clientOverview ? (
+                  <p className="admin-empty">Loading client profile…</p>
+                ) : clientOverview ? (
+                  <>
+                    <div className="admin-client-identity">
+                      <div>
+                        <span>CLIENT</span>
+                        <h3>{clientOverview.client.fullName || "Client"}</h3>
+                        <p>{clientOverview.client.company || "No company / brand"}</p>
+                      </div>
+                      <div className="admin-client-contact">
+                        <div><span>Email</span>{clientOverview.client.email ? <a href={`mailto:${clientOverview.client.email}`}>{clientOverview.client.email}</a> : <strong>—</strong>}</div>
+                        <div><span>Phone</span>{clientOverview.client.phone ? <a href={`tel:${clientOverview.client.phone}`}>{clientOverview.client.phone}</a> : <strong>—</strong>}</div>
+                        <div><span>Latest request contact</span><strong>{clientOverview.client.contact || "—"}</strong></div>
+                        <div><span>Client since</span><strong>{dateTime(clientOverview.client.createdAt)}</strong></div>
+                      </div>
+                    </div>
+
+                    <div className="admin-client-stats">
+                      <div><strong>{clientOverview.stats.projectCount}</strong><span>Projects</span></div>
+                      <div><strong>{clientOverview.stats.activeProjects}</strong><span>Active</span></div>
+                      <div><strong>{clientOverview.stats.completedProjects}</strong><span>Completed</span></div>
+                      <div><strong>{clientOverview.stats.messageCount}</strong><span>Client messages</span></div>
+                    </div>
+
+                    <div className="admin-client-columns">
+                      <div>
+                        <div className="admin-client-subhead"><span>PROJECTS</span><strong>All client work</strong></div>
+                        <div className="admin-client-project-list">
+                          {clientOverview.projects.length ? clientOverview.projects.map(project => (
+                            <button
+                              key={project.id}
+                              type="button"
+                              className={selectedId === project.id ? "is-current" : ""}
+                              onClick={() => setSelectedId(project.id)}
+                            >
+                              <span>{project.request?.reference_number || "PROJECT"}</span>
+                              <strong>{project.title || project.request?.service || "Project"}</strong>
+                              <small>{project.status} · Phase {project.phase}/5 · {dateTime(project.updated_at)}</small>
+                            </button>
+                          )) : <p className="admin-empty">No projects for this client.</p>}
+                        </div>
+                      </div>
+
+                      <div>
+                        <div className="admin-client-subhead"><span>RECENT ACTIVITY</span><strong>Latest client timeline</strong></div>
+                        <div className="admin-client-activity">
+                          {clientOverview.activity.length ? clientOverview.activity.slice(0, 10).map(item => (
+                            <article key={item.id}>
+                              <span>{item.type}</span>
+                              <strong>{item.title}</strong>
+                              <p>{item.detail || item.projectTitle || "—"}</p>
+                              <small>{dateTime(item.at)}</small>
+                            </article>
+                          )) : <p className="admin-empty">No recent client activity.</p>}
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                ) : (
+                  <p className="admin-empty">Client profile could not be loaded.</p>
+                )}
+              </section>
+            )}
 
             <section className="admin-card admin-request-brief">
               <div className="admin-card-title"><span>00</span><strong>Client request</strong></div>
