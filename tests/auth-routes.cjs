@@ -112,7 +112,10 @@ for (const endpoint of [
   "/api/auth/recover",
   "/api/auth/session",
   "/api/auth/update-password",
+  "/api/auth/logout-others",
   "/api/auth/logout",
+  "/api/account",
+  "/api/account/email",
 ]) {
   assert.ok(auth.includes(endpoint), `Worker auth is missing ${endpoint}`);
 }
@@ -167,6 +170,8 @@ assert.ok(nav.includes("markAllNotificationsRead"));
 assert.ok(nav.includes("openNotification"));
 assert.ok(nav.includes("setInterval"));
 assert.ok(nav.includes("visibilitychange"));
+assert.ok(nav.includes('href="/account"'));
+assert.ok(nav.includes("Account Settings"));
 assert.ok(client.includes("data.markAll===true"));
 assert.ok(client.includes('"/notifications?read_at=is.null&select=id,read_at"'));
 
@@ -177,6 +182,11 @@ assert.ok(login.includes("const returnPath = safeInternalNext"));
 assert.ok(login.includes("window.location.assign(returnPath)"));
 assert.ok(auth.includes("safeReturnPath"));
 assert.ok(auth.includes('redirectUrl.searchParams.set("next",next)'));
+assert.ok(auth.includes('path==="/api/account"'));
+assert.ok(auth.includes('path==="/api/account/email"'));
+assert.ok(auth.includes('path==="/api/auth/logout-others"'));
+assert.ok(auth.includes('"/profiles?select=id,full_name,company,phone,created_at,updated_at'));
+assert.ok(auth.includes('"/logout?scope=others"'));
 assert.ok(login.includes('search.get("confirmed") === "1"'));
 assert.ok(login.includes('search.get("recovery") === "1"'));
 for (const endpoint of [
@@ -256,6 +266,8 @@ assert.ok(client.includes("status=in.(ready,approved)"));
 assert.ok(workspaceClient.includes('projectHref("/handover", currentProjectId)'));
 
 for (const file of [
+  "app/account/page.tsx",
+  "app/account/AccountClient.tsx",
   "app/admin/page.tsx",
   "app/admin/AdminClient.tsx",
   "app/handover/page.tsx",
@@ -299,5 +311,15 @@ for (const endpoint of [
 ]) {
   assert.ok(adminClient.includes(endpoint), `Admin UI is not wired to ${endpoint}`);
 }
+
+const accountClient = read("app/account/AccountClient.tsx");
+assert.ok(accountClient.includes("/api/account"));
+assert.ok(accountClient.includes("/api/account/email"));
+assert.ok(accountClient.includes("/api/auth/update-password"));
+assert.ok(accountClient.includes("/api/auth/logout-others"));
+assert.ok(accountClient.includes("/api/auth/logout"));
+assert.ok(accountClient.includes("signOutOthers"));
+assert.ok(accountClient.includes("updatePassword"));
+assert.ok(accountClient.includes("updateEmail"));
 
 console.log("PASS: LINETECH Worker backend routes, secure cookies and frontend wiring are present");
