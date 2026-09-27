@@ -15,6 +15,7 @@ const timings = ["ASAP", "1–2 months", "3+ months", "Flexible"];
 const finderStorageKey = "linetech-service-finder-v1";
 const requestDraftKey = "linetech-project-request-draft-v1";
 const requestSubmissionKey = "linetech-project-submission-key-v1";
+const requestDraftTtlMs = 24 * 60 * 60 * 1000;
 
 type FinderAnswerIds = Partial<Record<"outcome" | "priority" | "stage", string>>;
 type StoredFinderState = {
@@ -253,25 +254,34 @@ export default function ProjectIntake() {
 
   useEffect(() => {
     try {
-      const rawDraft = window.sessionStorage.getItem(requestDraftKey);
+      const rawDraft =
+        window.sessionStorage.getItem(requestDraftKey)
+        || window.localStorage.getItem(requestDraftKey);
       if (rawDraft) {
         const draft = JSON.parse(rawDraft) as Record<string, unknown>;
-        if (typeof draft.name === "string") setName(draft.name);
-        if (typeof draft.company === "string") setCompany(draft.company);
-        if (typeof draft.contact === "string") setContact(draft.contact);
-        if (typeof draft.preferredContact === "string") setPreferredContact(draft.preferredContact);
-        if (typeof draft.service === "string") setService(draft.service);
-        if (typeof draft.stage === "string") setStage(draft.stage);
-        if (typeof draft.goal === "string") setGoal(draft.goal);
-        if (typeof draft.idea === "string") setIdea(draft.idea);
-        if (typeof draft.audience === "string") setAudience(draft.audience);
-        if (typeof draft.features === "string") setFeatures(draft.features);
-        if (typeof draft.references === "string") setReferences(draft.references);
-        if (typeof draft.budget === "string") setBudget(draft.budget);
-        if (typeof draft.timing === "string") setTiming(draft.timing);
-        if (typeof draft.notes === "string") setNotes(draft.notes);
-        if (typeof draft.step === "number") setStep(Math.min(4, Math.max(1, Math.round(draft.step))));
-        if (draft.confirmed === true) setConfirmed(true);
+        const savedAt = typeof draft.savedAt === "number" ? draft.savedAt : Date.now();
+        if (Date.now() - savedAt > requestDraftTtlMs) {
+          window.sessionStorage.removeItem(requestDraftKey);
+          window.localStorage.removeItem(requestDraftKey);
+          window.localStorage.removeItem(requestSubmissionKey);
+        } else {
+          if (typeof draft.name === "string") setName(draft.name);
+          if (typeof draft.company === "string") setCompany(draft.company);
+          if (typeof draft.contact === "string") setContact(draft.contact);
+          if (typeof draft.preferredContact === "string") setPreferredContact(draft.preferredContact);
+          if (typeof draft.service === "string") setService(draft.service);
+          if (typeof draft.stage === "string") setStage(draft.stage);
+          if (typeof draft.goal === "string") setGoal(draft.goal);
+          if (typeof draft.idea === "string") setIdea(draft.idea);
+          if (typeof draft.audience === "string") setAudience(draft.audience);
+          if (typeof draft.features === "string") setFeatures(draft.features);
+          if (typeof draft.references === "string") setReferences(draft.references);
+          if (typeof draft.budget === "string") setBudget(draft.budget);
+          if (typeof draft.timing === "string") setTiming(draft.timing);
+          if (typeof draft.notes === "string") setNotes(draft.notes);
+          if (typeof draft.step === "number") setStep(Math.min(4, Math.max(1, Math.round(draft.step))));
+          if (draft.confirmed === true) setConfirmed(true);
+        }
       }
     } catch {}
 
@@ -374,20 +384,6 @@ export default function ProjectIntake() {
     }
   }
 
-  async function shareBrief() {
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: t("LINETECH Project Brief"), text: brief });
-        setActionStatus(copy.shareDone);
-      } catch (error) {
-        if (error instanceof Error && error.name === "AbortError") return;
-        await copyBrief();
-      }
-      return;
-    }
-    await copyBrief();
-  }
-
   async function completeRequest() {
     if (!confirmed || completing) return;
     setCompleting(true);
@@ -397,13 +393,19 @@ export default function ProjectIntake() {
       let submissionKey = submissionKeyRef.current;
       if (!submissionKey) {
         try {
-          submissionKey = window.sessionStorage.getItem(requestSubmissionKey) || "";
+          submissionKey =
+            window.sessionStorage.getItem(requestSubmissionKey)
+            || window.localStorage.getItem(requestSubmissionKey)
+            || "";
         } catch {}
       }
       if (!submissionKey) {
         submissionKey = window.crypto.randomUUID();
         submissionKeyRef.current = submissionKey;
-        try { window.sessionStorage.setItem(requestSubmissionKey, submissionKey); } catch {}
+        try {
+          window.sessionStorage.setItem(requestSubmissionKey, submissionKey);
+          window.localStorage.setItem(requestSubmissionKey, submissionKey);
+        } catch {}
       }
 
       const response = await fetch("/api/project-request", {
@@ -430,7 +432,8 @@ export default function ProjectIntake() {
 
       if (response.status === 401) {
         try {
-          window.sessionStorage.setItem(requestDraftKey, JSON.stringify({
+          const pendingDraft = JSON.stringify({
+            savedAt: Date.now(),
             step: 4,
             confirmed,
             name,
@@ -447,7 +450,9 @@ export default function ProjectIntake() {
             budget,
             timing,
             notes,
-          }));
+          });
+          window.sessionStorage.setItem(requestDraftKey, pendingDraft);
+          window.localStorage.setItem(requestDraftKey, pendingDraft);
         } catch {}
         window.location.assign("/login?next=/start");
         return;
@@ -492,6 +497,8 @@ export default function ProjectIntake() {
       try {
         window.sessionStorage.removeItem(requestDraftKey);
         window.sessionStorage.removeItem(requestSubmissionKey);
+        window.localStorage.removeItem(requestDraftKey);
+        window.localStorage.removeItem(requestSubmissionKey);
       } catch {}
       submissionKeyRef.current = "";
       requestAnimationFrame(() => document.getElementById("brief")?.scrollIntoView({ behavior: "smooth", block: "start" }));
@@ -500,13 +507,6 @@ export default function ProjectIntake() {
     } finally {
       setCompleting(false);
     }
-  }
-
-  function editRequest() {
-    setCompleted(false);
-    setConfirmed(false);
-    setActionStatus("");
-    setStep(4);
   }
 
   const progressStep = completed ? 5 : step;
@@ -608,7 +608,6 @@ export default function ProjectIntake() {
         <Link className="button button-light" href="/workspace">{copy.openWorkspace} <span>→</span></Link>
         <Link className="brief-share request-chat-link" href="/chat">{copy.openChat} <span>→</span></Link>
         <button className="brief-share" type="button" onClick={copyBrief}>{copied ? copy.copied : copy.copy} <span>→</span></button>
-        <button className="brief-share request-edit-button" type="button" onClick={editRequest}>{copy.edit}</button>
       </div>
     </section>}
   </div></Localized>;
