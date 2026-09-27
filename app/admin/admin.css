@@ -94,3 +94,40 @@
   .admin-primary,.admin-secondary{min-height:46px}
   .admin-page input,.admin-page select,.admin-page textarea{font-size:16px}
 }
+
+
+.admin-chat-file-input{display:none!important}
+.admin-chat-tools{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.admin-chat-tools>button{
+  min-height:38px;
+  padding:0 12px;
+  border:1px solid #203b58;
+  border-radius:9px;
+  background:#08131e;
+  color:#a7cdf8;
+  font:inherit;
+  font-size:10px;
+  cursor:pointer;
+}
+.admin-chat-tools>button:disabled{opacity:.5;cursor:default}
+.admin-chat-image{display:block;margin:8px 0}
+.admin-chat-image img{display:block;width:min(100%,320px);max-height:280px;object-fit:cover;border-radius:10px;border:1px solid #1f354a}
+.admin-chat-audio{display:block;width:min(100%,320px);margin:8px 0}
+.admin-chat-document{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:8px 0;padding:11px 12px;border:1px solid #1c344c;border-radius:10px;background:#07111b;color:#d9e7f5;text-decoration:none}
+.admin-chat-document strong{font-size:11px;overflow-wrap:anywhere}
+.admin-chat-document span{flex:0 0 auto;color:#8bbcf5;font-size:9px}
+.admin-recording{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.admin-recording>span{display:inline-flex;align-items:center;gap:7px;color:#f0b1bc;font-size:10px}
+.admin-recording>span i{width:7px;height:7px;border-radius:50%;background:#ec6d82;box-shadow:0 0 12px rgba(236,109,130,.45)}
+.admin-recording>button{min-height:34px;padding:0 10px;border:1px solid #294660;border-radius:8px;background:#09131d;color:#c7dcf2;font:inherit;font-size:9px;cursor:pointer}
+.admin-recording>button:last-child{border-color:#315b47;color:#a7dbbd}
+.admin-chat-log>div.is-company .admin-chat-document{background:#0a1724}
+
+@media(max-width:620px){
+  .admin-chat-tools{align-items:stretch}
+  .admin-chat-tools>button{flex:1 1 120px;min-height:42px}
+  .admin-recording{width:100%;display:grid;grid-template-columns:1fr auto auto}
+  .admin-recording>span{min-height:38px}
+  .admin-chat-image img,.admin-chat-audio{width:100%;max-width:100%}
+  .admin-chat-document{align-items:flex-start;flex-direction:column}
+}
