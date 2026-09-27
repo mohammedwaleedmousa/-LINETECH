@@ -31,7 +31,7 @@ async function main() {
   assert.equal(payload?.backend, "linetech-worker");
   assert.equal(payload?.supabaseAuth, true);
 
-  for (const protectedPath of ["/admin","/workspace","/chat","/handover"]) {
+  for (const protectedPath of ["/admin","/workspace","/chat","/handover","/account"]) {
     const response = await fetch(`${base}${protectedPath}`, { redirect: "manual" });
     assert.ok(
       [301,302,303,307,308].includes(response.status),
