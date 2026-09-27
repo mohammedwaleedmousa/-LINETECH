@@ -13,8 +13,9 @@
     "qa": "npm run build",
     "test:auth": "node tests/auth-routes.cjs",
     "test:worker": "node tests/worker-syntax.cjs",
+    "test:e2e-contract": "node tests/e2e-contract.cjs",
     "smoke:prod": "node tests/production-smoke.cjs",
-    "prebuild": "npm run test:deps && npm run test:localization && npm run test:routes && npm run test:backend && npm run test:auth && npm run test:worker",
+    "prebuild": "npm run test:deps && npm run test:localization && npm run test:routes && npm run test:backend && npm run test:auth && npm run test:worker && npm run test:e2e-contract",
     "test:deps": "node tests/dependency-security.cjs"
   },
   "dependencies": {
