@@ -137,6 +137,7 @@ export default function LoginForm(){
   const [confirmPassword,setConfirmPassword]=useState("");
   const [showPassword,setShowPassword]=useState(false);
   const [submitting,setSubmitting]=useState(false);
+  const [nextPath,setNextPath]=useState("/workspace");
 
   function switchMode(next:Mode){
     setMode(next);
@@ -152,6 +153,8 @@ export default function LoginForm(){
     const refreshToken = hash.get("refresh_token");
     const expiresIn = Number(hash.get("expires_in") || "3600");
     const search = new URLSearchParams(window.location.search);
+    const resolvedNext = safeInternalNext(search.get("next"));
+    setNextPath(resolvedNext);
     const isRecovery = hash.get("type") === "recovery" || search.get("recovery") === "1";
     const isConfirmed = search.get("confirmed") === "1";
 
@@ -177,8 +180,7 @@ export default function LoginForm(){
       if(isRecovery){
         switchMode("reset");
       }else{
-        router.replace("/workspace");
-        router.refresh();
+        window.location.assign(resolvedNext);
       }
     })();
   },[router,language]);
@@ -247,6 +249,7 @@ export default function LoginForm(){
             company:String(form.get("company") || "").trim(),
             email,
             password,
+            next:nextPath,
           }),
         });
         const result = await response.json().catch(()=>({}));
@@ -263,8 +266,7 @@ export default function LoginForm(){
           return;
         }
         setMessage(t.signupReady);
-        router.replace("/workspace");
-        router.refresh();
+        window.location.assign(nextPath);
         return;
       }
 
@@ -287,8 +289,7 @@ export default function LoginForm(){
         return;
       }
 
-      const next = new URLSearchParams(window.location.search).get("next");
-      window.location.assign(safeInternalNext(next));
+      window.location.assign(nextPath);
     }catch{
       setMessage(
         mode==="signup" ? t.signupError :
@@ -337,7 +338,7 @@ export default function LoginForm(){
       <button className="login-submit" type="submit" disabled={submitting}>{mode==="login"?t.signIn:mode==="signup"?t.create:mode==="reset"?t.resetButton:t.recoverButton} <span>→</span></button>
       {isForgot&&<button className="login-inline-action" type="button" onClick={()=>switchMode("login")}>{t.back}</button>}
       <p className="login-ui-note">{t.note}</p>
-      {message&&<div className="login-feedback-wrap" role="status"><p className="login-feedback">{message}</p><Link href="/workspace">{t.workspace} →</Link></div>}
+      {message&&<div className="login-feedback-wrap" role="status"><p className="login-feedback">{message}</p></div>}
     </form>
   </div>;
 }
