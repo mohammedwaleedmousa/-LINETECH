@@ -357,10 +357,19 @@ for (const endpoint of [
 }
 
 const siteSurface = read("app/SiteSurface.tsx");
+const clientPortalShell = read("app/ClientPortalShell.tsx");
 const adminLoginClient = read("app/admin/login/AdminLoginClient.tsx");
 const adminAccountClient = read("app/admin/account/AdminAccountClient.tsx");
 assert.ok(siteSurface.includes('pathname === "/admin"'));
 assert.ok(siteSurface.includes("if (admin) return"));
+assert.ok(siteSurface.includes("clientPortal"));
+assert.ok(siteSurface.includes("ClientPortalShell"));
+assert.ok(clientPortalShell.includes('href: "/workspace"'));
+assert.ok(clientPortalShell.includes('href: "/chat"'));
+assert.ok(clientPortalShell.includes('href: "/handover"'));
+assert.ok(clientPortalShell.includes('href: "/account"'));
+assert.ok(clientPortalShell.includes("/api/notifications"));
+assert.ok(clientPortalShell.includes("/api/auth/logout"));
 assert.ok(adminLoginClient.includes("/api/auth/login"));
 assert.ok(adminLoginClient.includes("/api/auth/session"));
 assert.ok(adminLoginClient.includes('app_metadata?.role !== "admin"'));
