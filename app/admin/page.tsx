@@ -1,12 +1,11 @@
-import AdminClient from "./AdminClient";
-import "./admin.css";
+import DashboardClient from "./DashboardClient";
 
 export const metadata = {
-  title: "LINETECH Admin",
-  description: "Private LINETECH project administration workspace.",
+  title: "Dashboard",
+  description: "LINETECH administration control center.",
   robots: { index: false, follow: false },
 };
 
 export default function Page() {
-  return <AdminClient />;
+  return <DashboardClient />;
 }
