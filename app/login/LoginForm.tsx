@@ -137,7 +137,6 @@ export default function LoginForm(){
   const [confirmPassword,setConfirmPassword]=useState("");
   const [showPassword,setShowPassword]=useState(false);
   const [submitting,setSubmitting]=useState(false);
-  const [nextPath,setNextPath]=useState("/workspace");
 
   function switchMode(next:Mode){
     setMode(next);
@@ -154,7 +153,6 @@ export default function LoginForm(){
     const expiresIn = Number(hash.get("expires_in") || "3600");
     const search = new URLSearchParams(window.location.search);
     const resolvedNext = safeInternalNext(search.get("next"));
-    setNextPath(resolvedNext);
     const isRecovery = hash.get("type") === "recovery" || search.get("recovery") === "1";
     const isConfirmed = search.get("confirmed") === "1";
 
@@ -191,6 +189,7 @@ export default function LoginForm(){
 
     const form = new FormData(event.currentTarget);
     const email = String(form.get("email") || "").trim();
+    const returnPath = safeInternalNext(new URLSearchParams(window.location.search).get("next"));
     setMessage("");
 
     if(mode==="signup" || mode==="reset"){
@@ -249,7 +248,7 @@ export default function LoginForm(){
             company:String(form.get("company") || "").trim(),
             email,
             password,
-            next:nextPath,
+            next:returnPath,
           }),
         });
         const result = await response.json().catch(()=>({}));
@@ -266,7 +265,7 @@ export default function LoginForm(){
           return;
         }
         setMessage(t.signupReady);
-        window.location.assign(nextPath);
+        window.location.assign(returnPath);
         return;
       }
 
@@ -289,7 +288,7 @@ export default function LoginForm(){
         return;
       }
 
-      window.location.assign(nextPath);
+      window.location.assign(returnPath);
     }catch{
       setMessage(
         mode==="signup" ? t.signupError :
