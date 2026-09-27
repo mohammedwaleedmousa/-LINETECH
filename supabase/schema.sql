@@ -176,6 +176,14 @@ create table public.notifications (
   project_id uuid references public.projects(id) on delete cascade,
   title text not null,
   body text,
+  action_kind text not null default 'project_update'
+    check (action_kind in ('project_update','message','file','handover')),
+  destination text not null default '/workspace'
+    check (
+      char_length(destination) between 1 and 500
+      and left(destination,1) = '/'
+      and left(destination,2) <> '//'
+    ),
   read_at timestamptz,
   created_at timestamptz not null default now()
 );
@@ -188,6 +196,9 @@ create index project_activity_project_id_created_at_idx on public.project_activi
 create index project_files_project_id_created_at_idx on public.project_files(project_id, created_at desc);
 create index messages_conversation_id_created_at_idx on public.messages(conversation_id, created_at);
 create index notifications_user_id_created_at_idx on public.notifications(user_id, created_at desc);
+create index notifications_user_unread_created_at_idx
+  on public.notifications(user_id, created_at desc)
+  where read_at is null;
 create index project_members_user_id_idx on public.project_members(user_id);
 create index project_activity_actor_id_idx on public.project_activity(actor_id);
 create index project_files_uploader_id_idx on public.project_files(uploader_id);
