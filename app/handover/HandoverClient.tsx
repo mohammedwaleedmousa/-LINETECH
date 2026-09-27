@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLanguage } from "../Localized";
 
 type HandoverItem = {
@@ -10,6 +10,16 @@ type HandoverItem = {
   description?: string | null;
   completed?: boolean;
   completed_at?: string | null;
+};
+
+type HandoverFile = {
+  id: string;
+  name: string;
+  category?: string;
+  status?: string;
+  detail?: string;
+  updatedAt?: string;
+  href?: string;
 };
 
 const copy = {
@@ -23,6 +33,12 @@ const copy = {
     empty: "No handover items have been added yet.",
     completed: "Completed",
     pending: "Pending",
+    files: "FINAL FILES",
+    filesTitle: "Your delivery files.",
+    noFiles: "No final files are available yet.",
+    download: "Download",
+    refresh: "Refresh handover",
+    retry: "Try again",
   },
   ar: {
     kicker: "تسليم المشروع",
@@ -34,6 +50,12 @@ const copy = {
     empty: "لم تتم إضافة عناصر تسليم بعد.",
     completed: "مكتمل",
     pending: "قيد الانتظار",
+    files: "الملفات النهائية",
+    filesTitle: "ملفات تسليم مشروعك.",
+    noFiles: "لا توجد ملفات نهائية متاحة حتى الآن.",
+    download: "تحميل",
+    refresh: "تحديث التسليم",
+    retry: "إعادة المحاولة",
   },
 } as const;
 
@@ -43,35 +65,45 @@ export default function HandoverClient() {
   const [loaded, setLoaded] = useState(false);
   const [locked, setLocked] = useState(true);
   const [items, setItems] = useState<HandoverItem[]>([]);
+  const [files, setFiles] = useState<HandoverFile[]>([]);
   const [error, setError] = useState("");
+  const [refreshing, setRefreshing] = useState(false);
+
+  const loadHandover = useCallback(async (showRefreshing = false) => {
+    if (showRefreshing) setRefreshing(true);
+    setError("");
+    try {
+      const response = await fetch("/api/handover", { cache: "no-store" });
+      if (response.status === 401) {
+        window.location.assign("/login?next=/handover");
+        return;
+      }
+      const payload = await response.json().catch(() => null) as {
+        ok?: boolean;
+        locked?: boolean;
+        items?: HandoverItem[];
+        files?: HandoverFile[];
+      } | null;
+      if (!response.ok || !payload?.ok) throw new Error();
+      setLocked(Boolean(payload.locked));
+      setItems(Array.isArray(payload.items) ? payload.items : []);
+      setFiles(Array.isArray(payload.files) ? payload.files : []);
+    } catch {
+      setError("handover");
+    } finally {
+      setLoaded(true);
+      setRefreshing(false);
+    }
+  }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    void (async () => {
-      try {
-        const response = await fetch("/api/handover", { cache: "no-store" });
-        if (response.status === 401) {
-          window.location.assign("/login?next=/handover");
-          return;
-        }
-        const payload = await response.json().catch(() => null) as {
-          ok?: boolean;
-          locked?: boolean;
-          items?: HandoverItem[];
-        } | null;
-        if (!response.ok || !payload?.ok) throw new Error();
-        if (!cancelled) {
-          setLocked(Boolean(payload.locked));
-          setItems(Array.isArray(payload.items) ? payload.items : []);
-        }
-      } catch {
-        if (!cancelled) setError("handover");
-      } finally {
-        if (!cancelled) setLoaded(true);
-      }
-    })();
-    return () => { cancelled = true; };
-  }, []);
+    void loadHandover();
+    const refreshWhenVisible = () => {
+      if (document.visibilityState === "visible") void loadHandover();
+    };
+    document.addEventListener("visibilitychange", refreshWhenVisible);
+    return () => document.removeEventListener("visibilitychange", refreshWhenVisible);
+  }, [loadHandover]);
 
   if (!loaded) return <main className="handover-page"><div className="handover-state" /></main>;
 
@@ -86,8 +118,11 @@ export default function HandoverClient() {
 
         {error ? (
           <div className="handover-panel">
-            <strong>Unable to load handover.</strong>
-            <Link href="/workspace">{t.back} →</Link>
+            <strong>{language === "ar" ? "تعذر تحميل التسليم." : "Unable to load handover."}</strong>
+            <div className="handover-panel-actions">
+              <button type="button" onClick={() => void loadHandover(true)} disabled={refreshing}>{refreshing ? "…" : t.retry}</button>
+              <Link href="/workspace">{t.back} →</Link>
+            </div>
           </div>
         ) : locked ? (
           <div className="handover-panel is-locked">
@@ -98,6 +133,11 @@ export default function HandoverClient() {
           </div>
         ) : (
           <div className="handover-content">
+            <div className="handover-toolbar">
+              <span>{items.filter(item => item.completed).length}/{items.length || 0} {t.completed}</span>
+              <button type="button" onClick={() => void loadHandover(true)} disabled={refreshing}>{refreshing ? "…" : t.refresh}</button>
+            </div>
+
             <div className="handover-list">
               {items.length ? items.map((item, index) => (
                 <article key={item.id} className={item.completed ? "is-complete" : ""}>
@@ -110,6 +150,28 @@ export default function HandoverClient() {
                 </article>
               )) : <div className="handover-empty">{t.empty}</div>}
             </div>
+
+            <section className="handover-files">
+              <div className="handover-files-head">
+                <span>{t.files}</span>
+                <h2>{t.filesTitle}</h2>
+              </div>
+              {files.length ? (
+                <div className="handover-file-list">
+                  {files.map(file => (
+                    <article key={file.id}>
+                      <div>
+                        <strong>{file.name}</strong>
+                        {file.detail && <p>{file.detail}</p>}
+                        <small>{file.status || "ready"}</small>
+                      </div>
+                      {file.href && <a href={file.href} target="_blank" rel="noreferrer">{t.download} ↓</a>}
+                    </article>
+                  ))}
+                </div>
+              ) : <div className="handover-empty">{t.noFiles}</div>}
+            </section>
+
             <Link className="handover-back" href="/workspace">{t.back} →</Link>
           </div>
         )}
