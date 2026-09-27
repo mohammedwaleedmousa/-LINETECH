@@ -160,6 +160,14 @@ assert.ok(nav.includes("/api/notifications"));
 assert.ok(nav.includes("notification-trigger"));
 assert.ok(nav.includes("notificationId"));
 assert.ok(nav.includes('method: "PATCH"'));
+assert.ok(nav.includes("safeNotificationDestination"));
+assert.ok(nav.includes("notificationKindLabel"));
+assert.ok(nav.includes("markAllNotificationsRead"));
+assert.ok(nav.includes("openNotification"));
+assert.ok(nav.includes("setInterval"));
+assert.ok(nav.includes("visibilitychange"));
+assert.ok(client.includes("data.markAll===true"));
+assert.ok(client.includes('"/notifications?read_at=is.null&select=id,read_at"'));
 
 const login = read("app/login/LoginForm.tsx");
 assert.ok(login.includes("safeInternalNext"));
@@ -259,6 +267,10 @@ assert.ok(adminClient.includes("admin-chat-document"));
 assert.ok(adminClient.includes("/api/admin/chat/upload"));
 assert.ok(admin.includes("file_status_updated"));
 assert.ok(admin.includes("Project file updated"));
+assert.ok(admin.includes('action_kind:"message"'));
+assert.ok(admin.includes('destination:"/chat"'));
+assert.ok(admin.includes('destination:handoverReady?"/handover":"/workspace"'));
+assert.ok(adminClient.includes('name="notifyClient" type="checkbox" defaultChecked'));
 for (const endpoint of [
   "/api/admin/projects",
   "/api/admin/project",
