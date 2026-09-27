@@ -218,11 +218,16 @@ export default function SiteNav() {
     };
   }, [searchOpen]);
 
+  const visibleNavItems = authRole === "admin" ? items.filter(item => item.href !== "/chat") : items;
+  const visibleSearchItems = authRole === "admin"
+    ? searchItems.filter(item => !["/chat","/workspace","/account"].includes(item.href))
+    : searchItems;
+
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return searchItems.slice(0, 5);
-    return searchItems.filter((item) => `${item.title} ${item.meta} ${item.keywords}`.toLowerCase().includes(q)).slice(0, 6);
-  }, [query]);
+    if (!q) return visibleSearchItems.slice(0, 5);
+    return visibleSearchItems.filter((item) => `${item.title} ${item.meta} ${item.keywords}`.toLowerCase().includes(q)).slice(0, 6);
+  }, [query, authRole]);
 
   const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
   const workspaceLabel = language === "ar" ? "مساحة العمل" : "Workspace";
@@ -251,6 +256,7 @@ export default function SiteNav() {
       await fetch("/api/auth/logout", { method: "POST" });
     } finally {
       setSignedIn(false);
+      setAuthRole("");
       setNotifications([]);
       setNotificationsOpen(false);
       setOpen(false);
@@ -317,7 +323,7 @@ export default function SiteNav() {
           <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
-          {items.map((item) => {
+          {visibleNavItems.map((item) => {
             const active = isActive(item.href);
             return <Link key={item.href} href={item.href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>{language === "ar" ? item.ar : item.en}</Link>;
           })}
@@ -389,7 +395,7 @@ export default function SiteNav() {
 
       <div id="mobile-navigation" className={`mobile-menu-panel ${open ? "open" : ""}`} aria-hidden={!open}>
         <nav aria-label="Mobile navigation">
-          {items.map((item, index) => {
+          {visibleNavItems.map((item, index) => {
             const active = isActive(item.href);
             return <Link key={item.href} href={item.href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span>{language === "ar" ? item.ar : item.en}<b>→</b></Link>;
           })}
