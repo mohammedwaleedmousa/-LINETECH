@@ -108,6 +108,7 @@ export default function SiteNav() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
+  const [authRole, setAuthRole] = useState<"admin" | "client" | "">("");
   const [authChecked, setAuthChecked] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [query, setQuery] = useState("");
@@ -131,9 +132,16 @@ export default function SiteNav() {
     void (async () => {
       try {
         const response = await fetch("/api/auth/session", { cache: "no-store" });
-        if (!cancelled) setSignedIn(response.ok);
+        const payload = await response.json().catch(() => null) as { user?: { app_metadata?: { role?: string } } } | null;
+        if (!cancelled) {
+          setSignedIn(response.ok);
+          setAuthRole(response.ok && payload?.user?.app_metadata?.role === "admin" ? "admin" : response.ok ? "client" : "");
+        }
       } catch {
-        if (!cancelled) setSignedIn(false);
+        if (!cancelled) {
+          setSignedIn(false);
+          setAuthRole("");
+        }
       } finally {
         if (!cancelled) setAuthChecked(true);
       }
@@ -164,7 +172,7 @@ export default function SiteNav() {
   }, []);
 
   useEffect(() => {
-    if (!signedIn) {
+    if (!signedIn || authRole === "admin") {
       setNotifications([]);
       setNotificationsOpen(false);
       return;
@@ -181,7 +189,7 @@ export default function SiteNav() {
       window.clearInterval(timer);
       document.removeEventListener("visibilitychange", refreshWhenVisible);
     };
-  }, [signedIn, pathname, loadNotifications]);
+  }, [signedIn, authRole, pathname, loadNotifications]);
 
   useEffect(() => {
     if (!notificationsOpen) return;
@@ -220,6 +228,7 @@ export default function SiteNav() {
   const workspaceLabel = language === "ar" ? "مساحة العمل" : "Workspace";
   const loginLabel = language === "ar" ? "تسجيل الدخول" : "Login";
   const accountLabel = language === "ar" ? "الحساب" : "Account";
+  const adminLabel = language === "ar" ? "لوحة الإدارة" : "Admin";
   const logoutLabel = language === "ar" ? "تسجيل خروج" : "Logout";
   const startLabel = language === "ar" ? "ابدأ خطك" : "Start Your Line";
   const notificationsLabel = language === "ar" ? "الإشعارات" : "Notifications";
@@ -316,7 +325,7 @@ export default function SiteNav() {
         <div className="ref-nav-end">
           <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "ENG" : "العربية"}</button>
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setNotificationsOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
-          {authChecked && signedIn && (
+          {authChecked && signedIn && authRole !== "admin" && (
             <div className={`notification-center ${notificationsOpen ? "open" : ""}`} ref={notificationRef}>
               <button
                 className="notification-trigger"
@@ -367,8 +376,10 @@ export default function SiteNav() {
             </div>
           )}
           <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>
-          <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>
-          {authChecked && signedIn && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
+          {authChecked && authRole === "admin"
+            ? <Link className="nav-login desktop-login" href="/admin" prefetch>{adminLabel} <span>→</span></Link>
+            : <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>}
+          {authChecked && signedIn && authRole !== "admin" && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
           {authChecked && signedIn
             ? <Link className="nav-login desktop-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
             : <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>{loginLabel} <span>↗</span></Link>}
@@ -385,8 +396,10 @@ export default function SiteNav() {
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>
-        <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>
-        {authChecked && signedIn && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
+        {authChecked && authRole === "admin"
+          ? <Link className="mobile-login" href="/admin" prefetch onClick={() => setOpen(false)}>{adminLabel} <span>→</span></Link>
+          : <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>}
+        {authChecked && signedIn && authRole !== "admin" && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
         {authChecked && signedIn
           ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
           : <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>{loginLabel} <span>↗</span></Link>}
