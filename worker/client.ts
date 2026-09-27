@@ -253,7 +253,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     const context=await projectContext(request,env,session);
 
     if(request.method==="GET") {
-      if(!context.conversation) return json({ok:true,messages:[]},200,session.setCookies);
+      if(!context.conversation) return json({ok:true,projectId:context.project?.id||null,messages:[]},200,session.setCookies);
       const response=await restFetch(
         env,
         `/messages?select=*,message_attachments(*)&conversation_id=eq.${encodeURIComponent(context.conversation.id)}&order=created_at.asc`,
@@ -263,6 +263,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       if(!response.ok) return json({ok:false},response.status,session.setCookies);
       return json({
         ok:true,
+        projectId:context.project?.id||null,
         messages:Array.isArray(rows)?rows.map(row=>mapMessage(row)):[],
       },200,session.setCookies);
     }
@@ -522,14 +523,14 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
     const context=await projectContext(request,env,session);
     if(!context.project?.id) {
-      return json({ok:true,locked:true,items:[],files:[]},200,session.setCookies);
+      return json({ok:true,projectId:null,locked:true,items:[],files:[]},200,session.setCookies);
     }
 
     const phase=Number(context.project.phase||1);
     const status=String(context.project.status||"");
     const unlocked=phase>=5 || status==="completed";
     if(!unlocked) {
-      return json({ok:true,locked:true,items:[],files:[]},200,session.setCookies);
+      return json({ok:true,projectId:context.project.id,locked:true,items:[],files:[]},200,session.setCookies);
     }
 
     const [itemsResponse,filesResponse]=await Promise.all([
@@ -563,6 +564,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     })):[];
     return json({
       ok:true,
+      projectId:context.project.id,
       locked:false,
       items:Array.isArray(itemsPayload)?itemsPayload:[],
       files,
