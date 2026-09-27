@@ -59,7 +59,7 @@ const copy = {
     note: "Your account credentials are handled securely through LINETECH Auth.",
     loginReady: "Signed in successfully.",
     signupReady: "Account created successfully.",
-    signupConfirm: "Account created. Check your email to confirm your address before signing in.",
+    signupConfirm: "Account created. Check your email to confirm your address. The confirmation link will return you to LINETECH.",
     recoveryReady: "If an account exists for this email, a recovery message has been sent.",
     resetReady: "Password updated successfully.",
     loginError: "Unable to sign in with those details.",
@@ -112,7 +112,7 @@ const copy = {
     note: "يتم التعامل مع بيانات حسابك بشكل آمن عبر نظام مصادقة لاين تك.",
     loginReady: "تم تسجيل الدخول بنجاح.",
     signupReady: "تم إنشاء الحساب بنجاح.",
-    signupConfirm: "تم إنشاء الحساب. تحقق من بريدك الإلكتروني لتأكيد العنوان قبل تسجيل الدخول.",
+    signupConfirm: "تم إنشاء الحساب. تحقق من بريدك الإلكتروني لتأكيد العنوان، وسيعيدك رابط التأكيد إلى لاين تك.",
     recoveryReady: "إذا كان هناك حساب بهذا البريد، فقد تم إرسال رسالة الاستعادة.",
     resetReady: "تم تحديث كلمة المرور بنجاح.",
     loginError: "تعذر تسجيل الدخول بهذه البيانات.",
@@ -260,6 +260,8 @@ export default function LoginForm(){
           setMessage(t.signupError);
           return;
         }
+        setPassword("");
+        setConfirmPassword("");
         if(result.needsEmailConfirmation){
           setMessage(t.signupConfirm);
           return;
@@ -332,7 +334,7 @@ export default function LoginForm(){
       {mode==="login"?<div className="login-options">
         <label className="login-remember"><input type="checkbox" name="remember"/><span>{t.remember}</span></label>
         <button className="login-forgot" type="button" onClick={()=>switchMode("forgot")}>{t.forgot}</button>
-      </div>:mode==="signup"?<label className="signup-terms"><input type="checkbox" required/><span>{t.agree} <Link href="/terms">{t.terms}</Link> {t.and} <Link href="/privacy">{t.privacy}</Link>.</span></label>:null}
+      </div>:mode==="signup"?<label className="signup-terms"><input type="checkbox" required/><span>{t.agree} <Link href="/terms" target="_blank" rel="noreferrer">{t.terms}</Link> {t.and} <Link href="/privacy" target="_blank" rel="noreferrer">{t.privacy}</Link>.</span></label>:null}
 
       <button className="login-submit" type="submit" disabled={submitting}>{mode==="login"?t.signIn:mode==="signup"?t.create:mode==="reset"?t.resetButton:t.recoverButton} <span>→</span></button>
       {isForgot&&<button className="login-inline-action" type="button" onClick={()=>switchMode("login")}>{t.back}</button>}
