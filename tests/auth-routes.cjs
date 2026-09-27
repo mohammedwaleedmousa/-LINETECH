@@ -220,6 +220,14 @@ for (const file of [
 }
 
 const adminClient = read("app/admin/AdminClient.tsx");
+assert.ok(adminClient.includes("projectQuery"));
+assert.ok(adminClient.includes("projectStatusFilter"));
+assert.ok(adminClient.includes("refreshAdmin"));
+assert.ok(adminClient.includes("updateProjectFile"));
+assert.ok(adminClient.includes("Client request"));
+assert.ok(adminClient.includes("admin-chat-attachment"));
+assert.ok(admin.includes("file_status_updated"));
+assert.ok(admin.includes("Project file updated"));
 for (const endpoint of [
   "/api/admin/projects",
   "/api/admin/project",
