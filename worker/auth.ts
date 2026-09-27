@@ -21,6 +21,61 @@ async function body(request:Request) {
 }
 
 export async function handleAuth(request:Request,env:Env,path:string):Promise<Response|null> {
+
+  if(path==="/api/auth/request-code" && request.method==="POST") {
+    if(requestTooLarge(request,8*1024)) return json({ok:false},413);
+    const data=await body(request);
+    const emailRaw=boundedText(data.email,320);
+    if(emailRaw===null) return json({ok:false},413);
+    const email=(emailRaw||"").toLowerCase();
+    if(!email) return json({ok:false},400);
+    if(!(await rateLimitAllowed(env.AUTH_LOGIN_RATE_LIMITER,`otp-request:${email}`))) {
+      return rateLimitResponse();
+    }
+
+    const response=await authFetch(env,"/otp",{
+      method:"POST",
+      body:JSON.stringify({
+        email,
+        create_user:false,
+      }),
+    });
+
+    // Keep this response intentionally generic so the endpoint cannot be used
+    // to discover whether an email address already has a LINETECH account.
+    if(response.status===429) return rateLimitResponse();
+    return json({ok:true});
+  }
+
+  if(path==="/api/auth/verify-code" && request.method==="POST") {
+    if(requestTooLarge(request,8*1024)) return json({ok:false},413);
+    const data=await body(request);
+    const emailRaw=boundedText(data.email,320);
+    const codeRaw=boundedText(data.code,12);
+    if(emailRaw===null || codeRaw===null) return json({ok:false},413);
+    const email=(emailRaw||"").toLowerCase();
+    const code=(codeRaw||"").replace(/\s+/g,"");
+    if(!email || !/^\d{6}$/.test(code)) return json({ok:false},400);
+    if(!(await rateLimitAllowed(env.AUTH_LOGIN_RATE_LIMITER,`otp-verify:${email}`))) {
+      return rateLimitResponse();
+    }
+
+    const response=await authFetch(env,"/verify",{
+      method:"POST",
+      body:JSON.stringify({
+        email,
+        token:code,
+        type:"email",
+      }),
+    });
+    const payload=await safeJson(response);
+    if(!response.ok || !payload?.access_token || !payload?.refresh_token) {
+      return json({ok:false},401);
+    }
+
+    return json({ok:true},200,sessionCookies(payload as AuthSession,true));
+  }
+
   if(path==="/api/auth/login" && request.method==="POST") {
     if(requestTooLarge(request,16*1024)) return json({ok:false},413);
     const data=await body(request);
