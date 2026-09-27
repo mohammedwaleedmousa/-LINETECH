@@ -54,11 +54,33 @@ export default function AdminClient() {
   const [members, setMembers] = useState<Json[]>([]);
   const [memberUserId, setMemberUserId] = useState("");
   const [memberRole, setMemberRole] = useState("staff");
+  const [projectQuery, setProjectQuery] = useState("");
+  const [projectStatusFilter, setProjectStatusFilter] = useState("all");
+  const [refreshing, setRefreshing] = useState(false);
 
   const selected = useMemo(
     () => projects.find(project => project.id === selectedId) || null,
     [projects, selectedId],
   );
+
+  const visibleProjects = useMemo(() => {
+    const query = projectQuery.trim().toLowerCase();
+    return projects.filter(project => {
+      if (projectStatusFilter !== "all" && project.status !== projectStatusFilter) return false;
+      if (!query) return true;
+      const haystack = [
+        project.title,
+        project.status,
+        project.request?.reference_number,
+        project.request?.service,
+        project.request?.name,
+        project.request?.company,
+        project.client?.full_name,
+        project.client?.company,
+      ].filter(Boolean).join(" ").toLowerCase();
+      return haystack.includes(query);
+    });
+  }, [projects, projectQuery, projectStatusFilter]);
 
   const loadProjects = useCallback(async () => {
     const response = await fetch("/api/admin/projects", { cache: "no-store" });
@@ -105,6 +127,23 @@ export default function AdminClient() {
     setHandover(handoverResponse.ok && handoverPayload?.ok && Array.isArray(handoverPayload.items) ? handoverPayload.items : []);
     setMembers(membersResponse.ok && membersPayload?.ok && Array.isArray(membersPayload.members) ? membersPayload.members : []);
   }, []);
+
+  const refreshAdmin = useCallback(async () => {
+    setRefreshing(true);
+    setError("");
+    try {
+      await Promise.all([
+        loadProjects(),
+        loadUsers(),
+        selectedId ? loadProject(selectedId) : Promise.resolve(),
+      ]);
+      setNotice("Admin data refreshed.");
+    } catch {
+      setError("Admin data could not be refreshed.");
+    } finally {
+      setRefreshing(false);
+    }
+  }, [loadProjects, loadUsers, loadProject, selectedId]);
 
   useEffect(() => {
     let cancelled = false;
@@ -272,6 +311,28 @@ export default function AdminClient() {
   }
 
 
+  async function updateProjectFile(fileId: string, status: string) {
+    if (!fileId || !status || !selectedId) return;
+    setBusy(true);
+    setError("");
+    setNotice("");
+    try {
+      const response = await fetch("/api/admin/files", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ fileId, status }),
+      });
+      const payload = await readJson(response);
+      if (!response.ok || !payload?.ok) throw new Error();
+      setNotice("File status updated.");
+      await loadProject(selectedId);
+    } catch {
+      setError("File status could not be updated.");
+    } finally {
+      setBusy(false);
+    }
+  }
+
   async function addMember(event: FormEvent) {
     event.preventDefault();
     if (!selectedId || !memberUserId) return;
@@ -330,7 +391,12 @@ export default function AdminClient() {
     <main className="admin-page">
       <header className="admin-header">
         <div><span>LINETECH / ADMIN</span><h1>Project operations.</h1></div>
-        <div><strong>{projects.length}</strong><span>projects</span></div>
+        <div className="admin-header-actions">
+          <button type="button" onClick={() => void refreshAdmin()} disabled={refreshing || busy}>
+            {refreshing ? "Refreshing…" : "Refresh"}
+          </button>
+          <div><strong>{projects.length}</strong><span>projects</span></div>
+        </div>
       </header>
 
       {(notice || error) && <div className={error ? "admin-feedback is-error" : "admin-feedback"}>{error || notice}</div>}
@@ -338,7 +404,24 @@ export default function AdminClient() {
       <div className="admin-layout">
         <aside className="admin-projects">
           <div className="admin-section-label">PROJECTS</div>
-          {projects.length ? projects.map(project => (
+          <div className="admin-project-tools">
+            <input
+              type="search"
+              value={projectQuery}
+              onChange={event => setProjectQuery(event.target.value)}
+              placeholder="Search projects…"
+              aria-label="Search projects"
+            />
+            <select
+              value={projectStatusFilter}
+              onChange={event => setProjectStatusFilter(event.target.value)}
+              aria-label="Filter projects by status"
+            >
+              <option value="all">All statuses</option>
+              {["planned","active","waiting_client","review","completed","archived"].map(value => <option key={value} value={value}>{value}</option>)}
+            </select>
+          </div>
+          {visibleProjects.length ? visibleProjects.map(project => (
             <button
               key={project.id}
               type="button"
@@ -349,7 +432,7 @@ export default function AdminClient() {
               <strong>{project.title || project.request?.service || "Project"}</strong>
               <small>{project.client?.full_name || project.request?.name || "Client"} · {project.status} · P{project.phase}</small>
             </button>
-          )) : <p className="admin-empty">No projects yet.</p>}
+          )) : <p className="admin-empty">{projects.length ? "No projects match this filter." : "No projects yet."}</p>}
         </aside>
 
         <section className="admin-detail">
@@ -362,6 +445,20 @@ export default function AdminClient() {
               </div>
               <div><strong>Phase {detail.project.phase}/5</strong><span>{detail.project.status}</span></div>
             </div>
+
+            <section className="admin-card admin-request-brief">
+              <div className="admin-card-title"><span>00</span><strong>Client request</strong></div>
+              <div className="admin-request-grid">
+                <div><span>Client</span><strong>{detail.request?.name || "—"}</strong></div>
+                <div><span>Company</span><strong>{detail.request?.company || "—"}</strong></div>
+                <div><span>Service</span><strong>{detail.request?.service || detail.project.title || "—"}</strong></div>
+                <div><span>Contact</span><strong>{detail.request?.contact || "—"}</strong></div>
+                <div><span>Goal</span><strong>{detail.request?.goal || "—"}</strong></div>
+                <div><span>Timing</span><strong>{detail.request?.timing || "—"}</strong></div>
+                <div><span>Budget</span><strong>{detail.request?.budget || "—"}</strong></div>
+                <div className="is-wide"><span>Project need</span><strong>{detail.request?.idea || "—"}</strong></div>
+              </div>
+            </section>
 
             <form key={detail.project.id} className="admin-card admin-update-form" onSubmit={saveProject}>
               <div className="admin-card-title"><span>01</span><strong>Project control</strong></div>
@@ -421,8 +518,27 @@ export default function AdminClient() {
                   <input name="detail" placeholder="File note" />
                   <button className="admin-secondary" type="submit" disabled={busy}>Upload file</button>
                 </form>
-                <div className="admin-list">
-                  {(detail.files || []).map(file => <article key={file.id}><strong>{file.file_name}</strong><p>{file.category} · {file.status}</p><small>{dateTime(file.updated_at)}</small></article>)}
+                <div className="admin-list admin-file-list">
+                  {(detail.files || []).length ? (detail.files || []).map(file => (
+                    <article key={file.id}>
+                      <div className="admin-file-main">
+                        <strong>{file.file_name}</strong>
+                        <p>{file.category + (file.detail ? " · " + file.detail : "")}</p>
+                        <small>{dateTime(file.updated_at)}</small>
+                      </div>
+                      <div className="admin-file-actions">
+                        <select
+                          value={file.status || "ready"}
+                          onChange={event => void updateProjectFile(String(file.id), event.target.value)}
+                          disabled={busy}
+                          aria-label={"Status for " + (file.file_name || "file")}
+                        >
+                          {["in-progress","ready","review","approved"].map(value => <option key={value} value={value}>{value}</option>)}
+                        </select>
+                        <a href={"/api/files/download?fileId=" + encodeURIComponent(String(file.id))} target="_blank" rel="noreferrer">Open ↗</a>
+                      </div>
+                    </article>
+                  )) : <p className="admin-empty">No project files yet.</p>}
                 </div>
               </section>
             </div>
@@ -434,6 +550,7 @@ export default function AdminClient() {
                   {chat.length ? chat.map(message => <div key={message.id} className={message.sender === "company" ? "is-company" : ""}>
                     <span>{message.sender === "company" ? "LINETECH" : "CLIENT"}</span>
                     <p>{message.deleted ? "Message deleted." : message.text || message.fileName || message.kind}</p>
+                    {!message.deleted && message.src && <a className="admin-chat-attachment" href={message.src} target="_blank" rel="noreferrer">{message.fileName || "Open attachment"} ↗</a>}
                     <small>{message.time || ""}</small>
                   </div>) : <p className="admin-empty">No messages yet.</p>}
                 </div>
