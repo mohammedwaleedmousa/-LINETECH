@@ -339,7 +339,7 @@ body:has(.page-projects) .global-site-nav{
 
   .page-projects>section:first-child [class*="heroActions"]{
     width:100%!important;
-    max-width:none!important;
+    max-width:340px!important;
     margin-top:30px!important;
     gap:12px!important;
   }
