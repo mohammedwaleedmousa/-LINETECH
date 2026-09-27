@@ -627,7 +627,7 @@ export default function AdminClient() {
                 <label>Activity title<input name="activityTitle" placeholder="Optional activity log" /></label>
                 <label>Activity detail<input name="activityDetail" placeholder="Optional detail" /></label>
               </div>
-              <label className="admin-check"><input name="notifyClient" type="checkbox" />Notify client</label>
+              <label className="admin-check"><input name="notifyClient" type="checkbox" defaultChecked />Notify client</label>
               <div className="admin-grid two">
                 <label>Notification title<input name="notificationTitle" placeholder="Project updated" /></label>
                 <label>Notification body<input name="notificationBody" placeholder="Optional client message" /></label>
