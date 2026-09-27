@@ -211,7 +211,13 @@ assert.ok(admin.includes('admin-chat-upload:'));
 assert.ok(admin.includes('validateUpload(file,kind)'));
 assert.ok(admin.includes('duration_seconds:kind==="audio"'));
 
-assert.ok(read("app/handover/HandoverClient.tsx").includes("/api/handover"));
+const handoverClient = read("app/handover/HandoverClient.tsx");
+assert.ok(handoverClient.includes("/api/handover"));
+assert.ok(handoverClient.includes("files"));
+assert.ok(handoverClient.includes("loadHandover"));
+assert.ok(handoverClient.includes("visibilitychange"));
+assert.ok(client.includes("category=in.(handover,deliverable)"));
+assert.ok(client.includes("status=in.(ready,approved)"));
 assert.ok(workspaceClient.includes('href="/handover"'));
 
 for (const file of [
