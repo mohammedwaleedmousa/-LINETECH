@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import { useLanguage } from "../Localized";
+import ClientProjectSwitcher from "../ClientProjectSwitcher";
 
 type HandoverItem = {
   id: string;
@@ -59,6 +60,16 @@ const copy = {
   },
 } as const;
 
+function requestedProjectSuffix() {
+  if (typeof window === "undefined") return "";
+  const project = new URLSearchParams(window.location.search).get("project") || "";
+  return /^[0-9a-f-]{36}$/i.test(project) ? `?project=${encodeURIComponent(project)}` : "";
+}
+
+function projectHref(path: string, projectId?: string | null) {
+  return projectId ? `${path}?project=${encodeURIComponent(projectId)}` : path;
+}
+
 export default function HandoverClient() {
   const language = useLanguage();
   const t = copy[language];
@@ -68,23 +79,26 @@ export default function HandoverClient() {
   const [files, setFiles] = useState<HandoverFile[]>([]);
   const [error, setError] = useState("");
   const [refreshing, setRefreshing] = useState(false);
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
 
   const loadHandover = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
     setError("");
     try {
-      const response = await fetch("/api/handover", { cache: "no-store" });
+      const response = await fetch(`/api/handover${requestedProjectSuffix()}`, { cache: "no-store" });
       if (response.status === 401) {
-        window.location.assign("/login?next=/handover");
+        window.location.assign(`/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`);
         return;
       }
       const payload = await response.json().catch(() => null) as {
         ok?: boolean;
+        projectId?: string | null;
         locked?: boolean;
         items?: HandoverItem[];
         files?: HandoverFile[];
       } | null;
       if (!response.ok || !payload?.ok) throw new Error();
+      setCurrentProjectId(payload.projectId || null);
       setLocked(Boolean(payload.locked));
       setItems(Array.isArray(payload.items) ? payload.items : []);
       setFiles(Array.isArray(payload.files) ? payload.files : []);
@@ -114,6 +128,7 @@ export default function HandoverClient() {
           <span>{t.kicker}</span>
           <h1>{t.title}</h1>
           <p>{t.lead}</p>
+          <ClientProjectSwitcher currentProjectId={currentProjectId} className="handover-project-switcher" />
         </div>
 
         {error ? (
@@ -121,7 +136,7 @@ export default function HandoverClient() {
             <strong>{language === "ar" ? "تعذر تحميل التسليم." : "Unable to load handover."}</strong>
             <div className="handover-panel-actions">
               <button type="button" onClick={() => void loadHandover(true)} disabled={refreshing}>{refreshing ? "…" : t.retry}</button>
-              <Link href="/workspace">{t.back} →</Link>
+              <Link href={projectHref("/workspace", currentProjectId)}>{t.back} →</Link>
             </div>
           </div>
         ) : locked ? (
@@ -129,7 +144,7 @@ export default function HandoverClient() {
             <span>05</span>
             <h2>{t.locked}</h2>
             <p>{t.lockedBody}</p>
-            <Link href="/workspace">{t.back} →</Link>
+            <Link href={projectHref("/workspace", currentProjectId)}>{t.back} →</Link>
           </div>
         ) : (
           <div className="handover-content">
@@ -172,7 +187,7 @@ export default function HandoverClient() {
               ) : <div className="handover-empty">{t.noFiles}</div>}
             </section>
 
-            <Link className="handover-back" href="/workspace">{t.back} →</Link>
+            <Link className="handover-back" href={projectHref("/workspace", currentProjectId)}>{t.back} →</Link>
           </div>
         )}
       </section>
