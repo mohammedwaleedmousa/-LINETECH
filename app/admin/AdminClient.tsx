@@ -140,7 +140,13 @@ export default function AdminClient() {
     if (!response.ok || !payload?.ok) throw new Error("Could not load projects.");
     const rows = Array.isArray(payload.projects) ? payload.projects as ProjectRow[] : [];
     setProjects(rows);
-    setSelectedId(current => current || rows[0]?.id || "");
+    setSelectedId(current => {
+      if (current) return current;
+      const requested = typeof window !== "undefined"
+        ? new URLSearchParams(window.location.search).get("project") || ""
+        : "";
+      return rows.some(project => project.id === requested) ? requested : rows[0]?.id || "";
+    });
   }, []);
 
   const loadUsers = useCallback(async () => {
