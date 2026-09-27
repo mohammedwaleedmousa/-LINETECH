@@ -218,6 +218,10 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const rows=await safeJson(response) as Record<string,any>[]|null;
     if(!response.ok) return json({ok:false},response.status,session.setCookies);
     const profile=Array.isArray(rows)?rows[0]||null:null;
+    const userMetadata=
+      session.user.user_metadata && typeof session.user.user_metadata==="object"
+        ? session.user.user_metadata as Record<string,unknown>
+        : {};
 
     return json({
       ok:true,
@@ -229,9 +233,9 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
         lastSignInAt:session.user.last_sign_in_at||null,
         role:session.user.app_metadata?.role||"client",
         profile:{
-          fullName:profile?.full_name||session.user.user_metadata?.full_name||"",
-          company:profile?.company||session.user.user_metadata?.company||"",
-          phone:profile?.phone||session.user.user_metadata?.phone||"",
+          fullName:profile?.full_name||String(userMetadata.full_name||""),
+          company:profile?.company||String(userMetadata.company||""),
+          phone:profile?.phone||String(userMetadata.phone||""),
           updatedAt:profile?.updated_at||null,
         },
       },
