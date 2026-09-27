@@ -291,3 +291,100 @@ body:has(.page-projects) .global-site-nav{
     animation:none!important;
   }
 }
+
+
+/* Mobile hero rhythm — match the homepage: copy breathes, projects sit along the lower edge. */
+@media(max-width:620px){
+  .page-projects>section:first-child,
+  .page-projects>section:first-child>[class*="heroShell"]{
+    min-height:100svh!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]{
+    width:100%!important;
+    padding-top:132px!important;
+    padding-right:16px!important;
+    padding-bottom:34px!important;
+    padding-left:16px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:flex-start!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroCopy"]{
+    width:100%!important;
+    max-width:none!important;
+    align-self:stretch!important;
+  }
+
+  .page-projects>section:first-child [class*="kicker"]{
+    margin-bottom:22px!important;
+  }
+
+  .page-projects>section:first-child h1{
+    max-width:10.5ch!important;
+    font-size:clamp(46px,13vw,56px)!important;
+    line-height:1.04!important;
+  }
+
+  html[dir="rtl"] .page-projects>section:first-child h1{
+    line-height:1.16!important;
+  }
+
+  .page-projects>section:first-child [class*="heroLead"]{
+    max-width:34rem!important;
+    margin-top:26px!important;
+    line-height:1.85!important;
+  }
+
+  .page-projects>section:first-child [class*="heroActions"]{
+    width:100%!important;
+    max-width:none!important;
+    margin-top:30px!important;
+    gap:12px!important;
+  }
+
+  .page-projects>section:first-child [class*="heroActions"] a{
+    min-height:52px!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]{
+    width:100%!important;
+    max-width:none!important;
+    align-self:stretch!important;
+    margin-top:auto!important;
+    padding-top:24px!important;
+    grid-template-columns:repeat(3,minmax(0,1fr))!important;
+    gap:0!important;
+    border-top:1px solid rgba(255,255,255,.075)!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]>div{
+    min-width:0!important;
+    padding:0 14px!important;
+    border-inline-start:1px solid #18222d!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"]>div:first-child{
+    padding-inline-start:0!important;
+    border-inline-start:0!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"] span{
+    margin-bottom:7px!important;
+    font-size:10px!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"] strong{
+    font-size:12px!important;
+    line-height:1.5!important;
+    overflow-wrap:anywhere!important;
+  }
+
+  .page-projects>section:first-child>[class*="heroShell"]>[class*="heroIndex"] small{
+    margin-top:5px!important;
+    font-size:8px!important;
+    line-height:1.45!important;
+    white-space:normal!important;
+  }
+}
