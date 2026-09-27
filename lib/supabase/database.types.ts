@@ -137,6 +137,7 @@ export type Database = {
           id: string
           kind: Database["public"]["Enums"]["message_kind"]
           sender_id: string
+          sender_role: string
           text: string | null
         }
         Insert: {
@@ -147,6 +148,7 @@ export type Database = {
           id?: string
           kind?: Database["public"]["Enums"]["message_kind"]
           sender_id: string
+          sender_role?: string
           text?: string | null
         }
         Update: {
@@ -157,6 +159,7 @@ export type Database = {
           id?: string
           kind?: Database["public"]["Enums"]["message_kind"]
           sender_id?: string
+          sender_role?: string
           text?: string | null
         }
         Relationships: [
@@ -171,8 +174,10 @@ export type Database = {
       }
       notifications: {
         Row: {
+          action_kind: string
           body: string | null
           created_at: string
+          destination: string
           id: string
           project_id: string | null
           read_at: string | null
@@ -180,8 +185,10 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          action_kind?: string
           body?: string | null
           created_at?: string
+          destination?: string
           id?: string
           project_id?: string | null
           read_at?: string | null
@@ -189,8 +196,10 @@ export type Database = {
           user_id: string
         }
         Update: {
+          action_kind?: string
           body?: string | null
           created_at?: string
+          destination?: string
           id?: string
           project_id?: string | null
           read_at?: string | null
@@ -377,6 +386,7 @@ export type Database = {
           service: string
           stage: string
           status: Database["public"]["Enums"]["project_request_status"]
+          submission_key: string | null
           submitted_at: string
           timing: string | null
           updated_at: string
@@ -400,6 +410,7 @@ export type Database = {
           service: string
           stage: string
           status?: Database["public"]["Enums"]["project_request_status"]
+          submission_key?: string | null
           submitted_at?: string
           timing?: string | null
           updated_at?: string
@@ -423,6 +434,7 @@ export type Database = {
           service?: string
           stage?: string
           status?: Database["public"]["Enums"]["project_request_status"]
+          submission_key?: string | null
           submitted_at?: string
           timing?: string | null
           updated_at?: string
@@ -508,6 +520,7 @@ export type Database = {
           p_reference_links: string
           p_service: string
           p_stage: string
+          p_submission_key: string
           p_timing: string
         }
         Returns: Json
