@@ -227,6 +227,18 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     const data=await request.json().catch(()=>({})) as Record<string,any>;
     const fileId=boundedText(data.fileId,100);
     if(!fileId) return json({ok:false},400,admin.setCookies);
+
+    const currentResponse=await restFetch(
+      env,
+      `/project_files?select=*&id=eq.${encodeURIComponent(fileId)}&limit=1`,
+      admin.accessToken,
+    );
+    const currentRows=await safeJson(currentResponse) as Row[]|null;
+    const current=Array.isArray(currentRows)?currentRows[0]:null;
+    if(!currentResponse.ok||!current) {
+      return json({ok:false},currentResponse.ok?404:currentResponse.status,admin.setCookies);
+    }
+
     const update:Record<string,unknown>={};
     if(data.status!==undefined) {
       if(!fileStatuses.has(String(data.status))) return json({ok:false},400,admin.setCookies);
@@ -243,9 +255,43 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       method:"PATCH",headers:{Prefer:"return=representation"},body:JSON.stringify(update),
     });
     const rows=await safeJson(response) as Row[]|null;
-    return response.ok&&Array.isArray(rows)&&rows[0]
-      ? json({ok:true,file:rows[0]},200,admin.setCookies)
-      : json({ok:false},response.ok?404:response.status,admin.setCookies);
+    const file=response.ok&&Array.isArray(rows)?rows[0]:null;
+    if(!file) return json({ok:false},response.ok?404:response.status,admin.setCookies);
+
+    if(data.status!==undefined && String(current.status)!==String(file.status)) {
+      const projectResponse=await restFetch(
+        env,
+        `/projects?select=client_id&id=eq.${encodeURIComponent(String(file.project_id))}&limit=1`,
+        admin.accessToken,
+      );
+      const projectRows=await safeJson(projectResponse) as Row[]|null;
+      const project=Array.isArray(projectRows)?projectRows[0]:null;
+      await Promise.all([
+        restFetch(env,"/project_activity",admin.accessToken,{
+          method:"POST",
+          body:JSON.stringify({
+            project_id:file.project_id,
+            actor_id:admin.user.id,
+            event_type:"file_status_updated",
+            title:"Project file status updated",
+            detail:`${file.file_name}: ${file.status}`,
+          }),
+        }).catch(()=>null),
+        project?.client_id
+          ? restFetch(env,"/notifications",admin.accessToken,{
+              method:"POST",
+              body:JSON.stringify({
+                user_id:project.client_id,
+                project_id:file.project_id,
+                title:"Project file updated",
+                body:`${file.file_name}: ${file.status}`,
+              }),
+            }).catch(()=>null)
+          : Promise.resolve(null),
+      ]);
+    }
+
+    return json({ok:true,file},200,admin.setCookies);
   }
 
   if(path==="/api/admin/handover") {
