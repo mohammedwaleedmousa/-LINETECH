@@ -22,6 +22,13 @@ function loginRedirect(request:Request,path:string,cookies:string[] = []) {
   return withCookies(Response.redirect(login.toString(),302),cookies);
 }
 
+function adminLoginRedirect(request:Request,path:string,cookies:string[] = [],denied=false) {
+  const login=new URL("/admin/login",request.url);
+  login.searchParams.set("next",path);
+  if(denied) login.searchParams.set("denied","1");
+  return withCookies(Response.redirect(login.toString(),302),cookies);
+}
+
 function shouldLogRequest(request:Request,path:string,status:number) {
   return path.startsWith("/api/")
     || path==="/admin"
@@ -90,13 +97,21 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
     return response || new Response("Not found",{status:404});
   }
 
+  if(path==="/admin/login") {
+    const session=await resolveSession(request,env);
+    if(session?.user.app_metadata?.role==="admin") {
+      return withCookies(Response.redirect(new URL("/admin",request.url).toString(),302),session.setCookies);
+    }
+    return withCookies(await env.ASSETS.fetch(request),session?.setCookies||[]);
+  }
+
   if(path==="/admin" || path.startsWith("/admin/")) {
     const session=await resolveSession(request,env);
     if(!session) {
-      return loginRedirect(request,url.pathname+url.search,clearCookies());
+      return adminLoginRedirect(request,url.pathname+url.search,clearCookies());
     }
     if(session.user.app_metadata?.role!=="admin") {
-      return withCookies(Response.redirect(new URL("/workspace",request.url).toString(),302),session.setCookies);
+      return adminLoginRedirect(request,url.pathname+url.search,session.setCookies,true);
     }
     return withCookies(await env.ASSETS.fetch(request),session.setCookies);
   }
@@ -110,6 +125,9 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
     const session=await resolveSession(request,env);
     if(!session) {
       return loginRedirect(request,url.pathname+url.search,clearCookies());
+    }
+    if(session.user.app_metadata?.role==="admin") {
+      return withCookies(Response.redirect(new URL("/admin",request.url).toString(),302),session.setCookies);
     }
     return withCookies(await env.ASSETS.fetch(request),session.setCookies);
   }
