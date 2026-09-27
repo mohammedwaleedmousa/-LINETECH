@@ -57,3 +57,6 @@
   .handover-panel-actions{display:grid;grid-template-columns:1fr}
   .handover-panel-actions button,.handover-panel-actions a{width:100%}
 }
+
+.handover-project-switcher{margin-top:28px;max-width:430px}
+@media(max-width:620px){.handover-project-switcher{margin-top:24px;max-width:none}}
