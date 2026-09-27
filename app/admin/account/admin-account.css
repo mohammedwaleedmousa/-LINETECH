@@ -1,0 +1,13 @@
+.admin-account-page{width:min(1500px,100%);margin:0 auto;padding:52px 42px 80px}
+.admin-account-avatar{width:64px;height:64px;display:grid;place-items:center;border:1px solid #24405d;border-radius:16px;background:#08131e;color:#b7d6f8;font-size:20px;font-weight:650;letter-spacing:.08em}
+.admin-account-notice{margin-top:18px;padding:13px 15px;border:1px solid #1f405f;border-radius:9px;background:#07131e;color:#a9c9ea;font-size:10px}
+.admin-account-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin-top:24px}
+.admin-account-form{display:grid;gap:14px;margin-top:20px}.admin-account-form label{display:grid;gap:7px}.admin-account-form label span,.admin-account-current span,.admin-account-session span,.admin-account-reference span{color:#65798b;font-size:8px;letter-spacing:.11em;text-transform:uppercase}
+.admin-account-form input{width:100%;min-height:46px;padding:0 13px;border:1px solid #1d3144;border-radius:9px;background:#050b11;color:#eef3f8;font:inherit;font-size:12px;outline:none}.admin-account-form input:focus{border-color:#4b83c7}
+.admin-account-form button,.admin-account-session-actions button{min-height:44px;padding:0 14px;border:1px solid #264560;border-radius:9px;background:#09131d;color:#b8d4f0;font:inherit;font-size:10px;cursor:pointer}.admin-account-form button:disabled,.admin-account-session-actions button:disabled{opacity:.5;cursor:default}
+.admin-account-current{display:grid;gap:7px;margin-top:20px;padding-bottom:18px;border-bottom:1px solid #172431}.admin-account-current strong{font-size:14px;overflow-wrap:anywhere}.admin-account-current small{color:#85b89a;font-size:9px}
+.admin-account-session{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:20px;background:#172431;border:1px solid #172431}.admin-account-session>div{padding:16px;background:#071019}.admin-account-session strong{display:block;margin-top:7px;font-size:11px;overflow-wrap:anywhere}
+.admin-account-session-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}.admin-account-session-actions .is-danger{border-color:#5a3038;color:#e6a4ae}
+.admin-account-reference{display:grid;gap:6px;margin-top:18px;padding:18px 20px;border:1px solid #172431;border-radius:12px;background:#061019}.admin-account-reference strong{font-size:12px;overflow-wrap:anywhere}.admin-account-reference small{color:#6d7e8e;font-size:9px}
+@media(max-width:900px){.admin-account-page{padding:32px 20px 64px}.admin-account-grid{grid-template-columns:1fr}}
+@media(max-width:620px){.admin-account-page{padding:26px 14px 54px}.admin-account-session{grid-template-columns:1fr}.admin-account-session-actions{display:grid}.admin-account-form input{font-size:16px}.admin-account-avatar{width:54px;height:54px}}
