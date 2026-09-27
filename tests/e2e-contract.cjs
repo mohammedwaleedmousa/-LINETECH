@@ -72,6 +72,11 @@ assert.ok(admin.includes("project_activity"));
 assert.ok(admin.includes("notifications"));
 assert.ok(admin.includes("next_action_required"));
 assert.ok(admin.includes("file_status_updated"));
+assert.ok(admin.includes('action_kind:"message"'));
+assert.ok(admin.includes('destination:"/chat"'));
+assert.ok(admin.includes('destination:"/handover"'));
+assert.ok(schema.includes("action_kind text not null default 'project_update'"));
+assert.ok(schema.includes("destination text not null default '/workspace'"));
 
 // 6) Final handover exposes completed items and ready/approved delivery files.
 assert.ok(handover.includes("/api/handover"));
