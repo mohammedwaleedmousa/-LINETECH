@@ -31,17 +31,29 @@ async function main() {
   assert.equal(payload?.backend, "linetech-worker");
   assert.equal(payload?.supabaseAuth, true);
 
-  const admin = await fetch(`${base}/admin`, { redirect: "manual" });
-  assert.ok([301,302,303,307,308].includes(admin.status), `Expected protected admin redirect, got ${admin.status}`);
-  const adminLocation = admin.headers.get("location") || "";
-  assert.ok(adminLocation.includes("/login"), "Unauthenticated /admin must redirect to login");
+  for (const protectedPath of ["/admin","/workspace","/chat","/handover"]) {
+    const response = await fetch(`${base}${protectedPath}`, { redirect: "manual" });
+    assert.ok(
+      [301,302,303,307,308].includes(response.status),
+      `Expected protected ${protectedPath} redirect, got ${response.status}`,
+    );
+    const location = response.headers.get("location") || "";
+    assert.ok(location.includes("/login"), `Unauthenticated ${protectedPath} must redirect to login`);
+    assert.ok(
+      location.includes(encodeURIComponent(protectedPath)) || location.includes(`next=${protectedPath}`),
+      `Protected ${protectedPath} should preserve its return path`,
+    );
+  }
 
-  const workspace = await fetch(`${base}/workspace`, { redirect: "manual" });
-  assert.ok([301,302,303,307,308].includes(workspace.status), `Expected protected workspace redirect, got ${workspace.status}`);
-  const workspaceLocation = workspace.headers.get("location") || "";
-  assert.ok(workspaceLocation.includes("/login"), "Unauthenticated /workspace must redirect to login");
+  for (const publicPath of ["/privacy","/terms","/start"]) {
+    const response = await fetch(`${base}${publicPath}`, { redirect: "manual" });
+    assert.ok(
+      response.status >= 200 && response.status < 400,
+      `Public route ${publicPath} returned ${response.status}`,
+    );
+  }
 
-  console.log("PASS: LINETECH production health, security headers and protected-route redirects");
+  console.log("PASS: LINETECH production health, security headers, public routes and protected redirects");
 }
 
 main().catch(error => {
