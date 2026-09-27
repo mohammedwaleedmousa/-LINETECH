@@ -13,6 +13,10 @@ const client = read("worker/client.ts");
 const admin = read("worker/admin.ts");
 const auth = read("worker/auth.ts");
 const schema = read("supabase/schema.sql");
+const workerIndex = read("worker/index.ts");
+const siteSurface = read("app/SiteSurface.tsx");
+const clientPortalShell = read("app/ClientPortalShell.tsx");
+const adminShell = read("app/admin/AdminShell.tsx");
 
 // 1) Account/session layer.
 for (const endpoint of [
@@ -28,6 +32,16 @@ assert.ok(auth.includes('path==="/api/account"'));
 assert.ok(auth.includes('path==="/api/account/email"'));
 assert.ok(auth.includes('path==="/api/auth/logout-others"'));
 assert.ok(auth.includes("/profiles?select="));
+
+// 1b) Admin and client experiences remain separate surfaces.
+assert.ok(workerIndex.includes("adminLoginRedirect"));
+assert.ok(workerIndex.includes('app_metadata?.role==="admin"'));
+assert.ok(workerIndex.includes('app_metadata?.role!=="admin"'));
+assert.ok(siteSurface.includes("ClientPortalShell"));
+assert.ok(siteSurface.includes("if (admin) return"));
+assert.ok(clientPortalShell.includes("/api/notifications"));
+assert.ok(adminShell.includes("/admin/login"));
+assert.ok(adminShell.includes("/admin/account"));
 
 // 2) Project intake -> atomic request/project/conversation bootstrap.
 assert.ok(intake.includes("/api/project-request"));
