@@ -320,6 +320,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     }
 
     if(request.method==="PATCH") {
+      if(!context.conversation?.id) return json({ok:false},409,session.setCookies);
       if(!(await rateLimitAllowed(
         env.CHAT_RATE_LIMITER,
         `chat:${String(session.user.id||"unknown")}`,
@@ -335,7 +336,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
       const response=await restFetch(
         env,
-        `/messages?id=eq.${encodeURIComponent(id)}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&sender_role=eq.client&select=*`,
+        `/messages?id=eq.${encodeURIComponent(id)}&conversation_id=eq.${encodeURIComponent(String(context.conversation.id))}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&sender_role=eq.client&select=*`,
         session.accessToken,
         {
           method:"PATCH",
@@ -351,6 +352,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
     }
 
     if(request.method==="DELETE") {
+      if(!context.conversation?.id) return json({ok:false},409,session.setCookies);
       if(!(await rateLimitAllowed(
         env.CHAT_RATE_LIMITER,
         `chat:${String(session.user.id||"unknown")}`,
@@ -370,7 +372,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
       const response=await restFetch(
         env,
-        `/messages?id=eq.${encodeURIComponent(id)}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&sender_role=eq.client`,
+        `/messages?id=eq.${encodeURIComponent(id)}&conversation_id=eq.${encodeURIComponent(String(context.conversation.id))}&sender_id=eq.${encodeURIComponent(String(session.user.id))}&sender_role=eq.client`,
         session.accessToken,
         {method:"PATCH",body:JSON.stringify({text:null,deleted_at:new Date().toISOString()})},
       );
