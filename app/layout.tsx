@@ -96,6 +96,13 @@ export const viewport: Viewport = {
 const languageBootstrapScript = `
 (() => {
   try {
+    const path = window.location.pathname.replace(/\\/+$/, '') || '/';
+    if (path === '/admin' || path.startsWith('/admin/')) {
+      document.documentElement.lang = 'en';
+      document.documentElement.dir = 'ltr';
+      document.documentElement.dataset.language = 'en';
+      return;
+    }
     const stored = localStorage.getItem('linetech-language-v1');
     const cookieMatch = document.cookie.match(/(?:^|; )linetech-language-v1=(ar|en)(?:;|$)/);
     const cookieLanguage = cookieMatch ? cookieMatch[1] : null;
