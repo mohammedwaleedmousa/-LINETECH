@@ -75,3 +75,68 @@ html[dir="rtl"] .login-inline-action{text-align:center}
     padding:66px 0 34px;
   }
 }
+
+
+/* Passwordless email OTP sign-in. */
+.login-code-destination{
+  margin:0 0 18px;
+  padding:12px 14px;
+  border:1px solid rgba(255,255,255,.09);
+  border-radius:8px;
+  background:#06090c;
+}
+.login-code-destination span{
+  display:block;
+  margin-bottom:6px;
+  color:#708091;
+  font-size:9px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+}
+.login-code-destination strong{
+  display:block;
+  color:#dce6f0;
+  font-size:12px;
+  font-weight:560;
+  overflow-wrap:anywhere;
+}
+.login-form .login-otp-code{
+  width:100%;
+  min-height:58px;
+  padding:0 14px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:8px;
+  background:#06090c;
+  color:#fff;
+  font:inherit;
+  font-size:24px!important;
+  font-weight:650;
+  letter-spacing:.32em;
+  text-align:center;
+  font-variant-numeric:tabular-nums;
+  outline:none;
+}
+.login-form .login-otp-code:focus{
+  border-color:#3882f6;
+  box-shadow:0 0 0 3px rgba(56,130,246,.08);
+}
+.login-code-hint{
+  margin:-5px 0 18px;
+  color:#778795;
+  font-size:10px;
+  line-height:1.6;
+}
+.login-code-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+.login-code-actions .login-inline-action{
+  margin-top:8px;
+}
+html[dir="rtl"] .login-form .login-otp-code{
+  direction:ltr;
+}
+@media(max-width:620px){
+  .login-form .login-otp-code{min-height:56px;font-size:23px!important}
+}
