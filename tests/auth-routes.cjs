@@ -270,6 +270,8 @@ assert.ok(admin.includes("Project file updated"));
 assert.ok(admin.includes('action_kind:"message"'));
 assert.ok(admin.includes('destination:"/chat"'));
 assert.ok(admin.includes('destination:handoverReady?"/handover":"/workspace"'));
+assert.ok(admin.includes('title:"Handover updated"'));
+assert.ok(admin.includes('title:item.completed?"Handover item completed":"Handover updated"'));
 assert.ok(adminClient.includes('name="notifyClient" type="checkbox" defaultChecked'));
 for (const endpoint of [
   "/api/admin/projects",
