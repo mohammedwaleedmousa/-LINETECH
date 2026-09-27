@@ -4,6 +4,8 @@ import {
   encodeObjectPath,
   formatTime,
   json,
+  rateLimitAllowed,
+  rateLimitResponse,
   requestTooLarge,
   requireAdmin,
   restFetch,
@@ -459,6 +461,138 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         },
       },200,admin.setCookies);
     }
+  }
+
+  if(path==="/api/admin/chat/upload" && request.method==="POST") {
+    if(!(await rateLimitAllowed(
+      env.UPLOAD_RATE_LIMITER,
+      `admin-chat-upload:${String(admin.user.id||"unknown")}`,
+    ))) {
+      return rateLimitResponse(admin.setCookies);
+    }
+    if(requestTooLarge(request,16*1024*1024)) return json({ok:false},413,admin.setCookies);
+
+    const form=await request.formData();
+    const projectId=String(form.get("projectId")||"").trim();
+    const file=form.get("file");
+    const requestedKind=String(form.get("kind")||"");
+    const duration=Number(form.get("duration")||"0");
+    if(!projectId || !(file instanceof File)) return json({ok:false},400,admin.setCookies);
+
+    const kind=requestedKind==="image"||requestedKind==="audio"||requestedKind==="document"
+      ? requestedKind
+      : file.type.startsWith("image/")?"image":file.type.startsWith("audio/")?"audio":"document";
+    const validated=await validateUpload(file,kind);
+    if(!validated.ok) return json({ok:false},validated.status,admin.setCookies);
+
+    const [projectResponse,conversationResponse]=await Promise.all([
+      restFetch(env,`/projects?select=id,client_id&id=eq.${encodeURIComponent(projectId)}&limit=1`,admin.accessToken),
+      restFetch(env,`/conversations?select=id,project_id&project_id=eq.${encodeURIComponent(projectId)}&limit=1`,admin.accessToken),
+    ]);
+    const [projectRows,conversationRows]=await Promise.all([
+      safeJson(projectResponse) as Promise<Row[]|null>,
+      safeJson(conversationResponse) as Promise<Row[]|null>,
+    ]);
+    const project=Array.isArray(projectRows)?projectRows[0]:null;
+    const conversation=Array.isArray(conversationRows)?conversationRows[0]:null;
+    if(!projectResponse.ok||!conversationResponse.ok||!project?.id||!conversation?.id) {
+      return json({ok:false},404,admin.setCookies);
+    }
+
+    const objectPath=`${projectId}/${crypto.randomUUID()}-${safeName(file.name||kind)}`;
+    const upload=await storageFetch(
+      env,
+      `/object/project-files/${encodeObjectPath(objectPath)}`,
+      admin.accessToken,
+      {
+        method:"POST",
+        headers:{"Content-Type":validated.mime,"x-upsert":"false"},
+        body:file,
+      },
+    );
+    if(!upload.ok) return json({ok:false},upload.status,admin.setCookies);
+
+    const messageResponse=await restFetch(env,"/messages?select=*",admin.accessToken,{
+      method:"POST",
+      headers:{Prefer:"return=representation"},
+      body:JSON.stringify({
+        conversation_id:conversation.id,
+        sender_id:admin.user.id,
+        sender_role:"company",
+        kind,
+        text:null,
+      }),
+    });
+    const messageRows=await safeJson(messageResponse) as Row[]|null;
+    const message=Array.isArray(messageRows)?messageRows[0]:null;
+    if(!messageResponse.ok||!message) {
+      await storageFetch(
+        env,
+        `/object/project-files/${encodeObjectPath(objectPath)}`,
+        admin.accessToken,
+        {method:"DELETE"},
+      ).catch(()=>null);
+      return json({ok:false},messageResponse.status||500,admin.setCookies);
+    }
+
+    const attachmentResponse=await restFetch(env,"/message_attachments?select=*",admin.accessToken,{
+      method:"POST",
+      headers:{Prefer:"return=representation"},
+      body:JSON.stringify({
+        message_id:message.id,
+        storage_bucket:"project-files",
+        storage_path:objectPath,
+        file_name:file.name||safeName(file.name),
+        mime_type:validated.mime,
+        file_size:file.size,
+        duration_seconds:kind==="audio"&&Number.isFinite(duration)?Math.max(0,Math.round(duration)):null,
+      }),
+    });
+    const attachmentRows=await safeJson(attachmentResponse) as Row[]|null;
+    const attachment=Array.isArray(attachmentRows)?attachmentRows[0]:null;
+    if(!attachmentResponse.ok||!attachment) {
+      await Promise.all([
+        storageFetch(
+          env,
+          `/object/project-files/${encodeObjectPath(objectPath)}`,
+          admin.accessToken,
+          {method:"DELETE"},
+        ).catch(()=>null),
+        restFetch(
+          env,
+          `/messages?id=eq.${encodeURIComponent(String(message.id))}`,
+          admin.accessToken,
+          {method:"DELETE"},
+        ).catch(()=>null),
+      ]);
+      return json({ok:false},attachmentResponse.status||500,admin.setCookies);
+    }
+
+    if(project.client_id) {
+      await restFetch(env,"/notifications",admin.accessToken,{
+        method:"POST",
+        body:JSON.stringify({
+          user_id:project.client_id,
+          project_id:projectId,
+          title:kind==="image"?"New project image":kind==="audio"?"New voice message":"New project file",
+          body:file.name||undefined,
+        }),
+      }).catch(()=>null);
+    }
+
+    return json({ok:true,message:{
+      id:message.id,
+      sender:"company",
+      kind,
+      src:`/api/files/download?attachmentId=${encodeURIComponent(attachment.id)}`,
+      fileName:attachment.file_name||undefined,
+      fileSize:attachment.file_size??undefined,
+      fileType:attachment.mime_type||undefined,
+      duration:attachment.duration_seconds??undefined,
+      edited:false,
+      deleted:false,
+      time:formatTime(message.created_at),
+    }},200,admin.setCookies);
   }
 
   if(path==="/api/admin/users" && request.method==="GET") {
