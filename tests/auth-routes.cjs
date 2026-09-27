@@ -232,6 +232,7 @@ assert.ok(client.includes('/object/project-files/'));
 assert.ok(client.includes('{method:"DELETE"}'));
 assert.ok(client.includes('sender_role:"client"'));
 assert.ok(client.includes("sender_role=eq.client"));
+assert.ok(client.includes("conversation_id=eq."));
 assert.ok(admin.includes('validateUpload(file,"admin")'));
 assert.ok(admin.includes('requestTooLarge(request,26*1024*1024)'));
 assert.ok(admin.includes('requestTooLarge(request,64*1024)'));
@@ -252,7 +253,7 @@ assert.ok(handoverClient.includes("requestedProjectSuffix"));
 assert.ok(handoverClient.includes('projectHref("/workspace", currentProjectId)'));
 assert.ok(client.includes("category=in.(handover,deliverable)"));
 assert.ok(client.includes("status=in.(ready,approved)"));
-assert.ok(workspaceClient.includes('href="/handover"'));
+assert.ok(workspaceClient.includes('projectHref("/handover", currentProjectId)'));
 
 for (const file of [
   "app/admin/page.tsx",
