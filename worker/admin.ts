@@ -21,6 +21,10 @@ const requestStatuses=new Set(["submitted","reviewing","scoped","accepted","decl
 const fileStatuses=new Set(["in-progress","ready","review","approved"]);
 const categories=new Set(["brief","reference","deliverable","handover","other"]);
 
+function clientProjectPath(path:string,projectId:string) {
+  return `${path}?project=${encodeURIComponent(projectId)}`;
+}
+
 export async function handleAdminApi(request:Request,env:Env,path:string):Promise<Response|null> {
   if(!path.startsWith("/api/admin/")) return null;
   const admin=await requireAdmin(request,env);
@@ -162,7 +166,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
           title:textFields.notificationTitle||textFields.activityTitle||(handoverReady?"Project handover ready":"Project updated"),
           body:textFields.notificationBody||textFields.activityDetail||null,
           action_kind:handoverReady?"handover":"project_update",
-          destination:handoverReady?"/handover":"/workspace",
+          destination:clientProjectPath(handoverReady?"/handover":"/workspace",projectId),
         }),
       });
     }
@@ -227,9 +231,12 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         title:(category==="handover"||category==="deliverable")?"New delivery file":"New project file",
         body:file.name,
         action_kind:(category==="handover"||category==="deliverable")?"handover":"file",
-        destination:(category==="handover"||category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
-          ? "/handover"
-          : "/workspace",
+        destination:clientProjectPath(
+          (category==="handover"||category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
+            ? "/handover"
+            : "/workspace",
+          projectId,
+        ),
       })}),
     ]);
     return json({ok:true,file:{...record,href:`/api/files/download?fileId=${encodeURIComponent(record.id)}`}},200,admin.setCookies);
@@ -299,9 +306,12 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
                 title:(file.category==="handover"||file.category==="deliverable")?"Delivery file updated":"Project file updated",
                 body:`${file.file_name}: ${file.status}`,
                 action_kind:(file.category==="handover"||file.category==="deliverable")?"handover":"file",
-                destination:(file.category==="handover"||file.category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
-                  ? "/handover"
-                  : "/workspace",
+                destination:clientProjectPath(
+                  (file.category==="handover"||file.category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
+                    ? "/handover"
+                    : "/workspace",
+                  String(file.project_id),
+                ),
               }),
             }).catch(()=>null)
           : Promise.resolve(null),
@@ -355,7 +365,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
             title:"Handover updated",
             body:title,
             action_kind:"handover",
-            destination:"/handover",
+            destination:clientProjectPath("/handover",projectId),
           }),
         }).catch(()=>null);
       }
@@ -408,7 +418,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
             title:item.completed?"Handover item completed":"Handover updated",
             body:item.title,
             action_kind:"handover",
-            destination:"/handover",
+            destination:clientProjectPath("/handover",String(item.project_id)),
           }),
         }).catch(()=>null);
       }
@@ -506,7 +516,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
             title:"New project message",
             body:text.slice(0,180),
             action_kind:"message",
-            destination:"/chat",
+            destination:clientProjectPath("/chat",projectId),
           }),
         });
       }
