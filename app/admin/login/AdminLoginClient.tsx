@@ -155,7 +155,6 @@ export default function AdminLoginClient() {
     <main className="admin-login-page">
       <section className="admin-login-brand">
         <div className="admin-login-wordmark">
-          <span className="admin-app-mark"><i/><b/></span>
           <span><strong>LINETECH</strong><small>ADMINISTRATION</small></span>
         </div>
         <div className="admin-login-brand-copy">
