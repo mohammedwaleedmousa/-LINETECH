@@ -49,6 +49,13 @@ assert.ok(workerIndex.includes("adminLoginRedirect"));
 assert.ok(workerIndex.includes('app_metadata?.role==="admin"'));
 assert.ok(workerIndex.includes('new URL("/admin",request.url)'));
 assert.ok(workerIndex.includes('path==="/handover"'));
+const clientPortalRouteBlock = workerIndex.slice(
+  workerIndex.indexOf('path==="/workspace"'),
+  workerIndex.indexOf('return env.ASSETS.fetch(request);')
+);
+assert.ok(clientPortalRouteBlock.includes("loginRedirect"));
+assert.ok(!clientPortalRouteBlock.includes('Response.redirect(new URL("/admin"'));
+assert.ok(!clientPortalRouteBlock.includes('app_metadata?.role==="admin"'));
 assert.ok(workerIndex.includes("withSecurityHeaders"));
 assert.ok(workerIndex.includes('event:"request"'));
 assert.ok(workerIndex.includes('event:"worker_error"'));
