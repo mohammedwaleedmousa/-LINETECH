@@ -4,6 +4,7 @@ import Link from "next/link";
 import Localized, { useLanguage, setLanguage } from "./Localized";
 import { usePathname, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
@@ -118,6 +119,8 @@ export default function SiteNav() {
   const language = useLanguage();
   const inputRef = useRef<HTMLInputElement>(null);
   const notificationRef = useRef<HTMLDivElement>(null);
+  const mobileNotificationRef = useRef<HTMLDivElement>(null);
+  const [mobileNotifications, setMobileNotifications] = useState(false);
 
   useEffect(() => {
     setOpen(false);
@@ -125,6 +128,14 @@ export default function SiteNav() {
     setNotificationsOpen(false);
     setQuery("");
   }, [pathname]);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 1100px)");
+    const sync = () => setMobileNotifications(media.matches);
+    sync();
+    media.addEventListener?.("change", sync);
+    return () => media.removeEventListener?.("change", sync);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -195,7 +206,12 @@ export default function SiteNav() {
     if (!notificationsOpen) return;
     const onPointerDown = (event: MouseEvent) => {
       const target = event.target as Node | null;
-      if (target && notificationRef.current && !notificationRef.current.contains(target)) {
+      if (
+        target
+        && notificationRef.current
+        && !notificationRef.current.contains(target)
+        && !mobileNotificationRef.current?.contains(target)
+      ) {
         setNotificationsOpen(false);
       }
     };
@@ -340,7 +356,7 @@ export default function SiteNav() {
                 <BellIcon/>
                 {unreadCount > 0 && <span className="notification-badge">{unreadCount > 9 ? "9+" : unreadCount}</span>}
               </button>
-              {notificationsOpen && (
+              {notificationsOpen && !mobileNotifications && (
                 <div className="notification-panel" role="dialog" aria-label={notificationsLabel}>
                   <div className="notification-panel-head">
                     <div>
@@ -396,21 +412,6 @@ export default function SiteNav() {
           })}
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
-        {authChecked && signedIn && (
-          <button
-            className="mobile-notifications-link"
-            type="button"
-            onClick={() => {
-              setOpen(false);
-              setSearchOpen(false);
-              setNotificationsOpen(true);
-              void loadNotifications();
-            }}
-          >
-            <span>{language === "ar" ? "الإشعارات" : "Notifications"}</span>
-            <b>{unreadCount > 0 ? (unreadCount > 9 ? "9+" : unreadCount) : "→"}</b>
-          </button>
-        )}
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>
         <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>
         {authChecked && signedIn && authRole !== "admin" && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
@@ -418,6 +419,52 @@ export default function SiteNav() {
           ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
           : <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>{loginLabel} <span>↗</span></Link>}
       </div>
+
+      {notificationsOpen && mobileNotifications && typeof document !== "undefined" && createPortal(
+        <div
+          className="notification-panel notification-panel-mobile"
+          role="dialog"
+          aria-label={notificationsLabel}
+          ref={mobileNotificationRef}
+        >
+          <div className="notification-panel-head">
+            <div>
+              <strong>{notificationsLabel}</strong>
+              <span>{unreadCount ? `${unreadCount} ${unreadLabel}` : "—"}</span>
+            </div>
+            <div className="notification-mobile-head-actions">
+              {unreadCount > 0 && <button type="button" onClick={() => void markAllNotificationsRead()}>{markAllLabel}</button>}
+              <button type="button" className="notification-mobile-close" onClick={() => setNotificationsOpen(false)} aria-label="Close notifications">×</button>
+            </div>
+          </div>
+          <div className="notification-list">
+            {notificationsLoading && !notifications.length ? (
+              <p className="notification-loading">•••</p>
+            ) : notifications.length ? notifications.slice(0, 12).map(notification => (
+              <button
+                type="button"
+                key={notification.id}
+                className={`notification-item ${notification.read_at ? "" : "is-unread"}`}
+                onClick={() => openNotification(notification)}
+              >
+                <i aria-hidden="true"/>
+                <span>
+                  <em>{notificationKindLabel(notification.action_kind, language)}</em>
+                  <strong data-no-translate>{notification.title}</strong>
+                  {notification.body && <p data-no-translate>{notification.body}</p>}
+                  <small>{formatNotificationTime(notification.created_at, language)} · {language === "ar" ? "فتح" : "Open"} →</small>
+                </span>
+              </button>
+            )) : (
+              <p className="notification-empty">{noNotificationsLabel}</p>
+            )}
+          </div>
+          <Link className="notification-panel-foot" href="/workspace" onClick={() => setNotificationsOpen(false)}>
+            {workspaceNotificationsLabel}<span>→</span>
+          </Link>
+        </div>,
+        document.body
+      )}
 
       {searchOpen && (
         <div className="site-search-overlay" role="presentation" onMouseDown={(event) => { if (event.target === event.currentTarget) setSearchOpen(false); }}>
