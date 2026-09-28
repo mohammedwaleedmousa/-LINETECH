@@ -235,7 +235,7 @@ export default function AdminClient() {
       try {
         const session = await fetch("/api/auth/session", { cache: "no-store" });
         if (session.status === 401) {
-          window.location.assign("/login?next=/admin");
+          window.location.assign(`/admin/login?next=${encodeURIComponent(window.location.pathname + window.location.search)}`);
           return;
         }
         const sessionPayload = await readJson(session);
