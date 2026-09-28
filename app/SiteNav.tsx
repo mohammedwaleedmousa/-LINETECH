@@ -130,15 +130,10 @@ export default function SiteNav() {
   }, [pathname]);
 
   useEffect(() => {
-    if (typeof window.matchMedia !== "function") {
-      setMobileNotifications(false);
-      return;
-    }
-    const media = window.matchMedia("(max-width: 1100px)");
-    const sync = () => setMobileNotifications(media.matches);
+    const sync = () => setMobileNotifications(window.innerWidth <= 1100);
     sync();
-    media.addEventListener?.("change", sync);
-    return () => media.removeEventListener?.("change", sync);
+    window.addEventListener("resize", sync);
+    return () => window.removeEventListener("resize", sync);
   }, []);
 
   useEffect(() => {
