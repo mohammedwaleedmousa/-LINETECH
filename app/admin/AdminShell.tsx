@@ -67,9 +67,8 @@ export default function AdminShell({ children }: { children: ReactNode }) {
   return (
     <div className="admin-shell">
       <aside className="admin-app-sidebar">
-        <Link className="admin-app-brand" href="/admin">
-          <span className="admin-app-mark"><i/><b/></span>
-          <span><strong>LINETECH</strong><small>ADMIN OS</small></span>
+        <Link className="admin-app-brand" href="/admin" aria-label="LINETECH Admin">
+          <span className="admin-app-wordmark"><strong>LINETECH</strong><small>ADMIN OS</small></span>
         </Link>
 
         <nav className="admin-app-nav" aria-label="Admin navigation">
