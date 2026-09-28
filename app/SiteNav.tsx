@@ -218,22 +218,19 @@ export default function SiteNav() {
     };
   }, [searchOpen]);
 
-  const visibleNavItems = authRole === "admin" ? items.filter(item => item.href !== "/chat") : items;
-  const visibleSearchItems = authRole === "admin"
-    ? searchItems.filter(item => !["/chat","/workspace","/account"].includes(item.href))
-    : searchItems;
+  const visibleNavItems = items;
+  const visibleSearchItems = searchItems;
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
     if (!q) return visibleSearchItems.slice(0, 5);
     return visibleSearchItems.filter((item) => `${item.title} ${item.meta} ${item.keywords}`.toLowerCase().includes(q)).slice(0, 6);
-  }, [query, authRole]);
+  }, [query]);
 
   const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href);
   const workspaceLabel = language === "ar" ? "مساحة العمل" : "Workspace";
   const loginLabel = language === "ar" ? "تسجيل الدخول" : "Login";
   const accountLabel = language === "ar" ? "الحساب" : "Account";
-  const adminLabel = language === "ar" ? "لوحة الإدارة" : "Admin";
   const logoutLabel = language === "ar" ? "تسجيل خروج" : "Logout";
   const startLabel = language === "ar" ? "ابدأ خطك" : "Start Your Line";
   const notificationsLabel = language === "ar" ? "الإشعارات" : "Notifications";
@@ -382,9 +379,7 @@ export default function SiteNav() {
             </div>
           )}
           <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>
-          {authChecked && authRole === "admin"
-            ? <Link className="nav-login desktop-login" href="/admin" prefetch>{adminLabel} <span>→</span></Link>
-            : <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>}
+          <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>
           {authChecked && signedIn && authRole !== "admin" && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
           {authChecked && signedIn
             ? <Link className="nav-login desktop-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
@@ -401,10 +396,23 @@ export default function SiteNav() {
           })}
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
+        {authChecked && signedIn && authRole !== "admin" && (
+          <button
+            className="mobile-notifications-link"
+            type="button"
+            onClick={() => {
+              setOpen(false);
+              setSearchOpen(false);
+              setNotificationsOpen(true);
+              void loadNotifications();
+            }}
+          >
+            <span>{language === "ar" ? "الإشعارات" : "Notifications"}</span>
+            <b>{unreadCount > 0 ? (unreadCount > 9 ? "9+" : unreadCount) : "→"}</b>
+          </button>
+        )}
         <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>
-        {authChecked && authRole === "admin"
-          ? <Link className="mobile-login" href="/admin" prefetch onClick={() => setOpen(false)}>{adminLabel} <span>→</span></Link>
-          : <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>}
+        <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>
         {authChecked && signedIn && authRole !== "admin" && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
         {authChecked && signedIn
           ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
