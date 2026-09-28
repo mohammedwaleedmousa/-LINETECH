@@ -307,7 +307,7 @@ export default function SiteNav() {
     setOpen(false);
     setNotificationsOpen(current => {
       const next = !current;
-      if (next) void loadNotifications();
+      if (next && authRole !== "admin") void loadNotifications();
       return next;
     });
   }
@@ -328,7 +328,7 @@ export default function SiteNav() {
         <div className="ref-nav-end">
           <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "ENG" : "العربية"}</button>
           <button className={`ref-search search-trigger ${searchOpen ? "active" : ""}`} type="button" aria-label="Search LINETECH" aria-expanded={searchOpen} onClick={() => { setOpen(false); setNotificationsOpen(false); setSearchOpen((value) => !value); }}>⌕</button>
-          {authChecked && signedIn && authRole !== "admin" && (
+          {authChecked && signedIn && (
             <div className={`notification-center ${notificationsOpen ? "open" : ""}`} ref={notificationRef}>
               <button
                 className="notification-trigger"
@@ -396,7 +396,7 @@ export default function SiteNav() {
           })}
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
-        {authChecked && signedIn && authRole !== "admin" && (
+        {authChecked && signedIn && (
           <button
             className="mobile-notifications-link"
             type="button"
