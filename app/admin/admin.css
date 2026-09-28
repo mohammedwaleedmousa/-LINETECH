@@ -196,3 +196,62 @@
   .admin-client-stats>div:nth-child(-n+2){border-bottom:1px solid #172431}
   .admin-client-identity h3{font-size:30px}
 }
+
+
+/* Mobile admin operations */
+@media(max-width:620px){
+  .admin-header{display:grid;grid-template-columns:1fr;gap:14px}
+  .admin-header-actions{display:flex!important;width:100%;align-items:center!important;justify-content:space-between}
+  .admin-header-actions>button{width:100%;min-height:44px}
+  .admin-layout{display:grid;grid-template-columns:1fr}
+  .admin-projects{
+    max-height:320px;
+    overflow:auto;
+    padding:10px;
+    border-radius:13px;
+    overscroll-behavior:contain;
+  }
+  .admin-project-tools{
+    position:sticky;
+    top:0;
+    z-index:4;
+    margin:0 0 8px;
+    padding:2px 0 10px;
+    background:#071019;
+  }
+  .admin-project-tools input,.admin-project-tools select{min-height:46px}
+  .admin-project{padding:14px 11px;margin-top:7px}
+  .admin-project strong{font-size:13px}
+  .admin-detail{gap:14px}
+  .admin-project-head{padding:17px}
+  .admin-project-head p{font-size:11px;line-height:1.5}
+  .admin-project-head-actions{gap:10px}
+  .admin-project-head-actions>button{min-height:46px}
+  .admin-card{gap:14px}
+  .admin-card-title{align-items:flex-start}
+  .admin-columns{gap:14px}
+  .admin-member{align-items:flex-start;flex-direction:column}
+  .admin-member>button{width:100%;min-height:42px}
+  .admin-file-actions{display:grid;grid-template-columns:1fr auto;align-items:center}
+  .admin-file-actions select{width:100%;max-width:none}
+  .admin-chat-log{max-height:300px}
+  .admin-chat-log>div{max-width:100%}
+  .admin-chat-form textarea{min-height:96px}
+  .admin-request-grid strong{font-size:11px}
+  .admin-client-profile{padding:16px}
+  .admin-client-identity{gap:18px}
+  .admin-client-stats>div{padding:14px 12px}
+  .admin-client-stats strong{font-size:22px}
+  .admin-client-columns{gap:18px}
+  .admin-client-project-list button{padding:12px 0}
+  .admin-client-activity{max-height:300px}
+}
+
+@media(max-width:390px){
+  .admin-page{padding-left:10px;padding-right:10px}
+  .admin-project-head h2{font-size:30px}
+  .admin-card{padding:14px}
+  .admin-client-stats{grid-template-columns:1fr 1fr}
+  .admin-file-actions{grid-template-columns:1fr}
+  .admin-file-actions a{min-height:38px;display:flex;align-items:center}
+}
