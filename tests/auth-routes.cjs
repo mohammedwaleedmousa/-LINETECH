@@ -243,10 +243,10 @@ assert.ok(workspaceClient.includes("localizeWorkspaceText"));
 assert.ok(workspaceClient.includes("ClientProjectSwitcher"));
 assert.ok(workspaceClient.includes("requestedProjectSuffix"));
 assert.ok(workspaceClient.includes('projectHref("/chat", currentProjectId)'));
-assert.ok(workspaceClient.includes("workspace-dashboard-head"));
-assert.ok(workspaceClient.includes("workspace-overview-grid"));
-assert.ok(workspaceClient.includes('import "./workspace-dashboard.css"'));
-assert.ok(!workspaceClient.includes("ContentHeroArt"));
+assert.ok(workspaceClient.includes("workspace-hero"));
+assert.ok(workspaceClient.includes("ContentHeroArt"));
+assert.ok(!workspaceClient.includes("workspace-dashboard-head"));
+assert.ok(!workspaceClient.includes("workspace-overview-grid"));
 assert.ok(client.includes('path==="/api/projects"'));
 assert.ok(client.includes("nextMilestone:undefined"));
 assert.ok(read("app/chat/ChatWorkspace.tsx").includes("/api/chat/messages"));
@@ -375,19 +375,13 @@ for (const endpoint of [
 }
 
 const siteSurface = read("app/SiteSurface.tsx");
-const clientPortalShell = read("app/ClientPortalShell.tsx");
 const adminLoginClient = read("app/admin/login/AdminLoginClient.tsx");
 const adminAccountClient = read("app/admin/account/AdminAccountClient.tsx");
 assert.ok(siteSurface.includes('pathname === "/admin"'));
 assert.ok(siteSurface.includes("if (admin) return"));
-assert.ok(siteSurface.includes("clientPortal"));
-assert.ok(siteSurface.includes("ClientPortalShell"));
-assert.ok(clientPortalShell.includes('href: "/workspace"'));
-assert.ok(clientPortalShell.includes('href: "/chat"'));
-assert.ok(clientPortalShell.includes('href: "/handover"'));
-assert.ok(clientPortalShell.includes('href: "/account"'));
-assert.ok(clientPortalShell.includes("/api/notifications"));
-assert.ok(clientPortalShell.includes("/api/auth/logout"));
+assert.ok(siteSurface.includes("<SiteNav />"));
+assert.ok(siteSurface.includes("<SiteFooter />"));
+assert.ok(!siteSurface.includes("ClientPortalShell"));
 assert.ok(adminLoginClient.includes("/api/auth/login"));
 assert.ok(adminLoginClient.includes("/api/auth/session"));
 assert.ok(adminLoginClient.includes('app_metadata?.role !== "admin"'));
