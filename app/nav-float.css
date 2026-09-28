@@ -127,11 +127,13 @@
 .mobile-menu-panel.open nav a:nth-child(6){animation-delay:.24s}
 
 .mobile-menu-panel.open .mobile-language-toggle,
+.mobile-menu-panel.open .mobile-notifications-link,
 .mobile-menu-panel.open .mobile-start-line,
 .mobile-menu-panel.open .mobile-login{
   animation:mobileNavItemIn .42s cubic-bezier(.22,.61,.36,1) both;
 }
 .mobile-menu-panel.open .mobile-language-toggle{animation-delay:.27s}
+.mobile-menu-panel.open .mobile-notifications-link{animation-delay:.29s}
 .mobile-menu-panel.open .mobile-start-line{animation-delay:.31s}
 .mobile-menu-panel.open .mobile-login{animation-delay:.35s}
 
@@ -194,6 +196,7 @@
   .global-site-nav .ref-nav-end,
   .mobile-menu-panel.open nav a,
   .mobile-menu-panel.open .mobile-language-toggle,
+  .mobile-menu-panel.open .mobile-notifications-link,
   .mobile-menu-panel.open .mobile-start-line,
   .mobile-menu-panel.open .mobile-login{
     animation:none!important;
