@@ -194,7 +194,7 @@ assert.ok(auth.includes('redirectUrl.searchParams.set("next",next)'));
 assert.ok(auth.includes('path==="/api/account"'));
 assert.ok(auth.includes('path==="/api/account/email"'));
 assert.ok(auth.includes('path==="/api/auth/logout-others"'));
-assert.ok(auth.includes('"/profiles?select=id,full_name,company,phone,created_at,updated_at'));
+assert.ok(auth.includes('/profiles?select=id,full_name,company,phone,created_at,updated_at'));
 assert.ok(auth.includes('"/logout?scope=others"'));
 assert.ok(login.includes('search.get("confirmed") === "1"'));
 assert.ok(login.includes('search.get("recovery") === "1"'));
