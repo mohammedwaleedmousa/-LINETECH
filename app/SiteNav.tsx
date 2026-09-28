@@ -130,6 +130,10 @@ export default function SiteNav() {
   }, [pathname]);
 
   useEffect(() => {
+    if (typeof window.matchMedia !== "function") {
+      setMobileNotifications(false);
+      return;
+    }
     const media = window.matchMedia("(max-width: 1100px)");
     const sync = () => setMobileNotifications(media.matches);
     sync();
