@@ -236,7 +236,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.ok(document.body.textContent.includes('Your project request is ready.'));
 
 
-  await click(document.querySelector('.request-finish-actions .brief-share:not(.request-edit-button)'));
+  await click(document.querySelector('.request-finish-actions button.brief-share'));
   assert.ok(copied.includes('Project type：Web Development'));
 
 
