@@ -45,6 +45,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
   }, [isLogin]);
 
   const active = (href: string) => href === "/admin" ? pathname === "/admin" : pathname === href || pathname.startsWith(`${href}/`);
+  const current = nav.find(item => active(item.href)) || nav[0];
 
   async function signOut() {
     try {
@@ -86,7 +87,19 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         </div>
       </aside>
 
-      <div className="admin-app-main">{children}</div>
+      <div className="admin-app-main">
+        <header className="admin-app-topbar">
+          <div>
+            <span>ADMIN PORTAL</span>
+            <strong>{current.label}</strong>
+          </div>
+          <div className="admin-app-topbar-actions">
+            <Link href="/admin/account" aria-label="Admin account">Account</Link>
+            <button type="button" onClick={() => void signOut()}>Sign out</button>
+          </div>
+        </header>
+        <div className="admin-app-content">{children}</div>
+      </div>
     </div>
   );
 }
