@@ -1,12 +1,12 @@
 "use client";
 
+import ContentHeroArt from "../ContentHeroArt";
 import Link from "next/link";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLanguage, useTranslation } from "../Localized";
 import ClientProjectSwitcher from "../ClientProjectSwitcher";
 import "./workspace.css";
 import "./workspace-tracking.css";
-import "./workspace-dashboard.css";
 
 type RequestRecord = {
   requestId: string;
@@ -414,20 +414,18 @@ export default function WorkspaceClient() {
 
   return (
     <main className="workspace-page ref-page">
-      <section className="workspace-dashboard-head">
-        <div className="workspace-dashboard-title">
-          <p className="workspace-kicker">{t.kicker}</p>
-          <h1>{language === "ar" ? "لوحة المشروع." : "Project workspace."}</h1>
-          <p>{t.lead}</p>
-        </div>
-
-        <div className="workspace-dashboard-controls">
-          <ClientProjectSwitcher currentProjectId={currentProjectId} className="workspace-project-switcher" />
-          {record && (
-            <button type="button" onClick={() => void loadWorkspace(true)} disabled={refreshing}>
-              {refreshing ? t.refreshing : t.refresh}
-            </button>
-          )}
+      <section className="workspace-hero" data-content-hero="workspace">
+        <ContentHeroArt motif="workspace" />
+        <div className="ref-shell workspace-hero-grid">
+          <div>
+            <p className="workspace-kicker">{t.kicker}</p>
+            <h1>{t.title}</h1>
+          </div>
+          <div className="workspace-hero-side">
+            <p>{t.lead}</p>
+            <span>{t.local}</span>
+            <ClientProjectSwitcher currentProjectId={currentProjectId} className="workspace-project-switcher" />
+          </div>
         </div>
       </section>
 
@@ -445,35 +443,15 @@ export default function WorkspaceClient() {
         </section>
       ) : progress ? (
         <>
-          <section className="workspace-overview-grid" aria-label={language === "ar" ? "ملخص المشروع" : "Project summary"}>
-            <article>
-              <span>{t.stage}</span>
-              <strong>{currentPhaseCopy[1]}</strong>
-              <small>{t.phase} {String(currentPhase).padStart(2, "0")} / 05</small>
-            </article>
-            <article>
-              <span>{language === "ar" ? "الحالة" : "Status"}</span>
-              <strong>{statusLabel}</strong>
-              <small>{formatDate(progress.updatedAt, language)}</small>
-            </article>
-            <article>
-              <span>{t.nextMilestone}</span>
-              <strong>{nextMilestone}</strong>
-              <small>{progress.nextMilestoneDate ? formatDate(progress.nextMilestoneDate, language) : t.milestonePending}</small>
-            </article>
-            <article>
-              <span>{language === "ar" ? "النشاط" : "Activity"}</span>
-              <strong>{String(activities.length).padStart(2, "0")}</strong>
-              <small>{language === "ar" ? "آخر تحديثات المشروع" : "Recent project updates"}</small>
-            </article>
-          </section>
-
           <section className="workspace-status-section">
             <div className="ref-shell">
               <div className="workspace-section-eyebrow">
                 <p className="workspace-kicker">{t.tracking}</p>
                 <div className="workspace-section-eyebrow-actions">
                   <span>{record.requestId}</span>
+                  <button type="button" onClick={() => void loadWorkspace(true)} disabled={refreshing}>
+                    {refreshing ? t.refreshing : t.refresh}
+                  </button>
                 </div>
               </div>
 
