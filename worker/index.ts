@@ -126,9 +126,6 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
     if(!session) {
       return loginRedirect(request,url.pathname+url.search,clearCookies());
     }
-    if(session.user.app_metadata?.role==="admin") {
-      return withCookies(Response.redirect(new URL("/admin",request.url).toString(),302),session.setCookies);
-    }
     return withCookies(await env.ASSETS.fetch(request),session.setCookies);
   }
 
