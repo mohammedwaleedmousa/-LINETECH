@@ -11,3 +11,16 @@
 .admin-account-reference{display:grid;gap:6px;margin-top:18px;padding:18px 20px;border:1px solid #172431;border-radius:12px;background:#061019}.admin-account-reference strong{font-size:12px;overflow-wrap:anywhere}.admin-account-reference small{color:#6d7e8e;font-size:9px}
 @media(max-width:900px){.admin-account-page{padding:32px 20px 64px}.admin-account-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.admin-account-page{padding:26px 14px 54px}.admin-account-session{grid-template-columns:1fr}.admin-account-session-actions{display:grid}.admin-account-form input{font-size:16px}.admin-account-avatar{width:54px;height:54px}}
+
+@media(max-width:620px){
+  .admin-account-page{padding:24px 14px 38px}
+  .admin-account-avatar{width:50px;height:50px;border-radius:13px;font-size:16px}
+  .admin-account-grid{gap:12px;margin-top:18px}
+  .admin-account-grid .admin-overview-panel{padding:16px}
+  .admin-account-form{gap:12px}
+  .admin-account-form input{min-height:50px;font-size:16px}
+  .admin-account-form button,.admin-account-session-actions button{width:100%;min-height:46px}
+  .admin-account-session{grid-template-columns:1fr}
+  .admin-account-session-actions{display:grid;grid-template-columns:1fr}
+  .admin-account-reference{padding:16px}
+}
