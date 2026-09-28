@@ -15,6 +15,14 @@ const items = [
   { href: "/chat", en: "Chat", ar: "المحادثة" },
 ] as const;
 
+const clientItems = [
+  { href: "/", en: "Home", ar: "الرئيسية" },
+  { href: "/workspace", en: "Workspace", ar: "مساحة العمل" },
+  { href: "/chat", en: "Project Chat", ar: "محادثة المشروع" },
+  { href: "/handover", en: "Handover", ar: "التسليم" },
+  { href: "/account", en: "Account", ar: "الحساب" },
+] as const;
+
 const searchItems = [
   { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology الرئيسية لينتك تقنية" },
   { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },
@@ -233,7 +241,10 @@ export default function SiteNav() {
     };
   }, [searchOpen]);
 
-  const visibleNavItems = items;
+  const clientArea = ["/workspace","/chat","/handover","/account"].some(
+    route => pathname === route || pathname.startsWith(`${route}/`)
+  );
+  const visibleNavItems = clientArea ? clientItems : items;
   const visibleSearchItems = searchItems;
 
   const results = useMemo(() => {
@@ -393,9 +404,9 @@ export default function SiteNav() {
               )}
             </div>
           )}
-          <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>
-          <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>
-          {authChecked && signedIn && authRole !== "admin" && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
+          {!clientArea && <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>}
+          {!clientArea && <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>}
+          {!clientArea && authChecked && signedIn && authRole !== "admin" && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
           {authChecked && signedIn
             ? <Link className="nav-login desktop-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
             : <Link className={`nav-login desktop-login ${pathname.startsWith("/login") ? "active" : ""}`} href="/login" prefetch>{loginLabel} <span>↗</span></Link>}
@@ -411,9 +422,9 @@ export default function SiteNav() {
           })}
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
-        <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>
-        <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>
-        {authChecked && signedIn && authRole !== "admin" && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
+        {!clientArea && <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>}
+        {!clientArea && <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>}
+        {!clientArea && authChecked && signedIn && authRole !== "admin" && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
         {authChecked && signedIn
           ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
           : <Link className="mobile-login" href="/login" prefetch onClick={() => setOpen(false)}>{loginLabel} <span>↗</span></Link>}
