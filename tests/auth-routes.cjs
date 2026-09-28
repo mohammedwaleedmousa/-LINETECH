@@ -178,9 +178,11 @@ assert.ok(nav.includes("setInterval"));
 assert.ok(nav.includes("visibilitychange"));
 assert.ok(nav.includes('href="/account"'));
 assert.ok(nav.includes("Account Settings"));
-assert.ok(nav.includes('authRole === "admin"'));
-assert.ok(nav.includes('href="/admin"'));
-assert.ok(nav.includes('item.href !== "/chat"'));
+assert.ok(nav.includes('href="/workspace"'));
+assert.ok(nav.includes("notification-center"));
+assert.ok(nav.includes("mobile-notifications-link"));
+assert.ok(!nav.includes('href="/admin"'));
+assert.ok(!nav.includes('adminLabel'));
 assert.ok(client.includes("data.markAll===true"));
 assert.ok(client.includes('"/notifications?read_at=is.null&select=id,read_at"'));
 
