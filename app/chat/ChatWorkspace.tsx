@@ -134,6 +134,7 @@ export default function ChatWorkspace(){
   const [messages,setMessages] = useState<ChatMessage[]>(initialMessages);
   const [draft,setDraft] = useState("");
   const [notice,setNotice] = useState("");
+  const [loaded,setLoaded] = useState(false);
   const [currentProjectId,setCurrentProjectId] = useState<string | null>(null);
   const [recording,setRecording] = useState(false);
   const [recordingSeconds,setRecordingSeconds] = useState(0);
@@ -175,6 +176,8 @@ export default function ChatWorkspace(){
       }
     }catch{
       if(!silent) setNotice("Conversation could not be loaded.");
+    } finally {
+      if(!silent) setLoaded(true);
     }
   }
 
@@ -501,6 +504,8 @@ export default function ChatWorkspace(){
     if(images.length) void addImages(images);
     if(documents.length) void addDocuments(documents);
   }
+
+  if(!loaded) return <Localized><section className="chat-shell chat-shell-loading" aria-label="Loading project conversation"><div className="chat-loading-state" /></section></Localized>;
 
   return <Localized><section className="chat-shell" aria-label="LINETECH client chat">
     <aside className="chat-sidebar">
