@@ -8,8 +8,9 @@ const nav = [
   { href: "/admin", label: "Dashboard", index: "01" },
   { href: "/admin/projects", label: "Projects", index: "02" },
   { href: "/admin/clients", label: "Clients", index: "03" },
-  { href: "/admin/team", label: "Team & Accounts", index: "04" },
-  { href: "/admin/account", label: "Admin Account", index: "05" },
+  { href: "/admin/billing", label: "Billing", index: "04" },
+  { href: "/admin/team", label: "Team & Accounts", index: "05" },
+  { href: "/admin/account", label: "Admin Account", index: "06" },
 ];
 
 export default function AdminShell({ children }: { children: ReactNode }) {
