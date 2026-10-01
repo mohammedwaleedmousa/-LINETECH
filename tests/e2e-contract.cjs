@@ -140,6 +140,8 @@ assert.ok(billingClient.includes("Active + past due recurring value"), "Billing 
 assert.ok(billingClient.includes("MRR"), "Billing center does not display MRR");
 assert.ok(dashboardClient.includes('fetch("/api/admin/billing"') && dashboardClient.includes("billing.summary?.mrr"), "Admin dashboard does not surface live billing KPIs");
 assert.ok(dashboardClient.includes("admin-ops-table") && dashboardClient.includes("Project / client") && dashboardClient.includes("PAST DUE"), "Admin dashboard is missing the laptop operations table or collection KPI");
+assert.ok(dashboardClient.includes("Delivery overdue") && dashboardClient.includes("Payment past due") && dashboardClient.includes("Due soon"), "Admin attention center does not cover delivery, collection and deadline risk");
+assert.ok(dashboardClient.includes("priority = 0") && dashboardClient.includes(".sort((a, b) => a.priority - b.priority)"), "Admin attention queue is not risk-prioritized");
 assert.ok(pricing.includes('setup:"$149",monthly:"$19"') && pricing.includes('setup:"$299",monthly:"$35"') && pricing.includes('setup:"$499",monthly:"$59"'), "Published website plan pricing drifted from the approved catalog");
 assert.ok(pricing.includes('setup:"$699",monthly:"$79"') && pricing.includes('setup:"$1,199",monthly:"$129"') && pricing.includes('monthly:"$199+"'), "Published commerce/custom pricing drifted from the approved catalog");
 assert.ok(pricing.includes('Up to 20 pages') && pricing.includes('6 updates / month'), "Published plan limits drifted from the approved catalog");
