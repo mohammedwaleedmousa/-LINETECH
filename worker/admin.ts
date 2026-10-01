@@ -34,7 +34,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
 
   if(path==="/api/admin/inbox" && request.method==="GET") {
     const [messagesResponse,conversationsResponse,projectsResponse,profilesResponse,subscriptionsResponse]=await Promise.all([
-      restFetch(env,"/messages?select=id,conversation_id,kind,text,created_at,deleted_at,sender_role&sender_role=eq.client&order=created_at.desc&limit=80",admin.accessToken),
+      restFetch(env,"/messages?select=id,conversation_id,kind,text,created_at,deleted_at,sender_role,admin_message_reads(read_by,read_at)&sender_role=eq.client&order=created_at.desc&limit=80",admin.accessToken),
       restFetch(env,"/conversations?select=id,project_id",admin.accessToken),
       restFetch(env,"/projects?select=id,client_id,title,status,phase,due_date,next_action_required,updated_at&order=updated_at.desc&limit=200",admin.accessToken),
       restFetch(env,"/profiles?select=id,full_name,company",admin.accessToken),
@@ -81,7 +81,18 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       alerts.push({id:`billing:${sub.id}`,type:"billing",priority:1,reason:"Payment past due",projectId:project?.id||null,projectTitle:project?.title||"Client account",clientName:profileMap.get(String(sub.client_id||""))?.full_name||"Client",amount:Number(sub.recurring_price_usd||0),dueDate:sub.next_billing_at});
     }
     alerts.sort((a,b)=>Number(a.priority)-Number(b.priority));
-    return json({ok:true,messages:latestMessages,alerts:alerts.slice(0,40)},200,admin.setCookies);
+    return json({ok:true,messages:latestMessages,alerts:alerts.slice(0,40),unreadCount:latestMessages.filter((x:Row)=>x.unread).length},200,admin.setCookies);
+  }
+
+  if(path==="/api/admin/inbox/read" && request.method==="POST") {
+    const data=await request.json().catch(()=>({})) as Row;
+    const messageId=String(data.messageId||"");
+    if(!/^[0-9a-f]{8}-[0-9a-f-]{27}$/i.test(messageId)) return json({ok:false},400,admin.setCookies);
+    const response=await restFetch(env,"/admin_message_reads?on_conflict=message_id",admin.accessToken,{
+      method:"POST",headers:{Prefer:"resolution=merge-duplicates,return=minimal"},
+      body:JSON.stringify({message_id:messageId,read_by:admin.user.id,read_at:new Date().toISOString()}),
+    });
+    return json({ok:response.ok},response.ok?200:response.status,admin.setCookies);
   }
 
   if(path==="/api/admin/projects" && request.method==="GET") {
