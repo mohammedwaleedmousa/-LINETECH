@@ -31,7 +31,7 @@ async function main() {
   assert.equal(payload?.backend, "linetech-worker");
   assert.equal(payload?.supabaseAuth, true);
 
-  for (const protectedPath of ["/admin","/admin/projects","/admin/clients","/admin/team","/admin/account"]) {
+  for (const protectedPath of ["/admin","/admin/projects","/admin/clients","/admin/team","/admin/billing","/admin/account"]) {
     const response = await fetch(`${base}${protectedPath}`, { redirect: "manual" });
     assert.ok(
       [301,302,303,307,308].includes(response.status),
@@ -56,10 +56,24 @@ async function main() {
     assert.ok(!location.includes("/admin/login"), `Client route ${protectedPath} must not use admin login`);
   }
 
+  const robots = await fetch(`${base}/robots.txt`);
+  assert.equal(robots.status, 200, "robots.txt is unavailable");
+  const robotsText = await robots.text();
+  for (const privatePath of ["/admin","/login","/workspace","/chat","/handover","/account","/api/"]) {
+    assert.ok(robotsText.includes(`Disallow: ${privatePath}`), `robots.txt exposes private path ${privatePath}`);
+  }
+
+  const sitemap = await fetch(`${base}/sitemap.xml`);
+  assert.equal(sitemap.status, 200, "sitemap.xml is unavailable");
+  const sitemapText = await sitemap.text();
+  for (const publicPath of ["/pricing","/how-we-work","/service-finder"]) {
+    assert.ok(sitemapText.includes(`${publicPath}</loc>`), `sitemap is missing ${publicPath}`);
+  }
+
   const adminLogin = await fetch(`${base}/admin/login`, { redirect: "manual" });
   assert.ok(adminLogin.status >= 200 && adminLogin.status < 400, `Admin login returned ${adminLogin.status}`);
 
-  for (const publicPath of ["/privacy","/terms","/start"]) {
+  for (const publicPath of ["/services","/pricing","/projects","/about","/how-we-work","/service-finder","/privacy","/terms","/start"]) {
     const response = await fetch(`${base}${publicPath}`, { redirect: "manual" });
     assert.ok(
       response.status >= 200 && response.status < 400,
