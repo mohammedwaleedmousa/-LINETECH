@@ -371,3 +371,7 @@ body:has(.chat-page) .ref-footer{display:none!important}
   .chat-attach,.chat-emoji{width:34px}.chat-send,.chat-mic{width:40px;height:40px}
   .recording-state span{display:none}.chat-recording-bar{grid-template-columns:40px minmax(0,1fr) 42px}
 }
+
+.chat-shell-loading{display:grid!important;grid-template-columns:1fr!important;place-items:center}
+.chat-loading-state{width:30px;height:30px;border:1px solid #263746;border-top-color:#6ea8f8;border-radius:50%;animation:chatPortalSpin .8s linear infinite}
+@keyframes chatPortalSpin{to{transform:rotate(360deg)}}
