@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Localized, { useLanguage, setLanguage } from "./Localized";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
@@ -115,6 +115,7 @@ function GlobeIcon(){
 export default function SiteNav() {
   const pathname = usePathname();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [open, setOpen] = useState(false);
   const [signedIn, setSignedIn] = useState(false);
   const [authRole, setAuthRole] = useState<"admin" | "client" | "">("");
@@ -244,7 +245,7 @@ export default function SiteNav() {
   const clientArea = ["/workspace","/chat","/handover","/account"].some(
     route => pathname === route || pathname.startsWith(`${route}/`)
   );
-  const activeProject = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("project") || "" : "";
+  const activeProject = searchParams.get("project") || "";
   const portalHref = (href: string) => clientArea && /^[0-9a-f-]{36}$/i.test(activeProject)
     ? `${href}?project=${encodeURIComponent(activeProject)}`
     : href;
