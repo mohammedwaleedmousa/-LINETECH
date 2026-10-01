@@ -637,7 +637,7 @@ export default function WorkspaceClient() {
 
                   <div className="workspace-brief-grid">
                     <div><span>{t.service}</span><strong>{serviceLabels[record.project.service]?.[language] || translate(record.project.service)}</strong></div>
-                    <div><span>{t.plan}</span><strong>{record.project.plan ? record.project.plan.replaceAll("_", " ").toUpperCase() : "—"}</strong></div>
+                    <div><span>{t.plan}</span><strong>{record.project.plan ? record.project.plan.replaceAll("_", "-").toUpperCase() : "—"}</strong></div>
                     <div><span>{t.customer}</span><strong>{record.customer.name || "—"}</strong></div>
                     <div><span>{t.company}</span><strong>{record.customer.company || "—"}</strong></div>
                     <div><span>{t.contact}</span><strong>{translate(record.customer.preferredContact || "—")}</strong></div>
