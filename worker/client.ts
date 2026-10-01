@@ -239,6 +239,8 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       if(value==="completed") return "complete";
       if(value==="review"||value==="waiting_client") return "review";
       if(value==="active") return "in-progress";
+      if(value==="archived") return "archived";
+      if(value==="planned") return "planned";
       return "ready";
     };
 
