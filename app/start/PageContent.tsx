@@ -13,19 +13,6 @@ import "./custom-select.css";
 import "./journey.css";
 import "./finder-context.css";
 
-const briefNotesCopy = {
-  en: [
-    ["01", "Your project information stays in your browser until you choose to share it."],
-    ["02", "Four focused steps take you from basic details to a reviewed project request."],
-    ["03", "Completing the request creates a reference number and opens the path to your Client Workspace."],
-  ],
-  ar: [
-    ["01", "تبقى معلومات مشروعك داخل المتصفح حتى تختار مشاركتها."],
-    ["02", "أربع خطوات مركزة تنقلك من البيانات الأساسية إلى طلب مشروع تمت مراجعته."],
-    ["03", "إتمام الطلب ينشئ رقمًا مرجعيًا ويفتح لك المسار إلى مساحة العميل."],
-  ],
-} as const;
-
 const journeyCopy = {
   en: {
     kicker: "FROM SERVICE TO HANDOVER",
@@ -62,7 +49,6 @@ const journeyCopy = {
 export default function StartPage() {
   const language = useLanguage();
   const journey = journeyCopy[language];
-  const briefNotes = briefNotesCopy[language];
 
   return (
     <Localized>
@@ -99,22 +85,7 @@ export default function StartPage() {
         </section>
 
         <section id="brief" className="contact-brief-section">
-          <div className="ref-shell contact-brief-grid">
-            <aside className="contact-brief-intro">
-              <p className="ref-kicker">PROJECT BRIEF</p>
-              <h2>One clear line before we build.</h2>
-              <p>Fill in what you know. You do not need technical knowledge or every answer yet.</p>
-
-              <div className="contact-brief-notes">
-                {briefNotes.map(([number, text]) => (
-                  <div key={number}>
-                    <span>{number}</span>
-                    <p>{text}</p>
-                  </div>
-                ))}
-              </div>
-            </aside>
-
+          <div className="ref-shell contact-brief-grid contact-brief-grid-focused">
             <div className="contact-intake-panel">
               <ProjectIntake />
               <WorkspaceAfterRequest />
