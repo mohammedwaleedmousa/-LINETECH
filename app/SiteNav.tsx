@@ -12,7 +12,6 @@ const items = [
   { href: "/pricing", en: "Pricing", ar: "الباقات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
   { href: "/about", en: "About", ar: "عن الشركة" },
-  { href: "/start", en: "Start Your Line", ar: "ابدأ خطك" },
   { href: "/chat", en: "Chat", ar: "المحادثة" },
 ] as const;
 
@@ -46,7 +45,7 @@ const searchItems = [
   { title: "Client Workspace", meta: "Client", href: "/workspace", keywords: "workspace project status files handover client مساحة العميل المشروع الحالة الملفات التسليم" },
   { title: "Account Settings", meta: "Account", href: "/account", keywords: "account profile email password sessions settings client حساب ملف شخصي بريد كلمة مرور جلسات إعدادات" },
   { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace تسجيل دخول إنشاء حساب" },
-  { title: "Start Your Line", meta: "Contact", href: "/start", keywords: "contact start project brief build idea تواصل ابدأ مشروع ملخص فكرة" },
+  { title: "Start Your Line", meta: "Project request", href: "/start", keywords: "start project brief build idea ابدأ مشروع ملخص فكرة" },
 ] as const;
 
 type SiteLanguage = "ar" | "en";
