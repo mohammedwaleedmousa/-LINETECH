@@ -223,7 +223,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       client:profileMap.get(String(subscription.client_id))||null,
       project:projectMap.get(String(subscription.client_id))||null,
     }));
-    const recurringStatuses=new Set(["trial","active","past_due"]);
+    const recurringStatuses=new Set(["active","past_due"]);
     const mrr=rows.filter((row:any)=>recurringStatuses.has(String(row.status))).reduce((sum:number,row:any)=>sum+Number(row.recurring_price_usd||0),0);
     const now=Date.now();
     const day=86400000;
