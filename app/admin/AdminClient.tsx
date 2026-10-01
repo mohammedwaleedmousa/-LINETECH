@@ -789,7 +789,9 @@ export default function AdminClient() {
               </section>
             )}
 
-            <div id="admin-project-overview" className="admin-section-anchor" />\n            {projectSection === "overview" && <>\n            <section className="admin-card admin-request-brief">
+            <div id="admin-project-overview" className="admin-section-anchor" />
+            {projectSection === "overview" && <>
+            <section className="admin-card admin-request-brief">
               <div className="admin-card-title"><span>00</span><strong>Client request</strong></div>
               <div className="admin-request-grid">
                 <div><span>Client</span><strong>{detail.request?.name || "—"}</strong></div>
