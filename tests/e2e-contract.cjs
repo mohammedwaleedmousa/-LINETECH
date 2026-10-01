@@ -142,6 +142,7 @@ assert.ok(admin.includes("existing?.next_billing_at||nextBilling.toISOString()")
 assert.ok(admin.includes("project:projectMap.get"), "Billing API does not connect subscriptions to client projects");
 assert.ok(billingClient.includes("/admin/projects?project="), "Billing actions do not route to the related client project");
 assert.ok(siteNav.includes("portalHref"), "Client navigation does not preserve active project context");
+assert.ok(siteNav.includes("useSearchParams") && siteNav.includes('searchParams.get("project")'), "Client portal project context must use Next search params instead of window during render");
 assert.ok(accountClient.includes("currentProjectId ? `/workspace?project="), "Account workspace link does not preserve project context");
 assert.ok(accountClient.includes("currentProjectId ? `/chat?project="), "Account chat link does not preserve project context");
 assert.ok(chatWorkspace.includes("Open project workspace"), "Project chat is not connected back to Workspace");
