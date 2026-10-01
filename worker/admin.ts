@@ -20,6 +20,8 @@ const projectStatuses=new Set(["planned","active","waiting_client","review","com
 const requestStatuses=new Set(["submitted","reviewing","scoped","accepted","declined"]);
 const fileStatuses=new Set(["in-progress","ready","review","approved"]);
 const categories=new Set(["brief","reference","deliverable","handover","other"]);
+const subscriptionStatuses=new Set(["trial","active","past_due","suspended","cancelled"]);
+const billingCycles=new Set(["monthly","yearly","custom"]);
 
 function clientProjectPath(path:string,projectId:string) {
   return `${path}?project=${encodeURIComponent(projectId)}`;
@@ -198,6 +200,63 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       })),
       activity,
     },200,admin.setCookies);
+  }
+
+
+  if(path==="/api/admin/subscription" && request.method==="GET") {
+    const clientId=new URL(request.url).searchParams.get("clientId")||"";
+    if(!/^[0-9a-f-]{36}$/i.test(clientId)) return json({ok:false},400,admin.setCookies);
+    const [sr,pr]=await Promise.all([
+      restFetch(env,`/client_subscriptions?select=*&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,admin.accessToken),
+      restFetch(env,"/plan_catalog?select=*&is_active=eq.true&order=sort_order.asc",admin.accessToken),
+    ]);
+    const [subscriptions,plans]=await Promise.all([safeJson(sr),safeJson(pr)]);
+    if(!sr.ok||!pr.ok) return json({ok:false},!sr.ok?sr.status:pr.status,admin.setCookies);
+    return json({ok:true,subscription:Array.isArray(subscriptions)?subscriptions[0]||null:null,plans:Array.isArray(plans)?plans:[]},200,admin.setCookies);
+  }
+
+  if(path==="/api/admin/subscription" && request.method==="PUT") {
+    if(requestTooLarge(request,32*1024)) return json({ok:false},413,admin.setCookies);
+    const data=await request.json().catch(()=>({})) as Record<string,any>;
+    const clientId=boundedText(data.clientId,100);
+    const planCode=boundedText(data.planCode,40);
+    const status=boundedText(data.status,30);
+    const billingCycle=boundedText(data.billingCycle,30);
+    if(!clientId||!/^[0-9a-f-]{36}$/i.test(clientId)||!planCode||!status||!billingCycle) return json({ok:false},400,admin.setCookies);
+    if(!subscriptionStatuses.has(status)||!billingCycles.has(billingCycle)) return json({ok:false},400,admin.setCookies);
+
+    const planResponse=await restFetch(env,`/plan_catalog?select=*&code=eq.${encodeURIComponent(planCode)}&is_active=eq.true&limit=1`,admin.accessToken);
+    const planRows=await safeJson(planResponse) as Row[]|null;
+    const plan=Array.isArray(planRows)?planRows[0]:null;
+    if(!planResponse.ok||!plan) return json({ok:false},planResponse.ok?400:planResponse.status,admin.setCookies);
+
+    const existingResponse=await restFetch(env,`/client_subscriptions?select=id&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,admin.accessToken);
+    const existingRows=await safeJson(existingResponse) as Row[]|null;
+    if(!existingResponse.ok) return json({ok:false},existingResponse.status,admin.setCookies);
+
+    const now=new Date();
+    const nextBilling=new Date(now);
+    if(billingCycle==="monthly") nextBilling.setUTCMonth(nextBilling.getUTCMonth()+1);
+    if(billingCycle==="yearly") nextBilling.setUTCFullYear(nextBilling.getUTCFullYear()+1);
+    const payload={
+      client_id:clientId,
+      plan_code:plan.code,
+      status,
+      billing_cycle:billingCycle,
+      setup_fee_usd:plan.setup_price_usd,
+      recurring_price_usd:plan.monthly_price_usd,
+      starts_at:now.toISOString(),
+      next_billing_at:billingCycle==="custom"?null:nextBilling.toISOString(),
+      updated_at:now.toISOString(),
+    };
+
+    const existing=Array.isArray(existingRows)?existingRows[0]:null;
+    const saveResponse=existing
+      ? await restFetch(env,`/client_subscriptions?id=eq.${encodeURIComponent(existing.id)}&select=*`,admin.accessToken,{method:"PATCH",headers:{Prefer:"return=representation"},body:JSON.stringify(payload)})
+      : await restFetch(env,"/client_subscriptions?select=*",admin.accessToken,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(payload)});
+    const savedRows=await safeJson(saveResponse) as Row[]|null;
+    if(!saveResponse.ok||!Array.isArray(savedRows)||!savedRows[0]) return json({ok:false},saveResponse.status||500,admin.setCookies);
+    return json({ok:true,subscription:savedRows[0]},200,admin.setCookies);
   }
 
   if(path==="/api/admin/project" && request.method==="GET") {
