@@ -250,3 +250,22 @@ html[dir="rtl"] .project-intake .brief-share span{transform:scaleX(-1)}
 .brief-summary small{display:block;margin-top:5px;font-size:10px;letter-spacing:.08em;opacity:.6}
 @media(max-width:900px){.project-type-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.project-type-card:last-child{grid-column:1/-1}.plan-option-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.project-type-card{min-height:76px;padding:12px}.plan-picker{padding:15px}.plan-picker-head{display:grid;gap:10px}.plan-option-grid{grid-template-columns:1fr 1fr}.plan-option-grid button{font-size:11px}}
+
+
+/* Build Your Line journey */
+.intake-progress-four{position:relative;display:grid!important;grid-template-columns:repeat(5,1fr)!important;gap:0!important;padding:0 0 28px!important;margin-bottom:32px!important}
+.intake-progress-four:before{content:"";position:absolute;top:16px;inset-inline:7% 7%;height:1px;background:rgba(255,255,255,.13)}
+.intake-progress-item{position:relative;z-index:1;display:grid!important;justify-items:center!important;text-align:center!important;gap:8px!important}
+.intake-progress-item span{display:grid!important;place-items:center;width:32px!important;height:32px!important;border-radius:50%;background:#101014!important;border:1px solid rgba(255,255,255,.18)!important;font-size:9px!important;transition:.25s ease}
+.intake-progress-item strong{font-size:10px!important;letter-spacing:.08em!important;opacity:.45!important}
+.intake-progress-item.active span,.intake-progress-item.done span{background:#f5f5f2!important;color:#0b0b0d!important;border-color:#f5f5f2!important}
+.intake-progress-item.active strong,.intake-progress-item.done strong{opacity:1!important}
+.line-step{animation:lineStepIn .32s ease both}
+@keyframes lineStepIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.line-selection-summary{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:14px;padding:15px 0;border-block:1px solid rgba(255,255,255,.12);margin-bottom:18px}
+.line-selection-summary span{font-size:9px;letter-spacing:.12em;opacity:.5}.line-selection-summary strong{font-size:14px}.line-selection-summary button{border:0;background:none;color:inherit;text-decoration:underline;text-underline-offset:4px;cursor:pointer;font-size:11px;opacity:.65}
+.custom-path-card{padding:22px;border:1px solid rgba(255,255,255,.14);display:grid;gap:8px}.custom-path-card span{font-size:9px;letter-spacing:.14em;opacity:.5}.custom-path-card strong{font-size:15px}
+.optional-details{margin-top:8px;border-top:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12)}.optional-details summary{padding:16px 0;cursor:pointer;font-size:12px;font-weight:650;list-style:none}.optional-details summary::-webkit-details-marker{display:none}.optional-details>div{display:grid;gap:16px;padding:0 0 18px}
+.your-line-card{position:relative;overflow:hidden;padding:28px;border:1px solid rgba(255,255,255,.2);background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.015));display:grid;gap:16px;margin-bottom:24px}.your-line-card:before{content:"";position:absolute;inset-inline-start:0;top:0;width:3px;height:100%;background:#f5f5f2}.your-line-card>span{font-size:9px;letter-spacing:.16em;opacity:.5}.your-line-card>strong{font-size:clamp(22px,4vw,36px);letter-spacing:-.03em}.your-line-card>div{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.your-line-card b{font-size:10px;letter-spacing:.08em;padding:7px 9px;border:1px solid rgba(255,255,255,.14);font-weight:600}.your-line-card i{font-style:normal;opacity:.35}
+.final-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+@media(max-width:650px){.intake-progress-four{padding-bottom:20px!important;margin-bottom:22px!important}.intake-progress-item strong{font-size:8px!important;letter-spacing:0!important}.intake-progress-item span{width:28px!important;height:28px!important}.intake-progress-four:before{top:14px}.final-contact-grid{grid-template-columns:1fr}.your-line-card{padding:20px}.your-line-card>div{gap:6px}.your-line-card b{font-size:9px}.project-type-grid{grid-template-columns:1fr 1fr}}
