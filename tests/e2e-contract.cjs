@@ -21,6 +21,7 @@ const adminDashboard = read("app/admin/DashboardClient.tsx");
 const adminProjects = read("app/admin/AdminClient.tsx");
 const accountClient = read("app/account/AccountClient.tsx");
 const billingClient = read("app/admin/BillingClient.tsx");
+const pricing = read("app/pricing/page.tsx");
 const siteNav = read("app/SiteNav.tsx");
 const chatWorkspace = read("app/chat/ChatWorkspace.tsx");
 const robots = read("public/robots.txt");
@@ -136,6 +137,9 @@ assert.ok(admin.includes("overdueAmount"), "Billing API does not calculate overd
 assert.ok(admin.includes('new Set(["active","past_due"])'), "MRR must exclude trial, suspended and cancelled subscriptions");
 assert.ok(billingClient.includes("Active + past due recurring value"), "Billing UI must explain the MRR definition");
 assert.ok(billingClient.includes("MRR"), "Billing center does not display MRR");
+assert.ok(pricing.includes('setup:"$149",monthly:"$19"') && pricing.includes('setup:"$299",monthly:"$35"') && pricing.includes('setup:"$499",monthly:"$59"'), "Published website plan pricing drifted from the approved catalog");
+assert.ok(pricing.includes('setup:"$699",monthly:"$79"') && pricing.includes('setup:"$1,199",monthly:"$129"') && pricing.includes('monthly:"$199+"'), "Published commerce/custom pricing drifted from the approved catalog");
+assert.ok(pricing.includes('Up to 20 pages') && pricing.includes('6 updates / month'), "Published plan limits drifted from the approved catalog");
 assert.ok(billingClient.includes("Day 7") && billingClient.includes("Day 14") && billingClient.includes("Day 30"), "Billing center does not expose the collection policy");
 assert.ok(admin.includes("existing?.starts_at||now.toISOString()"), "Subscription updates must preserve the original start date");
 assert.ok(admin.includes("existing?.next_billing_at||nextBilling.toISOString()"), "Subscription updates must preserve the current billing date");
