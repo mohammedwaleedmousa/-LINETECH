@@ -156,6 +156,9 @@ assert.ok(!chatWorkspace.includes("Search or start new chat"), "Placeholder chat
 assert.ok(client.includes('if(value==="archived") return "archived"'), "Workspace API collapses archived projects into a misleading state");
 assert.ok(client.includes('if(value==="planned") return "planned"'), "Workspace API collapses planned projects into a misleading state");
 assert.ok(workspace.includes("statusArchived"), "Workspace UI does not expose archived project state");
+assert.ok(client.includes("client_subscriptions?select=*,plan:plan_catalog(*)"), "Workspace API does not expose the client subscription context");
+assert.ok(workspace.includes("workspace-commercial-overview") && workspace.includes("activeSubscription"), "Workspace does not connect project status to the active subscription");
+assert.ok(workspace.includes("requestedPlan") && workspace.includes("monthlyService"), "Workspace does not distinguish requested plan from recurring service");
 assert.ok(workspace.includes("statusPlanned"), "Workspace UI does not expose planning project state");
 assert.ok(chatWorkspace.includes("chat-shell-loading"), "Project chat has no explicit loading state");
 assert.ok(siteNav.includes('{ href: "/workspace", en: "Workspace"'), "Client portal navigation is missing Workspace");
