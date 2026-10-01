@@ -21,7 +21,7 @@ const requestStatuses=new Set(["submitted","reviewing","scoped","accepted","decl
 const fileStatuses=new Set(["in-progress","ready","review","approved"]);
 const categories=new Set(["brief","reference","deliverable","handover","other"]);
 const subscriptionStatuses=new Set(["trial","active","past_due","suspended","cancelled"]);
-const billingCycles=new Set(["monthly","yearly","custom"]);
+const billingCycles=new Set(["monthly"]);
 
 function clientProjectPath(path:string,projectId:string) {
   return `${path}?project=${encodeURIComponent(projectId)}`;
@@ -237,7 +237,6 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     const now=new Date();
     const nextBilling=new Date(now);
     if(billingCycle==="monthly") nextBilling.setUTCMonth(nextBilling.getUTCMonth()+1);
-    if(billingCycle==="yearly") nextBilling.setUTCFullYear(nextBilling.getUTCFullYear()+1);
     const payload={
       client_id:clientId,
       plan_code:plan.code,
@@ -246,7 +245,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       setup_fee_usd:plan.setup_price_usd,
       recurring_price_usd:plan.monthly_price_usd,
       starts_at:now.toISOString(),
-      next_billing_at:billingCycle==="custom"?null:nextBilling.toISOString(),
+      next_billing_at:nextBilling.toISOString(),
       updated_at:now.toISOString(),
     };
 
