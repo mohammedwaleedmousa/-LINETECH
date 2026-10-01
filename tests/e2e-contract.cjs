@@ -16,6 +16,8 @@ const schema = read("supabase/schema.sql");
 const workerIndex = read("worker/index.ts");
 const siteSurface = read("app/SiteSurface.tsx");
 const adminShell = read("app/admin/AdminShell.tsx");
+const adminClients = read("app/admin/ClientsClient.tsx");
+const adminDashboard = read("app/admin/DashboardClient.tsx");
 
 // 1) Account/session layer.
 for (const endpoint of [
@@ -105,6 +107,10 @@ assert.ok(admin.includes("file_status_updated"));
 assert.ok(admin.includes('action_kind:"message"'));
 assert.ok(admin.includes('clientProjectPath("/chat",projectId)'));
 assert.ok(admin.includes('clientProjectPath("/handover",projectId)'));
+assert.ok(admin.includes("/project_requests?select=*"), "Admin project feed is not loading the full request record");
+assert.ok(admin.includes("request:requestMap.get"), "Admin project feed is not attaching the request to the project");
+assert.ok(adminClients.includes("selected_plan_code"), "Admin Clients does not show the requested plan");
+assert.ok(adminDashboard.includes("selected_plan_code"), "Admin Dashboard does not show the requested plan");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
