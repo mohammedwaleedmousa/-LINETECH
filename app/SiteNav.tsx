@@ -8,7 +8,8 @@ import { createPortal } from "react-dom";
 
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
-  { href: "/services", en: "Services", ar: "الخدمات" },\n  { href: "/pricing", en: "Pricing", ar: "الباقات" },
+  { href: "/services", en: "Services", ar: "الخدمات" },
+  { href: "/pricing", en: "Pricing", ar: "الباقات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
   { href: "/about", en: "About", ar: "عن الشركة" },
   { href: "/start", en: "Contact", ar: "تواصل" },
