@@ -255,3 +255,65 @@
   .admin-file-actions{grid-template-columns:1fr}
   .admin-file-actions a{min-height:38px;display:flex;align-items:center}
 }
+
+
+/* Projects Operations V2 — laptop command surface */
+.admin-project-command{
+  position:sticky;
+  top:64px;
+  z-index:18;
+  display:grid;
+  grid-template-columns:1.2fr 1fr .9fr .55fr .85fr 1fr;
+  gap:1px;
+  margin:0 0 10px;
+  border:1px solid #172431;
+  background:#172431;
+  box-shadow:0 12px 28px rgba(0,0,0,.18)
+}
+.admin-project-command>div{min-width:0;padding:13px 14px;background:#071019}
+.admin-project-command span{display:block;margin-bottom:6px;color:#587086;font-size:7px;letter-spacing:.11em}
+.admin-project-command strong{display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:#dce8f3;font-size:10px}
+.admin-project-tabs{
+  position:sticky;
+  top:119px;
+  z-index:17;
+  display:flex;
+  gap:4px;
+  margin:0 0 18px;
+  padding:7px;
+  border:1px solid #172431;
+  border-radius:10px;
+  background:rgba(5,8,12,.96);
+  backdrop-filter:blur(12px)
+}
+.admin-project-tabs button{
+  min-height:34px;
+  padding:0 12px;
+  border:1px solid transparent;
+  border-radius:7px;
+  background:transparent;
+  color:#718496;
+  font:inherit;
+  font-size:9px;
+  cursor:pointer
+}
+.admin-project-tabs button:hover,.admin-project-tabs button.is-active{border-color:#1e3850;background:#0a1621;color:#b9d7f5}
+.admin-section-anchor{scroll-margin-top:175px}
+@media(min-width:1100px){
+  .admin-layout{grid-template-columns:300px minmax(0,1fr)!important;gap:18px!important}
+  .admin-projects{position:sticky;top:82px;align-self:start;max-height:calc(100vh - 104px);overflow:auto}
+  .admin-detail{min-width:0}
+}
+@media(min-width:1450px){
+  .admin-layout{grid-template-columns:330px minmax(0,1fr)!important}
+}
+@media(max-width:1099px){
+  .admin-project-command{position:relative;top:auto;grid-template-columns:repeat(3,minmax(0,1fr))}
+  .admin-project-tabs{top:142px;overflow-x:auto}
+}
+@media(max-width:620px){
+  .admin-project-command{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .admin-project-command>div{padding:11px}
+  .admin-project-tabs{position:relative;top:auto;margin-bottom:14px;overflow-x:auto}
+  .admin-project-tabs button{min-width:max-content}
+}
