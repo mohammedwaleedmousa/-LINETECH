@@ -102,3 +102,7 @@ html[dir="rtl"] .account-subscription-summary>div:last-child{border-left:0}
   .account-subscription-summary>div,.account-subscription-summary>div:last-child{border-right:0!important;border-left:0!important;border-bottom:1px solid rgba(255,255,255,.08)}
   .account-subscription-summary>div:last-child{border-bottom:0}
 }
+
+.account-loading{min-height:100svh;display:grid;place-items:center}
+.account-loading::before{content:"";width:30px;height:30px;border:1px solid #263746;border-top-color:#6ea8f8;border-radius:50%;animation:accountPortalSpin .8s linear infinite}
+@keyframes accountPortalSpin{to{transform:rotate(360deg)}}
