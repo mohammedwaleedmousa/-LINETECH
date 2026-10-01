@@ -269,3 +269,62 @@ html[dir="rtl"] .project-intake .brief-share span{transform:scaleX(-1)}
 .your-line-card{position:relative;overflow:hidden;padding:28px;border:1px solid rgba(255,255,255,.2);background:linear-gradient(135deg,rgba(255,255,255,.06),rgba(255,255,255,.015));display:grid;gap:16px;margin-bottom:24px}.your-line-card:before{content:"";position:absolute;inset-inline-start:0;top:0;width:3px;height:100%;background:#f5f5f2}.your-line-card>span{font-size:9px;letter-spacing:.16em;opacity:.5}.your-line-card>strong{font-size:clamp(22px,4vw,36px);letter-spacing:-.03em}.your-line-card>div{display:flex;align-items:center;gap:10px;flex-wrap:wrap}.your-line-card b{font-size:10px;letter-spacing:.08em;padding:7px 9px;border:1px solid rgba(255,255,255,.14);font-weight:600}.your-line-card i{font-style:normal;opacity:.35}
 .final-contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
 @media(max-width:650px){.intake-progress-four{padding-bottom:20px!important;margin-bottom:22px!important}.intake-progress-item strong{font-size:8px!important;letter-spacing:0!important}.intake-progress-item span{width:28px!important;height:28px!important}.intake-progress-four:before{top:14px}.final-contact-grid{grid-template-columns:1fr}.your-line-card{padding:20px}.your-line-card>div{gap:6px}.your-line-card b{font-size:9px}.project-type-grid{grid-template-columns:1fr 1fr}}
+
+
+/* Mobile: compact single-line journey instead of the large step grid */
+@media(max-width:650px){
+  .intake-progress-four{
+    display:grid!important;
+    grid-template-columns:repeat(5,minmax(0,1fr))!important;
+    align-items:start!important;
+    gap:0!important;
+    padding:0 2px 18px!important;
+    margin:0 0 24px!important;
+    border:0!important;
+    background:transparent!important;
+    overflow:visible!important;
+  }
+  .intake-progress-four:before{
+    top:13px!important;
+    inset-inline:10% 10%!important;
+    height:1px!important;
+    background:rgba(255,255,255,.16)!important;
+  }
+  .intake-progress-item{
+    min-width:0!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+    gap:7px!important;
+  }
+  .intake-progress-item span{
+    width:26px!important;
+    height:26px!important;
+    font-size:8px!important;
+    background:#0d0e12!important;
+    border:1px solid rgba(255,255,255,.28)!important;
+    box-shadow:0 0 0 5px #0d0e12!important;
+  }
+  .intake-progress-item strong{
+    display:none!important;
+  }
+  .intake-progress-item.active span{
+    background:#f5f5f2!important;
+    color:#0b0b0d!important;
+    border-color:#f5f5f2!important;
+  }
+  .intake-progress-item.active strong{
+    display:block!important;
+    position:absolute!important;
+    top:35px!important;
+    font-size:8px!important;
+    letter-spacing:.08em!important;
+    white-space:nowrap!important;
+    opacity:.72!important;
+  }
+  .intake-progress-item.done span{
+    background:#1a1c22!important;
+    color:#f5f5f2!important;
+    border-color:rgba(255,255,255,.5)!important;
+  }
+}
