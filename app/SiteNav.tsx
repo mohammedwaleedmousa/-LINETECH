@@ -12,7 +12,7 @@ const items = [
   { href: "/pricing", en: "Pricing", ar: "الباقات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
   { href: "/about", en: "About", ar: "عن الشركة" },
-  { href: "/start", en: "Contact", ar: "تواصل" },
+  { href: "/start", en: "Start Your Line", ar: "ابدأ خطك" },
   { href: "/chat", en: "Chat", ar: "المحادثة" },
 ] as const;
 
