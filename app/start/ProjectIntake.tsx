@@ -30,7 +30,7 @@ type StoredFinderState = {
 
 const requestCopy = {
   en: {
-    steps: ["About you", "Project", "Scope", "Review"],
+    steps: ["Idea", "Plan", "Brief", "Scope", "Submit"],
     localNote: "Your project details stay in this form while you prepare the request. When you complete it, LINETECH securely saves the request to your account workspace.",
     finderKicker: "SERVICE FINDER SAVED",
     finderTitle: "Your recommendation is already connected.",
@@ -72,7 +72,7 @@ const requestCopy = {
     openChat: "Open Project Chat",
   },
   ar: {
-    steps: ["بياناتك", "المشروع", "النطاق", "المراجعة"],
+    steps: ["الفكرة", "الباقة", "التفاصيل", "النطاق", "الإرسال"],
     localNote: "تبقى تفاصيل مشروعك في هذا النموذج أثناء تجهيز الطلب. عند إتمامه، تحفظ لاين تك الطلب بأمان داخل مساحة حسابك.",
     finderKicker: "تم حفظ نتيجة موجّه الخدمات",
     finderTitle: "نتيجتك مرتبطة بالفعل بطلب المشروع.",
@@ -279,7 +279,7 @@ export default function ProjectIntake() {
           if (typeof draft.budget === "string") setBudget(draft.budget);
           if (typeof draft.timing === "string") setTiming(draft.timing);
           if (typeof draft.notes === "string") setNotes(draft.notes);
-          if (typeof draft.step === "number") setStep(Math.min(4, Math.max(1, Math.round(draft.step))));
+          if (typeof draft.step === "number") setStep(Math.min(5, Math.max(1, Math.round(draft.step))));
           if (draft.confirmed === true) setConfirmed(true);
         }
       }
@@ -333,8 +333,9 @@ export default function ProjectIntake() {
 
   const availablePlans = planOptions[service] || [];
   const needsPlan = availablePlans.length > 0;
-  const canStep1 = Boolean(name.trim() && contact.trim() && service && (!needsPlan || plan));
-  const canStep2 = Boolean(stage && goal && idea.trim());
+  const canStep1 = Boolean(service);
+  const canStep2 = Boolean(!needsPlan || plan);
+  const canStep3 = Boolean(stage && goal && idea.trim());
 
   const brief = useMemo(() => [
     t("LINETECH — START YOUR LINE"),
@@ -514,12 +515,12 @@ export default function ProjectIntake() {
     }
   }
 
-  const progressStep = completed ? 5 : step;
+  const progressStep = completed ? 6 : step;
 
   return <Localized><div className={`project-brief-form project-intake ${completed ? "is-complete" : ""}`}>
     <p className="frontend-only-note">{copy.localNote}</p>
 
-    <div className="intake-progress intake-progress-four" aria-label={`Step ${Math.min(step, 4)} of 4`}>
+    <div className="intake-progress intake-progress-four" aria-label={`Step ${Math.min(step, 5)} of 5`}>
       {copy.steps.map((label, index) => {
         const n = index + 1;
         return <div key={label} className={`intake-progress-item ${step===n&&!completed?"active":""} ${progressStep>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>;
@@ -532,76 +533,61 @@ export default function ProjectIntake() {
       <b>{t(service)}</b>
     </div>}
 
-    {!completed && step===1 && <section className="intake-step">
-      <div className="intake-step-head"><span>01 / ABOUT YOU</span><h3>Who are we building with?</h3><p>Start with the essentials so the project has a clear owner and communication path.</p></div>
-      <div className="form-row two-col">
-        <label><span>Your name *</span><input value={name} onChange={e=>setName(e.target.value)} maxLength={120} autoComplete="name" placeholder="Your full name" /></label>
-        <label><span>Company / Brand</span><input value={company} onChange={e=>setCompany(e.target.value)} maxLength={160} autoComplete="organization" placeholder="Optional" /></label>
+    {!completed && step===1 && <section className="intake-step line-step">
+      <div className="intake-step-head"><span>01 / {language==="ar"?"الفكرة":"IDEA"}</span><h3>{language==="ar"?"ما الذي تريد أن نبنيه؟":"What do you want to build?"}</h3><p>{language==="ar"?"ابدأ بنوع المشروع فقط. سنُظهر لك المسار المناسب في الخطوة التالية.":"Start with the project type only. We will shape the right path in the next step."}</p></div>
+      <div className="project-type-grid">
+        {services.map((item,index)=><button type="button" key={item} className={`project-type-card ${service===item?"selected":""}`} onClick={()=>{setService(item);setPlan("");}}>
+          <span>0{index+1}</span><strong>{t(item)}</strong>
+        </button>)}
       </div>
-      <div className="form-row two-col">
-        <label><span>Email or WhatsApp *</span><input value={contact} onChange={e=>setContact(e.target.value)} maxLength={200} autoComplete="email" placeholder="How should we reach you?" /></label>
-        <div className="custom-select-field"><span className="custom-select-label">Preferred contact</span><CustomSelect value={preferredContact} onChange={setPreferredContact} options={preferredContacts} ariaLabel="Preferred contact" /></div>
-      </div>
-      <div className="project-type-field form-wide">
-        <span className="custom-select-label">{language==="ar"?"ما الذي تريد بناءه؟ *":"What do you want to build? *"}</span>
-        <div className="project-type-grid">
-          {services.map((item,index)=><button type="button" key={item} className={`project-type-card ${service===item?"selected":""}`} onClick={()=>{setService(item);setPlan("");}}>
-            <span>0{index+1}</span><strong>{t(item)}</strong>
-          </button>)}
-        </div>
-      </div>
-      {needsPlan && <div className="plan-picker form-wide">
-        <div className="plan-picker-head"><div><span>{language==="ar"?"اختر الباقة *":"Choose a plan *"}</span><p>{language==="ar"?"اختر الاسم فقط، ويمكنك مقارنة التفاصيل والأسعار إذا احتجت.":"Choose the name only. You can compare details and pricing if needed."}</p></div><Link href="/pricing">{language==="ar"?"مقارنة الباقات":"Compare plans"} →</Link></div>
+      <div className="intake-nav intake-nav-end"><button className="button button-light" type="button" disabled={!canStep1} onClick={()=>changeStep(2)}>{language==="ar"?"حدد المسار":"Shape the path"} <span>→</span></button></div>
+    </section>}
+
+    {!completed && step===2 && <section className="intake-step line-step">
+      <div className="intake-step-head"><span>02 / {language==="ar"?"المسار":"PLAN"}</span><h3>{needsPlan ? (language==="ar"?"اختر الباقة الأقرب لك.":"Choose the closest plan.") : (language==="ar"?"مسارك جاهز.":"Your path is ready.")}</h3><p>{language==="ar"?"لا تحتاج لقراءة كل التفاصيل الآن. اختر المسار الأقرب ويمكننا ضبط النطاق لاحقًا.":"No need to study every detail now. Pick the closest path and we can refine the scope later."}</p></div>
+      <div className="line-selection-summary"><span>{language==="ar"?"نوع المشروع":"PROJECT TYPE"}</span><strong>{t(service)}</strong><button type="button" onClick={()=>changeStep(1)}>{language==="ar"?"تغيير":"Change"}</button></div>
+      {needsPlan ? <div className="plan-picker">
+        <div className="plan-picker-head"><div><span>{language==="ar"?"اختر الباقة *":"Choose a plan *"}</span><p>{language==="ar"?"أسماء الباقات فقط حتى يبقى الطلب سريعًا وواضحًا.":"Plan names only, so the request stays fast and clear."}</p></div><Link href="/pricing">{language==="ar"?"مقارنة الباقات":"Compare plans"} →</Link></div>
         <div className="plan-option-grid">{availablePlans.map(item=><button type="button" key={item} className={plan===item?"selected":""} onClick={()=>setPlan(item)}>{item}</button>)}</div>
-      </div>
-      <div className="intake-nav intake-nav-end"><button className="button button-light" type="button" disabled={!canStep1} onClick={()=>changeStep(2)}>Continue to project <span>→</span></button></div>
+      </div> : <div className="custom-path-card"><span>LINETECH / CUSTOM</span><strong>{language==="ar"?"سنحدد نطاق المشروع معك.":"We will shape the project scope with you."}</strong></div>}
+      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(1)}>← {language==="ar"?"الفكرة":"Idea"}</button><button className="button button-light" type="button" disabled={!canStep2} onClick={()=>changeStep(3)}>{language==="ar"?"أضف التفاصيل":"Add the brief"} <span>→</span></button></div>
     </section>}
 
-    {!completed && step===2 && <section className="intake-step">
-      <div className="intake-step-head"><span>02 / THE PROJECT</span><h3>What needs to become real?</h3><p>Tell us the goal, current stage and the few things the solution must do well.</p></div>
+    {!completed && step===3 && <section className="intake-step line-step">
+      <div className="intake-step-head"><span>03 / {language==="ar"?"التفاصيل":"BRIEF"}</span><h3>{language==="ar"?"حوّل الفكرة إلى طلب واضح.":"Turn the idea into a clear brief."}</h3><p>{language==="ar"?"ثلاث معلومات أساسية تكفينا للبدء. التفاصيل الإضافية اختيارية.":"Three core answers are enough to start. Extra details are optional."}</p></div>
       <div className="form-row two-col">
-        <div className="custom-select-field"><span className="custom-select-label">Project stage *</span><CustomSelect value={stage} onChange={setStage} options={stages} placeholder="Select current stage" ariaLabel="Project stage" /></div>
-        <div className="custom-select-field"><span className="custom-select-label">Main goal *</span><CustomSelect value={goal} onChange={setGoal} options={goals} placeholder="Select the main outcome" ariaLabel="Main goal" /></div>
+        <div className="custom-select-field"><span className="custom-select-label">{language==="ar"?"مرحلة المشروع *":"Project stage *"}</span><CustomSelect value={stage} onChange={setStage} options={stages} placeholder="Select current stage" ariaLabel="Project stage" /></div>
+        <div className="custom-select-field"><span className="custom-select-label">{language==="ar"?"الهدف الرئيسي *":"Main goal *"}</span><CustomSelect value={goal} onChange={setGoal} options={goals} placeholder="Select the main outcome" ariaLabel="Main goal" /></div>
       </div>
-      <label className="form-wide"><span>What do you want to build? *</span><textarea value={idea} onChange={e=>setIdea(e.target.value)} maxLength={5000} placeholder="Describe the idea, problem and final result." rows={6}/></label>
-      <label className="form-wide"><span>Who is it for?</span><textarea value={audience} onChange={e=>setAudience(e.target.value)} maxLength={1000} placeholder="Customers, companies, a team, recruiters, a specific market..." rows={3}/></label>
-      <label className="form-wide"><span>Must-have features</span><textarea value={features} onChange={e=>setFeatures(e.target.value)} maxLength={5000} placeholder="List the 3–5 things the project cannot work without." rows={4}/></label>
-      <label className="form-wide"><span>Existing links / references</span><textarea value={references} onChange={e=>setReferences(e.target.value)} maxLength={3000} placeholder="Current site, competitor links or examples you like." rows={3}/></label>
-      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(1)}>← Back</button><button className="button button-light" type="button" disabled={!canStep2} onClick={()=>changeStep(3)}>Continue to scope <span>→</span></button></div>
+      <label className="form-wide"><span>{language==="ar"?"ماذا تريد أن نبني؟ *":"What do you want to build? *"}</span><textarea value={idea} onChange={e=>setIdea(e.target.value)} maxLength={5000} placeholder={language==="ar"?"اشرح النتيجة التي تريد الوصول إليها.":"Describe the result you want to achieve."} rows={5}/></label>
+      <details className="optional-details"><summary>{language==="ar"?"+ أضف تفاصيل اختيارية":"+ Add optional details"}</summary><div>
+        <label className="form-wide"><span>{language==="ar"?"لمن هذا المشروع؟":"Who is it for?"}</span><textarea value={audience} onChange={e=>setAudience(e.target.value)} maxLength={1000} rows={3}/></label>
+        <label className="form-wide"><span>{language==="ar"?"الخصائص الأساسية":"Must-have features"}</span><textarea value={features} onChange={e=>setFeatures(e.target.value)} maxLength={5000} rows={4}/></label>
+        <label className="form-wide"><span>{language==="ar"?"روابط أو مراجع":"Links / references"}</span><textarea value={references} onChange={e=>setReferences(e.target.value)} maxLength={3000} rows={3}/></label>
+      </div></details>
+      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← {language==="ar"?"الباقة":"Plan"}</button><button className="button button-light" type="button" disabled={!canStep3} onClick={()=>changeStep(4)}>{language==="ar"?"حدد النطاق":"Set the scope"} <span>→</span></button></div>
     </section>}
 
-    {!completed && step===3 && <section className="intake-step">
-      <div className="intake-step-head"><span>03 / SCOPE</span><h3>How should we frame the first move?</h3><p>These details help separate a small focused engagement from a larger product build.</p></div>
-      <fieldset><legend>Budget range</legend><div className="choice-grid intake-choice-grid">{budgets.map(v=><label key={v} className={`choice ${budget===v?"selected":""}`}><input type="radio" name="budget" checked={budget===v} onChange={()=>setBudget(v)}/><span>{v}</span></label>)}</div></fieldset>
-      <fieldset><legend>Launch timing</legend><div className="choice-grid intake-choice-grid">{timings.map(v=><label key={v} className={`choice ${timing===v?"selected":""}`}><input type="radio" name="timing" checked={timing===v} onChange={()=>setTiming(v)}/><span>{v}</span></label>)}</div></fieldset>
-      <label className="form-wide"><span>Anything else we should know?</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} maxLength={5000} placeholder="Constraints, preferences, deadlines or context." rows={4}/></label>
-      <div className="brief-summary"><div><span>Service</span><strong>{service||"—"}</strong>{plan&&<small>{plan}</small>}</div><div><span>Stage</span><strong>{stage||"—"}</strong></div><div><span>Goal</span><strong>{goal||"—"}</strong></div><div><span>Timing</span><strong>{timing}</strong></div></div>
-      <ScopePreview service={service} stage={stage} goal={goal} budget={budget} timing={timing} />
-      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button><button className="button button-light" type="button" onClick={()=>changeStep(4)}>Continue <span>→</span></button></div>
+    {!completed && step===4 && <section className="intake-step line-step">
+      <div className="intake-step-head"><span>04 / {language==="ar"?"النطاق":"SCOPE"}</span><h3>{language==="ar"?"متى تريد البدء وما حجم المشروع؟":"When do you want to move, and at what scale?"}</h3><p>{language==="ar"?"هذه ليست موافقة نهائية على السعر؛ تساعدنا فقط على تجهيز العرض المناسب.":"This is not a final price agreement. It simply helps us prepare the right proposal."}</p></div>
+      <fieldset><legend>{language==="ar"?"نطاق الميزانية":"Budget range"}</legend><div className="choice-grid intake-choice-grid">{budgets.map(v=><label key={v} className={`choice ${budget===v?"selected":""}`}><input type="radio" name="budget" checked={budget===v} onChange={()=>setBudget(v)}/><span>{t(v)}</span></label>)}</div></fieldset>
+      <fieldset><legend>{language==="ar"?"موعد الإطلاق":"Launch timing"}</legend><div className="choice-grid intake-choice-grid">{timings.map(v=><label key={v} className={`choice ${timing===v?"selected":""}`}><input type="radio" name="timing" checked={timing===v} onChange={()=>setTiming(v)}/><span>{t(v)}</span></label>)}</div></fieldset>
+      <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(3)}>← {language==="ar"?"التفاصيل":"Brief"}</button><button className="button button-light" type="button" onClick={()=>changeStep(5)}>{language==="ar"?"جهز خطي":"Prepare my line"} <span>→</span></button></div>
     </section>}
 
-    {!completed && step===4 && <section className="intake-step intake-review-step">
-      <div className="intake-step-head"><span>{copy.reviewKicker}</span><h3>{copy.reviewTitle}</h3><p>{copy.reviewBody}</p></div>
-
-      <div className="request-review-grid">
-        <article><span>{copy.customer}</span><strong>{name}</strong><p>{company || "—"}</p></article>
-        <article><span>{copy.contact}</span><strong>{contact}</strong><p>{t(preferredContact)}</p></article>
-        <article><span>{copy.service}</span><strong>{t(service)}</strong><p>{plan ? `${plan} · ` : ""}{t(stage)}</p></article>
-        <article><span>{copy.goal}</span><strong>{t(goal)}</strong><p>{t(timing)}</p></article>
-        <article><span>{copy.budget}</span><strong>{t(budget)}</strong><p>{t(timing)}</p></article>
-        <article className="request-review-wide"><span>{copy.request}</span><strong>{idea}</strong>{notes && <p>{notes}</p>}</article>
+    {!completed && step===5 && <section className="intake-step intake-review-step line-step">
+      <div className="intake-step-head"><span>05 / {language==="ar"?"الإرسال":"SUBMIT"}</span><h3>{language==="ar"?"خط مشروعك جاهز.":"Your project line is ready."}</h3><p>{language==="ar"?"أضف بيانات التواصل، راجع المسار، ثم أرسل الطلب إلى LINETECH.":"Add your contact details, review the path, then send your line to LINETECH."}</p></div>
+      <div className="your-line-card"><span>LINETECH / YOUR LINE</span><strong>{t(service)}</strong><div>{plan&&<b>{plan}</b>}<i>→</i><b>{t(stage)}</b><i>→</i><b>{t(timing)}</b></div></div>
+      <div className="final-contact-grid">
+        <label><span>{language==="ar"?"اسمك *":"Your name *"}</span><input value={name} onChange={e=>setName(e.target.value)} maxLength={120} autoComplete="name" /></label>
+        <label><span>{language==="ar"?"الشركة / العلامة":"Company / Brand"}</span><input value={company} onChange={e=>setCompany(e.target.value)} maxLength={160} autoComplete="organization" /></label>
+        <label><span>{language==="ar"?"البريد أو واتساب *":"Email or WhatsApp *"}</span><input value={contact} onChange={e=>setContact(e.target.value)} maxLength={200} /></label>
+        <div className="custom-select-field"><span className="custom-select-label">{language==="ar"?"طريقة التواصل":"Preferred contact"}</span><CustomSelect value={preferredContact} onChange={setPreferredContact} options={preferredContacts} ariaLabel="Preferred contact" /></div>
       </div>
-
-      <label className={`request-confirm ${confirmed ? "is-checked" : ""}`}>
-        <input type="checkbox" checked={confirmed} onChange={event=>setConfirmed(event.target.checked)} />
-        <i aria-hidden="true">✓</i>
-        <span>{copy.confirm}</span>
-      </label>
-
-      <div className="request-complete-actions">
-        <button className="button button-light request-complete-button" type="button" disabled={!confirmed || completing} onClick={completeRequest}>{completing ? copy.completing : copy.complete} <span>→</span></button>
-        <button className="intake-back" type="button" onClick={()=>changeStep(3)}>{copy.back}</button>
-      </div>
+      <label className="form-wide"><span>{language==="ar"?"ملاحظة أخيرة (اختياري)":"Final note (optional)"}</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} maxLength={5000} rows={3}/></label>
+      <label className={`request-confirm ${confirmed ? "is-checked" : ""}`}><input type="checkbox" checked={confirmed} onChange={event=>setConfirmed(event.target.checked)} /><i aria-hidden="true">✓</i><span>{copy.confirm}</span></label>
+      <div className="request-complete-actions"><button className="button button-light request-complete-button" type="button" disabled={!name.trim()||!contact.trim()||!confirmed||completing} onClick={completeRequest}>{completing ? copy.completing : (language==="ar"?"أرسل خطي":"Submit my line")} <span>→</span></button><button className="intake-back" type="button" onClick={()=>changeStep(4)}>← {language==="ar"?"النطاق":"Scope"}</button></div>
+      {actionStatus && <p className="brief-action-status" role="status">{actionStatus}</p>}
     </section>}
 
     {completed && <section className="intake-step request-complete-panel">
