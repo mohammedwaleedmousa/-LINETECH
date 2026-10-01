@@ -56,3 +56,8 @@
 }
 
 .workspace-project-switcher{margin-top:26px;max-width:430px}
+
+/* Shared client-portal state treatment */
+.workspace-loading{min-height:100svh;display:grid;place-items:center}
+.workspace-loading::before{content:"";width:30px;height:30px;border:1px solid #263746;border-top-color:#6ea8f8;border-radius:50%;animation:linetechPortalSpin .8s linear infinite}
+@keyframes linetechPortalSpin{to{transform:rotate(360deg)}}
