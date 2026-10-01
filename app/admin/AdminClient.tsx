@@ -88,6 +88,7 @@ export default function AdminClient() {
   const [memberRole, setMemberRole] = useState("staff");
   const [projectQuery, setProjectQuery] = useState("");
   const [projectStatusFilter, setProjectStatusFilter] = useState("all");
+  const [projectSection, setProjectSection] = useState("overview");
   const [refreshing, setRefreshing] = useState(false);
   const [clientOverview, setClientOverview] = useState<ClientOverview | null>(null);
   const [clientLoading, setClientLoading] = useState(false);
@@ -678,7 +679,7 @@ export default function AdminClient() {
               key={project.id}
               type="button"
               className={selectedId === project.id ? "admin-project is-active" : "admin-project"}
-              onClick={() => setSelectedId(project.id)}
+              onClick={() => { setSelectedId(project.id); setProjectSection("overview"); }}
             >
               <span>{project.request?.reference_number || "NO REF"}</span>
               <strong>{project.title || project.request?.service || "Project"}</strong>
@@ -702,6 +703,26 @@ export default function AdminClient() {
                 </button>
               </div>
             </div>
+
+            <div className="admin-project-command">
+              <div><span>CLIENT</span><strong>{detail.request?.name || "—"}</strong></div>
+              <div><span>PLAN</span><strong>{detail.request?.selected_plan_code ? String(detail.request.selected_plan_code).replaceAll("_", " ").toUpperCase() : "—"}</strong></div>
+              <div><span>STATUS</span><strong>{detail.project.status.replaceAll("_", " ").toUpperCase()}</strong></div>
+              <div><span>PHASE</span><strong>{detail.project.phase} / 5</strong></div>
+              <div><span>DUE</span><strong>{detail.project.due_date ? dateTime(detail.project.due_date).split(",")[0] : "—"}</strong></div>
+              <div><span>SUBSCRIPTION</span><strong>{subscription?.status ? String(subscription.status).replaceAll("_", " ").toUpperCase() : "NOT ACTIVE"}</strong></div>
+            </div>
+
+            <nav className="admin-project-tabs" aria-label="Project sections">
+              {[
+                ["overview","Overview"],["activity","Activity"],["files","Files"],["chat","Chat"],["handover","Handover"],["team","Team"],
+              ].map(([id,label]) => (
+                <button key={id} type="button" className={projectSection === id ? "is-active" : ""} onClick={() => {
+                  setProjectSection(id);
+                  document.getElementById(`admin-project-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
+                }}>{label}</button>
+              ))}
+            </nav>
 
             {clientOpen && (
               <section className="admin-card admin-client-profile">
@@ -771,7 +792,7 @@ export default function AdminClient() {
               </section>
             )}
 
-            <section className="admin-card admin-request-brief">
+            <div id="admin-project-overview" className="admin-section-anchor" />\n            <section className="admin-card admin-request-brief">
               <div className="admin-card-title"><span>00</span><strong>Client request</strong></div>
               <div className="admin-request-grid">
                 <div><span>Client</span><strong>{detail.request?.name || "—"}</strong></div>
