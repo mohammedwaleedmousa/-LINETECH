@@ -20,6 +20,7 @@ const adminClients = read("app/admin/ClientsClient.tsx");
 const adminDashboard = read("app/admin/DashboardClient.tsx");
 const adminProjects = read("app/admin/AdminClient.tsx");
 const accountClient = read("app/account/AccountClient.tsx");
+const billingClient = read("app/admin/BillingClient.tsx");
 
 // 1) Account/session layer.
 for (const endpoint of [
@@ -99,6 +100,7 @@ for (const endpoint of [
   "/api/admin/users",
   "/api/admin/members",
   "/api/admin/subscription",
+  "/api/admin/billing",
 ]) {
   assert.ok(admin.includes(endpoint), `Missing admin lifecycle endpoint: ${endpoint}`);
 }
@@ -124,6 +126,10 @@ assert.ok(adminProjects.includes("Current subscription"), "Admin project UI does
 assert.ok(auth.includes("/client_subscriptions?select=*,plan:plan_catalog(*)"), "Account API does not load the client subscription and plan");
 assert.ok(accountClient.includes("account.subscription"), "Account UI does not render the commercial subscription");
 assert.ok(accountClient.includes("max_storage_gb"), "Account UI does not show plan limits");
+assert.ok(admin.includes('path==="/api/admin/billing"'), "Admin billing API is missing");
+assert.ok(admin.includes("overdueAmount"), "Billing API does not calculate overdue recurring value");
+assert.ok(billingClient.includes("MRR"), "Billing center does not display MRR");
+assert.ok(billingClient.includes("Day 7") && billingClient.includes("Day 14") && billingClient.includes("Day 30"), "Billing center does not expose the collection policy");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
