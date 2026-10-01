@@ -12,7 +12,6 @@ const items = [
   { href: "/pricing", en: "Pricing", ar: "الباقات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
   { href: "/about", en: "About", ar: "عن الشركة" },
-  { href: "/chat", en: "Chat", ar: "المحادثة" },
 ] as const;
 
 const clientItems = [
