@@ -227,3 +227,26 @@ html[dir="rtl"] .project-intake .brief-share span{transform:scaleX(-1)}
 }
 
 @media(prefers-reduced-motion:reduce){.intake-step{animation:none!important}}
+
+
+/* Clear project + plan selection */
+.project-type-field{display:grid;gap:12px;margin-top:8px}
+.project-type-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.project-type-card{min-height:88px;padding:14px;border:1px solid rgba(255,255,255,.13);background:rgba(255,255,255,.025);color:inherit;text-align:start;display:flex;flex-direction:column;justify-content:space-between;gap:16px;cursor:pointer;transition:border-color .2s ease,background .2s ease,transform .2s ease}
+.project-type-card:hover{border-color:rgba(255,255,255,.32);transform:translateY(-2px)}
+.project-type-card.selected{background:#f5f5f2;color:#0b0b0d;border-color:#f5f5f2}
+.project-type-card span{font-size:10px;letter-spacing:.12em;opacity:.55}
+.project-type-card strong{font-size:13px;font-weight:600;line-height:1.25}
+.plan-picker{margin-top:18px;padding:20px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.025);display:grid;gap:16px}
+.plan-picker-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px}
+.plan-picker-head>div{display:grid;gap:5px}
+.plan-picker-head span{font-size:12px;font-weight:700;letter-spacing:.04em}
+.plan-picker-head p{margin:0;max-width:520px;font-size:12px;line-height:1.6;opacity:.58}
+.plan-picker-head a{font-size:11px;color:inherit;text-decoration:none;white-space:nowrap;border-bottom:1px solid rgba(255,255,255,.35);padding-bottom:3px}
+.plan-option-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.plan-option-grid button{min-height:48px;border:1px solid rgba(255,255,255,.14);background:transparent;color:inherit;font:inherit;font-size:12px;font-weight:650;letter-spacing:.035em;cursor:pointer;transition:.2s ease}
+.plan-option-grid button:hover{border-color:rgba(255,255,255,.38)}
+.plan-option-grid button.selected{background:#f5f5f2;color:#0b0b0d;border-color:#f5f5f2}
+.brief-summary small{display:block;margin-top:5px;font-size:10px;letter-spacing:.08em;opacity:.6}
+@media(max-width:900px){.project-type-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.project-type-card:last-child{grid-column:1/-1}.plan-option-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.project-type-card{min-height:76px;padding:12px}.plan-picker{padding:15px}.plan-picker-head{display:grid;gap:10px}.plan-option-grid{grid-template-columns:1fr 1fr}.plan-option-grid button{font-size:11px}}
