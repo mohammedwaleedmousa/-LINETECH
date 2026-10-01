@@ -71,3 +71,34 @@ html[dir="rtl"] .account-reference dl>div{padding:20px 0 20px 20px}
   .account-session-actions{display:grid;grid-template-columns:1fr}
   .account-session-actions button,.account-primary,.account-secondary{width:100%}
 }
+
+
+/* Commercial subscription */
+.account-subscription{grid-column:1/-1}
+.account-subscription-summary{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(255,255,255,.1)}
+.account-subscription-summary>div{display:flex;flex-direction:column;gap:8px;padding:20px;border-right:1px solid rgba(255,255,255,.1)}
+.account-subscription-summary>div:last-child{border-right:0}
+.account-subscription-summary span,.account-plan-limits>span{font-size:10px;letter-spacing:.12em;text-transform:uppercase;opacity:.5}
+.account-subscription-summary strong{font-size:15px;text-transform:capitalize}
+.subscription-status{width:max-content}
+.subscription-status.is-active{opacity:1}
+.subscription-status.is-past_due,.subscription-status.is-suspended,.subscription-status.is-cancelled{opacity:.62}
+.account-plan-limits{padding-top:22px}
+.account-plan-limits>div{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:12px}
+.account-plan-limits p{margin:0;padding:15px;border:1px solid rgba(255,255,255,.08);display:flex;min-height:82px;flex-direction:column;justify-content:space-between;gap:12px}
+.account-plan-limits b{font-size:14px;font-weight:650}
+.account-plan-limits small{font-size:10px;opacity:.5}
+.account-no-subscription{padding:22px 0 4px}
+.account-no-subscription strong{display:block;font-size:16px;margin-bottom:8px}
+.account-no-subscription p{max-width:650px;margin:0;opacity:.58;line-height:1.7}
+html[dir="rtl"] .account-subscription-summary>div{border-right:0;border-left:1px solid rgba(255,255,255,.1)}
+html[dir="rtl"] .account-subscription-summary>div:last-child{border-left:0}
+@media(max-width:800px){
+  .account-subscription-summary{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .account-plan-limits>div{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:520px){
+  .account-subscription-summary{grid-template-columns:1fr}
+  .account-subscription-summary>div,.account-subscription-summary>div:last-child{border-right:0!important;border-left:0!important;border-bottom:1px solid rgba(255,255,255,.08)}
+  .account-subscription-summary>div:last-child{border-bottom:0}
+}
