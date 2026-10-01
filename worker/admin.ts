@@ -206,7 +206,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
 
   if(path==="/api/admin/billing" && request.method==="GET") {
     const [sr,profilesResponse]=await Promise.all([
-      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*)&order=next_billing_at.asc.nullslast",admin.accessToken),
+      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*),projects:projects(id,title,status)&order=next_billing_at.asc.nullslast",admin.accessToken),
       restFetch(env,"/profiles?select=id,full_name,company,email,phone",admin.accessToken),
     ]);
     const [subscriptions,profiles]=await Promise.all([safeJson(sr),safeJson(profilesResponse)]);
