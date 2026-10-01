@@ -94,6 +94,8 @@ const copy = {
     start: "Start project request",
     finder: "Find the right service",
     tracking: "PROJECT STATUS",
+    overview: "PROJECT OVERVIEW",
+    overviewTitle: "What matters right now.",
     stage: "Current stage",
     phase: "Phase",
     lastUpdated: "Last updated",
@@ -176,6 +178,8 @@ const copy = {
     start: "ابدأ طلب المشروع",
     finder: "اعثر على الخدمة المناسبة",
     tracking: "حالة المشروع",
+    overview: "نظرة عامة على المشروع",
+    overviewTitle: "ما يهم الآن.",
     stage: "المرحلة الحالية",
     phase: "المرحلة",
     lastUpdated: "آخر تحديث",
@@ -463,6 +467,37 @@ export default function WorkspaceClient() {
                   <button type="button" onClick={() => void loadWorkspace(true)} disabled={refreshing}>
                     {refreshing ? t.refreshing : t.refresh}
                   </button>
+                </div>
+              </div>
+
+              <div className="workspace-v2-overview">
+                <div className="workspace-v2-overview-head">
+                  <div><p className="workspace-kicker">{t.overview}</p><h2>{t.overviewTitle}</h2></div>
+                  <span className={"workspace-live-status is-" + progress.status}><i />{statusLabel}</span>
+                </div>
+                <div className="workspace-v2-overview-grid">
+                  <article>
+                    <span>{t.stage}</span>
+                    <strong>{currentPhaseCopy[1]}</strong>
+                    <small>{String(currentPhase).padStart(2, "0")} / 05</small>
+                  </article>
+                  <article>
+                    <span>{clientAction.required ? t.action : t.noAction}</span>
+                    <strong>{clientAction.required ? localizeWorkspaceText(clientAction.title, language, t.actionDefaultTitle) : t.noActionBody}</strong>
+                    {clientAction.required && clientAction.href
+                      ? <Link href={clientAction.href}>{localizeWorkspaceText(clientAction.label, language, t.actionDefaultLabel)} →</Link>
+                      : <small>{formatDate(progress.updatedAt, language)}</small>}
+                  </article>
+                  <article>
+                    <span>{t.nextMilestone}</span>
+                    <strong>{nextMilestone}</strong>
+                    <small>{progress.nextMilestoneDate ? formatDate(progress.nextMilestoneDate, language) : t.milestonePending}</small>
+                  </article>
+                  <article>
+                    <span>{t.latest}</span>
+                    <strong>{latestUpdate}</strong>
+                    <small>{formatDate(progress.updatedAt, language)}</small>
+                  </article>
                 </div>
               </div>
 
