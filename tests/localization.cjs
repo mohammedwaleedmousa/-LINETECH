@@ -192,31 +192,33 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await click(document.querySelector('.site-search-topline button'));
 
 
-  await fill(document.querySelector('input[placeholder="اسمك الكامل"]'), 'محمد');
-  const contactInput = [...document.querySelectorAll('.intake-step input')]
-    .find(input => input.type === 'text' && input.value === '' && input.placeholder !== 'اختياري');
-  await fill(contactInput, 'mohammed@example.test');
-
-  // Step 1: preferred contact is the first custom select; project type is the second.
-  await chooseCustomSelect(1, 0);
+  // Build Your Line: Idea -> Plan -> Brief -> Scope -> Submit.
+  const projectCards = [...document.querySelectorAll('.project-type-card')];
+  assert.ok(projectCards[0], 'Expected project type cards');
+  await click(projectCards[0]);
   await click(document.querySelector('.intake-nav-end .button'));
-  assert.ok(document.body.textContent.includes('ما الذي يجب أن يتحول إلى واقع؟'));
+  assert.ok(document.body.textContent.includes('اختر الباقة الأقرب لك.'));
 
+  const planButtons = [...document.querySelectorAll('.plan-option-grid button')];
+  assert.ok(planButtons[0], 'Expected plan options for web development');
+  await click(planButtons[0]);
+  await click(document.querySelector('.intake-nav .button'));
+  assert.ok(document.body.textContent.includes('حوّل الفكرة إلى طلب واضح.'));
 
-  // Step 2: choose the first available stage and goal.
   await chooseCustomSelect(0, 0);
   await chooseCustomSelect(1, 0);
   await fill(document.querySelector('.intake-step textarea'), 'موقع لشركتي');
   await click(document.querySelector('.intake-nav .button'));
-  assert.ok(document.body.textContent.includes('كيف نحدد الخطوة الأولى؟'));
+  assert.ok(document.body.textContent.includes('متى تريد البدء وما حجم المشروع؟'));
 
-
-  // Step 3 -> final review. Review wording appears only on the final step.
   await click(document.querySelector('.intake-step .intake-nav .button'));
-  assert.ok(document.body.textContent.includes('راجع طلبك قبل إتمامه.'));
+  assert.ok(document.body.textContent.includes('خط مشروعك جاهز.'));
 
-
-  // Step 4 -> complete the request.
+  const finalInputs = [...document.querySelectorAll('.final-contact-grid input')];
+  assert.ok(finalInputs[0], 'Expected final contact name input');
+  assert.ok(finalInputs[2], 'Expected final contact channel input');
+  await fill(finalInputs[0], 'محمد');
+  await fill(finalInputs[2], 'mohammed@example.test');
   await click(document.querySelector('.request-confirm input'));
   await click(document.querySelector('.request-complete-button'));
   await act(async () => Promise.resolve());
@@ -224,17 +226,14 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.match(document.querySelector('.request-reference strong').textContent, /^LT-\d{6}-\d{4}$/);
   assert.ok(document.body.textContent.includes('طلب مشروعك جاهز.'));
 
-
   await click(buttonContaining('انسخ تفاصيل الطلب'));
   assert.ok(copied.includes('نوع المشروع：تطوير الويب'));
   assert.ok(copied.includes('موقع لشركتي'));
   assert.ok(!copied.includes('Project type'));
 
-
   await click(document.querySelector('.desktop-language'));
   assert.equal(document.documentElement.dir, 'ltr');
   assert.ok(document.body.textContent.includes('Your project request is ready.'));
-
 
   await click(document.querySelector('.request-finish-actions button.brief-share'));
   assert.ok(copied.includes('Project type：Web Development'));
