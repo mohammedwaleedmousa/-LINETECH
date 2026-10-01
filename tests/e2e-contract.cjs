@@ -144,6 +144,8 @@ assert.ok(dashboardClient.includes("Delivery overdue") && dashboardClient.includ
 assert.ok(dashboardClient.includes("priority = 0") && dashboardClient.includes(".sort((a, b) => a.priority - b.priority)"), "Admin attention queue is not risk-prioritized");
 assert.ok(adminClient.includes("admin-project-command") && adminClient.includes("SUBSCRIPTION") && adminClient.includes("detail.project.phase"), "Project operations is missing the laptop command bar");
 assert.ok(adminClient.includes("admin-project-tabs") && adminClient.includes("admin-project-chat") && adminClient.includes("admin-project-handover"), "Project operations is missing direct section navigation");
+assert.ok(adminClient.includes('projectSection === "overview"') && adminClient.includes('projectSection === "chat"') && adminClient.includes('projectSection === "files"'), "Project operation tabs are not focused conditional workspaces");
+assert.ok(adminClient.includes("admin-tab-workspace-chat") && adminClient.includes('projectSection === "team"'), "Chat and team are not isolated admin workspaces");
 assert.ok(pricing.includes('setup:"$149",monthly:"$19"') && pricing.includes('setup:"$299",monthly:"$35"') && pricing.includes('setup:"$499",monthly:"$59"'), "Published website plan pricing drifted from the approved catalog");
 assert.ok(pricing.includes('setup:"$699",monthly:"$79"') && pricing.includes('setup:"$1,199",monthly:"$129"') && pricing.includes('monthly:"$199+"'), "Published commerce/custom pricing drifted from the approved catalog");
 assert.ok(pricing.includes('Up to 20 pages') && pricing.includes('6 updates / month'), "Published plan limits drifted from the approved catalog");
