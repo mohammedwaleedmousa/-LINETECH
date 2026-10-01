@@ -223,3 +223,29 @@ body:has(.admin-shell){background:#05080c}
   .admin-app-main .admin-page{padding-top:20px;padding-bottom:28px}
   .admin-app-main .admin-header,.admin-app-main .admin-layout,.admin-app-main .admin-feedback,.admin-app-main .admin-state{width:calc(100% - 28px)}
 }
+
+
+/* Billing center */
+.billing-kpis article:first-child strong,.billing-kpis article:nth-child(5) strong{font-size:clamp(24px,3vw,38px)}
+.billing-table-panel{margin-top:24px}
+.billing-list{display:flex;flex-direction:column}
+.billing-list>article{display:grid;grid-template-columns:minmax(190px,1.5fr) repeat(3,minmax(110px,.7fr)) auto;gap:18px;align-items:center;padding:18px 0;border-top:1px solid rgba(255,255,255,.08)}
+.billing-list>article>div{display:flex;flex-direction:column;gap:5px;min-width:0}
+.billing-list span{font-size:9px;letter-spacing:.12em;opacity:.45}
+.billing-list strong{font-size:13px;font-weight:650}
+.billing-client>span{font-size:10px;opacity:.55}
+.billing-client>strong{font-size:15px}
+.billing-client>small{overflow:hidden;text-overflow:ellipsis;opacity:.42}
+.billing-list a{font-size:11px;text-decoration:none;white-space:nowrap}
+.billing-state{width:max-content;padding:5px 7px;border:1px solid rgba(255,255,255,.12);font-size:9px!important;letter-spacing:.06em}
+.billing-state.is-warn{border-color:rgba(255,255,255,.28)}
+.billing-state.is-danger{border-style:dashed}
+.billing-state.is-quiet{opacity:.45}
+.billing-policy{display:grid;grid-template-columns:1.2fr repeat(3,1fr);gap:1px;margin-top:24px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08)}
+.billing-policy>span,.billing-policy>div{padding:18px;background:#0d0e12}
+.billing-policy>span{font-size:10px;letter-spacing:.12em;opacity:.5}
+.billing-policy>div strong{display:block;margin-bottom:6px}
+.billing-policy>div p{margin:0;font-size:11px;opacity:.55}
+.billing-policy>small{grid-column:1/-1;padding:14px 18px;background:#0d0e12;opacity:.45;line-height:1.6}
+@media(max-width:900px){.billing-list>article{grid-template-columns:1fr 1fr}.billing-list>article>a{justify-self:start}.billing-policy{grid-template-columns:1fr 1fr}.billing-policy>small{grid-column:1/-1}}
+@media(max-width:560px){.billing-list>article{grid-template-columns:1fr;gap:12px}.billing-policy{grid-template-columns:1fr}.billing-policy>small{grid-column:1}}
