@@ -35,7 +35,7 @@ type RequestRecord = {
   };
 };
 
-type ProgressStatus = "ready" | "in-progress" | "review" | "complete";
+type ProgressStatus = "ready" | "planned" | "in-progress" | "review" | "complete" | "archived";
 
 type ProgressActivity = {
   id: string;
@@ -97,7 +97,9 @@ const copy = {
     stage: "Current stage",
     phase: "Phase",
     lastUpdated: "Last updated",
-    statusReady: "Request completed",
+    statusReady: "Request submitted",
+    statusPlanned: "Planning",
+    statusArchived: "Archived",
     statusInProgress: "In progress",
     statusReview: "Waiting for review",
     statusComplete: "Project complete",
@@ -177,7 +179,9 @@ const copy = {
     stage: "المرحلة الحالية",
     phase: "المرحلة",
     lastUpdated: "آخر تحديث",
-    statusReady: "تم إكمال الطلب",
+    statusReady: "تم إرسال الطلب",
+    statusPlanned: "قيد التخطيط",
+    statusArchived: "مؤرشف",
     statusInProgress: "قيد التنفيذ",
     statusReview: "بانتظار المراجعة",
     statusComplete: "اكتمل المشروع",
@@ -366,11 +370,15 @@ export default function WorkspaceClient() {
 
   const statusLabel = progress?.status === "complete"
     ? t.statusComplete
-    : progress?.status === "review"
-      ? t.statusReview
-      : progress?.status === "in-progress"
-        ? t.statusInProgress
-        : t.statusReady;
+    : progress?.status === "archived"
+      ? t.statusArchived
+      : progress?.status === "review"
+        ? t.statusReview
+        : progress?.status === "in-progress"
+          ? t.statusInProgress
+          : progress?.status === "planned"
+            ? t.statusPlanned
+            : t.statusReady;
 
   const defaultAction: ProgressAction = currentPhase === 1
     ? {
