@@ -21,6 +21,8 @@ const adminDashboard = read("app/admin/DashboardClient.tsx");
 const adminProjects = read("app/admin/AdminClient.tsx");
 const accountClient = read("app/account/AccountClient.tsx");
 const billingClient = read("app/admin/BillingClient.tsx");
+const siteNav = read("app/SiteNav.tsx");
+const chatWorkspace = read("app/chat/ChatWorkspace.tsx");
 
 // 1) Account/session layer.
 for (const endpoint of [
@@ -134,6 +136,11 @@ assert.ok(admin.includes("existing?.starts_at||now.toISOString()"), "Subscriptio
 assert.ok(admin.includes("existing?.next_billing_at||nextBilling.toISOString()"), "Subscription updates must preserve the current billing date");
 assert.ok(admin.includes("project:projectMap.get"), "Billing API does not connect subscriptions to client projects");
 assert.ok(billingClient.includes("/admin/projects?project="), "Billing actions do not route to the related client project");
+assert.ok(siteNav.includes("portalHref"), "Client navigation does not preserve active project context");
+assert.ok(accountClient.includes("currentProjectId ? `/workspace?project="), "Account workspace link does not preserve project context");
+assert.ok(accountClient.includes("currentProjectId ? `/chat?project="), "Account chat link does not preserve project context");
+assert.ok(chatWorkspace.includes("Open project workspace"), "Project chat is not connected back to Workspace");
+assert.ok(!chatWorkspace.includes("Search or start new chat"), "Placeholder chat search control is still exposed");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
