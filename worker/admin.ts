@@ -203,6 +203,39 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
   }
 
 
+
+  if(path==="/api/admin/billing" && request.method==="GET") {
+    const [sr,profilesResponse]=await Promise.all([
+      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*)&order=next_billing_at.asc.nullslast",admin.accessToken),
+      restFetch(env,"/profiles?select=id,full_name,company,email,phone",admin.accessToken),
+    ]);
+    const [subscriptions,profiles]=await Promise.all([safeJson(sr),safeJson(profilesResponse)]);
+    if(!sr.ok||!profilesResponse.ok) return json({ok:false},!sr.ok?sr.status:profilesResponse.status,admin.setCookies);
+    const profileMap=new Map((Array.isArray(profiles)?profiles:[]).map((profile:any)=>[String(profile.id),profile]));
+    const rows=(Array.isArray(subscriptions)?subscriptions:[]).map((subscription:any)=>({
+      ...subscription,
+      client:profileMap.get(String(subscription.client_id))||null,
+    }));
+    const recurringStatuses=new Set(["trial","active","past_due"]);
+    const mrr=rows.filter((row:any)=>recurringStatuses.has(String(row.status))).reduce((sum:number,row:any)=>sum+Number(row.recurring_price_usd||0),0);
+    const now=Date.now();
+    const day=86400000;
+    const withAging=rows.map((row:any)=>{
+      const due=row.next_billing_at?new Date(row.next_billing_at).getTime():NaN;
+      const daysOverdue=Number.isFinite(due)&&due<now?Math.floor((now-due)/day):0;
+      return {...row,days_overdue:daysOverdue};
+    });
+    return json({ok:true,summary:{
+      mrr:Number(mrr.toFixed(2)),
+      active:rows.filter((row:any)=>row.status==="active").length,
+      trial:rows.filter((row:any)=>row.status==="trial").length,
+      pastDue:rows.filter((row:any)=>row.status==="past_due").length,
+      suspended:rows.filter((row:any)=>row.status==="suspended").length,
+      cancelled:rows.filter((row:any)=>row.status==="cancelled").length,
+      overdueAmount:Number(withAging.filter((row:any)=>row.days_overdue>0&&row.status!=="cancelled").reduce((sum:number,row:any)=>sum+Number(row.recurring_price_usd||0),0).toFixed(2)),
+    },subscriptions:withAging},200,admin.setCookies);
+  }
+
   if(path==="/api/admin/subscription" && request.method==="GET") {
     const clientId=new URL(request.url).searchParams.get("clientId")||"";
     if(!/^[0-9a-f-]{36}$/i.test(clientId)) return json({ok:false},400,admin.setCookies);
