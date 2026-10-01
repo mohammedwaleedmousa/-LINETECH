@@ -130,6 +130,10 @@ assert.ok(admin.includes('path==="/api/admin/billing"'), "Admin billing API is m
 assert.ok(admin.includes("overdueAmount"), "Billing API does not calculate overdue recurring value");
 assert.ok(billingClient.includes("MRR"), "Billing center does not display MRR");
 assert.ok(billingClient.includes("Day 7") && billingClient.includes("Day 14") && billingClient.includes("Day 30"), "Billing center does not expose the collection policy");
+assert.ok(admin.includes("existing?.starts_at||now.toISOString()"), "Subscription updates must preserve the original start date");
+assert.ok(admin.includes("existing?.next_billing_at||nextBilling.toISOString()"), "Subscription updates must preserve the current billing date");
+assert.ok(admin.includes("project:projectMap.get"), "Billing API does not connect subscriptions to client projects");
+assert.ok(billingClient.includes("/admin/projects?project="), "Billing actions do not route to the related client project");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
