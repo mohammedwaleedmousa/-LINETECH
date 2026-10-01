@@ -205,11 +205,12 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
 
     let activity:Row[]=[];
     let files:Row[]=[];
-    const [activityResponse,filesResponse]=await Promise.all([
+    const [activityResponse,filesResponse,subscriptionResponse]=await Promise.all([
       restFetch(env,`/project_activity?select=*&project_id=eq.${encodeURIComponent(project.id)}&order=created_at.desc&limit=20`,session.accessToken),
       restFetch(env,`/project_files?select=*&project_id=eq.${encodeURIComponent(project.id)}&order=updated_at.desc&limit=50`,session.accessToken),
+      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*)&client_id=eq."+encodeURIComponent(String(session.user.id))+"&limit=1",session.accessToken),
     ]);
-    const [activityPayload,filesPayload]=await Promise.all([safeJson(activityResponse),safeJson(filesResponse)]);
+    const [activityPayload,filesPayload,subscriptionPayload]=await Promise.all([safeJson(activityResponse),safeJson(filesResponse),safeJson(subscriptionResponse)]);
     if(activityResponse.ok && Array.isArray(activityPayload)) activity=activityPayload as Row[];
     if(filesResponse.ok && Array.isArray(filesPayload)) files=filesPayload as Row[];
 
@@ -267,7 +268,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       })),
     };
 
-    return json({ok:true,projectId:project.id,record,progress},200,session.setCookies);
+    const subscription=subscriptionResponse.ok&&Array.isArray(subscriptionPayload)?subscriptionPayload[0]||null:null;\n    return json({ok:true,projectId:project.id,record,progress,subscription},200,session.setCookies);
   }
 
   if(path==="/api/chat/messages") {
