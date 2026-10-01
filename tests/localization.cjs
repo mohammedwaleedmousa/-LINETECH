@@ -224,7 +224,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await act(async () => Promise.resolve());
   assert.ok(document.querySelector('.request-complete-panel'));
   assert.match(document.querySelector('.request-reference strong').textContent, /^LT-\d{6}-\d{4}$/);
-  assert.ok(document.body.textContent.includes('طلب مشروعك جاهز.'));
+  assert.ok(document.body.textContent.includes('تم إرسال خط مشروعك.'));
 
   await click(buttonContaining('انسخ تفاصيل الطلب'));
   assert.ok(copied.includes('نوع المشروع：تطوير الويب'));
@@ -233,7 +233,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
 
   await click(document.querySelector('.desktop-language'));
   assert.equal(document.documentElement.dir, 'ltr');
-  assert.ok(document.body.textContent.includes('Your project request is ready.'));
+  assert.ok(document.body.textContent.includes('Your Line is submitted.'));
 
   await click(document.querySelector('.request-finish-actions button.brief-share'));
   assert.ok(copied.includes('Project type：Web Development'));
