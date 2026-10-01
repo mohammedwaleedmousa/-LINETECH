@@ -6,7 +6,8 @@ import { ReactNode, useEffect, useState } from "react";
 
 const nav = [
   { href: "/admin", label: "Dashboard", index: "01" },
-  { href: "/admin/inbox", label: "Inbox", index: "02" },\n  { href: "/admin/projects", label: "Projects", index: "03" },
+  { href: "/admin/inbox", label: "Inbox", index: "02" },
+  { href: "/admin/projects", label: "Projects", index: "03" },
   { href: "/admin/clients", label: "Clients", index: "04" },
   { href: "/admin/billing", label: "Billing", index: "05" },
   { href: "/admin/team", label: "Team & Accounts", index: "06" },
@@ -16,7 +17,8 @@ const nav = [
 export default function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [checking, setChecking] = useState(true);
-  const [authorized, setAuthorized] = useState(false);\n  const [inboxUnread, setInboxUnread] = useState(0);
+  const [authorized, setAuthorized] = useState(false);
+  const [inboxUnread, setInboxUnread] = useState(0);
 
   const isLogin = pathname === "/admin/login";
 
