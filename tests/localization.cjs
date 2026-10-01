@@ -117,6 +117,7 @@ Module._load = function(name, ...rest) {
   if (name === 'next/navigation') {
     return {
       usePathname: () => window.location.pathname,
+      useSearchParams: () => new URLSearchParams(window.location.search),
       useRouter: () => ({ prefetch() {}, push() {}, replace() {} }),
     };
   }
