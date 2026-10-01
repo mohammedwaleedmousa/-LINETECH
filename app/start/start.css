@@ -262,3 +262,43 @@ html[dir="rtl"] .contact-final-cta h2{line-height:1.2;letter-spacing:-.015em}
   .contact-signal-pulse{animation:none!important}
   .contact-hero .ref-kicker,.contact-hero h1,.contact-hero-lead,.contact-hero-actions,.contact-hero-index{opacity:1!important;transform:none!important;animation:none!important}
 }
+
+
+/* Focus Start Your Line directly on the request journey */
+.contact-brief-grid-focused{
+  display:block!important;
+  max-width:1120px;
+  margin-inline:auto;
+}
+.contact-brief-grid-focused .contact-intake-panel{
+  width:100%;
+  max-width:none;
+}
+@media(max-width:700px){
+  .contact-hero{
+    min-height:auto!important;
+  }
+  .contact-hero-shell{
+    min-height:auto!important;
+    padding-top:112px!important;
+    padding-bottom:54px!important;
+  }
+  .contact-hero-copy{
+    max-width:100%!important;
+  }
+  .contact-hero-copy h1{
+    margin-bottom:14px!important;
+  }
+  .contact-hero-lead{
+    max-width:34rem!important;
+  }
+  .contact-hero-index{
+    display:none!important;
+  }
+  .contact-brief-section{
+    padding-top:26px!important;
+  }
+  .contact-brief-grid-focused{
+    display:block!important;
+  }
+}
