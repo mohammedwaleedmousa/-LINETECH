@@ -143,7 +143,7 @@ const copy = {
     hideBrief: "Hide project brief",
     request: "Reference",
     service: "Service",
-    plan: "Plan",
+    plan: "Plan",\n    requestedPlan: "Requested plan",\n    activeSubscription: "Active subscription",\n    subscriptionStatus: "Subscription status",\n    monthlyService: "Monthly service",
     customer: "Customer",
     company: "Company / Brand",
     contact: "Preferred contact",
@@ -225,7 +225,7 @@ const copy = {
     hideBrief: "إخفاء تفاصيل المشروع",
     request: "الرقم المرجعي",
     service: "الخدمة",
-    plan: "الباقة",
+    plan: "الباقة",\n    requestedPlan: "الباقة المطلوبة",\n    activeSubscription: "الاشتراك الفعّال",\n    subscriptionStatus: "حالة الاشتراك",\n    monthlyService: "الخدمة الشهرية",
     customer: "العميل",
     company: "الشركة / العلامة",
     contact: "التواصل المفضل",
@@ -285,7 +285,7 @@ export default function WorkspaceClient() {
   const [loadError, setLoadError] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);\n  const [subscription, setSubscription] = useState<Record<string, any> | null>(null);
 
   const loadWorkspace = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
@@ -464,6 +464,13 @@ export default function WorkspaceClient() {
                     {refreshing ? t.refreshing : t.refresh}
                   </button>
                 </div>
+              </div>
+
+              <div className="workspace-commercial-overview">
+                <div><span>{t.requestedPlan}</span><strong>{record.project.plan ? record.project.plan.replaceAll("_", "-").toUpperCase() : "—"}</strong></div>
+                <div><span>{t.activeSubscription}</span><strong>{subscription?.plan?.name || (subscription?.plan_code ? String(subscription.plan_code).replaceAll("_", "-").toUpperCase() : "—")}</strong></div>
+                <div><span>{t.subscriptionStatus}</span><strong>{subscription?.status ? String(subscription.status).replaceAll("_", " ").toUpperCase() : "—"}</strong></div>
+                <div><span>{t.monthlyService}</span><strong>{subscription?.recurring_price_usd != null ? `${subscription.recurring_price_usd}` : "—"}</strong></div>
               </div>
 
               <div className="workspace-status-main">
