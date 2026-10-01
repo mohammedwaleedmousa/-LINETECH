@@ -74,7 +74,7 @@ export default function BillingClient() {
             <div><span>MONTHLY</span><strong>{money(row.recurring_price_usd)}</strong></div>
             <div><span>NEXT BILLING</span><strong>{date(row.next_billing_at)}</strong></div>
             <div><span>STATUS</span><strong className={`billing-state is-${state.tone}`}>{state.label}</strong></div>
-            <Link href={`/admin/projects`}>Manage →</Link>
+            <Link href={row.project?.id ? `/admin/projects?project=${encodeURIComponent(row.project.id)}` : "/admin/clients"}>{row.project?.id ? "Manage project →" : "Open client →"}</Link>
           </article>;
         })}
         {!rows.length && <p className="admin-overview-empty">No commercial subscriptions yet. Activate a plan from a client project.</p>}
