@@ -263,10 +263,11 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     const plan=Array.isArray(planRows)?planRows[0]:null;
     if(!planResponse.ok||!plan) return json({ok:false},planResponse.ok?400:planResponse.status,admin.setCookies);
 
-    const existingResponse=await restFetch(env,`/client_subscriptions?select=id&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,admin.accessToken);
+    const existingResponse=await restFetch(env,`/client_subscriptions?select=id,starts_at,next_billing_at&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,admin.accessToken);
     const existingRows=await safeJson(existingResponse) as Row[]|null;
     if(!existingResponse.ok) return json({ok:false},existingResponse.status,admin.setCookies);
 
+    const existing=Array.isArray(existingRows)?existingRows[0]:null;
     const now=new Date();
     const nextBilling=new Date(now);
     if(billingCycle==="monthly") nextBilling.setUTCMonth(nextBilling.getUTCMonth()+1);
@@ -277,12 +278,11 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       billing_cycle:billingCycle,
       setup_fee_usd:plan.setup_price_usd,
       recurring_price_usd:plan.monthly_price_usd,
-      starts_at:now.toISOString(),
-      next_billing_at:nextBilling.toISOString(),
+      starts_at:existing?.starts_at||now.toISOString(),
+      next_billing_at:existing?.next_billing_at||nextBilling.toISOString(),
       updated_at:now.toISOString(),
     };
 
-    const existing=Array.isArray(existingRows)?existingRows[0]:null;
     const saveResponse=existing
       ? await restFetch(env,`/client_subscriptions?id=eq.${encodeURIComponent(existing.id)}&select=*`,admin.accessToken,{method:"PATCH",headers:{Prefer:"return=representation"},body:JSON.stringify(payload)})
       : await restFetch(env,"/client_subscriptions?select=*",admin.accessToken,{method:"POST",headers:{Prefer:"return=representation"},body:JSON.stringify(payload)});
