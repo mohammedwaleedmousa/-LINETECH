@@ -37,3 +37,82 @@
   .workspace-commercial-overview>div:nth-child(3){border-inline-start:0;border-top:1px solid var(--ref-line)}
   .workspace-commercial-overview>div:nth-child(4){border-top:1px solid var(--ref-line)}
 }
+
+
+/* Workspace V2 — at-a-glance project command center */
+.workspace-v2-overview{
+  margin:0 0 34px;
+  padding:26px 0 30px;
+  border-top:1px solid var(--ref-line);
+  border-bottom:1px solid var(--ref-line);
+}
+.workspace-v2-overview-head{
+  display:flex;
+  align-items:flex-end;
+  justify-content:space-between;
+  gap:24px;
+  margin-bottom:22px;
+}
+.workspace-v2-overview-head h2{
+  margin:6px 0 0;
+  font-size:clamp(24px,3vw,38px);
+  line-height:1;
+  letter-spacing:-.035em;
+}
+.workspace-v2-overview-grid{
+  display:grid;
+  grid-template-columns:1fr 1.35fr 1fr 1.35fr;
+  border-top:1px solid var(--ref-line);
+}
+.workspace-v2-overview-grid article{
+  min-width:0;
+  padding:20px 20px 0 0;
+}
+.workspace-v2-overview-grid article+article{
+  border-inline-start:1px solid var(--ref-line);
+  padding-inline-start:20px;
+}
+.workspace-v2-overview-grid article>span{
+  display:block;
+  margin-bottom:10px;
+  font-size:10px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  opacity:.5;
+}
+.workspace-v2-overview-grid strong{
+  display:block;
+  font-size:14px;
+  line-height:1.45;
+  font-weight:600;
+}
+.workspace-v2-overview-grid small{
+  display:block;
+  margin-top:8px;
+  font-size:11px;
+  opacity:.5;
+}
+.workspace-v2-overview-grid a{
+  display:inline-block;
+  margin-top:12px;
+  font-size:12px;
+  font-weight:600;
+  text-decoration:none;
+  border-bottom:1px solid currentColor;
+}
+@media(max-width:900px){
+  .workspace-v2-overview-grid{grid-template-columns:1fr 1fr}
+  .workspace-v2-overview-grid article{padding:16px 14px 16px 0}
+  .workspace-v2-overview-grid article+article{padding-inline-start:14px}
+  .workspace-v2-overview-grid article:nth-child(3){border-inline-start:0;border-top:1px solid var(--ref-line)}
+  .workspace-v2-overview-grid article:nth-child(4){border-top:1px solid var(--ref-line)}
+}
+@media(max-width:560px){
+  .workspace-v2-overview{margin-bottom:24px;padding-top:20px}
+  .workspace-v2-overview-head{align-items:flex-start;flex-direction:column;gap:12px}
+  .workspace-v2-overview-head h2{font-size:28px}
+  .workspace-v2-overview-grid{grid-template-columns:1fr}
+  .workspace-v2-overview-grid article,
+  .workspace-v2-overview-grid article+article{border-inline-start:0;padding:15px 0}
+  .workspace-v2-overview-grid article+article{border-top:1px solid var(--ref-line)}
+}
