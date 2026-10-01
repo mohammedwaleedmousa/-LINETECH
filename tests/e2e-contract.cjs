@@ -145,6 +145,11 @@ assert.ok(client.includes('if(value==="archived") return "archived"'), "Workspac
 assert.ok(client.includes('if(value==="planned") return "planned"'), "Workspace API collapses planned projects into a misleading state");
 assert.ok(workspace.includes("statusArchived"), "Workspace UI does not expose archived project state");
 assert.ok(workspace.includes("statusPlanned"), "Workspace UI does not expose planning project state");
+assert.ok(chatWorkspace.includes("chat-shell-loading"), "Project chat has no explicit loading state");
+assert.ok(siteNav.includes('{ href: "/workspace", en: "Workspace"'), "Client portal navigation is missing Workspace");
+assert.ok(siteNav.includes('{ href: "/chat", en: "Project Chat"'), "Client portal navigation is missing Project Chat");
+assert.ok(siteNav.includes('{ href: "/handover", en: "Handover"'), "Client portal navigation is missing Handover");
+assert.ok(siteNav.includes('{ href: "/account", en: "Account"'), "Client portal navigation is missing Account");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
