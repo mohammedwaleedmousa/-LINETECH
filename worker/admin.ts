@@ -205,16 +205,23 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
 
 
   if(path==="/api/admin/billing" && request.method==="GET") {
-    const [sr,profilesResponse]=await Promise.all([
-      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*),projects:projects(id,title,status)&order=next_billing_at.asc.nullslast",admin.accessToken),
+    const [sr,profilesResponse,projectsResponse]=await Promise.all([
+      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*)&order=next_billing_at.asc.nullslast",admin.accessToken),
       restFetch(env,"/profiles?select=id,full_name,company,email,phone",admin.accessToken),
+      restFetch(env,"/projects?select=id,client_id,title,status,updated_at&order=updated_at.desc",admin.accessToken),
     ]);
-    const [subscriptions,profiles]=await Promise.all([safeJson(sr),safeJson(profilesResponse)]);
-    if(!sr.ok||!profilesResponse.ok) return json({ok:false},!sr.ok?sr.status:profilesResponse.status,admin.setCookies);
+    const [subscriptions,profiles,projects]=await Promise.all([safeJson(sr),safeJson(profilesResponse),safeJson(projectsResponse)]);
+    if(!sr.ok||!profilesResponse.ok||!projectsResponse.ok) return json({ok:false},!sr.ok?sr.status:!profilesResponse.ok?profilesResponse.status:projectsResponse.status,admin.setCookies);
     const profileMap=new Map((Array.isArray(profiles)?profiles:[]).map((profile:any)=>[String(profile.id),profile]));
+    const projectMap=new Map<string,any>();
+    for(const project of (Array.isArray(projects)?projects:[]) as any[]){
+      const clientId=String(project.client_id||"");
+      if(clientId&&!projectMap.has(clientId)) projectMap.set(clientId,project);
+    }
     const rows=(Array.isArray(subscriptions)?subscriptions:[]).map((subscription:any)=>({
       ...subscription,
       client:profileMap.get(String(subscription.client_id))||null,
+      project:projectMap.get(String(subscription.client_id))||null,
     }));
     const recurringStatuses=new Set(["trial","active","past_due"]);
     const mrr=rows.filter((row:any)=>recurringStatuses.has(String(row.status))).reduce((sum:number,row:any)=>sum+Number(row.recurring_price_usd||0),0);
