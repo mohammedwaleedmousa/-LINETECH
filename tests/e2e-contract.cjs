@@ -144,7 +144,7 @@ assert.ok(dashboardClient.includes("admin-ops-table") && dashboardClient.include
 assert.ok(dashboardClient.includes("Delivery overdue") && dashboardClient.includes("Payment past due") && dashboardClient.includes("Due soon"), "Admin attention center does not cover delivery, collection and deadline risk");
 assert.ok(dashboardClient.includes("priority = 0") && dashboardClient.includes(".sort((a, b) => a.priority - b.priority)"), "Admin attention queue is not risk-prioritized");
 assert.ok(adminProjects.includes("admin-project-command") && adminProjects.includes("SUBSCRIPTION") && adminProjects.includes("detail.project.phase"), "Project operations is missing the laptop command bar");
-assert.ok(adminProjects.includes("admin-project-tabs") && adminProjects.includes("admin-project-chat") && adminProjects.includes("admin-project-handover"), "Project operations is missing direct section navigation");
+assert.ok(adminProjects.includes("admin-project-tabs") && adminProjects.includes('["overview","Overview"],["activity","Activity"],["files","Files"],["chat","Chat"],["handover","Handover"],["team","Team"]'), "Project operations is missing direct section navigation");
 assert.ok(adminProjects.includes('projectSection === "overview"') && adminProjects.includes('projectSection === "chat"') && adminProjects.includes('projectSection === "files"'), "Project operation tabs are not focused conditional workspaces");
 assert.ok(adminProjects.includes("admin-tab-workspace-chat") && adminProjects.includes('projectSection === "team"'), "Chat and team are not isolated admin workspaces");
 assert.ok(clientsClient.includes('fetch("/api/admin/billing"') && clientsClient.includes("selectedSubscription"), "Client CRM is not connected to commercial subscription context");
