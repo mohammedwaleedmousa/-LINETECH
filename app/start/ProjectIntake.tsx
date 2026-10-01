@@ -520,17 +520,20 @@ export default function ProjectIntake() {
   return <Localized><div className={`project-brief-form project-intake ${completed ? "is-complete" : ""}`}>
     <p className="frontend-only-note">{copy.localNote}</p>
 
-    <div className="intake-progress intake-progress-four" aria-label={`Step ${Math.min(step, 5)} of 5`}>
-      {copy.steps.map((label, index) => {
-        const n = index + 1;
-        return <div key={label} className={`intake-progress-item ${step===n&&!completed?"active":""} ${progressStep>n?"done":""}`}><span>{String(n).padStart(2,"0")}</span><strong>{label}</strong></div>;
-      })}
-    </div>
-
     {finderLoaded && !completed && <div className="finder-context-loaded" role="status">
       <span>{copy.finderKicker}</span>
       <div><strong>{copy.finderTitle}</strong><p>{copy.finderBody}</p></div>
       <b>{t(service)}</b>
+    </div>}
+
+    {!completed && <div className="line-step-progress" aria-label={`Step ${Math.min(step, 5)} of 5`}>
+      {copy.steps.map((label, index) => {
+        const n = index + 1;
+        return <div key={label} className={`line-step-progress-item ${step===n?"active":""} ${progressStep>n?"done":""}`}>
+          <span>{String(n).padStart(2,"0")}</span>
+          <strong>{step===n ? label : ""}</strong>
+        </div>;
+      })}
     </div>}
 
     {!completed && step===1 && <section className="intake-step line-step">
