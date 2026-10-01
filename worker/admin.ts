@@ -32,6 +32,58 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
   const admin=await requireAdmin(request,env);
   if(!admin) return json({ok:false},403);
 
+  if(path==="/api/admin/inbox" && request.method==="GET") {
+    const [messagesResponse,conversationsResponse,projectsResponse,profilesResponse,subscriptionsResponse]=await Promise.all([
+      restFetch(env,"/messages?select=id,conversation_id,kind,text,created_at,deleted_at,sender_role&sender_role=eq.client&order=created_at.desc&limit=80",admin.accessToken),
+      restFetch(env,"/conversations?select=id,project_id",admin.accessToken),
+      restFetch(env,"/projects?select=id,client_id,title,status,phase,due_date,next_action_required,updated_at&order=updated_at.desc&limit=200",admin.accessToken),
+      restFetch(env,"/profiles?select=id,full_name,company",admin.accessToken),
+      restFetch(env,"/client_subscriptions?select=id,client_id,status,recurring_price_usd,next_billing_at&status=eq.past_due",admin.accessToken),
+    ]);
+    const [messages,conversations,projects,profiles,subscriptions]=await Promise.all([
+      safeJson(messagesResponse),safeJson(conversationsResponse),safeJson(projectsResponse),safeJson(profilesResponse),safeJson(subscriptionsResponse),
+    ]);
+    if(!messagesResponse.ok||!conversationsResponse.ok||!projectsResponse.ok||!profilesResponse.ok||!subscriptionsResponse.ok) {
+      return json({ok:false},500,admin.setCookies);
+    }
+    const conversationMap=new Map((Array.isArray(conversations)?conversations:[]).map((x:Row)=>[String(x.id),String(x.project_id)]));
+    const projectMap=new Map((Array.isArray(projects)?projects:[]).map((x:Row)=>[String(x.id),x]));
+    const profileMap=new Map((Array.isArray(profiles)?profiles:[]).map((x:Row)=>[String(x.id),x]));
+    const latestMessages=(Array.isArray(messages)?messages:[]).slice(0,30).map((message:Row)=>{
+      const projectId=conversationMap.get(String(message.conversation_id))||"";
+      const project=projectMap.get(projectId)||{};
+      const client=profileMap.get(String(project.client_id||""))||{};
+      return {
+        id:message.id,kind:message.kind,projectId,
+        projectTitle:project.title||"Project",
+        clientName:client.full_name||client.company||"Client",
+        preview:message.deleted_at?"Message deleted":message.kind==="text"?String(message.text||"").slice(0,180):`Shared ${String(message.kind||"attachment")}`,
+        createdAt:message.created_at,
+      };
+    }).filter((item:Row)=>item.projectId);
+
+    const now=Date.now(); const day=86400000;
+    const alerts:(Row[])=[];
+    for(const project of (Array.isArray(projects)?projects:[]) as Row[]) {
+      if(["completed","archived"].includes(String(project.status||""))) continue;
+      const due=project.due_date?new Date(String(project.due_date)).getTime():NaN;
+      const days=Number.isFinite(due)?Math.ceil((due-now)/day):null;
+      let reason=""; let priority=99;
+      if(days!==null&&days<0){reason="Delivery overdue";priority=0;}
+      else if(project.next_action_required){reason="Action required";priority=2;}
+      else if(project.status==="review"){reason="In review";priority=3;}
+      else if(project.status==="waiting_client"){reason="Waiting for client";priority=4;}
+      else if(days!==null&&days>=0&&days<=7){reason="Due soon";priority=5;}
+      if(priority<99) alerts.push({id:`project:${project.id}`,type:"project",priority,reason,projectId:project.id,projectTitle:project.title||"Project",clientName:profileMap.get(String(project.client_id||""))?.full_name||"Client",dueDate:project.due_date});
+    }
+    for(const sub of (Array.isArray(subscriptions)?subscriptions:[]) as Row[]) {
+      const project=((Array.isArray(projects)?projects:[]) as Row[]).find(p=>String(p.client_id)===String(sub.client_id)&&!["completed","archived"].includes(String(p.status||"")));
+      alerts.push({id:`billing:${sub.id}`,type:"billing",priority:1,reason:"Payment past due",projectId:project?.id||null,projectTitle:project?.title||"Client account",clientName:profileMap.get(String(sub.client_id||""))?.full_name||"Client",amount:Number(sub.recurring_price_usd||0),dueDate:sub.next_billing_at});
+    }
+    alerts.sort((a,b)=>Number(a.priority)-Number(b.priority));
+    return json({ok:true,messages:latestMessages,alerts:alerts.slice(0,40)},200,admin.setCookies);
+  }
+
   if(path==="/api/admin/projects" && request.method==="GET") {
     const response=await restFetch(env,"/projects?select=*&order=updated_at.desc&limit=200",admin.accessToken);
     const projects=await safeJson(response) as Row[]|null;
