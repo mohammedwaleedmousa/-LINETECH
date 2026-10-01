@@ -253,6 +253,14 @@ export default function ProjectIntake() {
   const submissionKeyRef = useRef("");
 
   useEffect(() => {
+    const requestedPlan = new URLSearchParams(window.location.search).get("plan") || "";
+    const planService = Object.entries(planOptions).find(([, options]) => options.includes(requestedPlan))?.[0] || "";
+    if (!requestedPlan || !planService) return;
+    setPlan(requestedPlan);
+    setService(current => current || planService);
+  }, []);
+
+  useEffect(() => {
     try {
       const rawDraft =
         window.sessionStorage.getItem(requestDraftKey)
