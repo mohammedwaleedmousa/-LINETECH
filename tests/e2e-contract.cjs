@@ -23,6 +23,9 @@ const accountClient = read("app/account/AccountClient.tsx");
 const billingClient = read("app/admin/BillingClient.tsx");
 const siteNav = read("app/SiteNav.tsx");
 const chatWorkspace = read("app/chat/ChatWorkspace.tsx");
+const robots = read("public/robots.txt");
+const sitemap = read("public/sitemap.xml");
+const terms = read("app/terms/PageContent.tsx");
 
 // 1) Account/session layer.
 for (const endpoint of [
@@ -179,5 +182,14 @@ for (const table of [
 }
 assert.ok(schema.includes("'app_metadata' ->> 'role'"));
 assert.ok(schema.includes("grant select, insert, update on public.messages to authenticated"));
+
+for (const privateRoute of ["/admin","/login","/workspace","/chat","/handover","/account","/api/"]) {
+  assert.ok(robots.includes(`Disallow: ${privateRoute}`), `Private route is indexable in robots.txt: ${privateRoute}`);
+}
+for (const publicRoute of ["/pricing","/how-we-work","/service-finder"]) {
+  assert.ok(sitemap.includes(`${publicRoute}</loc>`), `Commercial route is missing from sitemap: ${publicRoute}`);
+}
+assert.ok(terms.includes("recurring monthly service"), "Terms do not cover recurring subscription service");
+assert.ok(terms.includes("رسوم تأسيس واشتراكًا شهريًا"), "Arabic terms do not cover setup and recurring subscription fees");
 
 console.log("PASS: LINETECH end-to-end lifecycle contract is wired from intake through handover");
