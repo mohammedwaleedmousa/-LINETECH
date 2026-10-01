@@ -56,8 +56,8 @@ export default function BillingClient() {
     {error && <div className="admin-overview-error">{error}</div>}
 
     <section className="admin-kpi-grid billing-kpis">
-      <article><span>MRR</span><strong>{money(summary.mrr)}</strong><small>Trial + active + past due recurring value</small></article>
-      <article><span>ACTIVE</span><strong>{summary.active || 0}</strong><small>Paying subscriptions</small></article>
+      <article><span>MRR</span><strong>{money(summary.mrr)}</strong><small>Active + past due recurring value</small></article>
+      <article><span>ACTIVE</span><strong>{summary.active || 0}</strong><small>Active paying subscriptions</small></article>
       <article><span>PAST DUE</span><strong>{summary.pastDue || 0}</strong><small>Payment attention required</small></article>
       <article><span>SUSPENDED</span><strong>{summary.suspended || 0}</strong><small>Service currently suspended</small></article>
       <article><span>OVERDUE VALUE</span><strong>{money(summary.overdueAmount)}</strong><small>Recurring value past its billing date</small></article>
