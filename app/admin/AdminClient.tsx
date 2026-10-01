@@ -862,17 +862,18 @@ export default function AdminClient() {
               <button className="admin-primary" type="submit" disabled={busy}>Save project</button>
             </form>
 
-            <div className="admin-columns">
-              <section className="admin-card">
+            </>}
+
+            {projectSection === "activity" && <section className="admin-card">
                 <div className="admin-card-title"><span>02</span><strong>Activity</strong></div>
                 <div className="admin-list">
                   {(detail.activity || []).length ? (detail.activity || []).map(item => <article key={item.id}>
                     <strong>{item.title}</strong><p>{item.detail || "—"}</p><small>{dateTime(item.created_at)}</small>
                   </article>) : <p className="admin-empty">No activity yet.</p>}
                 </div>
-              </section>
+              </section>}
 
-              <section className="admin-card">
+            {projectSection === "files" && <section className="admin-card">
                 <div className="admin-card-title"><span>03</span><strong>Files</strong></div>
                 <form className="admin-stack" onSubmit={uploadFile}>
                   <input name="file" type="file" required />
@@ -909,11 +910,9 @@ export default function AdminClient() {
                     </article>
                   )) : <p className="admin-empty">No project files yet.</p>}
                 </div>
-              </section>
-            </div>
+              </section>}
 
-            <div className="admin-columns">
-              <section className="admin-card">
+            {projectSection === "chat" && <section className="admin-card admin-tab-workspace-chat">
                 <div className="admin-card-title"><span>04</span><strong>Project chat</strong></div>
                 <div className="admin-chat-log">
                   {chat.length ? chat.map(message => <div key={message.id} className={message.sender === "company" ? "is-company" : ""}>
@@ -952,9 +951,9 @@ export default function AdminClient() {
                   <textarea value={chatDraft} onChange={event => setChatDraft(event.target.value)} rows={3} placeholder="Write to the client…" />
                   <button className="admin-secondary" type="submit" disabled={busy || chatUploading || recording || !chatDraft.trim()}>Send message</button>
                 </form>
-              </section>
+              </section>}
 
-              <section className="admin-card">
+            {projectSection === "handover" && <section className="admin-card">
                 <div className="admin-card-title"><span>05</span><strong>Handover</strong></div>
                 <form className="admin-stack" onSubmit={addHandover}>
                   <input value={handoverTitle} onChange={event => setHandoverTitle(event.target.value)} placeholder="Handover item" required />
@@ -966,10 +965,9 @@ export default function AdminClient() {
                     <span>{item.completed ? "✓" : "○"}</span><div><strong>{item.title}</strong><p>{item.description || "—"}</p></div>
                   </button>) : <p className="admin-empty">No handover items yet.</p>}
                 </div>
-              </section>
-            </div>
+              </section>}
 
-            <section className="admin-card">
+            {projectSection === "team" && <section className="admin-card">
               <div className="admin-card-title"><span>06</span><strong>Team access</strong></div>
               <form className="admin-stack" onSubmit={addMember}>
                 <div className="admin-grid two">
@@ -996,7 +994,7 @@ export default function AdminClient() {
                   </div>
                 )) : <p className="admin-empty">No additional project members.</p>}
               </div>
-            </section>
+            </section>}
           </>}
         </section>
       </div>
