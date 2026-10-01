@@ -244,6 +244,10 @@ export default function SiteNav() {
   const clientArea = ["/workspace","/chat","/handover","/account"].some(
     route => pathname === route || pathname.startsWith(`${route}/`)
   );
+  const activeProject = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("project") || "" : "";
+  const portalHref = (href: string) => clientArea && /^[0-9a-f-]{36}$/i.test(activeProject)
+    ? `${href}?project=${encodeURIComponent(activeProject)}`
+    : href;
   const visibleNavItems = clientArea ? clientItems : items;
   const visibleSearchItems = searchItems;
 
@@ -348,7 +352,7 @@ export default function SiteNav() {
         <nav className="ref-nav-links" aria-label="Primary navigation">
           {visibleNavItems.map((item) => {
             const active = isActive(item.href);
-            return <Link key={item.href} href={item.href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>{language === "ar" ? item.ar : item.en}</Link>;
+            return <Link key={item.href} href={portalHref(item.href)} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>{language === "ar" ? item.ar : item.en}</Link>;
           })}
         </nav>
         <div className="ref-nav-end">
@@ -418,7 +422,7 @@ export default function SiteNav() {
         <nav aria-label="Mobile navigation">
           {visibleNavItems.map((item, index) => {
             const active = isActive(item.href);
-            return <Link key={item.href} href={item.href} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span>{language === "ar" ? item.ar : item.en}<b>→</b></Link>;
+            return <Link key={item.href} href={portalHref(item.href)} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span>{language === "ar" ? item.ar : item.en}<b>→</b></Link>;
           })}
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
