@@ -67,7 +67,7 @@ export default function ClientsClient() {
   const selectedSubscription = selected ? (Array.isArray(billing.subscriptions) ? billing.subscriptions : []).find((row: Json) => String(row.client_id || "") === selected.id) : null;
 
   return (
-
+    <main className="admin-directory admin-clients-v2">
       <header className="admin-directory-head">
         <div><span>LINETECH / CLIENTS</span><h1>Client relationships.</h1><p>Commercial and project context in one laptop workspace.</p></div>
         <strong>{clients.length}</strong>
