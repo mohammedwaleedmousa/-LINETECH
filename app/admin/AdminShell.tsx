@@ -16,7 +16,7 @@ const nav = [
 export default function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const [checking, setChecking] = useState(true);
-  const [authorized, setAuthorized] = useState(false);
+  const [authorized, setAuthorized] = useState(false);\n  const [inboxUnread, setInboxUnread] = useState(0);
 
   const isLogin = pathname === "/admin/login";
 
@@ -44,6 +44,14 @@ export default function AdminShell({ children }: { children: ReactNode }) {
     })();
     return () => { cancelled = true; };
   }, [isLogin]);
+
+  useEffect(() => {
+    if (!authorized || isLogin) return;
+    let cancelled=false;
+    const load=async()=>{const r=await fetch("/api/admin/inbox",{cache:"no-store"});const p=await r.json().catch(()=>null);if(!cancelled&&r.ok&&p?.ok)setInboxUnread(Number(p.unreadCount||0))};
+    void load();
+    return()=>{cancelled=true};
+  }, [authorized,isLogin,pathname]);
 
   const active = (href: string) => href === "/admin" ? pathname === "/admin" : pathname === href || pathname.startsWith(`${href}/`);
   const current = nav.find(item => active(item.href)) || nav[0];
@@ -76,7 +84,7 @@ export default function AdminShell({ children }: { children: ReactNode }) {
         <nav className="admin-app-nav" aria-label="Admin navigation">
           {nav.map(item => (
             <Link key={item.href} href={item.href} className={active(item.href) ? "is-active" : ""}>
-              <span>{item.index}</span><strong>{item.label}</strong><b>→</b>
+              <span>{item.index}</span><strong>{item.label}{item.href === "/admin/inbox" && inboxUnread > 0 ? <em className="admin-nav-badge">{inboxUnread > 99 ? "99+" : inboxUnread}</em> : null}</strong><b>→</b>
             </Link>
           ))}
         </nav>
