@@ -420,7 +420,7 @@ export default function AccountClient() {
                     <p><b>{account.subscription.plan?.max_monthly_updates ?? t.unlimited}</b><small>{t.updates}</small></p>
                     <p><b>{account.subscription.plan?.max_products ?? t.unlimited}</b><small>{t.products}</small></p>
                     <p><b>{account.subscription.plan?.max_team_members ?? t.unlimited}</b><small>{t.team}</small></p>
-                    <p><b>{Array.isArray(account.subscription.plan?.languages) ? account.subscription.plan.languages.join(" · ") : t.unlimited}</b><small>{t.languages}</small></p>
+                    <p><b>{account.subscription.plan?.languages != null ? String(account.subscription.plan.languages) : t.unlimited}</b><small>{t.languages}</small></p>
                   </div>
                 </div>
               </>
