@@ -222,7 +222,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         preferredContact:pr.preferred_contact||"",
       },
       project:{
-        service:pr.service||project.title||"",stage:pr.stage||"",goal:pr.goal||"",idea:pr.idea||"",
+        service:pr.service||project.title||"",plan:pr.selected_plan_code||"",stage:pr.stage||"",goal:pr.goal||"",idea:pr.idea||"",
         audience:pr.audience||"",features:pr.features||"",references:pr.reference_links||"",
       },
       scope:{budget:pr.budget||"",timing:pr.timing||"",notes:pr.notes||""},
@@ -231,7 +231,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       completedAt:project.created_at||project.updated_at||new Date().toISOString(),
       status:project.status||"planned",
       customer:{name:"",company:"",contact:"",preferredContact:""},
-      project:{service:project.title||"Project",stage:"",goal:"",idea:"",audience:"",features:"",references:""},
+      project:{service:project.title||"Project",plan:"",stage:"",goal:"",idea:"",audience:"",features:"",references:""},
       scope:{budget:"",timing:"",notes:""},
     };
 
