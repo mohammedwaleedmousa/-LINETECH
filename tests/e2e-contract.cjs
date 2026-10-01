@@ -18,6 +18,7 @@ const siteSurface = read("app/SiteSurface.tsx");
 const adminShell = read("app/admin/AdminShell.tsx");
 const adminClients = read("app/admin/ClientsClient.tsx");
 const adminDashboard = read("app/admin/DashboardClient.tsx");
+const adminProjects = read("app/admin/AdminClient.tsx");
 
 // 1) Account/session layer.
 for (const endpoint of [
@@ -96,6 +97,7 @@ for (const endpoint of [
   "/api/admin/handover",
   "/api/admin/users",
   "/api/admin/members",
+  "/api/admin/subscription",
 ]) {
   assert.ok(admin.includes(endpoint), `Missing admin lifecycle endpoint: ${endpoint}`);
 }
@@ -111,6 +113,13 @@ assert.ok(admin.includes("/project_requests?select=*"), "Admin project feed is n
 assert.ok(admin.includes("request:requestMap.get"), "Admin project feed is not attaching the request to the project");
 assert.ok(adminClients.includes("selected_plan_code"), "Admin Clients does not show the requested plan");
 assert.ok(adminDashboard.includes("selected_plan_code"), "Admin Dashboard does not show the requested plan");
+assert.ok(admin.includes("/client_subscriptions?select=*"), "Admin subscription API is not reading client subscriptions");
+assert.ok(admin.includes("/plan_catalog?select=*"), "Admin subscription API is not reading the active plan catalog");
+assert.ok(admin.includes("setup_fee_usd:plan.setup_price_usd"), "Subscription does not snapshot the setup price");
+assert.ok(admin.includes("recurring_price_usd:plan.monthly_price_usd"), "Subscription does not snapshot the recurring price");
+assert.ok(adminProjects.includes("saveSubscription"), "Admin project UI has no subscription action");
+assert.ok(adminProjects.includes("Requested plan"), "Admin project UI does not distinguish requested plan");
+assert.ok(adminProjects.includes("Current subscription"), "Admin project UI does not show the commercial subscription");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
