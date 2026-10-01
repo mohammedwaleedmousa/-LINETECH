@@ -314,3 +314,36 @@ body:has(.admin-shell){background:#05080c}
 .admin-attention-list>a.is-priority-5 i{background:#78a98b}
 .admin-attention-list>a.is-priority-0>span,
 .admin-attention-list>a.is-priority-1>span{color:#e4a08d}
+
+
+/* Clients V2 — laptop CRM */
+.admin-client-crm{display:grid;grid-template-columns:300px minmax(0,1fr);gap:16px;margin-top:22px;align-items:start}
+.admin-client-crm-list{position:sticky;top:82px;max-height:calc(100vh - 105px);overflow:auto;border:1px solid #142330;background:#060d14}
+.admin-client-crm-list .admin-directory-tools{position:sticky;top:0;z-index:2;margin:0;padding:12px;background:#060d14;border-bottom:1px solid #142330}
+.admin-client-crm-list button{display:grid;width:100%;gap:5px;padding:15px 14px;border:0;border-bottom:1px solid #111f2b;background:transparent;color:inherit;text-align:left;cursor:pointer}
+.admin-client-crm-list button:hover,.admin-client-crm-list button.is-active{background:#0a1621}
+.admin-client-crm-list button.is-active{box-shadow:inset 2px 0 #659de0}
+.admin-client-crm-list button span{font-size:7px;letter-spacing:.1em;color:#526a80}
+.admin-client-crm-list button strong{font-size:11px;color:#d8e4ee}
+.admin-client-crm-list button small{font-size:8px;color:#6f8192;text-transform:capitalize}
+.admin-client-crm-detail{min-width:0;border:1px solid #142330;background:#060d14;padding:24px}
+.admin-client-crm-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;padding-bottom:22px;border-bottom:1px solid #142330}
+.admin-client-crm-head span{font-size:8px;letter-spacing:.12em;color:#5f7890}
+.admin-client-crm-head h2{margin:6px 0;font-size:clamp(28px,3vw,42px);letter-spacing:-.04em}
+.admin-client-crm-head p{margin:0;color:#748697;font-size:10px}
+.admin-client-crm-head>a{font-size:9px;color:#9bc6f3;text-decoration:none;border-bottom:1px solid #31506d;padding-bottom:3px}
+.admin-client-crm-kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid #142330}
+.admin-client-crm-kpis>div{min-width:0;padding:18px 14px}
+.admin-client-crm-kpis>div+div{border-left:1px solid #142330}
+.admin-client-crm-kpis span{display:block;margin-bottom:7px;font-size:7px;letter-spacing:.09em;color:#526a80}
+.admin-client-crm-kpis strong{display:block;font-size:12px;color:#dce7f1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.admin-client-past-due{display:flex;justify-content:space-between;gap:16px;margin-top:16px;padding:13px 15px;border:1px solid #5a352d;background:#160d0b}
+.admin-client-past-due strong{font-size:10px;color:#e5a08e}.admin-client-past-due span{font-size:9px;color:#a7786e}
+.admin-client-crm-columns{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:16px;margin-top:20px}
+.admin-client-crm-columns>section{min-width:0;border:1px solid #142330;padding:18px}
+.admin-client-crm-projects{display:grid}
+.admin-client-crm-projects>a{display:grid;grid-template-columns:minmax(0,1fr) 120px 18px;align-items:center;gap:14px;padding:14px 0;border-bottom:1px solid #142330;color:inherit;text-decoration:none}
+.admin-client-crm-projects>a>div{display:grid;gap:4px;min-width:0}.admin-client-crm-projects span,.admin-client-crm-projects small{font-size:7px;color:#62778b}.admin-client-crm-projects strong{font-size:10px;text-transform:capitalize;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.admin-client-crm-projects b{color:#76a9df}
+.admin-client-account-context{display:grid}.admin-client-account-context>div{padding:12px 0;border-bottom:1px solid #142330}.admin-client-account-context span{display:block;margin-bottom:5px;font-size:7px;letter-spacing:.08em;color:#526a80}.admin-client-account-context strong{display:block;font-size:9px;color:#b7c6d4;overflow-wrap:anywhere}
+@media(max-width:1180px) and (min-width:901px){.admin-client-crm{grid-template-columns:250px minmax(0,1fr)}.admin-client-crm-kpis{grid-template-columns:repeat(3,1fr)}.admin-client-crm-kpis>div:nth-child(4){border-left:0;border-top:1px solid #142330}.admin-client-crm-kpis>div:nth-child(n+4){border-top:1px solid #142330}.admin-client-crm-columns{grid-template-columns:1fr}}
+@media(max-width:900px){.admin-client-crm{grid-template-columns:1fr}.admin-client-crm-list{position:relative;top:auto;max-height:340px}.admin-client-crm-detail{padding:16px}.admin-client-crm-kpis{grid-template-columns:repeat(2,1fr)}.admin-client-crm-columns{grid-template-columns:1fr}.admin-client-crm-head{align-items:flex-start;flex-direction:column}}
