@@ -82,10 +82,10 @@ export default function StartPage() {
           <div className="ref-shell contact-hero-shell">
             <div className="contact-hero-copy">
               <p className="ref-kicker">START YOUR LINE</p>
-              <h1>Tell us what you want to build.</h1>
-              <p className="contact-hero-lead">Start with the idea — even if it is still rough. We will use the brief to turn it into a clear first line.</p>
+              <h1>Build your line.</h1>
+              <p className="contact-hero-lead">Choose what you want to build, shape the right path, and send one clear project line to LINETECH.</p>
               <div className="contact-hero-actions">
-                <a className="ref-btn primary" href="#brief">Start the brief ↘</a>
+                <a className="ref-btn primary" href="#brief">Build your line ↘</a>
                 <Link className="ref-btn ghost" href="/services" prefetch>View services</Link>
               </div>
             </div>
@@ -118,28 +118,6 @@ export default function StartPage() {
             <div className="contact-intake-panel">
               <ProjectIntake />
               <WorkspaceAfterRequest />
-            </div>
-          </div>
-        </section>
-
-        <section className="contact-next-section contact-client-journey">
-          <div className="ref-shell">
-            <div className="contact-section-head">
-              <div>
-                <p className="ref-kicker">{journey.kicker}</p>
-                <h2>{journey.title}</h2>
-              </div>
-              <p>{journey.lead}</p>
-            </div>
-
-            <div className="contact-next-rail">
-              {journey.steps.map(([number, title, description]) => (
-                <article key={number}>
-                  <span>{number}</span>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </article>
-              ))}
             </div>
           </div>
         </section>
