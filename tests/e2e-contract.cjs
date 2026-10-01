@@ -133,6 +133,8 @@ assert.ok(accountClient.includes("account.subscription"), "Account UI does not r
 assert.ok(accountClient.includes("max_storage_gb"), "Account UI does not show plan limits");
 assert.ok(admin.includes('path==="/api/admin/billing"'), "Admin billing API is missing");
 assert.ok(admin.includes("overdueAmount"), "Billing API does not calculate overdue recurring value");
+assert.ok(admin.includes('new Set(["active","past_due"])'), "MRR must exclude trial, suspended and cancelled subscriptions");
+assert.ok(billingClient.includes("Active + past due recurring value"), "Billing UI must explain the MRR definition");
 assert.ok(billingClient.includes("MRR"), "Billing center does not display MRR");
 assert.ok(billingClient.includes("Day 7") && billingClient.includes("Day 14") && billingClient.includes("Day 30"), "Billing center does not expose the collection policy");
 assert.ok(admin.includes("existing?.starts_at||now.toISOString()"), "Subscription updates must preserve the original start date");
