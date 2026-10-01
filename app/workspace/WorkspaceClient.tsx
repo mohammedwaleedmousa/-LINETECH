@@ -145,7 +145,11 @@ const copy = {
     hideBrief: "Hide project brief",
     request: "Reference",
     service: "Service",
-    plan: "Plan",\n    requestedPlan: "Requested plan",\n    activeSubscription: "Active subscription",\n    subscriptionStatus: "Subscription status",\n    monthlyService: "Monthly service",
+    plan: "Plan",
+    requestedPlan: "Requested plan",
+    activeSubscription: "Active subscription",
+    subscriptionStatus: "Subscription status",
+    monthlyService: "Monthly service",
     customer: "Customer",
     company: "Company / Brand",
     contact: "Preferred contact",
@@ -229,7 +233,11 @@ const copy = {
     hideBrief: "إخفاء تفاصيل المشروع",
     request: "الرقم المرجعي",
     service: "الخدمة",
-    plan: "الباقة",\n    requestedPlan: "الباقة المطلوبة",\n    activeSubscription: "الاشتراك الفعّال",\n    subscriptionStatus: "حالة الاشتراك",\n    monthlyService: "الخدمة الشهرية",
+    plan: "الباقة",
+    requestedPlan: "الباقة المطلوبة",
+    activeSubscription: "الاشتراك الفعّال",
+    subscriptionStatus: "حالة الاشتراك",
+    monthlyService: "الخدمة الشهرية",
     customer: "العميل",
     company: "الشركة / العلامة",
     contact: "التواصل المفضل",
@@ -289,7 +297,8 @@ export default function WorkspaceClient() {
   const [loadError, setLoadError] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);\n  const [subscription, setSubscription] = useState<Record<string, any> | null>(null);
+  const [currentProjectId, setCurrentProjectId] = useState<string | null>(null);
+  const [subscription, setSubscription] = useState<Record<string, any> | null>(null);
 
   const loadWorkspace = useCallback(async (showRefreshing = false) => {
     if (showRefreshing) setRefreshing(true);
@@ -541,7 +550,10 @@ export default function WorkspaceClient() {
                 })}
               </div>
 
-            </div>\n          </section>\n\n          <section className="workspace-timeline-section">
+            </div>
+          </section>
+
+          <section className="workspace-timeline-section">
             <div className="ref-shell">
               <div className="workspace-section-heading">
                 <div>
