@@ -541,40 +541,7 @@ export default function WorkspaceClient() {
                 })}
               </div>
 
-              <div className="workspace-status-meta">
-                <div>
-                  <span>{t.latest}</span>
-                  <strong>{latestUpdate}</strong>
-                  <small>{formatDate(progress.updatedAt, language)}</small>
-                </div>
-                <div>
-                  <span>{t.nextMilestone}</span>
-                  <strong>{nextMilestone}</strong>
-                  <small>{progress.nextMilestoneDate ? formatDate(progress.nextMilestoneDate, language) : t.milestonePending}</small>
-                </div>
-                <div>
-                  <span>{t.lastUpdated}</span>
-                  <strong>{formatDate(progress.updatedAt, language)}</strong>
-                  <small>{t.phase} {String(currentPhase).padStart(2, "0")} / 05</small>
-                </div>
-              </div>
-
-              <div className={clientAction.required ? "workspace-action is-required" : "workspace-action"}>
-                <div>
-                  <span>{clientAction.required ? t.action : t.noAction}</span>
-                  <h3>{clientAction.required ? localizeWorkspaceText(clientAction.title, language, t.actionDefaultTitle) : t.noActionBody}</h3>
-                  {clientAction.required && (clientAction.detail || t.actionDefaultBody) && (
-                    <p>{localizeWorkspaceText(clientAction.detail, language, t.actionDefaultBody)}</p>
-                  )}
-                </div>
-                {clientAction.required && clientAction.href && (
-                  <Link href={clientAction.href}>{localizeWorkspaceText(clientAction.label, language, t.actionDefaultLabel)} →</Link>
-                )}
-              </div>
-            </div>
-          </section>
-
-          <section className="workspace-timeline-section">
+            </div>\n          </section>\n\n          <section className="workspace-timeline-section">
             <div className="ref-shell">
               <div className="workspace-section-heading">
                 <div>
