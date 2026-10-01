@@ -407,8 +407,8 @@ export default function AccountClient() {
             {account.subscription ? (
               <>
                 <div className="account-subscription-summary">
-                  <div><span>{t.plan}</span><strong>{account.subscription.plan?.name || account.subscription.planCode.replaceAll("_", " ").toUpperCase()}</strong></div>
-                  <div><span>{t.subscriptionStatus}</span><strong className={`subscription-status is-${account.subscription.status}`}>{account.subscription.status.replaceAll("_", " ")}</strong></div>
+                  <div><span>{t.plan}</span><strong>{account.subscription.plan?.name || account.subscription.planCode.replaceAll("_", "-").toUpperCase()}</strong></div>
+                  <div><span>{t.subscriptionStatus}</span><strong className={`subscription-status is-${account.subscription.status}`}>{account.subscription.status.replaceAll("_", " ").toUpperCase()}</strong></div>
                   <div><span>{t.monthlyPrice}</span><strong>${account.subscription.recurringPriceUsd ?? "—"}</strong></div>
                   <div><span>{t.nextBilling}</span><strong>{formatDate(account.subscription.nextBillingAt, language)}</strong></div>
                 </div>
