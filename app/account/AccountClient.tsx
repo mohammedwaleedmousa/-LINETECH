@@ -195,6 +195,7 @@ export default function AccountClient() {
   const language = useLanguage();
   const t = copy[language];
   const [account, setAccount] = useState<AccountData | null>(null);
+  const [currentProjectId, setCurrentProjectId] = useState("");
   const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [profileBusy, setProfileBusy] = useState(false);
@@ -225,6 +226,10 @@ export default function AccountClient() {
   }
 
   useEffect(() => {
+    try {
+      const project = new URLSearchParams(window.location.search).get("project") || "";
+      if (/^[0-9a-f-]{36}$/i.test(project)) setCurrentProjectId(project);
+    } catch {}
     void loadAccount();
   }, []);
 
@@ -389,8 +394,8 @@ export default function AccountClient() {
           <div className="account-hero-side">
             <p>{t.lead}</p>
             <div>
-              <Link href="/workspace">{t.workspace} →</Link>
-              <Link href="/chat">{t.chat} →</Link>
+              <Link href={currentProjectId ? `/workspace?project=${encodeURIComponent(currentProjectId)}` : "/workspace"}>{t.workspace} →</Link>
+              <Link href={currentProjectId ? `/chat?project=${encodeURIComponent(currentProjectId)}` : "/chat"}>{t.chat} →</Link>
             </div>
           </div>
         </div>
