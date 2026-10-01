@@ -717,10 +717,7 @@ export default function AdminClient() {
               {[
                 ["overview","Overview"],["activity","Activity"],["files","Files"],["chat","Chat"],["handover","Handover"],["team","Team"],
               ].map(([id,label]) => (
-                <button key={id} type="button" className={projectSection === id ? "is-active" : ""} onClick={() => {
-                  setProjectSection(id);
-                  document.getElementById(`admin-project-${id}`)?.scrollIntoView({ behavior: "smooth", block: "start" });
-                }}>{label}</button>
+                <button key={id} type="button" className={projectSection === id ? "is-active" : ""} onClick={() => setProjectSection(id)}>{label}</button>
               ))}
             </nav>
 
@@ -792,7 +789,7 @@ export default function AdminClient() {
               </section>
             )}
 
-            <div id="admin-project-overview" className="admin-section-anchor" />\n            <section className="admin-card admin-request-brief">
+            <div id="admin-project-overview" className="admin-section-anchor" />\n            {projectSection === "overview" && <>\n            <section className="admin-card admin-request-brief">
               <div className="admin-card-title"><span>00</span><strong>Client request</strong></div>
               <div className="admin-request-grid">
                 <div><span>Client</span><strong>{detail.request?.name || "—"}</strong></div>
