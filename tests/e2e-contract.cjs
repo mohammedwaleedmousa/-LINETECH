@@ -22,6 +22,7 @@ const adminProjects = read("app/admin/AdminClient.tsx");
 const accountClient = read("app/account/AccountClient.tsx");
 const billingClient = read("app/admin/BillingClient.tsx");
 const dashboardClient = read("app/admin/DashboardClient.tsx");
+const clientsClient = read("app/admin/ClientsClient.tsx");
 const pricing = read("app/pricing/page.tsx");
 const siteNav = read("app/SiteNav.tsx");
 const chatWorkspace = read("app/chat/ChatWorkspace.tsx");
@@ -146,6 +147,8 @@ assert.ok(adminClient.includes("admin-project-command") && adminClient.includes(
 assert.ok(adminClient.includes("admin-project-tabs") && adminClient.includes("admin-project-chat") && adminClient.includes("admin-project-handover"), "Project operations is missing direct section navigation");
 assert.ok(adminClient.includes('projectSection === "overview"') && adminClient.includes('projectSection === "chat"') && adminClient.includes('projectSection === "files"'), "Project operation tabs are not focused conditional workspaces");
 assert.ok(adminClient.includes("admin-tab-workspace-chat") && adminClient.includes('projectSection === "team"'), "Chat and team are not isolated admin workspaces");
+assert.ok(clientsClient.includes('fetch("/api/admin/billing"') && clientsClient.includes("selectedSubscription"), "Client CRM is not connected to commercial subscription context");
+assert.ok(clientsClient.includes("admin-client-crm") && clientsClient.includes("RECURRING") && clientsClient.includes("Payment past due"), "Client CRM is missing laptop relationship and collection context");
 assert.ok(pricing.includes('setup:"$149",monthly:"$19"') && pricing.includes('setup:"$299",monthly:"$35"') && pricing.includes('setup:"$499",monthly:"$59"'), "Published website plan pricing drifted from the approved catalog");
 assert.ok(pricing.includes('setup:"$699",monthly:"$79"') && pricing.includes('setup:"$1,199",monthly:"$129"') && pricing.includes('monthly:"$199+"'), "Published commerce/custom pricing drifted from the approved catalog");
 assert.ok(pricing.includes('Up to 20 pages') && pricing.includes('6 updates / month'), "Published plan limits drifted from the approved catalog");
