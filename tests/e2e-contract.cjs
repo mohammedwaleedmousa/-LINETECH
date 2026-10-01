@@ -19,6 +19,7 @@ const adminShell = read("app/admin/AdminShell.tsx");
 const adminClients = read("app/admin/ClientsClient.tsx");
 const adminDashboard = read("app/admin/DashboardClient.tsx");
 const adminProjects = read("app/admin/AdminClient.tsx");
+const accountClient = read("app/account/AccountClient.tsx");
 
 // 1) Account/session layer.
 for (const endpoint of [
@@ -120,6 +121,9 @@ assert.ok(admin.includes("recurring_price_usd:plan.monthly_price_usd"), "Subscri
 assert.ok(adminProjects.includes("saveSubscription"), "Admin project UI has no subscription action");
 assert.ok(adminProjects.includes("Requested plan"), "Admin project UI does not distinguish requested plan");
 assert.ok(adminProjects.includes("Current subscription"), "Admin project UI does not show the commercial subscription");
+assert.ok(auth.includes("/client_subscriptions?select=*,plan:plan_catalog(*)"), "Account API does not load the client subscription and plan");
+assert.ok(accountClient.includes("account.subscription"), "Account UI does not render the commercial subscription");
+assert.ok(accountClient.includes("max_storage_gb"), "Account UI does not show plan limits");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
