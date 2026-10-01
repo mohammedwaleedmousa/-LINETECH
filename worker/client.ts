@@ -268,7 +268,8 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
       })),
     };
 
-    const subscription=subscriptionResponse.ok&&Array.isArray(subscriptionPayload)?subscriptionPayload[0]||null:null;\n    return json({ok:true,projectId:project.id,record,progress,subscription},200,session.setCookies);
+    const subscription=subscriptionResponse.ok&&Array.isArray(subscriptionPayload)?subscriptionPayload[0]||null:null;
+    return json({ok:true,projectId:project.id,record,progress,subscription},200,session.setCookies);
   }
 
   if(path==="/api/chat/messages") {
