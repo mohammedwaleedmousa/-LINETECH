@@ -53,6 +53,12 @@ assert.ok(schema.includes("'idempotent_replay'"));
 assert.ok(schema.includes("insert into public.project_requests"));
 assert.ok(schema.includes("insert into public.projects"));
 assert.ok(schema.includes("insert into public.conversations"));
+assert.ok(intake.includes("plan,"), "Selected plan is not included in the project request payload");
+assert.ok(client.includes("p_plan:fields.plan"), "Worker is not forwarding the selected plan to the request RPC");
+assert.ok(intake.includes("project_id?: string"), "Intake is not expecting the created project id");
+assert.ok(intake.includes("setSubmittedProjectId(result.data.project_id"), "Created project id is not retained for the success handoff");
+assert.ok(intake.includes("/workspace?project="), "Success screen does not target the created project workspace");
+assert.ok(intake.includes("/chat?project="), "Success screen does not target the created project chat");
 
 // 3) Workspace reads project state, activity and project files.
 assert.ok(client.includes('path==="/api/projects"'));
@@ -65,6 +71,9 @@ for (const table of ["project_requests","projects","project_activity","project_f
 assert.ok(workspace.includes("loadWorkspace"));
 assert.ok(workspace.includes("visibilitychange"));
 assert.ok(workspace.includes("handoverUnlocked"));
+assert.ok(client.includes("plan:pr.selected_plan_code"), "Workspace API is not exposing the requested plan");
+assert.ok(workspace.includes("record.project.plan"), "Workspace UI is not rendering the requested plan");
+assert.ok(workspace.includes("new URLSearchParams(window.location.search).get(\"project\")"), "Workspace does not honor the project query parameter");
 
 // 4) Client chat supports text + rich uploads and authenticated downloads.
 assert.ok(chat.includes("/api/chat/messages"));
