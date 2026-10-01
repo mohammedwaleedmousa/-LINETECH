@@ -1,0 +1,47 @@
+"use client";
+
+import Link from "next/link";
+import { useLanguage } from "../Localized";
+import "./pricing.css";
+
+type Copy={en:string;ar:string};
+const c=(en:string,ar:string):Copy=>({en,ar});
+const plans=[
+ {name:"START",setup:"$149",monthly:"$15",tag:c("For small businesses","للأنشطة الصغيرة"),features:[c("Up to 5 pages","حتى 5 صفحات"),c("One language","لغة واحدة"),c("Responsive website","متجاوب مع جميع الأجهزة"),c("Custom domain connection","ربط دومين مخصص"),c("SSL, hosting & management","SSL والاستضافة والإدارة"),c("Contact form, WhatsApp & Maps","نموذج تواصل وواتساب وخرائط"),c("Basic SEO","SEO أساسي")]},
+ {name:"BUSINESS",setup:"$299",monthly:"$25",featured:true,tag:c("Most popular","الأكثر طلبًا"),features:[c("Up to 10 pages","حتى 10 صفحات"),c("Arabic + English","العربية + الإنجليزية"),c("Everything in START","كل مميزات START"),c("Content management","إدارة المحتوى"),c("Analytics","التحليلات"),c("Enhanced SEO","SEO محسّن"),c("Portfolio / gallery","معرض أعمال أو صور"),c("Lead forms & social integration","نماذج عملاء وربط الشبكات الاجتماعية")]},
+ {name:"PRO",setup:"$499",monthly:"$45",tag:c("For advanced businesses","للأعمال المتقدمة"),features:[c("Expanded page scope","نطاق صفحات أوسع"),c("Everything in BUSINESS","كل مميزات BUSINESS"),c("Advanced customization","تخصيص متقدم"),c("Bookings or appointments","حجوزات أو مواعيد"),c("Team management options","خيارات إدارة الفريق"),c("Advanced forms & integrations","نماذج وتكاملات متقدمة"),c("Advanced analytics","تحليلات متقدمة"),c("Priority support","دعم بأولوية")]},
+ {name:"E-COMMERCE",setup:"$699",monthly:"$59",tag:c("Online stores","للمتاجر الإلكترونية"),features:[c("Product & category management","إدارة المنتجات والتصنيفات"),c("Cart & checkout","السلة وإتمام الطلب"),c("Orders & customers","إدارة الطلبات والعملاء"),c("Coupons & inventory","الكوبونات والمخزون"),c("Search & filtering","البحث والفلترة"),c("WhatsApp & analytics","واتساب والتحليلات"),c("Store SEO","SEO للمتجر"),c("Admin dashboard","لوحة إدارة")]},
+ {name:"E-COMMERCE PRO",setup:"$1,199",monthly:"$99",tag:c("For larger stores","للمتاجر الأكبر"),features:[c("Everything in E-COMMERCE","كل مميزات E-COMMERCE"),c("Product variants","ألوان ومقاسات وخيارات المنتجات"),c("Advanced inventory","مخزون متقدم"),c("Staff permissions","صلاحيات الموظفين"),c("Sales reporting","تقارير المبيعات"),c("Advanced promotions","عروض وخصومات متقدمة"),c("Product import tools","أدوات استيراد المنتجات"),c("Priority integrations & support","تكاملات ودعم بأولوية")]},
+ {name:"CUSTOM",setup:c("Quoted","حسب المشروع"),monthly:"$99+",tag:c("Custom systems & enterprise","للأنظمة الخاصة والشركات"),features:[c("Custom project scope","نطاق مشروع مخصص"),c("CRM & business systems","CRM وأنظمة أعمال"),c("Branches & staff roles","فروع وصلاحيات موظفين"),c("Custom APIs & integrations","API وتكاملات مخصصة"),c("Advanced workflows","مسارات عمل متقدمة"),c("Dedicated architecture","بنية تقنية مخصصة"),c("Priority planning & support","تخطيط ودعم بأولوية")]}
+];
+const addons=[
+ ["Extra page","صفحة إضافية","$25+"],["Additional language","لغة إضافية","$75+"],["Content writing","كتابة المحتوى","$50+"],["Advanced SEO","SEO متقدم","$100+/mo"],["Booking system","نظام حجوزات","$100+"],["Integrations","تكاملات","$50+"],["Fully custom design","تصميم مخصص بالكامل","$200+"],["Additional maintenance","صيانة إضافية","$25+/mo"]
+];
+export default function Pricing(){
+ const lang=useLanguage(); const ar=lang==="ar"; const t=(x:Copy)=>ar?x.ar:x.en;
+ return <main className="pricing-page">
+  <section className="pricing-hero"><div className="pricing-grid"/><div className="ref-shell pricing-hero-inner">
+   <span className="pricing-index">LINETECH / 06</span>
+   <p className="ref-kicker">{ar?"الخطط والأسعار":"PLANS & PRICING"}</p>
+   <h1>{ar?"ابدأ بخطة تناسب عملك.":"Start with a plan that fits your business."}</h1>
+   <p>{ar?"مواقع ومتاجر وأنظمة أعمال تُطلق وتُدار بواسطة LINETECH، برسوم تأسيس واضحة واشتراك مستمر للاستضافة والإدارة والدعم.":"Websites, stores and business systems launched and managed by LINETECH, with clear setup pricing and ongoing hosting, management and support."}</p>
+   <div className="pricing-hero-actions"><a href="#plans" className="ref-button light">{ar?"استعرض الباقات":"Explore plans"} <span>↓</span></a><Link href="/start" className="pricing-text-link">{ar?"ابدأ مشروعك":"Start your project"} <span>→</span></Link></div>
+  </div></section>
+  <section className="pricing-section" id="plans"><div className="ref-shell">
+   <div className="pricing-heading"><div><p className="ref-kicker with-line">{ar?"باقات المواقع والأنظمة":"WEBSITE & SYSTEM PLANS"}</p><h2>{ar?"من أول حضور رقمي إلى منصة أعمال كاملة.":"From your first digital presence to a complete business platform."}</h2></div><p>{ar?"رسوم التأسيس تغطي بناء وإطلاق المشروع. الاشتراك يغطي تشغيل الموقع واستضافته وإدارته حسب نطاق الباقة.":"The setup fee covers building and launching the project. The subscription covers ongoing operation, hosting and management within the plan scope."}</p></div>
+   <div className="pricing-plan-grid">{plans.map((p,i)=><article className={"pricing-card "+(p.featured?"featured":"")} key={p.name}>
+    <div className="pricing-card-top"><span>0{i+1}</span>{p.featured&&<b>{ar?"الأكثر طلبًا":"POPULAR"}</b>}</div>
+    <p className="pricing-plan-tag">{t(p.tag)}</p><h3>{p.name}</h3>
+    <div className="pricing-price"><div><small>{ar?"التأسيس":"SETUP"}</small><strong>{typeof p.setup==="string"?p.setup:t(p.setup)}</strong></div><i/><div><small>{ar?"شهريًا":"MONTHLY"}</small><strong>{p.monthly}</strong></div></div>
+    <ul>{p.features.map((f,j)=><li key={j}><span>✓</span>{t(f)}</li>)}</ul>
+    <Link href="/start" className={p.featured?"ref-button light":"pricing-plan-link"}>{ar?"اختر هذه الباقة":"Choose this plan"} <span>→</span></Link>
+   </article>)}</div>
+  </div></section>
+  <section className="pricing-addons"><div className="ref-shell">
+   <div className="pricing-heading compact"><div><p className="ref-kicker with-line">{ar?"إضافات اختيارية":"ADD-ONS"}</p><h2>{ar?"أضف فقط ما يحتاجه عملك.":"Add only what your business needs."}</h2></div><p>{ar?"المتطلبات خارج نطاق الباقة تُسعّر بشكل منفصل حتى تبقى التكلفة واضحة من البداية.":"Requirements outside a plan are priced separately so the project cost stays clear from the start."}</p></div>
+   <div className="addon-grid">{addons.map(([en,arText,price],i)=><div className="addon-row" key={en}><span>0{i+1}</span><strong>{ar?arText:en}</strong><b>{price}</b></div>)}</div>
+   <p className="pricing-note">{ar?"البريد الاحترافي، الدومينات، إدخال كميات كبيرة من المنتجات والخدمات الخارجية تُسعّر حسب العدد أو المزود أو نطاق العمل. قد تختلف تكلفة تجديد الدومين حسب الامتداد.":"Professional email, domains, bulk product entry and third-party services are priced by quantity, provider or scope. Domain renewal costs may vary by extension."}</p>
+  </div></section>
+  <section className="pricing-platform"><div className="ref-shell pricing-platform-grid"><div><p className="ref-kicker">{ar?"تُدار بواسطة LINETECH":"MANAGED BY LINETECH"}</p><h2>{ar?"منصة واحدة. أعمال متعددة. إدارة أوضح.":"One platform. Many businesses. Clearer management."}</h2></div><div><p>{ar?"تم تصميم نموذج الخدمة ليتيح لـ LINETECH إدارة مواقع العملاء واستضافتهم ودعمهم من بنية مركزية، مع فصل بيانات كل عميل وصلاحياته.":"The service model is designed so LINETECH can host, manage and support client websites from a central platform while keeping each client's data and access separated."}</p><Link href="/start" className="ref-button light">{ar?"ابدأ خطك":"Start Your Line"} <span>→</span></Link></div></div></section>
+ </main>
+}
