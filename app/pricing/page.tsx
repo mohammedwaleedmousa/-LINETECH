@@ -41,7 +41,7 @@ export default function Pricing(){
     <p className="pricing-plan-tag">{t(p.tag)}</p><h3>{p.name}</h3>
     <div className="pricing-price"><div><small>{ar?"التأسيس":"SETUP"}</small><strong>{typeof p.setup==="string"?p.setup:t(p.setup)}</strong></div><i/><div><small>{ar?"شهريًا":"MONTHLY"}</small><strong>{p.monthly}</strong></div></div>
     <ul>{p.features.map((f,j)=><li key={j}><span>✓</span>{t(f)}</li>)}</ul>
-    <Link href="/start" className={p.featured?"ref-button light":"pricing-plan-link"}>{ar?"اختر هذه الباقة":"Choose this plan"} <span>→</span></Link>
+    <Link href={`/start?plan=${encodeURIComponent(p.name)}`} className={p.featured?"ref-button light":"pricing-plan-link"}>{ar?"اختر هذه الباقة":"Choose this plan"} <span>→</span></Link>
    </article>)}</div>
   </div></section>
   <section className="pricing-addons"><div className="ref-shell">
