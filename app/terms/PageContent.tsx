@@ -48,7 +48,7 @@ const copy = {
         id: "fees-and-costs",
         number: "05",
         title: "Fees, payments and third-party costs",
-        text: "Project fees, currency, payment stages and payment method are confirmed before work begins. Hosting, domains, paid software, licenses, advertising, platform fees or other third-party costs are included only when the project agreement expressly says so.",
+        text: "Project fees, currency, payment stages and payment method are confirmed before work begins. Where a LINETECH plan includes a setup fee and recurring monthly service, the setup fee covers the agreed initial build and the recurring fee covers the ongoing service and plan limits shown or agreed for that subscription. New pages, systems, features or work outside the included content-update allowance may be quoted separately. Domain registration and renewal, paid software, licenses, advertising, payment-provider fees and other third-party costs are included only when expressly stated.",
       },
       {
         id: "timelines",
@@ -84,7 +84,7 @@ const copy = {
         id: "suspension-and-cancellation",
         number: "11",
         title: "Suspension and cancellation",
-        text: "Either side may request to pause or end a project subject to the applicable project agreement. Amounts already due, completed work, committed third-party costs and handover obligations are handled according to that agreement and the work completed at that point.",
+        text: "Either side may request to pause or end a project subject to the applicable project agreement. Recurring services may also be marked past due or suspended when payment remains overdue, subject to the billing status and notices shown by LINETECH. Suspension does not by itself erase project data. Amounts already due, completed work, committed third-party costs and handover obligations are handled according to the applicable agreement and service status.",
       },
       {
         id: "liability-and-updates",
@@ -172,7 +172,7 @@ const copy = {
         id: "suspension-and-cancellation",
         number: "11",
         title: "إيقاف المشروع أو إلغاؤه",
-        text: "يجوز لأي من الطرفين طلب إيقاف المشروع مؤقتًا أو إنهائه وفقًا لاتفاق المشروع المعتمد. ويتم التعامل مع المبالغ المستحقة والعمل المنجز والتكاليف الخارجية الملتزم بها والتسليمات وفقًا لذلك الاتفاق وحالة المشروع عند التوقف.",
+        text: "يجوز لأي من الطرفين طلب إيقاف المشروع مؤقتًا أو إنهائه وفقًا لاتفاق المشروع المعتمد. كما قد تُصنّف الخدمات المتكررة كمتأخرة الدفع أو يتم تعليقها عند استمرار التأخر، وفق حالة الفوترة والتنبيهات التي تعرضها لاين تك. ولا يعني التعليق بحد ذاته حذف بيانات المشروع. ويتم التعامل مع المبالغ المستحقة والعمل المنجز والتكاليف الخارجية الملتزم بها والتسليمات وفق الاتفاق المعتمد وحالة الخدمة.",
       },
       {
         id: "liability-and-updates",
