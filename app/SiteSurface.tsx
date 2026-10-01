@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect } from "react";
+import { ReactNode, Suspense, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
@@ -34,7 +34,9 @@ export default function SiteSurface({ children }: { children: ReactNode }) {
       <HomeMotion />
       <ServicesMotion />
       <HomeSplash />
-      <SiteNav />
+      <Suspense fallback={null}>
+        <SiteNav />
+      </Suspense>
       {children}
       <SiteFooter />
     </>
