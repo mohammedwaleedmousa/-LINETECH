@@ -92,6 +92,8 @@ export default function AdminClient() {
   const [clientOverview, setClientOverview] = useState<ClientOverview | null>(null);
   const [clientLoading, setClientLoading] = useState(false);
   const [clientOpen, setClientOpen] = useState(false);
+  const [subscription, setSubscription] = useState<Json | null>(null);
+  const [plans, setPlans] = useState<Json[]>([]);
   const [chatUploading, setChatUploading] = useState(false);
   const [recording, setRecording] = useState(false);
   const [recordingSeconds, setRecordingSeconds] = useState(0);
@@ -196,8 +198,22 @@ export default function AdminClient() {
     const nextDetail = projectPayload as unknown as ProjectDetail;
     setDetail(nextDetail);
     const clientId = String(nextDetail.project?.client_id || "");
-    if (clientId) void loadClient(clientId);
-    else setClientOverview(null);
+    if (clientId) {
+      void loadClient(clientId);
+      const subscriptionResponse = await fetch(`/api/admin/subscription?clientId=${encodeURIComponent(clientId)}`, { cache: "no-store" });
+      const subscriptionPayload = await readJson(subscriptionResponse);
+      if (subscriptionResponse.ok && subscriptionPayload?.ok) {
+        setSubscription(subscriptionPayload.subscription || null);
+        setPlans(Array.isArray(subscriptionPayload.plans) ? subscriptionPayload.plans : []);
+      } else {
+        setSubscription(null);
+        setPlans([]);
+      }
+    } else {
+      setClientOverview(null);
+      setSubscription(null);
+      setPlans([]);
+    }
     setChat(chatResponse.ok && chatPayload?.ok && Array.isArray(chatPayload.messages) ? chatPayload.messages : []);
     setHandover(handoverResponse.ok && handoverPayload?.ok && Array.isArray(handoverPayload.items) ? handoverPayload.items : []);
     setMembers(membersResponse.ok && membersPayload?.ok && Array.isArray(membersPayload.members) ? membersPayload.members : []);
@@ -281,6 +297,35 @@ export default function AdminClient() {
     if (recordingTimerRef.current) window.clearInterval(recordingTimerRef.current);
     mediaStreamRef.current?.getTracks().forEach(track => track.stop());
   }, []);
+
+
+  async function saveSubscription(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const clientId = String(detail?.project?.client_id || "");
+    if (!clientId) return;
+    const form = new FormData(event.currentTarget);
+    setBusy(true); setError(""); setNotice("");
+    try {
+      const response = await fetch("/api/admin/subscription", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          clientId,
+          planCode: form.get("planCode"),
+          status: form.get("subscriptionStatus"),
+          billingCycle: form.get("billingCycle"),
+        }),
+      });
+      const payload = await readJson(response);
+      if (!response.ok || !payload?.ok) throw new Error();
+      setSubscription(payload.subscription || null);
+      setNotice("Client subscription updated.");
+    } catch {
+      setError("Subscription update failed.");
+    } finally {
+      setBusy(false);
+    }
+  }
 
   async function saveProject(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -739,6 +784,30 @@ export default function AdminClient() {
                 <div className="is-wide"><span>Project need</span><strong>{detail.request?.idea || "—"}</strong></div>
               </div>
             </section>
+
+
+            <form key={`subscription-${detail.project.id}-${subscription?.updated_at || "new"}`} className="admin-card admin-update-form admin-subscription-card" onSubmit={saveSubscription}>
+              <div className="admin-card-title"><span>SUB</span><strong>Client subscription</strong></div>
+              <div className="admin-request-grid">
+                <div><span>Requested plan</span><strong>{detail.request?.selected_plan_code ? String(detail.request.selected_plan_code).replaceAll("_", " ").toUpperCase() : "—"}</strong></div>
+                <div><span>Current subscription</span><strong>{subscription?.plan_code ? String(subscription.plan_code).replaceAll("_", " ").toUpperCase() : "Not activated"}</strong></div>
+                <div><span>Recurring price</span><strong>{subscription?.recurring_price_usd != null ? `${subscription.recurring_price_usd} / ${subscription.billing_cycle || "month"}` : "—"}</strong></div>
+                <div><span>Next billing</span><strong>{subscription?.next_billing_at ? dateTime(subscription.next_billing_at) : "—"}</strong></div>
+              </div>
+              <div className="admin-grid three">
+                <label>Plan<select name="planCode" defaultValue={subscription?.plan_code || detail.request?.selected_plan_code || plans[0]?.code || ""} required>
+                  {plans.map(item => <option key={String(item.code)} value={String(item.code)}>{item.name} · ${item.monthly_price_usd}/mo</option>)}
+                </select></label>
+                <label>Status<select name="subscriptionStatus" defaultValue={subscription?.status || "active"}>
+                  {["trial","active","past_due","suspended","cancelled"].map(value => <option key={value} value={value}>{value}</option>)}
+                </select></label>
+                <label>Billing<select name="billingCycle" defaultValue={subscription?.billing_cycle || "monthly"}>
+                  {["monthly","yearly","custom"].map(value => <option key={value} value={value}>{value}</option>)}
+                </select></label>
+              </div>
+              <p className="admin-subscription-note">Activating this records the commercial subscription. It does not change the plan originally requested by the client.</p>
+              <button className="admin-primary" type="submit" disabled={busy || !plans.length}>{subscription ? "Update subscription" : "Activate subscription"}</button>
+            </form>
 
             <form key={detail.project.id} className="admin-card admin-update-form" onSubmit={saveProject}>
               <div className="admin-card-title"><span>01</span><strong>Project control</strong></div>
