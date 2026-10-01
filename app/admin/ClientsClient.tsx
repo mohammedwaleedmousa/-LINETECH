@@ -19,7 +19,9 @@ export default function ClientsClient() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [users, setUsers] = useState<Json[]>([]);
   const [query, setQuery] = useState("");
-  const [loading, setLoading] = useState(true);\n  const [billing, setBilling] = useState<Json>({ subscriptions: [] });\n  const [selectedId, setSelectedId] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [billing, setBilling] = useState<Json>({ subscriptions: [] });
+  const [selectedId, setSelectedId] = useState("");
 
   useEffect(() => {
     let cancelled = false;
@@ -28,18 +30,44 @@ export default function ClientsClient() {
         const [pr, ur, br] = await Promise.all([
           fetch("/api/admin/projects", { cache: "no-store" }),
           fetch("/api/admin/users", { cache: "no-store" }),
+          fetch("/api/admin/billing", { cache: "no-store" }),
         ]);
         const [pp, up, bp] = await Promise.all([pr.json().catch(() => null), ur.json().catch(() => null), br.json().catch(() => null)]);
         if (!cancelled) {
           if (pr.ok && pp?.ok) setProjects(Array.isArray(pp.projects) ? pp.projects : []);
-          if (ur.ok && up?.ok) setUsers(Array.isArray(up.users) ? up.users : []);\n          if (br.ok && bp?.ok) setBilling(bp);
+          if (ur.ok && up?.ok) setUsers(Array.isArray(up.users) ? up.users : []);
+          if (br.ok && bp?.ok) setBilling(bp);
         }
       } finally {
         if (!cancelled) setLoading(false);
       }
     })();
-    return (
-    <main className="admin-directory admin-clients-v2">
+    return () => { cancelled = true; };
+  }, []);
+
+  const clients = useMemo(() => {
+    const byId = new Map<string, { id: string; profile: Json; projects: Project[] }>();
+    for (const user of users) byId.set(String(user.id), { id: String(user.id), profile: user, projects: [] });
+    for (const project of projects) {
+      const id = String(project.client_id || project.client?.id || "");
+      if (!id) continue;
+      const row = byId.get(id) || { id, profile: project.client || {}, projects: [] };
+      row.projects.push(project);
+      byId.set(id, row);
+    }
+    const q = query.trim().toLowerCase();
+    return [...byId.values()].filter(item => !q || [item.profile?.full_name,item.profile?.company,item.profile?.email,item.projects[0]?.request?.name].some(value => String(value || "").toLowerCase().includes(q)));
+  }, [projects, users, query]);
+
+  useEffect(() => { if (!selectedId && clients[0]?.id) setSelectedId(clients[0].id); }, [clients, selectedId]);
+  const selected = clients.find(item => item.id === selectedId) || clients[0] || null;
+  const selectedLatest = selected?.projects.slice().sort((a,b) => String(b.updated_at || "").localeCompare(String(a.updated_at || "")))[0] || null;
+  const selectedActive = selected ? selected.projects.filter(p => !["completed","archived"].includes(p.status)).length : 0;
+  const selectedCompleted = selected ? selected.projects.filter(p => p.status === "completed").length : 0;
+  const selectedSubscription = selected ? (Array.isArray(billing.subscriptions) ? billing.subscriptions : []).find((row: Json) => String(row.client_id || "") === selected.id) : null;
+
+  return (
+
       <header className="admin-directory-head">
         <div><span>LINETECH / CLIENTS</span><h1>Client relationships.</h1><p>Commercial and project context in one laptop workspace.</p></div>
         <strong>{clients.length}</strong>
@@ -109,4 +137,4 @@ export default function ClientsClient() {
       </div>
     </main>
   );
-}\n}\n
+}
