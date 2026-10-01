@@ -141,6 +141,10 @@ assert.ok(accountClient.includes("currentProjectId ? `/workspace?project="), "Ac
 assert.ok(accountClient.includes("currentProjectId ? `/chat?project="), "Account chat link does not preserve project context");
 assert.ok(chatWorkspace.includes("Open project workspace"), "Project chat is not connected back to Workspace");
 assert.ok(!chatWorkspace.includes("Search or start new chat"), "Placeholder chat search control is still exposed");
+assert.ok(client.includes('if(value==="archived") return "archived"'), "Workspace API collapses archived projects into a misleading state");
+assert.ok(client.includes('if(value==="planned") return "planned"'), "Workspace API collapses planned projects into a misleading state");
+assert.ok(workspace.includes("statusArchived"), "Workspace UI does not expose archived project state");
+assert.ok(workspace.includes("statusPlanned"), "Workspace UI does not expose planning project state");
 assert.ok(schema.includes("action_kind text not null default 'project_update'"));
 assert.ok(schema.includes("destination text not null default '/workspace'"));
 
