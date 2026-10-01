@@ -802,7 +802,7 @@ export default function AdminClient() {
                   {["trial","active","past_due","suspended","cancelled"].map(value => <option key={value} value={value}>{value}</option>)}
                 </select></label>
                 <label>Billing<select name="billingCycle" defaultValue={subscription?.billing_cycle || "monthly"}>
-                  {["monthly","yearly","custom"].map(value => <option key={value} value={value}>{value}</option>)}
+                  <option value="monthly">monthly</option>
                 </select></label>
               </div>
               <p className="admin-subscription-note">Activating this records the commercial subscription. It does not change the plan originally requested by the client.</p>
