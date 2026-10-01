@@ -506,12 +506,10 @@ export default function ChatWorkspace(){
     <aside className="chat-sidebar">
       <div className="chat-sidebar-head">
         <div><span className="chat-eyebrow">LINETECH</span><h1>Chats</h1></div>
-        <button type="button" className="chat-new" onClick={clearPreview} aria-label="Refresh project conversation">＋</button>
+        <button type="button" className="chat-new" onClick={() => void loadMessages()} aria-label="Refresh project conversation">↻</button>
       </div>
 
       <ClientProjectSwitcher currentProjectId={currentProjectId} className="chat-project-switcher" />
-
-      <div className="chat-search-box" aria-hidden="true"><span>⌕</span><p>Search or start new chat</p></div>
 
       <div className="chat-conversations">
         <button className="chat-conversation active" type="button">
@@ -527,7 +525,7 @@ export default function ChatWorkspace(){
     <div className={`chat-main ${dragging?"is-dragging":""}`} onDragEnter={event=>{event.preventDefault();setDragging(true)}} onDragOver={event=>event.preventDefault()} onDragLeave={event=>{if(event.currentTarget===event.target)setDragging(false)}} onDrop={onDrop}>
       <header className="chat-header">
         <div className="chat-header-person"><span className="chat-avatar large"><i/><b/></span><div><strong>LINETECH Project Team</strong><span><i/> Project conversation</span></div></div>
-        <div className="chat-header-actions"><button type="button" aria-label="Search conversation">⌕</button><button type="button" aria-label="Conversation menu"><Icon name="more"/></button></div>
+        <div className="chat-header-actions"><a href={currentProjectId ? `/workspace?project=${encodeURIComponent(currentProjectId)}` : "/workspace"} aria-label="Open project workspace">↗</a></div>
       </header>
 
       <div className="chat-preview-banner"><span>PROJECT WORKSPACE</span><p>Messages, photos, documents and voice notes are securely connected to this project.</p></div>
