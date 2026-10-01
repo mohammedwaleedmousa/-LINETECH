@@ -182,7 +182,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await render(Bridge, Nav, Intake);
   assert.equal(document.documentElement.dir, 'rtl');
   assert.ok(document.body.textContent.includes('الخدمات'));
-  assert.ok(document.body.textContent.includes('المحادثة'));
+  assert.ok(document.body.textContent.includes('الباقات'));
   assert.ok(document.body.textContent.includes('تسجيل الدخول'));
 
 
