@@ -26,22 +26,26 @@ export default function DashboardClient() {
   const [users, setUsers] = useState<Json[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [billing, setBilling] = useState<Json>({ summary: {}, subscriptions: [] });
 
   async function load() {
     setLoading(true);
     setError("");
     try {
-      const [projectsResponse, usersResponse] = await Promise.all([
+      const [projectsResponse, usersResponse, billingResponse] = await Promise.all([
         fetch("/api/admin/projects", { cache: "no-store" }),
         fetch("/api/admin/users", { cache: "no-store" }),
+        fetch("/api/admin/billing", { cache: "no-store" }),
       ]);
-      const [projectPayload, userPayload] = await Promise.all([
+      const [projectPayload, userPayload, billingPayload] = await Promise.all([
         projectsResponse.json().catch(() => null),
         usersResponse.json().catch(() => null),
+        billingResponse.json().catch(() => null),
       ]);
       if (!projectsResponse.ok || !projectPayload?.ok) throw new Error();
       setProjects(Array.isArray(projectPayload.projects) ? projectPayload.projects : []);
       setUsers(usersResponse.ok && userPayload?.ok && Array.isArray(userPayload.users) ? userPayload.users : []);
+      setBilling(billingResponse.ok && billingPayload?.ok ? billingPayload : { summary: {}, subscriptions: [] });
     } catch {
       setError("Admin dashboard could not be loaded.");
     } finally {
@@ -75,24 +79,29 @@ export default function DashboardClient() {
 
       {error && <div className="admin-overview-error">{error}</div>}
 
-      <section className="admin-kpi-grid">
-        <article><span>ALL PROJECTS</span><strong>{stats.total}</strong><small>Current project records</small></article>
-        <article><span>ACTIVE</span><strong>{stats.active}</strong><small>Work currently moving</small></article>
-        <article><span>WAITING CLIENT</span><strong>{stats.waiting}</strong><small>Blocked on client input</small></article>
-        <article><span>IN REVIEW</span><strong>{stats.review}</strong><small>Review / approval stage</small></article>
+      <section className="admin-kpi-grid admin-kpi-grid-v2">
+        <article><span>MRR</span><strong>${Number(billing.summary?.mrr || 0).toLocaleString()}</strong><small>Active + past due recurring</small></article>
+        <article><span>ACTIVE PROJECTS</span><strong>{stats.active}</strong><small>Work currently moving</small></article>
+        <article><span>NEEDS ATTENTION</span><strong>{attention.length}</strong><small>Client/review/action queue</small></article>
+        <article><span>PAST DUE</span><strong>{billing.summary?.pastDue || 0}</strong><small>${Number(billing.summary?.overdueAmount || 0).toLocaleString()} overdue value</small></article>
+        <article><span>CLIENT ACCOUNTS</span><strong>{users.length}</strong><small>Known client/team profiles</small></article>
         <article><span>COMPLETED</span><strong>{stats.completed}</strong><small>Delivered projects</small></article>
-        <article><span>ACCOUNTS</span><strong>{users.length}</strong><small>Known client/team profiles</small></article>
       </section>
 
       <section className="admin-overview-grid">
         <div className="admin-overview-panel">
           <div className="admin-overview-panel-head"><div><span>RECENT PROJECTS</span><h2>Latest work.</h2></div><Link href="/admin/projects">View all →</Link></div>
-          <div className="admin-dashboard-list">
-            {projects.slice(0, 7).map(project => (
-              <Link key={project.id} href={`/admin/projects?project=${encodeURIComponent(project.id)}`}>
-                <span>{project.request?.reference_number || "PROJECT"}</span>
-                <strong>{project.title || project.request?.service || "Project"}</strong>
-                <small>{project.client?.full_name || project.request?.name || "Client"} · {project.request?.selected_plan_code ? `${String(project.request.selected_plan_code).replaceAll("_", "-").toUpperCase()} · ` : ""}{project.status} · Phase {project.phase}/5</small>
+          <div className="admin-ops-table" role="table" aria-label="Project operations">
+            <div className="admin-ops-row admin-ops-head" role="row">
+              <span>Project / client</span><span>Plan</span><span>Status</span><span>Phase</span><span>Due</span><span />
+            </div>
+            {projects.slice(0, 10).map(project => (
+              <Link className="admin-ops-row" role="row" key={project.id} href={`/admin/projects?project=${encodeURIComponent(project.id)}`}>
+                <span className="admin-ops-project"><strong>{project.title || project.request?.service || "Project"}</strong><small>{project.client?.full_name || project.request?.name || "Client"} · {project.request?.reference_number || "—"}</small></span>
+                <span>{project.request?.selected_plan_code ? String(project.request.selected_plan_code).replaceAll("_", "-").toUpperCase() : "—"}</span>
+                <span className={`admin-ops-status is-${project.status}`}>{project.status.replaceAll("_", " ")}</span>
+                <span>{project.phase}/5</span>
+                <span>{project.due_date ? date(project.due_date) : "—"}</span>
                 <b>→</b>
               </Link>
             ))}
