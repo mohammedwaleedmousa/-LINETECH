@@ -11,6 +11,16 @@ type AccountData = {
   createdAt?: string | null;
   lastSignInAt?: string | null;
   role?: string;
+  subscription?: {
+    planCode: string;
+    status: string;
+    billingCycle: string;
+    setupFeeUsd?: string | number | null;
+    recurringPriceUsd?: string | number | null;
+    startsAt?: string | null;
+    nextBillingAt?: string | null;
+    plan?: Record<string, any> | null;
+  } | null;
   profile: {
     fullName: string;
     company: string;
@@ -26,6 +36,22 @@ const copy = {
     lead: "Keep your contact details current and control the credentials and sessions that protect your project workspace.",
     workspace: "Open Workspace",
     chat: "Open Project Chat",
+    subscriptionLabel: "SUBSCRIPTION",
+    subscriptionTitle: "Your current LINETECH plan.",
+    noSubscription: "No active commercial subscription yet.",
+    noSubscriptionBody: "Your requested package remains part of the project brief until LINETECH activates the commercial subscription.",
+    plan: "Plan",
+    subscriptionStatus: "Status",
+    monthlyPrice: "Monthly",
+    nextBilling: "Next billing",
+    planLimits: "Plan limits",
+    pages: "Pages",
+    storage: "Storage",
+    updates: "Updates / month",
+    products: "Products",
+    team: "Team members",
+    languages: "Languages",
+    unlimited: "Custom",
     profileLabel: "PROFILE",
     profileTitle: "Your client details.",
     fullName: "Full name",
@@ -82,6 +108,22 @@ const copy = {
     lead: "حدّث بيانات التواصل وتحكم بكلمة المرور والجلسات التي تحمي مساحة مشروعك.",
     workspace: "افتح مساحة العميل",
     chat: "افتح محادثة المشروع",
+    subscriptionLabel: "الاشتراك",
+    subscriptionTitle: "باقتك الحالية في لاين تك.",
+    noSubscription: "لا يوجد اشتراك تجاري مفعّل حتى الآن.",
+    noSubscriptionBody: "تبقى الباقة التي طلبتها ضمن تفاصيل المشروع إلى أن تعتمد لاين تك الاشتراك التجاري.",
+    plan: "الباقة",
+    subscriptionStatus: "الحالة",
+    monthlyPrice: "شهريًا",
+    nextBilling: "التجديد القادم",
+    planLimits: "حدود الباقة",
+    pages: "الصفحات",
+    storage: "التخزين",
+    updates: "التعديلات / شهر",
+    products: "المنتجات",
+    team: "أعضاء الفريق",
+    languages: "اللغات",
+    unlimited: "مخصص",
     profileLabel: "الملف الشخصي",
     profileTitle: "بيانات العميل.",
     fullName: "الاسم الكامل",
@@ -356,6 +398,40 @@ export default function AccountClient() {
 
       <section className="account-content">
         <div className="account-shell account-grid">
+
+          <section className="account-card account-subscription">
+            <div className="account-card-head">
+              <span>{t.subscriptionLabel}</span>
+              <h2>{t.subscriptionTitle}</h2>
+            </div>
+            {account.subscription ? (
+              <>
+                <div className="account-subscription-summary">
+                  <div><span>{t.plan}</span><strong>{account.subscription.plan?.name || account.subscription.planCode.replaceAll("_", " ").toUpperCase()}</strong></div>
+                  <div><span>{t.subscriptionStatus}</span><strong className={`subscription-status is-${account.subscription.status}`}>{account.subscription.status.replaceAll("_", " ")}</strong></div>
+                  <div><span>{t.monthlyPrice}</span><strong>${account.subscription.recurringPriceUsd ?? "—"}</strong></div>
+                  <div><span>{t.nextBilling}</span><strong>{formatDate(account.subscription.nextBillingAt, language)}</strong></div>
+                </div>
+                <div className="account-plan-limits">
+                  <span>{t.planLimits}</span>
+                  <div>
+                    <p><b>{account.subscription.plan?.max_pages ?? t.unlimited}</b><small>{t.pages}</small></p>
+                    <p><b>{account.subscription.plan?.max_storage_gb != null ? `${account.subscription.plan.max_storage_gb} GB` : t.unlimited}</b><small>{t.storage}</small></p>
+                    <p><b>{account.subscription.plan?.max_monthly_updates ?? t.unlimited}</b><small>{t.updates}</small></p>
+                    <p><b>{account.subscription.plan?.max_products ?? t.unlimited}</b><small>{t.products}</small></p>
+                    <p><b>{account.subscription.plan?.max_team_members ?? t.unlimited}</b><small>{t.team}</small></p>
+                    <p><b>{Array.isArray(account.subscription.plan?.languages) ? account.subscription.plan.languages.join(" · ") : t.unlimited}</b><small>{t.languages}</small></p>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <div className="account-no-subscription">
+                <strong>{t.noSubscription}</strong>
+                <p>{t.noSubscriptionBody}</p>
+              </div>
+            )}
+          </section>
+
           <section className="account-card">
             <div className="account-card-head">
               <span>{t.profileLabel}</span>
