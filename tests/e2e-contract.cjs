@@ -159,6 +159,8 @@ assert.ok(workspace.includes("statusArchived"), "Workspace UI does not expose ar
 assert.ok(client.includes("client_subscriptions?select=*,plan:plan_catalog(*)"), "Workspace API does not expose the client subscription context");
 assert.ok(workspace.includes("workspace-commercial-overview") && workspace.includes("activeSubscription"), "Workspace does not connect project status to the active subscription");
 assert.ok(workspace.includes("requestedPlan") && workspace.includes("monthlyService"), "Workspace does not distinguish requested plan from recurring service");
+assert.ok(workspace.includes("workspace-v2-overview") && workspace.includes("overviewTitle"), "Workspace is missing the at-a-glance project overview");
+assert.ok(workspace.includes("clientAction.required") && workspace.includes("nextMilestone") && workspace.includes("latestUpdate"), "Workspace overview does not surface action, milestone and latest update together");
 assert.ok(workspace.includes("statusPlanned"), "Workspace UI does not expose planning project state");
 assert.ok(chatWorkspace.includes("chat-shell-loading"), "Project chat has no explicit loading state");
 assert.ok(siteNav.includes('{ href: "/workspace", en: "Workspace"'), "Client portal navigation is missing Workspace");
