@@ -14,6 +14,7 @@ type Project = {
   next_action_required?: boolean;
   request?: Json | null;
   client?: Json | null;
+  client_id?: string | null;
 };
 
 function date(value?: string | null) {
