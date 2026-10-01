@@ -7,6 +7,10 @@ import ScopePreview from "./ScopePreview";
 import "./custom-select.css";
 
 const services = ["Web Development", "E-commerce & Systems", "Brand Identity", "CV & Portfolio", "Other"] as const;
+const planOptions: Record<string, readonly string[]> = {
+  "Web Development": ["START", "BUSINESS", "PRO", "CUSTOM"],
+  "E-commerce & Systems": ["E-COMMERCE", "E-COMMERCE PRO", "CUSTOM"],
+};
 const stages = ["New idea", "Existing project", "Redesign / rebuild", "Improve an existing system"] as const;
 const goals = ["Sell / generate leads", "Bookings / requests", "Internal operations", "Build credibility", "Career / portfolio", "Other"] as const;
 const preferredContacts = ["WhatsApp", "Email", "Call", "Either"] as const;
@@ -235,6 +239,7 @@ export default function ProjectIntake() {
   const [contact, setContact] = useState("");
   const [preferredContact, setPreferredContact] = useState("Either");
   const [service, setService] = useState("");
+  const [plan, setPlan] = useState("");
   const [stage, setStage] = useState("");
   const [goal, setGoal] = useState("");
   const [idea, setIdea] = useState("");
@@ -264,6 +269,7 @@ export default function ProjectIntake() {
           if (typeof draft.contact === "string") setContact(draft.contact);
           if (typeof draft.preferredContact === "string") setPreferredContact(draft.preferredContact);
           if (typeof draft.service === "string") setService(draft.service);
+          if (typeof draft.plan === "string") setPlan(draft.plan);
           if (typeof draft.stage === "string") setStage(draft.stage);
           if (typeof draft.goal === "string") setGoal(draft.goal);
           if (typeof draft.idea === "string") setIdea(draft.idea);
@@ -325,7 +331,9 @@ export default function ProjectIntake() {
     return () => { cancelled = true; };
   }, []);
 
-  const canStep1 = Boolean(name.trim() && contact.trim() && service);
+  const availablePlans = planOptions[service] || [];
+  const needsPlan = availablePlans.length > 0;
+  const canStep1 = Boolean(name.trim() && contact.trim() && service && (!needsPlan || plan));
   const canStep2 = Boolean(stage && goal && idea.trim());
 
   const brief = useMemo(() => [
@@ -338,6 +346,7 @@ export default function ProjectIntake() {
     `${t("Contact")}：${contact || "—"}`,
     `${t("Preferred contact")}：${t(preferredContact)}`,
     `${t("Project type")}：${t(service || "—")}`,
+    plan ? `${language === "ar" ? "الباقة" : "Plan"}：${plan}` : "",
     "",
     t("PROJECT"),
     `${t("Stage")}：${t(stage || "—")}`,
@@ -359,7 +368,7 @@ export default function ProjectIntake() {
     "",
     t("OTHER NOTES"),
     notes || "—",
-  ].filter(Boolean).join("\n"), [t, copy.requestId, requestId, name, company, contact, preferredContact, service, stage, goal, audience, idea, features, references, budget, timing, notes]);
+  ].filter(Boolean).join("\n"), [t, copy.requestId, requestId, name, company, contact, preferredContact, service, plan, language, stage, goal, audience, idea, features, references, budget, timing, notes]);
 
   function changeStep(next: number) {
     setStep(next);
@@ -412,6 +421,7 @@ export default function ProjectIntake() {
           contact,
           preferredContact,
           service,
+          plan,
           stage,
           goal,
           idea,
@@ -435,6 +445,7 @@ export default function ProjectIntake() {
             contact,
             preferredContact,
             service,
+            plan,
             stage,
             goal,
             idea,
@@ -531,7 +542,18 @@ export default function ProjectIntake() {
         <label><span>Email or WhatsApp *</span><input value={contact} onChange={e=>setContact(e.target.value)} maxLength={200} autoComplete="email" placeholder="How should we reach you?" /></label>
         <div className="custom-select-field"><span className="custom-select-label">Preferred contact</span><CustomSelect value={preferredContact} onChange={setPreferredContact} options={preferredContacts} ariaLabel="Preferred contact" /></div>
       </div>
-      <div className="custom-select-field form-wide"><span className="custom-select-label">Project type *</span><CustomSelect value={service} onChange={setService} options={services} placeholder="Select a service" ariaLabel="Project type" /></div>
+      <div className="project-type-field form-wide">
+        <span className="custom-select-label">{language==="ar"?"ما الذي تريد بناءه؟ *":"What do you want to build? *"}</span>
+        <div className="project-type-grid">
+          {services.map((item,index)=><button type="button" key={item} className={`project-type-card ${service===item?"selected":""}`} onClick={()=>{setService(item);setPlan("");}}>
+            <span>0{index+1}</span><strong>{t(item)}</strong>
+          </button>)}
+        </div>
+      </div>
+      {needsPlan && <div className="plan-picker form-wide">
+        <div className="plan-picker-head"><div><span>{language==="ar"?"اختر الباقة *":"Choose a plan *"}</span><p>{language==="ar"?"اختر الاسم فقط، ويمكنك مقارنة التفاصيل والأسعار إذا احتجت.":"Choose the name only. You can compare details and pricing if needed."}</p></div><Link href="/pricing">{language==="ar"?"مقارنة الباقات":"Compare plans"} →</Link></div>
+        <div className="plan-option-grid">{availablePlans.map(item=><button type="button" key={item} className={plan===item?"selected":""} onClick={()=>setPlan(item)}>{item}</button>)}</div>
+      </div>
       <div className="intake-nav intake-nav-end"><button className="button button-light" type="button" disabled={!canStep1} onClick={()=>changeStep(2)}>Continue to project <span>→</span></button></div>
     </section>}
 
@@ -553,7 +575,7 @@ export default function ProjectIntake() {
       <fieldset><legend>Budget range</legend><div className="choice-grid intake-choice-grid">{budgets.map(v=><label key={v} className={`choice ${budget===v?"selected":""}`}><input type="radio" name="budget" checked={budget===v} onChange={()=>setBudget(v)}/><span>{v}</span></label>)}</div></fieldset>
       <fieldset><legend>Launch timing</legend><div className="choice-grid intake-choice-grid">{timings.map(v=><label key={v} className={`choice ${timing===v?"selected":""}`}><input type="radio" name="timing" checked={timing===v} onChange={()=>setTiming(v)}/><span>{v}</span></label>)}</div></fieldset>
       <label className="form-wide"><span>Anything else we should know?</span><textarea value={notes} onChange={e=>setNotes(e.target.value)} maxLength={5000} placeholder="Constraints, preferences, deadlines or context." rows={4}/></label>
-      <div className="brief-summary"><div><span>Service</span><strong>{service||"—"}</strong></div><div><span>Stage</span><strong>{stage||"—"}</strong></div><div><span>Goal</span><strong>{goal||"—"}</strong></div><div><span>Timing</span><strong>{timing}</strong></div></div>
+      <div className="brief-summary"><div><span>Service</span><strong>{service||"—"}</strong>{plan&&<small>{plan}</small>}</div><div><span>Stage</span><strong>{stage||"—"}</strong></div><div><span>Goal</span><strong>{goal||"—"}</strong></div><div><span>Timing</span><strong>{timing}</strong></div></div>
       <ScopePreview service={service} stage={stage} goal={goal} budget={budget} timing={timing} />
       <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(2)}>← Back to project</button><button className="button button-light" type="button" onClick={()=>changeStep(4)}>Continue <span>→</span></button></div>
     </section>}
@@ -564,7 +586,7 @@ export default function ProjectIntake() {
       <div className="request-review-grid">
         <article><span>{copy.customer}</span><strong>{name}</strong><p>{company || "—"}</p></article>
         <article><span>{copy.contact}</span><strong>{contact}</strong><p>{t(preferredContact)}</p></article>
-        <article><span>{copy.service}</span><strong>{t(service)}</strong><p>{t(stage)}</p></article>
+        <article><span>{copy.service}</span><strong>{t(service)}</strong><p>{plan ? `${plan} · ` : ""}{t(stage)}</p></article>
         <article><span>{copy.goal}</span><strong>{t(goal)}</strong><p>{t(timing)}</p></article>
         <article><span>{copy.budget}</span><strong>{t(budget)}</strong><p>{t(timing)}</p></article>
         <article className="request-review-wide"><span>{copy.request}</span><strong>{idea}</strong>{notes && <p>{notes}</p>}</article>
