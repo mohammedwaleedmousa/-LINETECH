@@ -98,7 +98,7 @@ export default function ClientsClient() {
                     <Link key={project.id} href={`/admin/projects?project=${encodeURIComponent(project.id)}`}>
                       <span>{project.request?.reference_number || "PROJECT"}</span>
                       <strong>{project.title || project.request?.service || "Project"}</strong>
-                      <small>{project.status} · P{project.phase}</small>
+                      <small>{project.request?.selected_plan_code ? `${String(project.request.selected_plan_code).replaceAll("_", " ").toUpperCase()} · ` : ""}{project.status} · P{project.phase}</small>
                     </Link>
                   ))}
                   {!item.projects.length && <p>No projects yet.</p>}
