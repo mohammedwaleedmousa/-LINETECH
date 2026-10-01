@@ -92,7 +92,7 @@ export default function DashboardClient() {
               <Link key={project.id} href={`/admin/projects?project=${encodeURIComponent(project.id)}`}>
                 <span>{project.request?.reference_number || "PROJECT"}</span>
                 <strong>{project.title || project.request?.service || "Project"}</strong>
-                <small>{project.client?.full_name || project.request?.name || "Client"} · {project.status} · Phase {project.phase}/5</small>
+                <small>{project.client?.full_name || project.request?.name || "Client"} · {project.request?.selected_plan_code ? `${String(project.request.selected_plan_code).replaceAll("_", " ").toUpperCase()} · ` : ""}{project.status} · Phase {project.phase}/5</small>
                 <b>→</b>
               </Link>
             ))}
