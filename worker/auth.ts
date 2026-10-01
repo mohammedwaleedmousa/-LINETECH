@@ -210,14 +210,25 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
     const session=await resolveSession(request,env);
     if(!session) return json({ok:false},401,clearCookies());
 
-    const response=await restFetch(
-      env,
-      `/profiles?select=id,full_name,company,phone,created_at,updated_at&id=eq.${encodeURIComponent(String(session.user.id))}&limit=1`,
-      session.accessToken,
-    );
-    const rows=await safeJson(response) as Record<string,any>[]|null;
-    if(!response.ok) return json({ok:false},response.status,session.setCookies);
+    const [response,subscriptionResponse]=await Promise.all([
+      restFetch(
+        env,
+        `/profiles?select=id,full_name,company,phone,created_at,updated_at&id=eq.${encodeURIComponent(String(session.user.id))}&limit=1`,
+        session.accessToken,
+      ),
+      restFetch(
+        env,
+        `/client_subscriptions?select=*,plan:plan_catalog(*)&client_id=eq.${encodeURIComponent(String(session.user.id))}&limit=1`,
+        session.accessToken,
+      ),
+    ]);
+    const [rows,subscriptionRows]=await Promise.all([
+      safeJson(response) as Promise<Record<string,any>[]|null>,
+      safeJson(subscriptionResponse) as Promise<Record<string,any>[]|null>,
+    ]);
+    if(!response.ok||!subscriptionResponse.ok) return json({ok:false},!response.ok?response.status:subscriptionResponse.status,session.setCookies);
     const profile=Array.isArray(rows)?rows[0]||null:null;
+    const subscription=Array.isArray(subscriptionRows)?subscriptionRows[0]||null:null;
     const userMetadata=
       session.user.user_metadata && typeof session.user.user_metadata==="object"
         ? session.user.user_metadata as Record<string,unknown>
@@ -238,6 +249,16 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
           phone:profile?.phone||String(userMetadata.phone||""),
           updatedAt:profile?.updated_at||null,
         },
+        subscription:subscription ? {
+          planCode:subscription.plan_code,
+          status:subscription.status,
+          billingCycle:subscription.billing_cycle,
+          setupFeeUsd:subscription.setup_fee_usd,
+          recurringPriceUsd:subscription.recurring_price_usd,
+          startsAt:subscription.starts_at,
+          nextBillingAt:subscription.next_billing_at,
+          plan:subscription.plan||null,
+        } : null,
       },
     },200,session.setCookies);
   }
