@@ -317,3 +317,31 @@
   .admin-project-tabs{position:relative;top:auto;margin-bottom:14px;overflow-x:auto}
   .admin-project-tabs button{min-width:max-content}
 }
+
+
+/* Projects Operations V2 — focused tab workspaces */
+.admin-tab-workspace{min-width:0;animation:adminTabIn .16s ease-out}
+.admin-tab-workspace-single>.admin-card{width:100%;margin:0}
+.admin-tab-workspace-chat>.admin-card{width:100%;margin:0}
+@media(min-width:1100px){
+  .admin-tab-workspace>.admin-card,
+  .admin-card.admin-tab-workspace{min-height:calc(100vh - 250px)}
+  .admin-tab-workspace-chat .admin-chat-log{
+    height:clamp(420px,52vh,680px);
+    max-height:none;
+    overflow:auto;
+    padding-right:6px
+  }
+  .admin-tab-workspace-chat .admin-chat-form{
+    position:sticky;
+    bottom:0;
+    z-index:3;
+    padding-top:12px;
+    background:#070b10
+  }
+  #admin-project-files .admin-file-list,
+  #admin-project-activity .admin-list,
+  #admin-project-handover .admin-list,
+  #admin-project-team .admin-list{max-height:calc(100vh - 470px);overflow:auto}
+}
+@keyframes adminTabIn{from{opacity:.55;transform:translateY(3px)}to{opacity:1;transform:none}}
