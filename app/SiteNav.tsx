@@ -8,7 +8,7 @@ import { createPortal } from "react-dom";
 
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
-  { href: "/services", en: "Services", ar: "الخدمات" },
+  { href: "/services", en: "Services", ar: "الخدمات" },\n  { href: "/pricing", en: "Pricing", ar: "الباقات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
   { href: "/about", en: "About", ar: "عن الشركة" },
   { href: "/start", en: "Contact", ar: "تواصل" },
@@ -25,7 +25,7 @@ const clientItems = [
 
 const searchItems = [
   { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology الرئيسية لينتك تقنية" },
-  { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },
+  { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },\n  { title: "Pricing", meta: "Plans", href: "/pricing", keywords: "pricing plans packages subscription website ecommerce اسعار باقات اشتراك مواقع متاجر" },
   { title: "Find Your Service", meta: "Guide", href: "/service-finder", keywords: "service finder recommend choose service find help موجّه اختيار خدمة خدمتك" },
   { title: "How We Work", meta: "Process", href: "/how-we-work", keywords: "process workflow scope proposal handover كيف نعمل مراحل نطاق عرض تسليم" },
   { title: "Web Development", meta: "Service", href: "/services/web-development", keywords: "website web development landing business custom apps تطوير ويب مواقع تطبيقات" },
