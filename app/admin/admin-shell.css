@@ -302,3 +302,15 @@ body:has(.admin-shell){background:#05080c}
   .admin-ops-table{overflow-x:auto}
   .admin-ops-row{min-width:720px}
 }
+
+
+/* Attention Center — operational priority */
+.admin-attention-list>a>div small{display:block;margin-top:4px;color:#52697e;font-size:8px}
+.admin-attention-list>a.is-priority-0 i{background:#e07b7b;box-shadow:0 0 0 4px rgba(224,123,123,.08)}
+.admin-attention-list>a.is-priority-1 i{background:#d79a72}
+.admin-attention-list>a.is-priority-2 i{background:#d3a05c}
+.admin-attention-list>a.is-priority-3 i{background:#8aaee0}
+.admin-attention-list>a.is-priority-4 i{background:#8799a9}
+.admin-attention-list>a.is-priority-5 i{background:#78a98b}
+.admin-attention-list>a.is-priority-0>span,
+.admin-attention-list>a.is-priority-1>span{color:#e4a08d}
