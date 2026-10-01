@@ -6,11 +6,11 @@ import { ReactNode, useEffect, useState } from "react";
 
 const nav = [
   { href: "/admin", label: "Dashboard", index: "01" },
-  { href: "/admin/projects", label: "Projects", index: "02" },
-  { href: "/admin/clients", label: "Clients", index: "03" },
-  { href: "/admin/billing", label: "Billing", index: "04" },
-  { href: "/admin/team", label: "Team & Accounts", index: "05" },
-  { href: "/admin/account", label: "Admin Account", index: "06" },
+  { href: "/admin/inbox", label: "Inbox", index: "02" },\n  { href: "/admin/projects", label: "Projects", index: "03" },
+  { href: "/admin/clients", label: "Clients", index: "04" },
+  { href: "/admin/billing", label: "Billing", index: "05" },
+  { href: "/admin/team", label: "Team & Accounts", index: "06" },
+  { href: "/admin/account", label: "Admin Account", index: "07" },
 ];
 
 export default function AdminShell({ children }: { children: ReactNode }) {
