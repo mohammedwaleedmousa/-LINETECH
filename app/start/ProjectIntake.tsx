@@ -50,9 +50,9 @@ const requestCopy = {
     complete: "Complete project request",
     completing: "Completing request…",
     back: "← Back to scope",
-    doneKicker: "REQUEST COMPLETE",
-    doneTitle: "Your project request is ready.",
-    doneBody: "Your project request has been saved to your LINETECH workspace with a reference number. You can now follow its status and continue in the project conversation.",
+    doneKicker: "LINE SUBMITTED",
+    doneTitle: "Your Line is submitted.",
+    doneBody: "LINETECH has received your project line. Use the reference below to track it in Workspace or continue directly in Project Chat.",
     requestId: "Request ID",
     status: "Status",
     statusValue: "Submitted",
@@ -92,9 +92,9 @@ const requestCopy = {
     complete: "إتمام طلب المشروع",
     completing: "جارٍ إتمام الطلب…",
     back: "العودة إلى النطاق →",
-    doneKicker: "تم إتمام الطلب",
-    doneTitle: "طلب مشروعك جاهز.",
-    doneBody: "تم حفظ طلب مشروعك داخل مساحة عملك في لاين تك مع رقم مرجعي. يمكنك الآن متابعة حالته والاستمرار في محادثة المشروع.",
+    doneKicker: "تم إرسال خط المشروع",
+    doneTitle: "تم إرسال خط مشروعك.",
+    doneBody: "استلمت LINETECH طلب مشروعك. استخدم الرقم المرجعي أدناه لمتابعته في مساحة العميل أو انتقل مباشرة إلى محادثة المشروع.",
     requestId: "رقم الطلب",
     status: "الحالة",
     statusValue: "تم الإرسال",
@@ -234,6 +234,7 @@ export default function ProjectIntake() {
   const [finderLoaded, setFinderLoaded] = useState(false);
   const [requestId, setRequestId] = useState("");
   const [completedAt, setCompletedAt] = useState("");
+  const [submittedProjectId, setSubmittedProjectId] = useState("");
   const [name, setName] = useState("");
   const [company, setCompany] = useState("");
   const [contact, setContact] = useState("");
@@ -486,6 +487,7 @@ export default function ProjectIntake() {
         data?: {
           reference_number?: string;
           submitted_at?: string;
+          project_id?: string;
         };
       } | null;
 
@@ -499,6 +501,7 @@ export default function ProjectIntake() {
 
       setRequestId(id);
       setCompletedAt(timestamp);
+      setSubmittedProjectId(result.data.project_id || "");
       setCompleted(true);
       try {
         window.sessionStorage.removeItem(requestDraftKey);
@@ -600,6 +603,10 @@ export default function ProjectIntake() {
       <p className="request-complete-lead">{copy.doneBody}</p>
 
       <div className="request-reference"><span>{copy.requestId}</span><strong>{requestId}</strong>{completedAt && <small>{new Date(completedAt).toLocaleString(language === "ar" ? "ar" : "en")}</small>}</div>
+       <div className="submitted-line-summary">
+         <div><span>{copy.service}</span><strong>{t(service)}</strong></div>
+         {plan && <div><span>{language==="ar"?"الباقة":"Plan"}</span><strong>{plan}</strong></div>}
+       </div>
 
       <div className="request-status-grid">
         <div><span>{copy.status}</span><strong>{copy.statusValue}</strong></div>
@@ -610,8 +617,8 @@ export default function ProjectIntake() {
       {actionStatus && <p className="brief-action-status" role="status">{actionStatus}</p>}
 
       <div className="brief-actions request-finish-actions">
-        <Link className="button button-light" href="/workspace">{copy.openWorkspace} <span>→</span></Link>
-        <Link className="brief-share request-chat-link" href="/chat">{copy.openChat} <span>→</span></Link>
+        <Link className="button button-light" href={submittedProjectId ? `/workspace?project=${encodeURIComponent(submittedProjectId)}` : "/workspace"}>{copy.openWorkspace} <span>→</span></Link>
+        <Link className="brief-share request-chat-link" href={submittedProjectId ? `/chat?project=${encodeURIComponent(submittedProjectId)}` : "/chat"}>{copy.openChat} <span>→</span></Link>
         <button className="brief-share" type="button" onClick={copyBrief}>{copied ? copy.copied : copy.copy} <span>→</span></button>
       </div>
     </section>}
