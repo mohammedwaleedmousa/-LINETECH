@@ -140,6 +140,8 @@ assert.ok(billingClient.includes("MRR"), "Billing center does not display MRR");
 assert.ok(pricing.includes('setup:"$149",monthly:"$19"') && pricing.includes('setup:"$299",monthly:"$35"') && pricing.includes('setup:"$499",monthly:"$59"'), "Published website plan pricing drifted from the approved catalog");
 assert.ok(pricing.includes('setup:"$699",monthly:"$79"') && pricing.includes('setup:"$1,199",monthly:"$129"') && pricing.includes('monthly:"$199+"'), "Published commerce/custom pricing drifted from the approved catalog");
 assert.ok(pricing.includes('Up to 20 pages') && pricing.includes('6 updates / month'), "Published plan limits drifted from the approved catalog");
+assert.ok(pricing.includes('/start?plan=${encodeURIComponent(p.name)}'), "Pricing plan CTA must carry the selected plan into intake");
+assert.ok(intake.includes('new URLSearchParams(window.location.search).get("plan")') && intake.includes("planOptions).find"), "Project intake must validate and preselect the pricing plan query");
 assert.ok(billingClient.includes("Day 7") && billingClient.includes("Day 14") && billingClient.includes("Day 30"), "Billing center does not expose the collection policy");
 assert.ok(admin.includes("existing?.starts_at||now.toISOString()"), "Subscription updates must preserve the original start date");
 assert.ok(admin.includes("existing?.next_billing_at||nextBilling.toISOString()"), "Subscription updates must preserve the current billing date");
