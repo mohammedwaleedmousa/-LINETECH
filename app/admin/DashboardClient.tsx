@@ -64,9 +64,47 @@ export default function DashboardClient() {
     clients: new Set(projects.map(p => p.client?.id || p.id && p.client?.id).filter(Boolean)).size || users.length,
   }), [projects, users]);
 
-  const attention = useMemo(() =>
-    projects.filter(p => p.next_action_required || p.status === "waiting_client" || p.status === "review").slice(0, 6),
-  [projects]);
+  const attention = useMemo(() => {
+    const now = Date.now();
+    const day = 86_400_000;
+    const subscriptionByClient = new Map(
+      (Array.isArray(billing.subscriptions) ? billing.subscriptions : []).map((item: Json) => [String(item.client_id || ""), item]),
+    );
+
+    return projects
+      .filter(project => !["completed", "archived"].includes(project.status))
+      .map(project => {
+        const due = project.due_date ? new Date(project.due_date).getTime() : NaN;
+        const daysToDue = Number.isFinite(due) ? Math.ceil((due - now) / day) : null;
+        const subscription = subscriptionByClient.get(String(project.client?.id || project.client_id || ""));
+        const pastDue = subscription?.status === "past_due";
+        const overdueDelivery = daysToDue !== null && daysToDue < 0;
+        const dueSoon = daysToDue !== null && daysToDue >= 0 && daysToDue <= 7;
+
+        let priority = 99;
+        let reason = "";
+        let meta = project.due_date ? date(project.due_date) : "OPEN";
+
+        if (overdueDelivery) {
+          priority = 0; reason = "Delivery overdue"; meta = `${Math.abs(daysToDue || 0)}d overdue`;
+        } else if (pastDue) {
+          priority = 1; reason = "Payment past due"; meta = `${Number(subscription?.recurring_price_usd || 0).toLocaleString()} due`;
+        } else if (project.next_action_required) {
+          priority = 2; reason = "Action required";
+        } else if (project.status === "review") {
+          priority = 3; reason = "In review";
+        } else if (project.status === "waiting_client") {
+          priority = 4; reason = "Waiting for client";
+        } else if (dueSoon) {
+          priority = 5; reason = "Due soon"; meta = daysToDue === 0 ? "DUE TODAY" : `${daysToDue}d left`;
+        }
+
+        return { project, priority, reason, meta };
+      })
+      .filter(item => item.priority < 99)
+      .sort((a, b) => a.priority - b.priority)
+      .slice(0, 8);
+  }, [projects, billing]);
 
   if (loading) return <main className="admin-overview"><div className="admin-overview-state">Loading operations…</div></main>;
 
@@ -82,7 +120,7 @@ export default function DashboardClient() {
       <section className="admin-kpi-grid admin-kpi-grid-v2">
         <article><span>MRR</span><strong>${Number(billing.summary?.mrr || 0).toLocaleString()}</strong><small>Active + past due recurring</small></article>
         <article><span>ACTIVE PROJECTS</span><strong>{stats.active}</strong><small>Work currently moving</small></article>
-        <article><span>NEEDS ATTENTION</span><strong>{attention.length}</strong><small>Client/review/action queue</small></article>
+        <article><span>NEEDS ATTENTION</span><strong>{attention.length}</strong><small>Priority operations queue</small></article>
         <article><span>PAST DUE</span><strong>{billing.summary?.pastDue || 0}</strong><small>${Number(billing.summary?.overdueAmount || 0).toLocaleString()} overdue value</small></article>
         <article><span>CLIENT ACCOUNTS</span><strong>{users.length}</strong><small>Known client/team profiles</small></article>
         <article><span>COMPLETED</span><strong>{stats.completed}</strong><small>Delivered projects</small></article>
@@ -112,11 +150,11 @@ export default function DashboardClient() {
         <div className="admin-overview-panel">
           <div className="admin-overview-panel-head"><div><span>NEEDS ATTENTION</span><h2>Next actions.</h2></div></div>
           <div className="admin-attention-list">
-            {attention.map(project => (
-              <Link key={project.id} href={`/admin/projects?project=${encodeURIComponent(project.id)}`}>
+            {attention.map(item => (
+              <Link key={item.project.id} className={`is-priority-${item.priority}`} href={`/admin/projects?project=${encodeURIComponent(item.project.id)}`}>
                 <i/>
-                <div><strong>{project.title || project.request?.service || "Project"}</strong><p>{project.status === "waiting_client" ? "Waiting for client" : project.status === "review" ? "In review" : "Action required"}</p></div>
-                <span>{project.due_date ? date(project.due_date) : "OPEN"}</span>
+                <div><strong>{item.project.title || item.project.request?.service || "Project"}</strong><p>{item.reason}</p><small>{item.project.client?.full_name || item.project.request?.name || "Client"}</small></div>
+                <span>{item.meta}</span>
               </Link>
             ))}
             {!attention.length && <p className="admin-overview-empty">Nothing urgent right now.</p>}
