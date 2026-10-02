@@ -1,22 +1,14 @@
 "use client";
 
 import Link from "next/link";
+import { safeReturnPath } from "../../lib/navigation/return-path";
 import { FormEvent, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "../Localized";
 
 type Mode = "login" | "signup" | "forgot" | "reset";
 
-function safeInternalNext(value:string|null) {
-  if(!value || !value.startsWith("/") || value.startsWith("//")) return "/workspace";
-  try {
-    const parsed=new URL(value,window.location.origin);
-    if(parsed.origin!==window.location.origin) return "/workspace";
-    return parsed.pathname+parsed.search+parsed.hash;
-  } catch {
-    return "/workspace";
-  }
-}
+const safeInternalNext = safeReturnPath;
 
 const copy = {
   en: {

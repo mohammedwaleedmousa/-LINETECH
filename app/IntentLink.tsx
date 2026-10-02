@@ -1,6 +1,7 @@
 "use client";
 
 import NextLink from "next/link";
+import { isProtectedPath } from "../lib/navigation/return-path";
 import { useRouter } from "next/navigation";
 import { useRef, type ComponentProps, type FocusEvent, type PointerEvent } from "react";
 
@@ -39,7 +40,7 @@ export default function IntentLink({
   };
 
   const schedulePrefetch = () => {
-    if (!hrefString || !shouldPrefetch()) return;
+    if (requestedPrefetch === false || !hrefString || !shouldPrefetch()) return;
     clearTimer();
     timerRef.current = window.setTimeout(() => {
       router.prefetch(hrefString);
@@ -48,10 +49,15 @@ export default function IntentLink({
   };
 
   const prefetchNow = () => {
-    if (!hrefString || !shouldPrefetch()) return;
+    if (requestedPrefetch === false || !hrefString || !shouldPrefetch()) return;
     clearTimer();
     router.prefetch(hrefString);
   };
+
+  if (hrefString && isProtectedPath(hrefString.split(/[?#]/)[0])) {
+    const { replace, scroll, shallow, locale, onNavigate, as, ...anchorProps } = props;
+    return <a {...anchorProps} href={hrefString} onPointerEnter={onPointerEnter} onPointerLeave={onPointerLeave} onFocus={onFocus} />;
+  }
 
   return (
     <NextLink

@@ -16,7 +16,8 @@
       "/workspace*",
       "/chat*",
       "/admin*",
-      "/handover*"
+      "/handover*",
+      "/account*"
     ]
   },
   "secrets": {

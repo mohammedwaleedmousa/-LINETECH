@@ -1,3 +1,4 @@
+import { safeReturnPath } from "../lib/navigation/return-path";
 import {
   type Env,
   type AuthSession,
@@ -21,17 +22,6 @@ async function body(request:Request) {
   try { return await request.json() as Record<string,any>; } catch { return {}; }
 }
 
-function safeReturnPath(value:unknown) {
-  const raw=String(value||"").trim();
-  if(!raw || !raw.startsWith("/") || raw.startsWith("//")) return "/workspace";
-  try {
-    const parsed=new URL(raw,"https://linetech.local");
-    if(parsed.origin!=="https://linetech.local") return "/workspace";
-    return parsed.pathname+parsed.search+parsed.hash;
-  } catch {
-    return "/workspace";
-  }
-}
 
 export async function handleAuth(request:Request,env:Env,path:string):Promise<Response|null> {
 
@@ -255,8 +245,8 @@ export async function handleAuth(request:Request,env:Env,path:string):Promise<Re
           billingCycle:subscription.billing_cycle,
           setupFeeUsd:subscription.setup_fee_usd,
           recurringPriceUsd:subscription.recurring_price_usd,
-          startsAt:subscription.starts_at,
-          nextBillingAt:subscription.next_billing_at,
+          startsAt:subscription.started_at,
+          nextBillingAt:subscription.current_period_end,
           plan:subscription.plan||null,
         } : null,
       },

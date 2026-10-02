@@ -1,19 +1,14 @@
 "use client";
 
+import { safeReturnPath } from "../../../lib/navigation/return-path";
+
 import { FormEvent, useEffect, useState } from "react";
 
 type Mode = "login" | "forgot" | "reset";
 
 function safeAdminNext(value: string | null) {
-  if (!value || !value.startsWith("/admin") || value.startsWith("//")) return "/admin";
-  if (value.startsWith("/admin/login")) return "/admin";
-  try {
-    const parsed = new URL(value, window.location.origin);
-    if (parsed.origin !== window.location.origin || !parsed.pathname.startsWith("/admin")) return "/admin";
-    return parsed.pathname + parsed.search + parsed.hash;
-  } catch {
-    return "/admin";
-  }
+  const result = safeReturnPath(value, "/admin");
+  return /^\/admin(?:\/|$)/.test(result.split(/[?#]/)[0]) ? result : "/admin";
 }
 
 export default function AdminLoginClient() {

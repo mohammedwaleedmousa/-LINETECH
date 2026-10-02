@@ -103,7 +103,7 @@ export default function ClientsClient() {
               <div><span>COMPLETED</span><strong>{selectedCompleted}</strong></div>
               <div><span>SUBSCRIPTION</span><strong>{selectedSubscription?.status ? String(selectedSubscription.status).replaceAll("_"," ").toUpperCase() : "NOT ACTIVE"}</strong></div>
               <div><span>RECURRING</span><strong>{selectedSubscription?.recurring_price_usd != null ? `$${Number(selectedSubscription.recurring_price_usd).toLocaleString()}/mo` : "—"}</strong></div>
-              <div><span>NEXT BILLING</span><strong>{selectedSubscription?.next_billing_at ? new Date(selectedSubscription.next_billing_at).toLocaleDateString() : "—"}</strong></div>
+              <div><span>NEXT BILLING</span><strong>{selectedSubscription?.current_period_end ? new Date(selectedSubscription.current_period_end).toLocaleDateString() : "—"}</strong></div>
             </div>
 
             {selectedSubscription?.status === "past_due" && <div className="admin-client-past-due"><strong>Payment past due</strong><span>${Number(selectedSubscription.recurring_price_usd || 0).toLocaleString()} recurring value requires attention.</span></div>}

@@ -155,8 +155,8 @@ assert.ok(pricing.includes('Up to 20 pages') && pricing.includes('6 updates / mo
 assert.ok(pricing.includes('/start?plan=${encodeURIComponent(p.name)}'), "Pricing plan CTA must carry the selected plan into intake");
 assert.ok(intake.includes('new URLSearchParams(window.location.search).get("plan")') && intake.includes("planOptions).find"), "Project intake must validate and preselect the pricing plan query");
 assert.ok(billingClient.includes("Day 7") && billingClient.includes("Day 14") && billingClient.includes("Day 30"), "Billing center does not expose the collection policy");
-assert.ok(admin.includes("existing?.starts_at||now.toISOString()"), "Subscription updates must preserve the original start date");
-assert.ok(admin.includes("existing?.next_billing_at||nextBilling.toISOString()"), "Subscription updates must preserve the current billing date");
+assert.ok(admin.includes("existing?.started_at||now.toISOString()"), "Subscription updates must preserve the original start date");
+assert.ok(admin.includes("existing?.current_period_end||nextBilling.toISOString()"), "Subscription updates must preserve the current billing date");
 assert.ok(admin.includes("project:projectMap.get"), "Billing API does not connect subscriptions to client projects");
 assert.ok(billingClient.includes("/admin/projects?project="), "Billing actions do not route to the related client project");
 assert.ok(siteNav.includes("portalHref"), "Client navigation does not preserve active project context");

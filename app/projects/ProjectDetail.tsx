@@ -36,7 +36,7 @@ const caseLabels = {
     decisionsLead: "A case study is not only what was built. These are the decisions that shaped the experience and kept the product focused.",
     outcomeKicker: "THE OUTCOME",
     outcomeTitle: "A clearer product system.",
-    outcomeLead: "The outcome is described through the delivered product structure and experience — without invented performance claims.",
+    outcomeLead: "The delivered capabilities and experience.",
   },
   ar: {
     decisionsKicker: "قرارات المنتج الرئيسية",
@@ -44,7 +44,7 @@ const caseLabels = {
     decisionsLead: "دراسة الحالة ليست فقط ما تم بناؤه. هذه أهم القرارات التي شكّلت التجربة وحافظت على تركيز المنتج.",
     outcomeKicker: "النتيجة",
     outcomeTitle: "نظام منتج أكثر وضوحًا.",
-    outcomeLead: "نصف النتيجة من خلال هيكل المنتج والتجربة التي تم تنفيذها، بدون اختراع أرقام أداء غير حقيقية.",
+    outcomeLead: "الإمكانات والتجربة التي تم تنفيذها.",
   },
 } as const;
 
@@ -84,7 +84,7 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
 
     <section className="ref-section">
       <div className="ref-shell">
-        <div className="ref-head"><div><p className="ref-kicker">WHAT WE BUILT</p><h2>The working parts.</h2></div><p>The case study focuses on the product structure and implemented capabilities rather than invented performance claims.</p></div>
+        <div className="ref-head"><div><p className="ref-kicker">WHAT WE BUILT</p><h2>The working parts.</h2></div><p>Explore the features delivered for this project.</p></div>
         <div className="project-detail-built-grid">
           {built.map(([title,text],index)=><article key={title}><span>0{index+1}</span><h3>{title}</h3><p>{text}</p></article>)}
         </div>

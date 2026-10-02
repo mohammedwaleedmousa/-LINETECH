@@ -200,7 +200,7 @@ assert.ok(client.includes('"/notifications?read_at=is.null&select=id,read_at"'))
 
 const login = read("app/login/LoginForm.tsx");
 assert.ok(login.includes("safeInternalNext"));
-assert.ok(login.includes('value.startsWith("//")'));
+assert.ok(login.includes('import { safeReturnPath }'));
 assert.ok(login.includes("const returnPath = safeInternalNext"));
 assert.ok(login.includes("window.location.assign(returnPath)"));
 assert.ok(auth.includes("safeReturnPath"));

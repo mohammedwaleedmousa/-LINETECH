@@ -17,6 +17,8 @@ const requiredTables = [
   "message_attachments",
   "handover_items",
   "notifications",
+  "plan_catalog",
+  "client_subscriptions",
 ];
 
 for (const table of requiredTables) {
@@ -46,7 +48,7 @@ assert.ok(
 );
 
 assert.ok(
-  !/grant\s+[^;]+\s+to\s+anon\b/.test(schema),
+  !/grant\s+[^;]+\s+to\s+anon\b/.test(schema.replace(/grant select on public\.plan_catalog to anon, authenticated;/g, "")),
   "Backend schema must not grant table access to anon."
 );
 
@@ -166,5 +168,5 @@ assert.ok(
 );
 
 console.log(
-  `PASS: ${requiredTables.length} LINETECH backend tables are defined with RLS and authenticated-only grants`
+  `PASS: ${requiredTables.length} LINETECH backend tables are defined with RLS and a public read-only plan catalog`
 );

@@ -72,7 +72,7 @@ export default function BillingClient() {
           return <article key={row.id}>
             <div className="billing-client"><span>{row.client?.company || row.client?.full_name || "Client"}</span><strong>{row.plan?.name || String(row.plan_code).toUpperCase()}</strong><small>{row.client?.email || row.client_id}</small></div>
             <div><span>MONTHLY</span><strong>{money(row.recurring_price_usd)}</strong></div>
-            <div><span>NEXT BILLING</span><strong>{date(row.next_billing_at)}</strong></div>
+            <div><span>NEXT BILLING</span><strong>{date(row.current_period_end)}</strong></div>
             <div><span>STATUS</span><strong className={`billing-state is-${state.tone}`}>{state.label}</strong></div>
             <Link href={row.project?.id ? `/admin/projects?project=${encodeURIComponent(row.project.id)}` : "/admin/clients"}>{row.project?.id ? "Manage project →" : "Open client →"}</Link>
           </article>;

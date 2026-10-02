@@ -1589,3 +1589,221 @@ revoke execute on function public.submit_project_request(
 grant execute on function public.submit_project_request(
   uuid,text,text,text,text,text,text,text,text,text,text,text,text,text,text
 ) to authenticated;
+
+-- Billing and selected-plan snapshot (2026-10-02).
+-- Backfilled prerequisite: billing tables were originally created outside migration history.
+-- Recovered from the live LINETECH catalog, 2026-10-02.
+-- Prerequisite for selected_plan_code; creates only missing billing tables.
+
+do $baseline$
+begin
+  if to_regclass('public.plan_catalog') is null then
+    create table public.plan_catalog (
+  "code" text not null,
+  "name" text not null,
+  "setup_price_usd" numeric(10,2),
+  "monthly_price_usd" numeric(10,2),
+  "max_pages" integer,
+  "max_storage_gb" numeric(10,2),
+  "max_monthly_updates" integer,
+  "max_products" integer,
+  "max_team_members" integer,
+  "languages" integer,
+  "priority_support" boolean default false not null,
+  "support_response_hours" integer,
+  "features" jsonb default '[]'::jsonb not null,
+  "is_active" boolean default true not null,
+  "sort_order" integer default 0 not null,
+  "created_at" timestamp with time zone default now() not null,
+  "updated_at" timestamp with time zone default now() not null,
+  constraint "plan_catalog_pkey" PRIMARY KEY (code)
+    );
+    alter table public.plan_catalog enable row level security;
+    revoke all on table public.plan_catalog from anon, authenticated;
+    grant select on public.plan_catalog to anon, authenticated;
+    execute 'create policy "Public can read active plans" on public.plan_catalog for SELECT to anon, authenticated using ((is_active = true))';
+  end if;
+end;
+$baseline$;
+
+do $baseline$
+begin
+  if to_regclass('public.client_subscriptions') is null then
+    create table public.client_subscriptions (
+  "id" uuid default gen_random_uuid() not null,
+  "client_id" uuid not null,
+  "plan_code" text not null,
+  "status" text default 'active'::text not null,
+  "billing_cycle" text default 'monthly'::text not null,
+  "setup_fee_usd" numeric(10,2),
+  "recurring_price_usd" numeric(10,2),
+  "started_at" timestamp with time zone default now() not null,
+  "current_period_start" timestamp with time zone,
+  "current_period_end" timestamp with time zone,
+  "past_due_since" timestamp with time zone,
+  "suspended_at" timestamp with time zone,
+  "cancelled_at" timestamp with time zone,
+  "custom_limits" jsonb default '{}'::jsonb not null,
+  "internal_notes" text,
+  "created_at" timestamp with time zone default now() not null,
+  "updated_at" timestamp with time zone default now() not null,
+  constraint "client_subscriptions_billing_cycle_check" CHECK ((billing_cycle = ANY (ARRAY['monthly'::text, 'yearly'::text, 'custom'::text]))),
+  constraint "client_subscriptions_client_id_fkey" FOREIGN KEY (client_id) REFERENCES auth.users(id) ON DELETE CASCADE,
+  constraint "client_subscriptions_client_id_key" UNIQUE (client_id),
+  constraint "client_subscriptions_internal_notes_check" CHECK (((internal_notes IS NULL) OR (char_length(internal_notes) <= 5000))),
+  constraint "client_subscriptions_pkey" PRIMARY KEY (id),
+  constraint "client_subscriptions_plan_code_fkey" FOREIGN KEY (plan_code) REFERENCES plan_catalog(code),
+  constraint "client_subscriptions_status_check" CHECK ((status = ANY (ARRAY['trial'::text, 'active'::text, 'past_due'::text, 'suspended'::text, 'cancelled'::text])))
+    );
+    alter table public.client_subscriptions enable row level security;
+    revoke all on table public.client_subscriptions from anon, authenticated;
+    grant select, insert, update, delete on public.client_subscriptions to authenticated;
+    execute 'create policy "Admins delete subscriptions" on public.client_subscriptions for DELETE to authenticated using ((COALESCE(((( SELECT auth.jwt() AS jwt) -> ''app_metadata''::text) ->> ''role''::text), ''''::text) = ''admin''::text))';
+    execute 'create policy "Admins insert subscriptions" on public.client_subscriptions for INSERT to authenticated with check ((COALESCE(((( SELECT auth.jwt() AS jwt) -> ''app_metadata''::text) ->> ''role''::text), ''''::text) = ''admin''::text))';
+    execute 'create policy "Admins update subscriptions" on public.client_subscriptions for UPDATE to authenticated using ((COALESCE(((( SELECT auth.jwt() AS jwt) -> ''app_metadata''::text) ->> ''role''::text), ''''::text) = ''admin''::text)) with check ((COALESCE(((( SELECT auth.jwt() AS jwt) -> ''app_metadata''::text) ->> ''role''::text), ''''::text) = ''admin''::text))';
+    execute 'create policy "Clients read own subscription" on public.client_subscriptions for SELECT to authenticated using (((( SELECT auth.uid() AS uid) = client_id) OR (COALESCE(((( SELECT auth.jwt() AS jwt) -> ''app_metadata''::text) ->> ''role''::text), ''''::text) = ''admin''::text)))';
+  end if;
+end;
+$baseline$;
+
+insert into public.plan_catalog select * from jsonb_populate_recordset(null::public.plan_catalog,
+'[{"code":"start","name":"START","features":["Responsive website","Custom domain connection","SSL, hosting & management","Basic SEO"],"is_active":true,"languages":1,"max_pages":5,"sort_order":1,"max_products":null,"max_storage_gb":1,"setup_price_usd":149,"max_team_members":1,"priority_support":false,"monthly_price_usd":19,"max_monthly_updates":1,"support_response_hours":48,"created_at":"2026-10-01T07:31:57.350448+00:00","updated_at":"2026-10-01T07:31:57.350448+00:00"},{"code":"business","name":"BUSINESS","features":["Arabic + English","Content management","Analytics","Enhanced SEO","Lead forms"],"is_active":true,"languages":2,"max_pages":10,"sort_order":2,"max_products":null,"max_storage_gb":3,"setup_price_usd":299,"max_team_members":2,"priority_support":false,"monthly_price_usd":35,"max_monthly_updates":3,"support_response_hours":24,"created_at":"2026-10-01T07:31:57.350448+00:00","updated_at":"2026-10-01T07:31:57.350448+00:00"},{"code":"pro","name":"PRO","features":["Advanced customization","Bookings","Advanced analytics","Priority support"],"is_active":true,"languages":2,"max_pages":20,"sort_order":3,"max_products":null,"max_storage_gb":5,"setup_price_usd":499,"max_team_members":5,"priority_support":true,"monthly_price_usd":59,"max_monthly_updates":5,"support_response_hours":12,"created_at":"2026-10-01T07:31:57.350448+00:00","updated_at":"2026-10-01T07:31:57.350448+00:00"},{"code":"ecommerce","name":"E-COMMERCE","features":["Products & categories","Cart & checkout","Orders","Inventory","Admin dashboard"],"is_active":true,"languages":2,"max_pages":null,"sort_order":4,"max_products":1000,"max_storage_gb":10,"setup_price_usd":699,"max_team_members":3,"priority_support":true,"monthly_price_usd":79,"max_monthly_updates":3,"support_response_hours":12,"created_at":"2026-10-01T07:31:57.350448+00:00","updated_at":"2026-10-01T07:31:57.350448+00:00"},{"code":"ecommerce_pro","name":"E-COMMERCE PRO","features":["Advanced inventory","Staff permissions","Sales reports","Advanced promotions","Priority integrations"],"is_active":true,"languages":2,"max_pages":null,"sort_order":5,"max_products":10000,"max_storage_gb":25,"setup_price_usd":1199,"max_team_members":10,"priority_support":true,"monthly_price_usd":129,"max_monthly_updates":6,"support_response_hours":6,"created_at":"2026-10-01T07:31:57.350448+00:00","updated_at":"2026-10-01T07:31:57.350448+00:00"},{"code":"custom","name":"CUSTOM","features":["Custom scope","CRM & business systems","Branches & roles","Custom APIs","Dedicated architecture"],"is_active":true,"languages":null,"max_pages":null,"sort_order":6,"max_products":null,"max_storage_gb":null,"setup_price_usd":null,"max_team_members":null,"priority_support":true,"monthly_price_usd":199,"max_monthly_updates":null,"support_response_hours":6,"created_at":"2026-10-01T07:31:57.350448+00:00","updated_at":"2026-10-01T07:31:57.350448+00:00"}]'::jsonb)
+on conflict (code) do nothing;
+
+
+-- Link a selected public pricing plan to a submitted project request.
+alter table public.project_requests
+  add column if not exists selected_plan_code text null
+  references public.plan_catalog(code);
+
+alter table public.project_requests
+  drop constraint if exists project_requests_selected_plan_code_length;
+
+alter table public.project_requests
+  add constraint project_requests_selected_plan_code_length
+  check (selected_plan_code is null or char_length(selected_plan_code) <= 40);
+
+create index if not exists project_requests_selected_plan_code_idx
+  on public.project_requests(selected_plan_code)
+  where selected_plan_code is not null;
+
+drop function if exists public.submit_project_request(
+  uuid,text,text,text,text,text,text,text,text,text,text,text,text,text,text
+);
+
+create or replace function public.submit_project_request(
+  p_submission_key uuid,
+  p_name text,
+  p_company text,
+  p_contact text,
+  p_preferred_contact text,
+  p_service text,
+  p_plan text,
+  p_stage text,
+  p_goal text,
+  p_audience text,
+  p_idea text,
+  p_features text,
+  p_reference_links text,
+  p_budget text,
+  p_timing text,
+  p_notes text
+)
+returns jsonb
+language plpgsql
+security invoker
+set search_path = ''
+as $$
+declare
+  v_user_id uuid := (select auth.uid());
+  v_reference text;
+  v_request_id uuid;
+  v_project_id uuid;
+  v_conversation_id uuid;
+  v_submitted_at timestamptz;
+  v_attempt integer := 0;
+  v_plan_code text;
+begin
+  if v_user_id is null then raise exception 'Authentication required'; end if;
+  if p_submission_key is null then raise exception 'Submission key is required'; end if;
+
+  select pr.id, pr.reference_number, pr.submitted_at, p.id, c.id
+    into v_request_id, v_reference, v_submitted_at, v_project_id, v_conversation_id
+  from public.project_requests pr
+  left join public.projects p on p.request_id = pr.id
+  left join public.conversations c on c.project_id = p.id
+  where pr.owner_id = v_user_id and pr.submission_key = p_submission_key
+  limit 1;
+
+  if v_request_id is not null then
+    return jsonb_build_object(
+      'request_id',v_request_id,'reference_number',v_reference,'project_id',v_project_id,
+      'conversation_id',v_conversation_id,'submitted_at',v_submitted_at,'idempotent_replay',true
+    );
+  end if;
+
+  if nullif(trim(p_name),'') is null or nullif(trim(p_contact),'') is null
+     or nullif(trim(p_service),'') is null or nullif(trim(p_stage),'') is null
+     or nullif(trim(p_goal),'') is null or nullif(trim(p_idea),'') is null then
+    raise exception 'Required project request fields are missing';
+  end if;
+
+  if nullif(trim(p_plan),'') is not null then
+    select pc.code into v_plan_code
+    from public.plan_catalog pc
+    where pc.is_active = true and upper(pc.name) = upper(trim(p_plan))
+    limit 1;
+    if v_plan_code is null then raise exception 'Invalid or inactive service plan'; end if;
+  end if;
+
+  loop
+    v_attempt := v_attempt + 1;
+    v_reference := 'LT-' || to_char(clock_timestamp(),'YYMMDD') || '-' ||
+      lpad((floor(random()*10000))::integer::text,4,'0');
+    exit when not exists (
+      select 1 from public.project_requests pr where pr.reference_number = v_reference
+    );
+    if v_attempt >= 20 then raise exception 'Could not allocate project request reference'; end if;
+  end loop;
+
+  insert into public.project_requests (
+    reference_number,owner_id,submission_key,status,name,company,contact,preferred_contact,
+    service,selected_plan_code,stage,goal,audience,idea,features,reference_links,budget,timing,notes
+  ) values (
+    v_reference,v_user_id,p_submission_key,'submitted',trim(p_name),nullif(trim(p_company),''),
+    trim(p_contact),trim(p_preferred_contact),trim(p_service),v_plan_code,trim(p_stage),trim(p_goal),
+    nullif(trim(p_audience),''),trim(p_idea),nullif(trim(p_features),''),
+    nullif(trim(p_reference_links),''),nullif(trim(p_budget),''),nullif(trim(p_timing),''),
+    nullif(trim(p_notes),'')
+  ) returning id,submitted_at into v_request_id,v_submitted_at;
+
+  insert into public.projects (
+    request_id,client_id,title,status,phase,summary,latest_update,
+    next_action_title,next_action_body,next_action_required
+  ) values (
+    v_request_id,v_user_id,trim(p_service),'planned',1,trim(p_idea),'Project request submitted.',
+    'Move the completed request into the project conversation.',
+    'Open project chat so the request can move into scope and proposal.',true
+  ) returning id into v_project_id;
+
+  insert into public.conversations(project_id)
+  values(v_project_id)
+  returning id into v_conversation_id;
+
+  return jsonb_build_object(
+    'request_id',v_request_id,'reference_number',v_reference,'project_id',v_project_id,
+    'conversation_id',v_conversation_id,'submitted_at',v_submitted_at,
+    'selected_plan_code',v_plan_code,'idempotent_replay',false
+  );
+end;
+$$;
+
+revoke execute on function public.submit_project_request(
+  uuid,text,text,text,text,text,text,text,text,text,text,text,text,text,text,text
+) from public;
+revoke execute on function public.submit_project_request(
+  uuid,text,text,text,text,text,text,text,text,text,text,text,text,text,text,text
+) from anon;
+grant execute on function public.submit_project_request(
+  uuid,text,text,text,text,text,text,text,text,text,text,text,text,text,text,text
+) to authenticated;

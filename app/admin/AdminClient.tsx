@@ -812,7 +812,7 @@ export default function AdminClient() {
                 <div><span>Requested plan</span><strong>{detail.request?.selected_plan_code ? String(detail.request.selected_plan_code).replaceAll("_", " ").toUpperCase() : "—"}</strong></div>
                 <div><span>Current subscription</span><strong>{subscription?.plan_code ? String(subscription.plan_code).replaceAll("_", " ").toUpperCase() : "Not activated"}</strong></div>
                 <div><span>Recurring price</span><strong>{subscription?.recurring_price_usd != null ? `${subscription.recurring_price_usd} / ${subscription.billing_cycle || "month"}` : "—"}</strong></div>
-                <div><span>Next billing</span><strong>{subscription?.next_billing_at ? dateTime(subscription.next_billing_at) : "—"}</strong></div>
+                <div><span>Next billing</span><strong>{subscription?.current_period_end ? dateTime(subscription.current_period_end) : "—"}</strong></div>
               </div>
               <div className="admin-grid three">
                 <label>Plan<select name="planCode" defaultValue={subscription?.plan_code || detail.request?.selected_plan_code || plans[0]?.code || ""} required>

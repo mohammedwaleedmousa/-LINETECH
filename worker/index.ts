@@ -1,3 +1,4 @@
+import { documentPath, safeReturnPath, isProtectedPath } from "../lib/navigation/return-path";
 import type { Env } from "./core";
 import {
   authFetch,
@@ -12,19 +13,18 @@ import { handleClientApi } from "./client";
 import { handleAdminApi } from "./admin";
 
 function normalized(pathname:string) {
-  if(pathname.length>1 && pathname.endsWith("/")) return pathname.slice(0,-1);
-  return pathname;
+  return documentPath(pathname);
 }
 
 function loginRedirect(request:Request,path:string,cookies:string[] = []) {
   const login=new URL("/login",request.url);
-  login.searchParams.set("next",path);
+  login.searchParams.set("next",safeReturnPath(path));
   return withCookies(Response.redirect(login.toString(),302),cookies);
 }
 
 function adminLoginRedirect(request:Request,path:string,cookies:string[] = [],denied=false) {
   const login=new URL("/admin/login",request.url);
-  login.searchParams.set("next",path);
+  login.searchParams.set("next",safeReturnPath(path,"/admin"));
   if(denied) login.searchParams.set("denied","1");
   return withCookies(Response.redirect(login.toString(),302),cookies);
 }
@@ -156,6 +156,8 @@ export default {
           status:503,
           headers:{"Content-Type":"application/json; charset=utf-8","Cache-Control":"no-store"},
         });
+      }else if(isProtectedPath(path)){
+        response=new Response("Temporarily unavailable. Please try again.",{status:503,headers:{"Cache-Control":"no-store","Content-Type":"text/plain; charset=utf-8"}});
       }else{
         response=await env.ASSETS.fetch(request);
       }

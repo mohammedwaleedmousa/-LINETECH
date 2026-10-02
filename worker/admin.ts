@@ -38,7 +38,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       restFetch(env,"/conversations?select=id,project_id",admin.accessToken),
       restFetch(env,"/projects?select=id,client_id,title,status,phase,due_date,next_action_required,updated_at&order=updated_at.desc&limit=200",admin.accessToken),
       restFetch(env,"/profiles?select=id,full_name,company",admin.accessToken),
-      restFetch(env,"/client_subscriptions?select=id,client_id,status,recurring_price_usd,next_billing_at&status=eq.past_due",admin.accessToken),
+      restFetch(env,"/client_subscriptions?select=id,client_id,status,recurring_price_usd,current_period_end&status=eq.past_due",admin.accessToken),
     ]);
     const [messages,conversations,projects,profiles,subscriptions]=await Promise.all([
       safeJson(messagesResponse),safeJson(conversationsResponse),safeJson(projectsResponse),safeJson(profilesResponse),safeJson(subscriptionsResponse),
@@ -78,7 +78,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     }
     for(const sub of (Array.isArray(subscriptions)?subscriptions:[]) as Row[]) {
       const project=((Array.isArray(projects)?projects:[]) as Row[]).find(p=>String(p.client_id)===String(sub.client_id)&&!["completed","archived"].includes(String(p.status||"")));
-      alerts.push({id:`billing:${sub.id}`,type:"billing",priority:1,reason:"Payment past due",projectId:project?.id||null,projectTitle:project?.title||"Client account",clientName:profileMap.get(String(sub.client_id||""))?.full_name||"Client",amount:Number(sub.recurring_price_usd||0),dueDate:sub.next_billing_at});
+      alerts.push({id:`billing:${sub.id}`,type:"billing",priority:1,reason:"Payment past due",projectId:project?.id||null,projectTitle:project?.title||"Client account",clientName:profileMap.get(String(sub.client_id||""))?.full_name||"Client",amount:Number(sub.recurring_price_usd||0),dueDate:sub.current_period_end});
     }
     alerts.sort((a,b)=>Number(a.priority)-Number(b.priority));
     return json({ok:true,messages:latestMessages,alerts:alerts.slice(0,40),unreadCount:latestMessages.filter((x:Row)=>x.unread).length},200,admin.setCookies);
@@ -269,7 +269,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
 
   if(path==="/api/admin/billing" && request.method==="GET") {
     const [sr,profilesResponse,projectsResponse]=await Promise.all([
-      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*)&order=next_billing_at.asc.nullslast",admin.accessToken),
+      restFetch(env,"/client_subscriptions?select=*,plan:plan_catalog(*)&order=current_period_end.asc.nullslast",admin.accessToken),
       restFetch(env,"/profiles?select=id,full_name,company,email,phone",admin.accessToken),
       restFetch(env,"/projects?select=id,client_id,title,status,updated_at&order=updated_at.desc",admin.accessToken),
     ]);
@@ -291,7 +291,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     const now=Date.now();
     const day=86400000;
     const withAging=rows.map((row:any)=>{
-      const due=row.next_billing_at?new Date(row.next_billing_at).getTime():NaN;
+      const due=row.current_period_end?new Date(row.current_period_end).getTime():NaN;
       const daysOverdue=Number.isFinite(due)&&due<now?Math.floor((now-due)/day):0;
       return {...row,days_overdue:daysOverdue};
     });
@@ -333,7 +333,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
     const plan=Array.isArray(planRows)?planRows[0]:null;
     if(!planResponse.ok||!plan) return json({ok:false},planResponse.ok?400:planResponse.status,admin.setCookies);
 
-    const existingResponse=await restFetch(env,`/client_subscriptions?select=id,starts_at,next_billing_at&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,admin.accessToken);
+    const existingResponse=await restFetch(env,`/client_subscriptions?select=id,started_at,current_period_start,current_period_end&client_id=eq.${encodeURIComponent(clientId)}&limit=1`,admin.accessToken);
     const existingRows=await safeJson(existingResponse) as Row[]|null;
     if(!existingResponse.ok) return json({ok:false},existingResponse.status,admin.setCookies);
 
@@ -348,8 +348,9 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
       billing_cycle:billingCycle,
       setup_fee_usd:plan.setup_price_usd,
       recurring_price_usd:plan.monthly_price_usd,
-      starts_at:existing?.starts_at||now.toISOString(),
-      next_billing_at:existing?.next_billing_at||nextBilling.toISOString(),
+      started_at:existing?.started_at||now.toISOString(),
+      current_period_start:existing?.current_period_start||now.toISOString(),
+      current_period_end:existing?.current_period_end||nextBilling.toISOString(),
       updated_at:now.toISOString(),
     };
 
