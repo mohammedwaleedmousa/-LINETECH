@@ -8,7 +8,6 @@ import LanguageBridge from "./LanguageBridge";
 import HomeMotion from "./HomeMotion";
 import ServicesMotion from "./ServicesMotion";
 import NavigationFeedback from "./NavigationFeedback";
-import HomeSplash from "./HomeSplash";
 
 export default function SiteSurface({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -33,7 +32,6 @@ export default function SiteSurface({ children }: { children: ReactNode }) {
       <NavigationFeedback />
       <HomeMotion />
       <ServicesMotion />
-      <HomeSplash />
       <Suspense fallback={null}>
         <SiteNav />
       </Suspense>

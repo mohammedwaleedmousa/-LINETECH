@@ -581,3 +581,8 @@ html[dir="rtl"] .project-intake .brief-share span{transform:scaleX(-1)}
 .plan-option-grid button small{font-size:11px;letter-spacing:0}
 .plan-option-grid button strong{font-size:13px}
 .plan-option-grid button:focus-visible{outline:2px solid #6ca8f8;outline-offset:3px}
+
+@media(max-width:420px){
+  .plan-option-grid{grid-template-columns:1fr}
+  .plan-option-grid button{min-height:132px}
+}

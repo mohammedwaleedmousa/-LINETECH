@@ -1,5 +1,7 @@
 "use client";
 
+import "../service-detail-engagement.css";
+
 import ContentHeroArt from "../ContentHeroArt";
 
 import Localized, { useLanguage } from "../Localized";

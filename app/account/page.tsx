@@ -1,3 +1,5 @@
+
+import "./account.css";
 import AccountClient from "./AccountClient";
 
 export const metadata = {

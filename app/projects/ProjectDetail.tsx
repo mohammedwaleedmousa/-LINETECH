@@ -1,5 +1,7 @@
 "use client";
 
+import "../project-case-study.css";
+
 import ContentHeroArt from "../ContentHeroArt";
 
 import Localized, { useLanguage } from "../Localized";
