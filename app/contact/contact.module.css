@@ -1,0 +1,22 @@
+.page{min-height:100svh;background:#05080c;color:#f5f7fa;padding:clamp(140px,17vh,200px) 0 90px}
+.shell{width:min(1180px,calc(100% - 48px));margin-inline:auto}
+.header{max-width:800px;margin-bottom:54px}
+.kicker{font-size:11px;letter-spacing:.12em;color:#83b4f0}
+.header h1{font-size:clamp(38px,6vw,76px);line-height:1.15;letter-spacing:-.035em;margin:22px 0}
+.header>p:last-child{max-width:650px;font-size:17px;line-height:1.9;color:#a8b4c2}
+.channels{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.channel{min-width:0;padding:28px;border:1px solid #233244;border-radius:12px;display:flex;flex-direction:column;align-items:flex-start;text-decoration:none;color:inherit;background:#080e16;transition:border-color .2s,background .2s}
+.channel:hover{border-color:#659fe9;background:#0b1522}
+.channel:focus-visible,.next a:focus-visible,.existing a:focus-visible{outline:2px solid #83b4f0;outline-offset:5px}
+.number{font-size:11px;color:#83b4f0}
+.channel h2{font-size:24px;line-height:1.4;margin:24px 0 12px}
+.detail{max-width:100%;font-size:clamp(14px,1.5vw,18px);overflow-wrap:anywhere}
+.action{display:flex;align-items:center;justify-content:space-between;width:100%;gap:12px;margin-top:32px;color:#b8d5fb;font-size:14px;min-height:28px}
+.channel small{color:#9caebf;font-size:11px;margin-top:8px}
+.next{display:flex;align-items:center;justify-content:space-between;gap:32px;padding-block:42px;margin-top:42px;border-block:1px solid #233244}
+.next h2{font-size:26px;margin:0 0 12px}.next p{max-width:650px;color:#a8b4c2;line-height:1.9;margin:0}
+.next a{flex-shrink:0;display:inline-flex;align-items:center;min-height:48px;padding:12px 20px;background:#f5f7fa;color:#080e16;border-radius:7px;text-decoration:none;font-size:14px}
+.existing{margin-top:26px;color:#a8b4c2;line-height:1.9;font-size:14px}.existing a{color:#b8d5fb;text-underline-offset:5px}
+@media(max-width:800px){.channels{grid-template-columns:1fr}.channel{padding:24px}.channel h2{margin-top:16px}.detail{font-size:18px}.next{align-items:flex-start;flex-direction:column}.next a{max-width:100%;white-space:normal}.header{margin-bottom:32px}}
+@media(max-width:420px){.shell{width:calc(100% - 36px)}.header h1{font-size:38px}.header>p:last-child{font-size:16px}.channel{padding:22px}.detail{font-size:16px}}
+@media(prefers-reduced-motion:reduce){.channel{transition:none}}

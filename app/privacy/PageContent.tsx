@@ -32,7 +32,7 @@ const copy = {
     ],
     contactLabel: "PRIVACY QUESTIONS",
     contactTitle: "Want to ask about your information?",
-    contactText: "Use the LINETECH chat to contact us about privacy or information connected to your account or project. Include enough context for us to identify the relevant account, conversation or project.",
+    contactText: "Use the LINETECH contact page to reach us about privacy or information connected to your account or project. Include enough context for us to identify the relevant account, conversation or project.",
     contactCta: "Contact LINETECH",
     sections: [
       {
@@ -130,7 +130,7 @@ const copy = {
     ],
     contactLabel: "أسئلة الخصوصية",
     contactTitle: "هل لديك سؤال عن معلوماتك؟",
-    contactText: "استخدم محادثة لاين تك للتواصل معنا بخصوص الخصوصية أو المعلومات المرتبطة بحسابك أو مشروعك، وأضف قدرًا كافيًا من السياق حتى نتمكن من تحديد الحساب أو المحادثة أو المشروع المعني.",
+    contactText: "استخدم صفحة تواصل معنا في لاين تك بخصوص الخصوصية أو المعلومات المرتبطة بحسابك أو مشروعك، وأضف قدرًا كافيًا من السياق حتى نتمكن من تحديد الحساب أو المحادثة أو المشروع المعني.",
     contactCta: "تواصل مع لاين تك",
     sections: [
       {
@@ -323,7 +323,7 @@ export default function PrivacyPage() {
               <p className="ref-kicker">{t.contactLabel}</p>
               <h2>{t.contactTitle}</h2>
               <p>{t.contactText}</p>
-              <a className="privacy-contact-link" href="/chat">
+              <a className="privacy-contact-link" href="/contact">
                 {t.contactCta}<span aria-hidden="true">→</span>
               </a>
             </section>

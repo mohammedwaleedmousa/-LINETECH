@@ -23,6 +23,7 @@ const clientItems = [
 ] as const;
 
 const searchItems = [
+  { title: "Contact LINETECH", meta: "Page", href: "/contact", keywords: "contact email phone whatsapp تواصل بريد اتصال واتساب" },
   { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology الرئيسية لينتك تقنية" },
   { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },
   { title: "Pricing", meta: "Plans", href: "/pricing", keywords: "pricing plans packages subscription website ecommerce اسعار باقات اشتراك مواقع متاجر" },

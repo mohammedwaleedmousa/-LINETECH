@@ -101,7 +101,7 @@ export default function SiteFooter() {
             <Link className={linkClass("/services")} href="/services" prefetch>{t.services}</Link>
             <Link className={linkClass("/how-we-work")} href="/how-we-work" prefetch>{t.how}</Link>
             <Link className={linkClass("/workspace")} href="/workspace" prefetch>{t.workspace}</Link>
-            <Link className={linkClass("/chat")} aria-current={isActive("/chat") ? "page" : undefined} href="/chat" prefetch>{t.contact}</Link>
+            <Link className={linkClass("/contact")} aria-current={isActive("/contact") ? "page" : undefined} href="/contact" prefetch>{t.contact}</Link>
             <Link className={linkClass("/privacy")} href="/privacy" prefetch>{t.privacy}</Link>
             <Link className={linkClass("/terms")} href="/terms" prefetch>{t.terms}</Link>
           </nav>
