@@ -5,11 +5,11 @@
 ## Current status
 
 - **Repository:** [mohammedwaleedmousa/-LINETECH](https://github.com/mohammedwaleedmousa/-LINETECH)
-- **Working branch:** `codex/sitemap-alignment-audit`
+- **Working branch:** `codex/sitemap-ui-alignment-phase1`
 - **Context last updated:** 2026-10-11
-- **Phase:** Sitemap alignment implementation and baseline QA audit.
-- **Implemented on this branch:** Primary navigation now links to the existing Service Finder, How We Work, and Contact routes in both Arabic and English. `public/sitemap.xml` now uses the canonical `/contact` path without a trailing slash.
-- **Important:** This is an in-progress change. Automated tests/build have not yet been verified for this commit, no route or file was deleted, and nothing has been merged into `main`.
+- **Phase:** Sitemap UI alignment — phase 1, pending automated validation.
+- **Implemented on this branch:** Added `/products` and six category landing routes with honest empty states, added `/knowledge`, reused the current LINETECH dark visual system and responsive styles, exposed Products and Knowledge in site search/footer, and added canonical `/products` and `/knowledge` URLs to `public/sitemap.xml`. No fake products, prices, article entries, or product details were created.
+- **Important:** This is an in-progress change. Automated tests/build have not yet been verified for this branch, no route or file was deleted, and this phase has not been merged into `main`.
 
 ## Product vision
 
@@ -96,7 +96,7 @@ BASE_URL=https://your-production-domain npm run smoke:prod
 - Updated `app/SiteNav.tsx` to expose the existing `/service-finder`, `/how-we-work`, and `/contact` routes in the primary desktop/mobile navigation, with Arabic and English labels.
 - Updated `public/sitemap.xml` to use the canonical `/contact` URL without a trailing slash.
 - Validation status: static content review only; automated tests and production build remain pending because the QA workflow failure has not yet provided accessible step logs.
-- No routes/files were deleted and nothing was merged to `main`.
+- No routes/files were deleted; this phase is on a feature branch and has not been merged to `main`.
 
 ## Work log
 
