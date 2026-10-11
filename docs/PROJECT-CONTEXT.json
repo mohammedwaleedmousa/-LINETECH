@@ -1,8 +1,8 @@
 {
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
-  "branch": "codex/sitemap-ui-alignment-phase1",
-  "status": "sitemap_ui_alignment_phase1",
+  "branch": "codex/sitemap-public-route-lockdown",
+  "status": "sitemap_public_route_lockdown",
   "updated_on": "2026-10-11",
   "source_of_truth": [
     "docs/LINETECH-SITEMAP.md",
@@ -10,7 +10,7 @@
     "docs/PROJECT-CONTEXT.json",
     "README.md"
   ],
-  "current_goal": "Implement the approved sitemap in verified stages while reusing the existing LINETECH UI, preserving Arabic/English and RTL/LTR, and avoiding invented products or article content.",
+  "current_goal": "Enforce public/sitemap.xml as the allowlist for public pages while preserving required authenticated and system routes.",
   "guardrails": [
     "Do not merge to main until required checks pass and the change set is reviewed.",
     "Reuse working features; do not rebuild from scratch without evidence.",
@@ -20,7 +20,8 @@
     "Support Arabic/English and RTL/LTR.",
     "Do not invent product inventory, prices, subscription benefits, client names, or case-study claims.",
     "Keep custom service packages separate from platform/product subscription tiers.",
-    "Update both project context files and README after each meaningful implementation change."
+    "Update both project context files and README after each meaningful implementation change.",
+    "Public document routes must be listed in public/sitemap.xml; preserve login, authenticated account/admin/workspace flows, APIs, static assets, and required internal handoff routes as non-public exceptions."
   ],
   "architecture": {
     "frontend": "Next.js static export",
@@ -183,9 +184,23 @@
         "Implement knowledge article routes and product detail pages only when real published content/catalog data is available.",
         "Continue auditing target routes and existing routes before any deletion or redirect."
       ]
+    },
+    {
+      "date": "2026-10-11",
+      "branch": "codex/sitemap-public-route-lockdown",
+      "completed": [
+        "Added a Cloudflare Worker public-route allowlist aligned with public/sitemap.xml; unlisted public document routes return a noindex 404.",
+        "Disabled the unlisted /products/category/[slug] routes and changed catalogue category cards to non-link informational cards.",
+        "Added robots disallow and automated contract coverage for unlisted product-category URLs.",
+        "Preserved login, authenticated customer/admin routes, APIs, static assets, and the non-indexable /thank-you handoff."
+      ],
+      "validation": [
+        "Automated checks and production build are pending; do not treat deployment as verified."
+      ]
     }
   ],
   "next_steps": [
+    "Run the route, navigation, auth, Worker, E2E, localization, dependency checks, and production build for the public sitemap allowlist change.",
     "Inspect/reproduce the GitHub Actions QA failure; do not guess at its root cause or weaken checks.",
     "Run npm run test:routes, localization, auth, worker, E2E contract, navigation, dependency checks, and npm run build on the updated branch.",
     "Review public navigation layout at desktop/mobile breakpoints and Arabic/English RTL/LTR.",

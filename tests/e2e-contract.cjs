@@ -212,6 +212,8 @@ assert.ok(schema.includes("grant select, insert, update on public.messages to au
 for (const privateRoute of ["/admin","/login","/workspace","/chat","/handover","/account","/api/"]) {
   assert.ok(robots.includes(`Disallow: ${privateRoute}`), `Private route is indexable in robots.txt: ${privateRoute}`);
 }
+assert.ok(robots.includes("Disallow: /products/category/"), "Unlisted product-category routes must not be indexed");
+assert.ok(!sitemap.includes("/products/category/"), "Product-category pages must not be exposed outside the approved sitemap");
 for (const publicRoute of ["/pricing","/how-we-work","/service-finder"]) {
   assert.ok(sitemap.includes(`${publicRoute}</loc>`), `Commercial route is missing from sitemap: ${publicRoute}`);
 }

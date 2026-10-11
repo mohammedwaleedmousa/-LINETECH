@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useLanguage } from "./Localized";
 
-type PageKind = "products" | "knowledge" | "product-category";
-type Props = { page: PageKind; category?: string };
+type PageKind = "products" | "knowledge";
+type Props = { page: PageKind };
 
 const categories = [
   { slug: "websites", en: "Websites", ar: "المواقع الإلكترونية", noteEn: "Business websites and focused digital experiences.", noteAr: "مواقع الأعمال والتجارب الرقمية المتخصصة." },
@@ -18,8 +18,6 @@ const categories = [
 export default function SitemapLanding({ page, category }: Props) {
   const language = useLanguage();
   const ar = language === "ar";
-  const selectedCategory = categories.find((item) => item.slug === category);
-
   const copy = page === "products"
     ? {
         eyebrow: ar ? "منتجات لاين تك" : "LINETECH PRODUCTS",
@@ -30,8 +28,7 @@ export default function SitemapLanding({ page, category }: Props) {
         action: ar ? "اسألنا عن منتج" : "Ask about a product",
         back: ar ? "العودة للرئيسية" : "Back to home",
       }
-    : page === "knowledge"
-    ? {
+    : {
         eyebrow: ar ? "المعرفة والبحث" : "KNOWLEDGE & RESEARCH",
         title: ar ? "أفكار عملية لبناء أفضل." : "Ideas for building better.",
         description: ar ? "سيضم هذا القسم مقالات وأدلة وأبحاثًا عملية حول التقنية والمنتجات الرقمية. لا توجد مقالات منشورة هنا حتى الآن." : "This section will bring together practical articles, guides, and research on technology and digital products. No articles have been published here yet.",
@@ -39,15 +36,6 @@ export default function SitemapLanding({ page, category }: Props) {
         body: ar ? "محتوى واضح ومفيد مبني على الخبرة، دون ادعاء وجود مواد لم تُنشر بعد." : "Clear, useful content grounded in experience—without presenting unpublished material as if it already exists.",
         action: ar ? "اقترح موضوعًا" : "Suggest a topic",
         back: ar ? "الرئيسية" : "Home",
-      }
-    : {
-        eyebrow: ar ? "كتالوج المنتجات" : "PRODUCT CATALOG",
-        title: selectedCategory ? (ar ? selectedCategory.ar : selectedCategory.en) : (ar ? "تصنيف المنتجات" : "Product category"),
-        description: ar ? "لا توجد منتجات منشورة في هذا التصنيف حتى الآن. سنضيف العناصر هنا بعد اعتماد تفاصيلها." : "There are no published products in this category yet. Items will appear here once their details are approved.",
-        section: ar ? "حالة التصنيف" : "Category status",
-        body: ar ? "لا نعرض منتجات أو أسعارًا أو مزايا افتراضية. يمكنك التواصل معنا للاستفسار عن احتياجك." : "We don’t show invented products, prices, or features. Contact us to discuss what you need.",
-        action: ar ? "تواصل مع لاين تك" : "Contact LINETECH",
-        back: ar ? "العودة إلى المنتجات" : "Back to products",
       };
 
   return (
@@ -60,7 +48,7 @@ export default function SitemapLanding({ page, category }: Props) {
             <p className="sitemap-landing-lead">{copy.description}</p>
             <div className="sitemap-landing-actions">
               <Link className="ref-button light" href="/contact">{copy.action} <span>↗</span></Link>
-              <Link className="ref-button ghost" href={page === "product-category" ? "/products" : "/"}>{copy.back} <span>→</span></Link>
+              <Link className="ref-button ghost" href="/">{copy.back} <span>→</span></Link>
             </div>
           </div>
           <div className="sitemap-landing-visual" aria-hidden="true">
@@ -82,11 +70,11 @@ export default function SitemapLanding({ page, category }: Props) {
           {page === "products" ? (
             <div className="sitemap-category-grid">
               {categories.map((item, index) => (
-                <Link className="sitemap-category-card" href={`/products/category/${item.slug}`} key={item.slug}>
+                <article className="sitemap-category-card" key={item.slug}>
                   <span className="sitemap-category-number">{String(index + 1).padStart(2, "0")}</span>
                   <div><h3>{ar ? item.ar : item.en}</h3><p>{ar ? item.noteAr : item.noteEn}</p></div>
-                  <span className="sitemap-category-arrow" aria-hidden="true">↗</span>
-                </Link>
+                  
+                </article>
               ))}
             </div>
           ) : (
