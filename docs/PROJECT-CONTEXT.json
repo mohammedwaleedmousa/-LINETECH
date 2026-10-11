@@ -2,7 +2,7 @@
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
   "branch": "codex/sitemap-alignment-audit",
-  "status": "planning_and_audit",
+  "status": "sitemap_alignment_in_progress",
   "updated_on": "2026-10-11",
   "source_of_truth": [
     "docs/LINETECH-SITEMAP.md",
@@ -150,16 +150,27 @@
         "No changes merged into main.",
         "No QA run has been executed on this branch yet."
       ]
+    },
+    {
+      "date": "2026-10-11",
+      "branch": "codex/sitemap-alignment-audit",
+      "completed": [
+        "Updated the public primary navigation with existing /service-finder, /how-we-work, and /contact routes, retaining Arabic and English labels.",
+        "Corrected the contact URL in public/sitemap.xml to the canonical no-trailing-slash path."
+      ],
+      "not_done": [
+        "Automated tests and production build have not yet been verified for this implementation commit.",
+        "GitHub Actions QA failure root cause remains unconfirmed because job steps/logs were unavailable.",
+        "No changes merged into main."
+      ]
     }
   ],
   "next_steps": [
-    "Inspect the exact failing step and logs from the latest QA run.",
-    "Inventory app routes, navigation links, references, API routes, auth gates, and deployment dependencies.",
-    "Run or reproduce QA on the working branch and record baseline failures.",
-    "Fix existing QA failures without weakening security or deleting tests.",
-    "Compare actual routes with docs/LINETECH-SITEMAP.md; classify each extra route as retain, merge/redirect, or remove with evidence.",
-    "Implement the target sitemap in small cohesive changes, updating this JSON, PROJECT-CONTEXT.md, and README after each meaningful change.",
-    "Add product catalog, subscription, company workspace, and knowledge features only after data model and business rules are validated.",
-    "Verify route tests, localization, security/auth, build, and production smoke as applicable before merge."
+    "Inspect/reproduce the GitHub Actions QA failure; do not guess at its root cause or weaken checks.",
+    "Run npm run test:routes, localization, auth, worker, E2E contract, navigation, dependency checks, and npm run build on the updated branch.",
+    "Review public navigation layout at desktop/mobile breakpoints and Arabic/English RTL/LTR.",
+    "Continue route/dependency inventory against docs/LINETECH-SITEMAP.md and implement only verified, tested changes.",
+    "Keep product catalog, company workspace, and knowledge pages marked as planned until implemented and verified.",
+    "Do not merge into main until applicable checks pass and the change is reviewed."
   ]
 }
