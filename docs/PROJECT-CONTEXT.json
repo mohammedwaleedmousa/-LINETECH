@@ -119,10 +119,10 @@
     "Auditable administration and future least-privilege staff roles"
   ],
   "qa_baseline": {
-    "latest_known_run": "https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/37109102547",
+    "latest_known_run": "https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/38138022343",
     "latest_known_result": "failure",
-    "run_created_at": "2026-10-03T08:15:39Z",
-    "failure_root_cause": "Not yet confirmed in this context; inspect job steps/logs before changing code.",
+    "run_created_at": "2026-10-11T12:06:32Z",
+    "failure_root_cause": "Unconfirmed; the GitHub Actions job endpoint returned no step summaries and detailed logs were unavailable through the current connection.",
     "required_commands_from_package_json": [
       "npm run test:deps",
       "npm run test:localization",
@@ -195,7 +195,9 @@
         "Preserved login, authenticated customer/admin routes, APIs, static assets, and the non-indexable /thank-you handoff."
       ],
       "validation": [
-        "Automated checks and production build are pending; do not treat deployment as verified."
+        "GitHub Actions run 38138022343 failed on the merge commit; detailed step logs were unavailable and the root cause remains unconfirmed.",
+        "Public sitemap URL list and Worker allowlist were independently compared: both contain the same 21 normalized paths.",
+        "Production build/deployment is not verified."
       ]
     }
   ],

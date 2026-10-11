@@ -7,7 +7,7 @@
 - **Repository:** [mohammedwaleedmousa/-LINETECH](https://github.com/mohammedwaleedmousa/-LINETECH)
 - **Working branch:** `codex/sitemap-public-route-lockdown`
 - **Context last updated:** 2026-10-11
-- **Phase:** Enforce the current XML sitemap as the public-route allowlist; automated validation pending.
+- **Phase:** Public-route allowlist is merged to `main`; GitHub Actions QA failed and the failure root cause remains unconfirmed. Production deployment is not verified.
 - **Current implementation:** Public document routes are restricted to the URLs in `public/sitemap.xml`. Unlisted product-category routes are blocked and category cards on `/products` are informational, not links. Required login, protected client/admin routes, API endpoints, static assets, and the non-indexable `/thank-you` handoff remain functional exceptions. Existing LINETECH UI and bilingual support are preserved.
 - **Important:** This is an in-progress change. Automated tests/build have not yet been verified for this branch, no route or file was deleted, and this phase has not been merged into `main`.
 
@@ -72,7 +72,7 @@ Keep necessary system/auth/API/legal routes even when they are not visible in th
 
 ## QA baseline
 
-The latest known GitHub Actions QA run is [run 37109102547](https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/37109102547), on `main`, created 2026-10-03, and its result was **failure**. A fresh PR run also failed, but the available connector returned no step summaries and a 404 for logs; the root cause is therefore still unconfirmed. Do not guess or suppress the failing check.
+The latest known GitHub Actions QA run is [run 38138022343](https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/38138022343), on the 2026-10-11 merge commit, and its result was **failure**. A fresh PR run also failed, but the available connector returned no step summaries and a 404 for logs; the root cause is therefore still unconfirmed. Do not guess or suppress the failing check.
 
 The current `package.json` prebuild pipeline runs:
 ```bash
@@ -97,7 +97,7 @@ BASE_URL=https://your-production-domain npm run smoke:prod
 - Disabled unlisted `/products/category/[slug]` routes and removed public links to them while keeping category labels informational on `/products`.
 - Added `/products/category/` to robots disallow rules and added route-policy assertions to the Worker behavior and end-to-end contract tests.
 - Preserved `/login`, protected account/workspace/chat/handover/admin flows, APIs, static assets, and `/thank-you` as non-indexable/internal exceptions.
-- Validation: automated checks and production build are pending.
+- Validation: GitHub Actions run [38138022343](https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/38138022343) failed on the merge commit. Detailed step logs were unavailable through the current connection; root cause is unconfirmed. Production build/deployment is not verified.
 
 ### 2026-10-11 — Sitemap alignment implementation
 - Updated `app/SiteNav.tsx` to expose the existing `/service-finder`, `/how-we-work`, and `/contact` routes in the primary desktop/mobile navigation, with Arabic and English labels.
