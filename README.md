@@ -37,3 +37,17 @@ BASE_URL=https://your-production-domain npm run smoke:prod
 ```
 
 The production smoke test verifies the Worker health endpoint, security headers, public routes, and authentication redirects for Admin, Workspace, Chat and Handover.
+
+## Project roadmap and agent handoff
+
+The target information architecture and route-retention policy are documented in [`docs/LINETECH-SITEMAP.md`](docs/LINETECH-SITEMAP.md).
+
+For continuity across ChatGPT conversations or coding agents, read these files before starting work:
+
+- [Current project context and work log](docs/PROJECT-CONTEXT.md) — readable handoff, current phase, decisions, QA baseline, and next steps.
+- [Compact machine-readable project context](docs/PROJECT-CONTEXT.json) — structured project state for tools and agents.
+- [Target sitemap](docs/LINETECH-SITEMAP.md) — intended route structure and rules for retaining/removing routes.
+
+**Documentation rule:** After every meaningful implementation or configuration change, update `docs/PROJECT-CONTEXT.json`, `docs/PROJECT-CONTEXT.md`, and this README in the same change set. Record actual files changed, behavior, test commands/results, blockers, and the next step. Never report an unimplemented feature as complete.
+
+**Current handoff status (2026-10-11):** Work is on the `codex/sitemap-alignment-audit` branch. The target sitemap and context documents have been added; application code has not yet been changed on this branch, no routes/files have been deleted, and no changes have been merged to `main`. The latest known QA run on `main` ([run 37109102547](https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/37109102547)) failed on 2026-10-03. Inspect its job logs and reproduce the failure before making implementation changes; do not guess at the root cause or bypass checks.
