@@ -1,0 +1,165 @@
+{
+  "project": "LINETECH",
+  "repository": "mohammedwaleedmousa/-LINETECH",
+  "branch": "codex/sitemap-alignment-audit",
+  "status": "planning_and_audit",
+  "updated_on": "2026-10-11",
+  "source_of_truth": [
+    "docs/LINETECH-SITEMAP.md",
+    "docs/PROJECT-CONTEXT.md",
+    "docs/PROJECT-CONTEXT.json",
+    "README.md"
+  ],
+  "current_goal": "Align LINETECH with the approved target sitemap, audit existing routes and dependencies, fix baseline QA failures, then implement in small verified stages.",
+  "guardrails": [
+    "Do not merge to main until required checks pass and the change set is reviewed.",
+    "Reuse working features; do not rebuild from scratch without evidence.",
+    "Before removing any route/file, inspect imports, links, redirects, API callbacks, auth, tests, and deployment dependencies.",
+    "Never delete customer data, database tables, migrations, or APIs as incidental sitemap cleanup.",
+    "Preserve server-side authorization, Supabase RLS, secure cookies, private storage, rate limits, and fail-closed behavior.",
+    "Support Arabic/English and RTL/LTR.",
+    "Do not invent product inventory, prices, subscription benefits, client names, or case-study claims.",
+    "Keep custom service packages separate from platform/product subscription tiers.",
+    "Update both project context files and README after each meaningful implementation change."
+  ],
+  "architecture": {
+    "frontend": "Next.js static export",
+    "edge": "Cloudflare Workers",
+    "backend": "Supabase Auth and PostgreSQL",
+    "storage": "Private Supabase project-file storage",
+    "framework_versions": {
+      "next": "15.5.24",
+      "react": "19.1.9",
+      "react_dom": "19.1.9"
+    },
+    "locale": [
+      "ar",
+      "en"
+    ],
+    "lifecycle": [
+      "account",
+      "project request",
+      "client workspace",
+      "project chat",
+      "files/reviews",
+      "notifications",
+      "handover"
+    ]
+  },
+  "current_capabilities_seen_in_readme": [
+    "Client project workspace and delivery lifecycle",
+    "Admin project/status management, client actions, activity history, files, chat, handover, and team access",
+    "Secure HttpOnly SameSite cookies",
+    "Supabase Row Level Security",
+    "Private project-file bucket",
+    "Upload type/size/signature checks",
+    "Cross-origin protections and rate limiting",
+    "Atomic/idempotent project-request creation"
+  ],
+  "target_sitemap": {
+    "public": [
+      "/",
+      "/about",
+      "/services",
+      "/services/web-development",
+      "/services/ecommerce-systems",
+      "/services/brand-identity",
+      "/services/cv-portfolio",
+      "/pricing",
+      "/projects",
+      "/projects/etqan",
+      "/projects/flamingo-park",
+      "/projects/ledgerpro",
+      "/how-we-work",
+      "/service-finder",
+      "/contact",
+      "/faq",
+      "/knowledge",
+      "/knowledge/[slug]",
+      "/privacy",
+      "/terms",
+      "/start",
+      "/thank-you"
+    ],
+    "products": [
+      "/products",
+      "/products/category/[slug]",
+      "/products/[slug]"
+    ],
+    "individual_customer": [
+      "/login",
+      "/account",
+      "/workspace",
+      "/chat",
+      "/handover"
+    ],
+    "company_space_planned": [
+      "/company-space/request",
+      "/company-space"
+    ],
+    "admin": [
+      "/admin",
+      "/admin/login",
+      "/admin/account",
+      "/admin/projects",
+      "/admin/clients",
+      "/admin/inbox",
+      "/admin/billing",
+      "/admin/team"
+    ]
+  },
+  "target_capabilities_not_yet_confirmed_as_implemented": [
+    "LINETECH-owned product catalog with search, filters, categories, and product detail pages",
+    "Platform subscriptions distinct from service packages",
+    "Company workspace requests subject to LINETECH approval",
+    "Company memberships, per-member billing/entitlements, and permissions",
+    "Knowledge/research publishing",
+    "Product and subscription administration",
+    "Auditable administration and future least-privilege staff roles"
+  ],
+  "qa_baseline": {
+    "latest_known_run": "https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/37109102547",
+    "latest_known_result": "failure",
+    "run_created_at": "2026-10-03T08:15:39Z",
+    "failure_root_cause": "Not yet confirmed in this context; inspect job steps/logs before changing code.",
+    "required_commands_from_package_json": [
+      "npm run test:deps",
+      "npm run test:localization",
+      "npm run test:routes",
+      "npm run test:backend",
+      "npm run test:auth",
+      "npm run test:worker",
+      "npm run test:e2e-contract",
+      "npm run test:navigation",
+      "npm run build"
+    ],
+    "production_smoke": "BASE_URL=https://your-production-domain npm run smoke:prod"
+  },
+  "work_log": [
+    {
+      "date": "2026-10-11",
+      "branch": "codex/sitemap-alignment-audit",
+      "completed": [
+        "Created branch from main for sitemap alignment work.",
+        "Added docs/LINETECH-SITEMAP.md as the target sitemap and route-retention policy.",
+        "Included /service-finder after reviewing current navigation/search references."
+      ],
+      "not_done": [
+        "No application routes/components were changed yet.",
+        "No route/file was deleted.",
+        "No changes merged into main.",
+        "No QA run has been executed on this branch yet."
+      ]
+    }
+  ],
+  "next_steps": [
+    "Inspect the exact failing step and logs from the latest QA run.",
+    "Inventory app routes, navigation links, references, API routes, auth gates, and deployment dependencies.",
+    "Run or reproduce QA on the working branch and record baseline failures.",
+    "Fix existing QA failures without weakening security or deleting tests.",
+    "Compare actual routes with docs/LINETECH-SITEMAP.md; classify each extra route as retain, merge/redirect, or remove with evidence.",
+    "Implement the target sitemap in small cohesive changes, updating this JSON, PROJECT-CONTEXT.md, and README after each meaningful change.",
+    "Add product catalog, subscription, company workspace, and knowledge features only after data model and business rules are validated.",
+    "Verify route tests, localization, security/auth, build, and production smoke as applicable before merge."
+  ]
+}
