@@ -16,6 +16,37 @@ function normalized(pathname:string) {
   return documentPath(pathname);
 }
 
+const publicSitemapRoutes = new Set([
+  "/", "/services", "/services/web-development", "/services/ecommerce-systems",
+  "/services/brand-identity", "/services/cv-portfolio", "/projects",
+  "/projects/flamingo-park", "/projects/etqan", "/projects/ledgerpro",
+  "/about", "/faq", "/start", "/privacy", "/terms", "/pricing",
+  "/how-we-work", "/service-finder", "/contact", "/products", "/knowledge",
+]);
+
+// Required account entry points and internal handoff utility remain functional,
+// but are deliberately not part of public discovery or the XML sitemap.
+const requiredUtilityRoutes = new Set(["/login", "/admin/login", "/thank-you"]);
+
+function isPublicRouteAllowed(path:string) {
+  if (publicSitemapRoutes.has(path) || requiredUtilityRoutes.has(path)) return true;
+  if (path.startsWith("/_next/") || path.startsWith("/api/")) return true;
+  // Static assets are not document routes and must continue to be served.
+  if (/\.[a-z0-9]{1,8}$/i.test(path)) return true;
+  return false;
+}
+
+function hiddenRouteResponse() {
+  return new Response("Not found", {
+    status: 404,
+    headers: {
+      "Cache-Control": "no-store",
+      "Content-Type": "text/plain; charset=utf-8",
+      "X-Robots-Tag": "noindex, nofollow",
+    },
+  });
+}
+
 function loginRedirect(request:Request,path:string,cookies:string[] = []) {
   const login=new URL("/login",request.url);
   login.searchParams.set("next",safeReturnPath(path));
@@ -129,6 +160,13 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
     return withCookies(await env.ASSETS.fetch(request),session.setCookies);
   }
 
+  // Product category routes are not in the current approved XML sitemap.
+  // Keep the catalogue landing page, but do not expose unlisted category pages.
+  if (path === "/products/category" || path.startsWith("/products/category/")) {
+    return hiddenRouteResponse();
+  }
+
+  if (!isPublicRouteAllowed(path)) return hiddenRouteResponse();
   return env.ASSETS.fetch(request);
 }
 

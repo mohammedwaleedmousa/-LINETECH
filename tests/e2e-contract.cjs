@@ -212,6 +212,16 @@ assert.ok(schema.includes("grant select, insert, update on public.messages to au
 for (const privateRoute of ["/admin","/login","/workspace","/chat","/handover","/account","/api/"]) {
   assert.ok(robots.includes(`Disallow: ${privateRoute}`), `Private route is indexable in robots.txt: ${privateRoute}`);
 }
+assert.ok(robots.includes("Disallow: /products/category/"), "Unlisted product-category routes must not be indexed");
+assert.ok(!sitemap.includes("/products/category/"), "Product-category pages must not be exposed outside the approved sitemap");
+assert.ok(!read("app/SitemapLanding.tsx").includes("/products/category/"), "Product catalogue must not link to unlisted category routes");
+const sitemapPaths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
+  .map(([, value]) => new URL(value).pathname.replace(/\/+$/, "") || "/")
+  .sort();
+const allowlistBlock = workerIndex.match(/const publicSitemapRoutes = new Set\(\[([\s\S]*?)\]\);/);
+assert.ok(allowlistBlock, "Worker public route allowlist is missing");
+const allowlistedPaths = [...allowlistBlock[1].matchAll(/"([^"]+)"/g)].map(([, value]) => value).sort();
+assert.deepEqual(allowlistedPaths, sitemapPaths, "Worker public route allowlist must exactly match public/sitemap.xml");
 for (const publicRoute of ["/pricing","/how-we-work","/service-finder"]) {
   assert.ok(sitemap.includes(`${publicRoute}</loc>`), `Commercial route is missing from sitemap: ${publicRoute}`);
 }

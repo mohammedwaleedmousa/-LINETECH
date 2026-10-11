@@ -6,6 +6,7 @@ Disallow: /workspace
 Disallow: /chat
 Disallow: /handover
 Disallow: /account
+Disallow: /products/category/
 Disallow: /api/
 
 Sitemap: https://linetech.aiengineer77.workers.dev/sitemap.xml

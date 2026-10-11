@@ -5,10 +5,10 @@
 ## Current status
 
 - **Repository:** [mohammedwaleedmousa/-LINETECH](https://github.com/mohammedwaleedmousa/-LINETECH)
-- **Working branch:** `codex/sitemap-ui-alignment-phase1`
+- **Working branch:** `codex/sitemap-public-route-lockdown`
 - **Context last updated:** 2026-10-11
-- **Phase:** Sitemap UI alignment — phase 1, pending automated validation.
-- **Implemented on this branch:** Added `/products` and six category landing routes with honest empty states, added `/knowledge`, reused the current LINETECH dark visual system and responsive styles, exposed Products and Knowledge in site search/footer, and added canonical `/products` and `/knowledge` URLs to `public/sitemap.xml`. No fake products, prices, article entries, or product details were created.
+- **Phase:** Enforce the current XML sitemap as the public-route allowlist; automated validation pending.
+- **Current implementation:** Public document routes are restricted to the URLs in `public/sitemap.xml`. Unlisted product-category routes are blocked and category cards on `/products` are informational, not links. Required login, protected client/admin routes, API endpoints, static assets, and the non-indexable `/thank-you` handoff remain functional exceptions. Existing LINETECH UI and bilingual support are preserved.
 - **Important:** This is an in-progress change. Automated tests/build have not yet been verified for this branch, no route or file was deleted, and this phase has not been merged into `main`.
 
 ## Product vision
@@ -91,6 +91,13 @@ BASE_URL=https://your-production-domain npm run smoke:prod
 ```
 
 ## Work log
+
+### 2026-10-11 — Public route allowlist enforcement
+- Added a Cloudflare Worker allowlist matching the current public XML sitemap; unlisted public document routes return a noindex 404.
+- Disabled unlisted `/products/category/[slug]` routes and removed public links to them while keeping category labels informational on `/products`.
+- Added `/products/category/` to robots disallow rules and added route-policy assertions to the Worker behavior and end-to-end contract tests.
+- Preserved `/login`, protected account/workspace/chat/handover/admin flows, APIs, static assets, and `/thank-you` as non-indexable/internal exceptions.
+- Validation: automated checks and production build are pending.
 
 ### 2026-10-11 — Sitemap alignment implementation
 - Updated `app/SiteNav.tsx` to expose the existing `/service-finder`, `/how-we-work`, and `/contact` routes in the primary desktop/mobile navigation, with Arabic and English labels.

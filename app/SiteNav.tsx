@@ -256,7 +256,12 @@ export default function SiteNav() {
     ? `${href}?project=${encodeURIComponent(activeProject)}`
     : href;
   const visibleNavItems = clientArea ? clientItems : items;
-  const visibleSearchItems = searchItems;
+  const visibleSearchItems = searchItems.filter((item) => {
+    const privateRoutes = ["/workspace", "/chat", "/handover", "/account"];
+    if (privateRoutes.includes(item.href)) return signedIn && authRole !== "admin";
+    if (item.href === "/login") return false;
+    return true;
+  });
 
   const results = useMemo(() => {
     const q = query.trim().toLowerCase();
