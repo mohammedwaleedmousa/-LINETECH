@@ -27,6 +27,8 @@ const clientItems = [
 
 const searchItems = [
   { title: "Contact LINETECH", meta: "Page", href: "/contact", keywords: "contact email phone whatsapp تواصل بريد اتصال واتساب" },
+  { title: "LINETECH Products", meta: "Catalog", href: "/products", keywords: "products digital tools software catalog منتجات أدوات رقمية برمجيات كتالوج" },
+  { title: "Knowledge & Research", meta: "Articles", href: "/knowledge", keywords: "knowledge articles research guides technology معرفة مقالات أبحاث أدلة تقنية" },
   { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology الرئيسية لينتك تقنية" },
   { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },
   { title: "Pricing", meta: "Plans", href: "/pricing", keywords: "pricing plans packages subscription website ecommerce اسعار باقات اشتراك مواقع متاجر" },
