@@ -8,13 +8,14 @@ import { createPortal } from "react-dom";
 
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
+  { href: "/products", en: "Products", ar: "المنتجات" },
   { href: "/services", en: "Services", ar: "الخدمات" },
-  { href: "/service-finder", en: "Find a Service", ar: "اعثر على خدمتك" },
-  { href: "/how-we-work", en: "How We Work", ar: "كيف نعمل" },
-  { href: "/pricing", en: "Pricing", ar: "الباقات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
-  { href: "/about", en: "About", ar: "عن الشركة" },
+  { href: "/knowledge", en: "Knowledge & Research", ar: "المعرفة والأبحاث" },
+  { href: "/pricing", en: "Plans & Pricing", ar: "الخطط والأسعار" },
+  { href: "/about", en: "About LINETECH", ar: "عن LINETECH" },
   { href: "/contact", en: "Contact", ar: "تواصل معنا" },
+  { href: "/faq", en: "Support & FAQ", ar: "الدعم والأسئلة الشائعة" },
 ] as const;
 
 const clientItems = [
