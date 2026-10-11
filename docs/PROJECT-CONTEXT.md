@@ -7,8 +7,9 @@
 - **Repository:** [mohammedwaleedmousa/-LINETECH](https://github.com/mohammedwaleedmousa/-LINETECH)
 - **Working branch:** `codex/sitemap-alignment-audit`
 - **Context last updated:** 2026-10-11
-- **Phase:** Sitemap alignment planning and baseline audit.
-- **Important:** Only the target sitemap and documentation have been changed on this branch so far. No application page/component was changed, no route or file was deleted, and nothing has been merged into `main`.
+- **Phase:** Sitemap alignment implementation and baseline QA audit.
+- **Implemented on this branch:** Primary navigation now links to the existing Service Finder, How We Work, and Contact routes in both Arabic and English. `public/sitemap.xml` now uses the canonical `/contact` path without a trailing slash.
+- **Important:** This is an in-progress change. Automated tests/build have not yet been verified for this commit, no route or file was deleted, and nothing has been merged into `main`.
 
 ## Product vision
 
@@ -71,7 +72,7 @@ Keep necessary system/auth/API/legal routes even when they are not visible in th
 
 ## QA baseline
 
-The latest known GitHub Actions QA run is [run 37109102547](https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/37109102547), on `main`, created 2026-10-03, and its result was **failure**. The exact failing step/root cause still needs to be confirmed from job logs; do not guess or suppress the failing check.
+The latest known GitHub Actions QA run is [run 37109102547](https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/37109102547), on `main`, created 2026-10-03, and its result was **failure**. A fresh PR run also failed, but the available connector returned no step summaries and a 404 for logs; the root cause is therefore still unconfirmed. Do not guess or suppress the failing check.
 
 The current `package.json` prebuild pipeline runs:
 ```bash
@@ -88,6 +89,14 @@ Then run `npm run build`. Production smoke test command:
 ```bash
 BASE_URL=https://your-production-domain npm run smoke:prod
 ```
+
+## Work log
+
+### 2026-10-11 — Sitemap alignment implementation
+- Updated `app/SiteNav.tsx` to expose the existing `/service-finder`, `/how-we-work`, and `/contact` routes in the primary desktop/mobile navigation, with Arabic and English labels.
+- Updated `public/sitemap.xml` to use the canonical `/contact` URL without a trailing slash.
+- Validation status: static content review only; automated tests and production build remain pending because the QA workflow failure has not yet provided accessible step logs.
+- No routes/files were deleted and nothing was merged to `main`.
 
 ## Work log
 
