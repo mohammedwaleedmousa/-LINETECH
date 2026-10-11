@@ -9,9 +9,12 @@ import { createPortal } from "react-dom";
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
   { href: "/services", en: "Services", ar: "الخدمات" },
+  { href: "/service-finder", en: "Find a Service", ar: "اعثر على خدمتك" },
+  { href: "/how-we-work", en: "How We Work", ar: "كيف نعمل" },
   { href: "/pricing", en: "Pricing", ar: "الباقات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
   { href: "/about", en: "About", ar: "عن الشركة" },
+  { href: "/contact", en: "Contact", ar: "تواصل معنا" },
 ] as const;
 
 const clientItems = [
