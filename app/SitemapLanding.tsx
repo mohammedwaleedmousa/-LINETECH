@@ -28,7 +28,7 @@ export default function SitemapLanding({ page, category }: Props) {
         section: ar ? "تصفّح حسب النوع" : "Explore by type",
         body: ar ? "هذه تصنيفات للتنظيم فقط، ولا تعني أن منتجات ضمنها متاحة للبيع حاليًا." : "These are organizational categories, not a claim that products are currently available for sale.",
         action: ar ? "اسألنا عن منتج" : "Ask about a product",
-        back: ar ? "تواصل معنا" : "Contact us",
+        back: ar ? "العودة للرئيسية" : "Back to home",
       }
     : page === "knowledge"
     ? {
@@ -38,7 +38,7 @@ export default function SitemapLanding({ page, category }: Props) {
         section: ar ? "ما الذي سيجده الزائر هنا؟" : "What belongs here?",
         body: ar ? "محتوى واضح ومفيد مبني على الخبرة، دون ادعاء وجود مواد لم تُنشر بعد." : "Clear, useful content grounded in experience—without presenting unpublished material as if it already exists.",
         action: ar ? "اقترح موضوعًا" : "Suggest a topic",
-        back: ar ? "تواصل معنا" : "Contact us",
+        back: ar ? "الرئيسية" : "Home",
       }
     : {
         eyebrow: ar ? "كتالوج المنتجات" : "PRODUCT CATALOG",
