@@ -29,6 +29,7 @@ Status: target architecture for implementation. This document is the source of t
 - `/projects/flamingo-park` — Flamingo Park case study, subject to confidentiality/content review
 - `/projects/ledgerpro` — LedgerPro case study, subject to confidentiality/content review
 - `/how-we-work` — Service and project delivery process
+- `/service-finder` — Guided service discovery and recommendation
 - `/contact` — Contact
 - `/faq` — Frequently asked questions
 - `/knowledge` — Knowledge, articles, and research index (planned)
