@@ -225,6 +225,24 @@ assert.deepEqual(allowlistedPaths, sitemapPaths, "Worker public route allowlist 
 for (const publicRoute of ["/pricing","/how-we-work","/service-finder"]) {
   assert.ok(sitemap.includes(`${publicRoute}</loc>`), `Commercial route is missing from sitemap: ${publicRoute}`);
 }
+// Public top-level navigation follows the implemented public sitemap sections.
+for (const [route, label] of [
+  ["/", 'en: "Home"'],
+  ["/products", 'en: "Products"'],
+  ["/services", 'en: "Services"'],
+  ["/projects", 'en: "Projects"'],
+  ["/knowledge", 'en: "Knowledge & Research"'],
+  ["/pricing", 'en: "Plans & Pricing"'],
+  ["/about", 'en: "About LINETECH"'],
+  ["/contact", 'en: "Contact"'],
+  ["/faq", 'en: "Support & FAQ"'],
+]) {
+  assert.ok(siteNav.includes(`href: "${route}"`) && siteNav.includes(label), `Primary navigation is missing implemented public section: ${route}`);
+  assert.ok(sitemap.includes(`${route}</loc>`), `Public sitemap is missing navigation section: ${route}`);
+}
+for (const futureRoute of ["/support", "/register", "/companies", "/admin/dashboard"]) {
+  assert.ok(!sitemap.includes(`${futureRoute}</loc>`), `Unimplemented/future route must not be added to public sitemap: ${futureRoute}`);
+}
 assert.ok(terms.includes("recurring monthly service"), "Terms do not cover recurring subscription service");
 assert.ok(terms.includes("رسوم تأسيس واشتراكًا شهريًا"), "Arabic terms do not cover setup and recurring subscription fees");
 
