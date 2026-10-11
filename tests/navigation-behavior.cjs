@@ -30,10 +30,14 @@ async function request(p){return worker.fetch(new Request('https://linetech.test
     const r=await request(p);assert.equal(r.status,503);assert.equal(r.headers.get('cache-control'),'no-store');assert.equal(assets,0);
   }
   assert.equal((await request('/pricing/')).status,200);assert.equal(assets,1);
+  assert.equal((await request('/about/')).status,200);assert.equal(assets,2);
+  const hiddenCategory=await request('/products/category/websites/');assert.equal(hiddenCategory.status,404);assert.equal(hiddenCategory.headers.get('x-robots-tag'),'noindex, nofollow');assert.equal(assets,2);
+  assert.equal((await request('/unlisted-public-page/')).status,404);assert.equal(assets,2);
+  assert.equal((await request('/thank-you/')).status,200);assert.equal(assets,3);
   fail=false;session={user:{app_metadata:{role:'client'}},setCookies:[]};
   assert.equal((await request('/admin/')).status,302);assert.equal(assets,1);
-  assert.equal((await request('/workspace/')).status,200);assert.equal(assets,2);
-  session.user.app_metadata.role='admin';assert.equal((await request('/admin/')).status,200);assert.equal(assets,3);
+  assert.equal((await request('/workspace/')).status,200);assert.equal(assets,4);
+  session.user.app_metadata.role='admin';assert.equal((await request('/admin/')).status,200);assert.equal(assets,5);
   let existing = null;
   let saved;
   const calls = [];

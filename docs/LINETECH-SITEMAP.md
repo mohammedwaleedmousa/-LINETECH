@@ -42,7 +42,7 @@ Status: target architecture for implementation. This document is the source of t
 ## 2. Product catalog
 
 - `/products` — Unified catalog with search, filters, and category cards; include an all-products view.
-- `/products/category/[slug]` — Filtered category listing.
+- `/products/category/[slug]` — Planned filtered category listing; do not expose or link this route until its canonical URLs are explicitly added to `public/sitemap.xml`.
 - `/products/[slug]` — Product detail, suitability, features, pricing model, support/update policy, and purchase or subscription action.
 - Catalog categories may include websites, applications, brand assets, software/SaaS, templates, and digital tools. Categories are navigation facets, not promises that a product is available.
 - A product may be one-time purchase, subscription, or a time-limited license with a renewal option. Only show the model actually supported by that product.
@@ -88,6 +88,10 @@ Planned administration capabilities should be added to these existing sections o
 - Audit trail for sensitive administrative actions
 
 Keep owner-level control available to the business owner. Add staff roles only when needed, using least privilege and auditable access. Do not expose sensitive client project data to staff who do not need it.
+
+## Active public sitemap enforcement
+
+`public/sitemap.xml` is the current allowlist for public document routes. A public route not listed there must not be linked from public navigation/search and is blocked by the Cloudflare Worker. `/products/category/[slug]` remains planned but is currently unavailable because its individual URLs are not listed in the XML sitemap. Required login/admin entry points, authenticated account/workspace/chat/handover routes, APIs, static assets, and the non-indexable `/thank-you` handoff are functional exceptions; they are not public marketing pages and must retain their authorization and noindex protections.
 
 ## 6. Routes that are not ordinary navigation pages
 

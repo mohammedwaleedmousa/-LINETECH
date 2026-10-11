@@ -15,7 +15,7 @@ const categories = [
   { slug: "digital-tools", en: "Digital tools", ar: "الأدوات الرقمية", noteEn: "Practical tools for common digital tasks.", noteAr: "أدوات عملية للمهام الرقمية الشائعة." },
 ] as const;
 
-export default function SitemapLanding({ page, category }: Props) {
+export default function SitemapLanding({ page }: Props) {
   const language = useLanguage();
   const ar = language === "ar";
   const copy = page === "products"
