@@ -13,6 +13,8 @@ const copy = {
     company: "Company",
     home: "Home",
     projects: "Projects",
+    products: "Products",
+    knowledge: "Knowledge",
     about: "About",
     faq: "FAQ",
     contact: "Contact",
@@ -36,6 +38,8 @@ const copy = {
     company: "الشركة",
     home: "الرئيسية",
     projects: "المشاريع",
+    products: "المنتجات",
+    knowledge: "المعرفة والأبحاث",
     about: "عن لاين تك",
     faq: "الأسئلة الشائعة",
     contact: "تواصل معنا",
@@ -83,6 +87,8 @@ export default function SiteFooter() {
             <h4>{t.explore}</h4>
             <Link className={linkClass("/")} aria-current={isActive("/") ? "page" : undefined} href="/" prefetch>{t.home}</Link>
             <Link className={linkClass("/projects")} aria-current={isActive("/projects") ? "page" : undefined} href="/projects" prefetch>{t.projects}</Link>
+            <Link className={linkClass("/products")} aria-current={isActive("/products") ? "page" : undefined} href="/products" prefetch>{t.products}</Link>
+            <Link className={linkClass("/knowledge")} aria-current={isActive("/knowledge") ? "page" : undefined} href="/knowledge" prefetch>{t.knowledge}</Link>
             <Link className={linkClass("/about")} aria-current={isActive("/about") ? "page" : undefined} href="/about" prefetch>{t.about}</Link>
             <Link className={linkClass("/faq")} aria-current={isActive("/faq") ? "page" : undefined} href="/faq" prefetch>{t.faq}</Link>
           </nav>
