@@ -61,3 +61,13 @@ The V2 pages now share a responsive dark/blue design system: illustrated headers
 The structural V2 change was merged into main at `1f622f2da5ce7deb0217c0b8c729e0ec08bdf6a5`. Cloudflare publication remains pending account sign-in. The prior browser-install blocker was resolved for local development using a temporary Chromium runtime; no browser dependency was added to this repository. Local screenshot review covered AR/EN products, knowledge, pricing, account and company pages at 390px and 1440px. Build, localization interaction checks and TypeScript pass. This is local UI validation, not production or authenticated backend validation.
 
 Final UI verification: 50 responsive checks across 320/390/768/1024/1440px passed in Arabic and English, including desktop More navigation, mobile menu and no runtime errors.
+
+## Company applications — 2026-10-22
+
+Company request submission, status tracking, admin approval/rejection and the approved-company overview now have backend/UI implementations. Approval creates the company and owner membership atomically; applicant identity and company visibility are enforced in PostgreSQL RLS. Repeated submissions reuse a stable key. Payment, invitations and company project access are not enabled by approval.
+
+**Rollout pending:** the configured LINETECH Supabase project is not available through the current connection. No remote database was modified and Cloudflare remains unpublished. Apply the new migration to the verified LINETECH database, then deploy the Worker; see [company rollout](docs/company-applications-setup.md). Missing schema/RPCs produce an unavailable state rather than false success.
+
+`npm run test:companies` runs API boundary tests and real PostgreSQL migration/RPC/RLS tests using pinned dev-only PGlite. The build now includes this suite. Local tests verify idempotency, review authorization, rejection reasons, company isolation and rollback on membership failure.
+
+Company UI verification: synthetic browser API fixtures passed submission failure/retry with stable key, receipt/status tracking, required rejection reason, admin approval and selected workspace; 12 responsive views at 320/390/768/1440px passed. Real SQL/RLS was verified independently; hosted Auth/PostgREST remains untested.

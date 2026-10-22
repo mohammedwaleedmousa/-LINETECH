@@ -1,3 +1,13 @@
+# Company application implementation — 2026-10-22
+
+The company application slice is implemented in source: form submission/receipt, own status/history, company list/selected overview and admin review queue. `worker/companies.ts` adds bounded/validated authenticated APIs. The CLI-generated migration `20261022183607_company_applications.sql` adds three RLS tables and two security-invoker RPCs. Approval is atomic with owner membership; no project/billing entitlements are activated.
+
+No remote database changed. The connected Supabase account listed Flamingo/Genan but not configured LINETECH project `vbaomkixvrtuuujcodii`. Apply the migration only to the verified LINETECH database and deploy the Worker before claiming the feature is active. Cloudflare sign-in/publication remains pending and was explicitly skipped by the owner. See `docs/company-applications-setup.md`.
+
+API tests and actual PostgreSQL tests pass, including tenant isolation, anonymous denial, client role-spoof denial, replay and transactional rollback. PGlite is a pinned development dependency used only for tests. Existing auth/APIs and customer records are retained. Invitations/member management, company project permissions, paid billing and the 7-day grace policy remain unimplemented.
+
+---
+
 # Design refinement — 2026-10-22
 
 The structural V2 implementation is merged into main at `1f622f2`. The design refinement unifies products/categories, knowledge, pricing, inactive modules, account overview and subscriptions. Shared `app/PlatformUI.tsx` provides scalable SVG icons, headers and empty states; `app/platform-v2.css` is the scoped responsive system. New homepage sections reuse the category card design. Secondary desktop navigation uses a native More disclosure; mobile keeps all public destinations. Company navigation is localized with active-page states.
@@ -164,3 +174,5 @@ Never mark a feature as implemented unless the code exists and the relevant chec
 Visual verification limitation (2026-10-22): Playwright could not start because Chromium was unavailable; browser installation failed with truncated download archives. No mobile screenshot QA or live backend validation is claimed.
 
 Final UI verification: 50 responsive checks across 320/390/768/1024/1440px passed in Arabic and English, including desktop More navigation, mobile menu and no runtime errors.
+
+Company UI verification: synthetic browser API fixtures passed submission failure/retry with stable key, receipt/status tracking, required rejection reason, admin approval and selected workspace; 12 responsive views at 320/390/768/1440px passed. Real SQL/RLS was verified independently; hosted Auth/PostgREST remains untested.

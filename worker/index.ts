@@ -10,6 +10,7 @@ import {
 } from "./core";
 import { handleAuth } from "./auth";
 import { handleClientApi } from "./client";
+import { handleCompanyApi } from "./companies";
 import { handleAdminApi } from "./admin";
 
 function normalized(pathname:string) {
@@ -116,6 +117,9 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
     const response=await handleAuth(request,env,path);
     return response || new Response("Not found",{status:404});
   }
+
+  const companyResponse=await handleCompanyApi(request,env,path);
+  if(companyResponse)return companyResponse;
 
   if(path.startsWith("/api/admin/")) {
     const response=await handleAdminApi(request,env,path);

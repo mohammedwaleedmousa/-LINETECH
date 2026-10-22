@@ -1,8 +1,8 @@
 {
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
-  "branch": "codex/design-v2-polish",
-  "status": "v2_design_refined_business_modules_pending",
+  "branch": "codex/company-applications",
+  "status": "company_application_source_ready_rollout_pending",
   "updated_on": "2026-10-22",
   "source_of_truth": [
     "docs/LINETECH-SITEMAP.md",
@@ -10,7 +10,7 @@
     "docs/PROJECT-CONTEXT.json",
     "README.md"
   ],
-  "current_goal": "Finalize the V2 UI design while retaining existing auth/API contracts and clear inactive business-module states.",
+  "current_goal": "Complete and locally verify company submission, status tracking, admin review and atomic approved-space creation without touching unrelated databases.",
   "guardrails": [
     "Do not merge to main until required checks pass and the change set is reviewed.",
     "Reuse working features; do not rebuild from scratch without evidence.",
@@ -118,7 +118,9 @@
     "github_actions": "Prior main run 38139124840 failed before runner steps; new remote checks pending",
     "production": "Not deployed or smoke-tested against configured Supabase",
     "visual": "20 local AR/EN screenshot views passed at 390/1440px; temporary Chromium runtime outside repository. Public local UI only, not production/backend validation.",
-    "responsive": "50 checks passed at 320, 390, 768, 1024 and 1440px in AR/EN, plus desktop More and mobile menu behavior; no runtime errors."
+    "responsive": "50 checks passed at 320, 390, 768, 1024 and 1440px in AR/EN, plus desktop More and mobile menu behavior; no runtime errors.",
+    "company": "API and actual PostgreSQL RLS/RPC tests passed, including replay, spoofed role denial, rejection and approval rollback. Build and TypeScript passed; remote Supabase/Auth/PostgREST and production not tested.",
+    "company_browser": "Passed synthetic API browser workflow from failed submission/retry through admin approval and selected company; 12 responsive views passed. Live Auth/PostgREST not tested."
   },
   "work_log": [
     {
@@ -216,13 +218,29 @@
         "Cloudflare account sign-in and deployment",
         "Business capabilities listed in the V2 sitemap"
       ]
+    },
+    {
+      "date": "2026-10-22",
+      "branch": "codex/company-applications",
+      "completed": [
+        "CLI-generated additive company application migration and fresh-bootstrap snapshot",
+        "Security-invoker submission/review RPCs with atomic company/owner creation and RLS isolation",
+        "Bounded authenticated Worker APIs, validation and throttling",
+        "Client submission/receipt/status views and selected company overview",
+        "Admin review filters, pagination and rejection reason requirements",
+        "Worker API and actual PostgreSQL/PGlite tests including failure rollback"
+      ],
+      "not_done": [
+        "No remote database changed: configured LINETECH project unavailable to current connection",
+        "Cloudflare publication skipped pending account sign-in",
+        "Invitations, company project permissions, member billing and payment enforcement remain unimplemented"
+      ]
     }
   ],
   "next_steps": [
-    "Review and merge tested V2 structural migration",
-    "Approve actual products and service catalog, then implement product/content backend",
-    "Implement company approval and isolated memberships before enabling company records",
-    "Select payment providers/currencies and approve licence/refund/retention policy",
-    "Implement and validate billing/grace/entitlements with real account tests"
+    "Connect verified LINETECH project and apply company migration; run project advisors",
+    "Deploy current main to Cloudflare after authentication",
+    "Verify full applicant/admin workflow against actual Supabase Auth/PostgREST",
+    "Implement invitations and isolated company project permissions before paid member billing"
   ]
 }
