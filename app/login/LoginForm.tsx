@@ -151,6 +151,8 @@ export default function LoginForm(){
     if(!accessToken || !refreshToken){
       if(isRecovery) switchMode("reset");
       else if(isConfirmed) setMessage(t.confirmedReady);
+      else if(search.get("mode")==="signup") switchMode("signup");
+      else if(search.get("mode")==="forgot") switchMode("forgot");
       return;
     }
 
@@ -226,7 +228,7 @@ export default function LoginForm(){
           return;
         }
         setMessage(t.resetReady);
-        router.replace("/workspace");
+        router.replace("/account/projects");
         router.refresh();
         return;
       }

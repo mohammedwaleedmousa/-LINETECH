@@ -345,7 +345,7 @@ export default function PageContent() {
               </div>
 
               <div className="finder-result-actions">
-                <Link className="ref-btn primary" onClick={keepResultForProject} href={`/start?service=${encodeURIComponent(selectedService.serviceParam)}&source=finder`}>{t.start} ↗</Link>
+                <Link className="ref-btn primary" onClick={keepResultForProject} href={`/services/request?service=${encodeURIComponent(selectedService.serviceParam)}&source=finder`}>{t.start} ↗</Link>
                 <Link className="ref-btn ghost" href={selectedService.href}>{t.view}</Link>
                 <button type="button" onClick={reset}>{t.reset}</button>
               </div>

@@ -11,8 +11,8 @@ export default function LoginPage(){return <Localized><main className="login-pag
     <div className="login-shell login-shell-auth-only">
       <div className="login-card">
         <LoginForm/>
-        <div className="login-card-foot"><span>Want to see the client area?</span><Link href="/workspace" prefetch>Open Client Workspace →</Link></div>
-        <div className="login-card-foot"><span>Need to start a project first?</span><Link href="/start" prefetch>Start Your Line →</Link></div>
+        <div className="login-card-foot"><span>Want to see the client area?</span><Link href="/account/projects" prefetch>Open Client Workspace →</Link></div>
+        <div className="login-card-foot"><span>Need to start a project first?</span><Link href="/services/request" prefetch>Start Your Line →</Link></div>
       </div>
     </div>
   </section>

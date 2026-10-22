@@ -1,10 +1,3 @@
-import SitemapLanding from "../SitemapLanding";
-
-export const metadata = {
-  title: "Knowledge & Research",
-  description: "Practical LINETECH articles, guides, and research on technology and digital products.",
-};
-
-export default function KnowledgePage() {
-  return <SitemapLanding page="knowledge" />;
-}
+import KnowledgeHub from "./KnowledgeHub";
+export const metadata={title:"Knowledge & Research"};
+export default function Page(){return <KnowledgeHub/>;}

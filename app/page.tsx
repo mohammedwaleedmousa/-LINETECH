@@ -4,6 +4,7 @@ import Localized from "./Localized";
 import HomeHeroArt from "./HomeHeroArt";
 import HomeProjects from "./HomeProjects";
 import HomeAbout from "./HomeAbout";
+import HomePlatform from "./HomePlatform";
 import HomeWhy from "./HomeWhy";
 import Link from "next/link";
 import "./home-content.css";
@@ -46,7 +47,7 @@ export default function Home() {
             <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
             <h1>Every idea<br/>starts with a line.</h1>
             <p className="ref-lead">We build websites, online stores and business systems for companies and founders, with a clear identity and an experience designed around their customers.</p>
-            <div className="ref-actions"><Link className="ref-button light" href="/start" prefetch>Start Your Line <span>→</span></Link><a className="ref-button ghost" href="#projects">View Our Work <span>↓</span></a></div>
+            <div className="ref-actions"><Link className="ref-button light" href="/services/request" prefetch>Start Your Line <span>→</span></Link><a className="ref-button ghost" href="#projects">View Our Work <span>↓</span></a></div>
             <div className="ref-stats">
               <div><strong>01</strong><span>Founder-led</span></div>
               <div><strong>{String(services.length).padStart(2, "0")}</strong><span>Core Services</span></div>
@@ -61,7 +62,7 @@ export default function Home() {
         <div className="ref-shell">
           <div className="ref-section-heading">
             <div><p className="ref-kicker with-line">OUR SERVICES</p><h2>Solutions for<br/>a smarter tomorrow.</h2></div>
-            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><Link className="ref-button ghost small" href="/service-finder" prefetch>Find Your Service <span>→</span></Link></div>
+            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><Link className="ref-button ghost small" href="/services/guide" prefetch>Find Your Service <span>→</span></Link></div>
           </div>
           <div className="ref-service-grid">
             {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><Link href={service.href} prefetch>Learn more <span>→</span></Link></article>)}
@@ -70,6 +71,7 @@ export default function Home() {
       </section>
 
       <HomeProjects/>
+      <HomePlatform/>
 
       <HomeAbout/>
 
@@ -80,7 +82,7 @@ export default function Home() {
           <div className="process-center-head">
             <p>OUR PROCESS <span/></p>
             <h2>From idea to impact.</h2>
-            <Link className="ref-button ghost small" href="/how-we-work" prefetch>See full process <span>→</span></Link>
+            <Link className="ref-button ghost small" href="/services/process" prefetch>See full process <span>→</span></Link>
           </div>
           <div className="process-center-grid">
             {process.map(([n,t,d], index) => (
@@ -113,7 +115,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p><p className="home-start-note">Your request stays on your device until you choose to share it with LINETECH.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/start" prefetch>Start your project request <span>→</span></Link><Link className="home-start-help" href="/service-finder" prefetch>Find the right service <span>→</span></Link></div></div></section>
+      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p><p className="home-start-note">Your request stays on your device until you choose to share it with LINETECH.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/services/request" prefetch>Start your project request <span>→</span></Link><Link className="home-start-help" href="/services/guide" prefetch>Find the right service <span>→</span></Link></div></div></section>
     </main></Localized>
   );
 }

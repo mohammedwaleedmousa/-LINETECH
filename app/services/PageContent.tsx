@@ -180,7 +180,7 @@ export default function ServicesPage() {
             <h1>{t.hero.title}</h1>
             <p className={styles.heroLead}>{t.hero.lead}</p>
             <div className={styles.heroActions}>
-              <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
+              <Link className={styles.primary} href="/services/request" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
               <Link className={styles.secondary} href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
@@ -254,7 +254,7 @@ export default function ServicesPage() {
 
             <div className={outcomeStyles.helper}>
               <p>{t.decision.helper}</p>
-              <Link href="/service-finder" prefetch>{t.decision.helperLink}<span aria-hidden="true">→</span></Link>
+              <Link href="/services/guide" prefetch>{t.decision.helperLink}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
         </div>
@@ -288,7 +288,7 @@ export default function ServicesPage() {
             <h2>{t.cta.title}</h2>
             <p>{t.cta.lead}</p>
           </div>
-          <Link className="ref-btn primary" href="/start" prefetch>{t.cta.button} <span aria-hidden="true">↗</span></Link>
+          <Link className="ref-btn primary" href="/services/request" prefetch>{t.cta.button} <span aria-hidden="true">↗</span></Link>
         </div>
       </section>
     </main>

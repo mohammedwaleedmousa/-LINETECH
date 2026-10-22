@@ -468,7 +468,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
           title:textFields.notificationTitle||textFields.activityTitle||(handoverReady?"Project handover ready":"Project updated"),
           body:textFields.notificationBody||textFields.activityDetail||null,
           action_kind:handoverReady?"handover":"project_update",
-          destination:clientProjectPath(handoverReady?"/handover":"/workspace",projectId),
+          destination:clientProjectPath(handoverReady?"/account/projects/handover":"/account/projects",projectId),
         }),
       });
     }
@@ -535,8 +535,8 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
         action_kind:(category==="handover"||category==="deliverable")?"handover":"file",
         destination:clientProjectPath(
           (category==="handover"||category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
-            ? "/handover"
-            : "/workspace",
+            ? "/account/projects/handover"
+            : "/account/projects",
           projectId,
         ),
       })}),
@@ -610,8 +610,8 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
                 action_kind:(file.category==="handover"||file.category==="deliverable")?"handover":"file",
                 destination:clientProjectPath(
                   (file.category==="handover"||file.category==="deliverable") && (Number(project.phase||1)>=5 || String(project.status||"")==="completed")
-                    ? "/handover"
-                    : "/workspace",
+                    ? "/account/projects/handover"
+                    : "/account/projects",
                   String(file.project_id),
                 ),
               }),
@@ -667,7 +667,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
             title:"Handover updated",
             body:title,
             action_kind:"handover",
-            destination:clientProjectPath("/handover",projectId),
+            destination:clientProjectPath("/account/projects/handover",projectId),
           }),
         }).catch(()=>null);
       }
@@ -720,7 +720,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
             title:item.completed?"Handover item completed":"Handover updated",
             body:item.title,
             action_kind:"handover",
-            destination:clientProjectPath("/handover",String(item.project_id)),
+            destination:clientProjectPath("/account/projects/handover",String(item.project_id)),
           }),
         }).catch(()=>null);
       }
@@ -818,7 +818,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
             title:"New project message",
             body:text.slice(0,180),
             action_kind:"message",
-            destination:clientProjectPath("/chat",projectId),
+            destination:clientProjectPath("/account/projects/messages",projectId),
           }),
         });
       }
@@ -952,7 +952,7 @@ export async function handleAdminApi(request:Request,env:Env,path:string):Promis
           title:kind==="image"?"New project image":kind==="audio"?"New voice message":"New project file",
           body:file.name||undefined,
           action_kind:"message",
-          destination:clientProjectPath("/chat",projectId),
+          destination:clientProjectPath("/account/projects/messages",projectId),
         }),
       }).catch(()=>null);
     }

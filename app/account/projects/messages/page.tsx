@@ -1,4 +1,4 @@
-import PageContent from "./PageContent";
+import PageContent from "../../../chat/PageContent";
 
 export const metadata = {
   title: "Chat",

@@ -258,7 +258,7 @@ export async function handleClientApi(request:Request,env:Env,path:string):Promi
         title:project.next_action_title||undefined,
         detail:project.next_action_body||undefined,
         label:project.next_action_required?"Open project chat":undefined,
-        href:project.next_action_required?`/chat?project=${encodeURIComponent(project.id)}`:undefined,
+        href:project.next_action_required?`/account/projects/messages?project=${encodeURIComponent(project.id)}`:undefined,
       },
       activity:activity.map(item=>({id:item.id,title:item.title,detail:item.detail||undefined,at:item.created_at})),
       files:files.map(file=>({

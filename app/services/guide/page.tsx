@@ -1,4 +1,4 @@
-import PageContent from "./PageContent";
+import PageContent from "../../service-finder/PageContent";
 
 export const metadata = {
   title: "Find Your Service",
@@ -11,7 +11,7 @@ const finderTransferScript = `
 
   document.addEventListener('click', (event) => {
     const target = event.target instanceof Element
-      ? event.target.closest('a[href*="/start?service="]')
+      ? event.target.closest('a[href*="/services/request?service="]')
       : null;
 
     if (!target) return;

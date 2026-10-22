@@ -54,7 +54,7 @@ export default function WorkspaceAfterRequest(){
     <div className="workspace-after-request-action">
       <small>{t.reference}</small>
       <strong>{record.requestId}</strong>
-      <Link href="/workspace">{t.button} <b aria-hidden="true">→</b></Link>
+      <Link href="/account/projects">{t.button} <b aria-hidden="true">→</b></Link>
     </div>
   </aside>;
 }

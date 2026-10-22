@@ -1,5 +1,5 @@
-import HandoverClient from "./HandoverClient";
-import "./handover.css";
+import HandoverClient from "../../../handover/HandoverClient";
+import "../../../handover/handover.css";
 
 export const metadata = {
   title: "Project Handover",

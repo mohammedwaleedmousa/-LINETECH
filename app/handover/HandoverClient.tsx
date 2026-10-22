@@ -136,7 +136,7 @@ export default function HandoverClient() {
             <strong>{language === "ar" ? "تعذر تحميل التسليم." : "Unable to load handover."}</strong>
             <div className="handover-panel-actions">
               <button type="button" onClick={() => void loadHandover(true)} disabled={refreshing}>{refreshing ? "…" : t.retry}</button>
-              <Link href={projectHref("/workspace", currentProjectId)}>{t.back} →</Link>
+              <Link href={projectHref("/account/projects", currentProjectId)}>{t.back} →</Link>
             </div>
           </div>
         ) : locked ? (
@@ -144,7 +144,7 @@ export default function HandoverClient() {
             <span>05</span>
             <h2>{t.locked}</h2>
             <p>{t.lockedBody}</p>
-            <Link href={projectHref("/workspace", currentProjectId)}>{t.back} →</Link>
+            <Link href={projectHref("/account/projects", currentProjectId)}>{t.back} →</Link>
           </div>
         ) : (
           <div className="handover-content">
@@ -187,7 +187,7 @@ export default function HandoverClient() {
               ) : <div className="handover-empty">{t.noFiles}</div>}
             </section>
 
-            <Link className="handover-back" href={projectHref("/workspace", currentProjectId)}>{t.back} →</Link>
+            <Link className="handover-back" href={projectHref("/account/projects", currentProjectId)}>{t.back} →</Link>
           </div>
         )}
       </section>

@@ -18,7 +18,7 @@ export default function ThankYouPage(){
           <h1>Your first line is ready.</h1>
           <p className="thank-you-lead">This is the confirmation experience LINETECH can use once the final submission flow is connected later. For now, keep your brief ready and use the copy or share actions from the project form.</p>
           <div className="thank-you-actions">
-            <Link className="ref-btn primary" href="/start" prefetch>Back to Project Brief ↗</Link>
+            <Link className="ref-btn primary" href="/services/request" prefetch>Back to Project Brief ↗</Link>
             <Link className="ref-btn ghost" href="/projects" prefetch>View our work</Link>
           </div>
           <div className="thank-you-steps">

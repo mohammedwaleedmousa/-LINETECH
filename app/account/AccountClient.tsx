@@ -394,8 +394,8 @@ export default function AccountClient() {
           <div className="account-hero-side">
             <p>{t.lead}</p>
             <div>
-              <Link href={currentProjectId ? `/workspace?project=${encodeURIComponent(currentProjectId)}` : "/workspace"}>{t.workspace} →</Link>
-              <Link href={currentProjectId ? `/chat?project=${encodeURIComponent(currentProjectId)}` : "/chat"}>{t.chat} →</Link>
+              <Link href={currentProjectId ? `/account/projects?project=${encodeURIComponent(currentProjectId)}` : "/account/projects"}>{t.workspace} →</Link>
+              <Link href={currentProjectId ? `/account/projects/messages?project=${encodeURIComponent(currentProjectId)}` : "/account/projects/messages"}>{t.chat} →</Link>
             </div>
           </div>
         </div>

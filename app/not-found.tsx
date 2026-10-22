@@ -28,7 +28,7 @@ export default function NotFound(){
       <span className="not-found-code">{t.code}</span>
       <h1>{t.title}</h1>
       <p>{t.body}</p>
-      <div className="not-found-actions"><Link className="ref-btn primary" href="/" prefetch>{t.home} ↗</Link><Link className="ref-btn ghost" href="/start" prefetch>{t.start}</Link></div>
+      <div className="not-found-actions"><Link className="ref-btn primary" href="/" prefetch>{t.home} ↗</Link><Link className="ref-btn ghost" href="/services/request" prefetch>{t.start}</Link></div>
     </div>
   </main>;
 }

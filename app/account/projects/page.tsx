@@ -1,4 +1,4 @@
-import WorkspaceClient from "./WorkspaceClient";
+import WorkspaceClient from "../../workspace/WorkspaceClient";
 
 export const metadata = {
   title: "Client Workspace",

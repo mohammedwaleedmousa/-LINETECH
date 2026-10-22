@@ -1,16 +1,16 @@
 {
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
-  "branch": "codex/sitemap-public-route-lockdown",
-  "status": "sitemap_public_route_lockdown",
-  "updated_on": "2026-10-11",
+  "branch": "codex/platform-sitemap-v2",
+  "status": "platform_v2_structure_implemented_business_modules_pending",
+  "updated_on": "2026-10-22",
   "source_of_truth": [
     "docs/LINETECH-SITEMAP.md",
     "docs/PROJECT-CONTEXT.md",
     "docs/PROJECT-CONTEXT.json",
     "README.md"
   ],
-  "current_goal": "Enforce public/sitemap.xml as the allowlist for public pages while preserving required authenticated and system routes.",
+  "current_goal": "Implement the owner-approved V2 sitemap, migrate existing functions, remove retired standalone pages and obsolete public pricing, and distinguish working workflows from inactive business modules.",
   "guardrails": [
     "Do not merge to main until required checks pass and the change set is reviewed.",
     "Reuse working features; do not rebuild from scratch without evidence.",
@@ -21,7 +21,7 @@
     "Do not invent product inventory, prices, subscription benefits, client names, or case-study claims.",
     "Keep custom service packages separate from platform/product subscription tiers.",
     "Update both project context files and README after each meaningful implementation change.",
-    "Public document routes must be listed in public/sitemap.xml; preserve login, authenticated account/admin/workspace flows, APIs, static assets, and required internal handoff routes as non-public exceptions."
+    "Follow docs/LINETECH-SITEMAP.md V2. Public XML and Worker allowlist match; all assets pass through Worker first. Never claim inactive company/commerce modules are live."
   ],
   "architecture": {
     "frontend": "Next.js static export",
@@ -58,55 +58,50 @@
     "Atomic/idempotent project-request creation"
   ],
   "target_sitemap": {
-    "public": [
-      "/",
-      "/about",
-      "/services",
-      "/services/web-development",
-      "/services/ecommerce-systems",
-      "/services/brand-identity",
-      "/services/cv-portfolio",
-      "/pricing",
-      "/projects",
-      "/projects/etqan",
-      "/projects/flamingo-park",
-      "/projects/ledgerpro",
-      "/how-we-work",
-      "/service-finder",
-      "/contact",
-      "/faq",
-      "/knowledge",
-      "/knowledge/[slug]",
-      "/privacy",
-      "/terms",
-      "/start",
-      "/thank-you"
+    "source": "docs/LINETECH-SITEMAP.md",
+    "public_sections": [
+      "Home",
+      "Products",
+      "Services",
+      "Projects",
+      "Knowledge & Research",
+      "Plans & Pricing",
+      "About",
+      "Contact",
+      "Support & FAQ"
     ],
-    "products": [
-      "/products",
-      "/products/category/[slug]",
-      "/products/[slug]"
-    ],
-    "individual_customer": [
-      "/login",
+    "personal": [
       "/account",
-      "/workspace",
-      "/chat",
-      "/handover"
+      "/account/profile",
+      "/account/orders",
+      "/account/subscriptions",
+      "/account/projects",
+      "/account/projects/messages",
+      "/account/projects/handover",
+      "/account/companies",
+      "/account/billing",
+      "/account/support"
     ],
-    "company_space_planned": [
+    "company": [
       "/company-space/request",
-      "/company-space"
+      "/company-space",
+      "/company-space/projects",
+      "/company-space/members",
+      "/company-space/billing",
+      "/company-space/settings"
     ],
     "admin": [
       "/admin",
-      "/admin/login",
-      "/admin/account",
       "/admin/projects",
       "/admin/clients",
       "/admin/inbox",
       "/admin/billing",
-      "/admin/team"
+      "/admin/team",
+      "/admin/account",
+      "/admin/companies",
+      "/admin/products",
+      "/admin/content",
+      "/admin/audit"
     ]
   },
   "target_capabilities_not_yet_confirmed_as_implemented": [
@@ -119,22 +114,10 @@
     "Auditable administration and future least-privilege staff roles"
   ],
   "qa_baseline": {
-    "latest_known_run": "https://github.com/mohammedwaleedmousa/-LINETECH/actions/runs/38138022343",
-    "latest_known_result": "failure",
-    "run_created_at": "2026-10-11T12:06:32Z",
-    "failure_root_cause": "Unconfirmed; the GitHub Actions job endpoint returned no step summaries and detailed logs were unavailable through the current connection.",
-    "required_commands_from_package_json": [
-      "npm run test:deps",
-      "npm run test:localization",
-      "npm run test:routes",
-      "npm run test:backend",
-      "npm run test:auth",
-      "npm run test:worker",
-      "npm run test:e2e-contract",
-      "npm run test:navigation",
-      "npm run build"
-    ],
-    "production_smoke": "BASE_URL=https://your-production-domain npm run smoke:prod"
+    "local": "npm run build passed all eight prebuild checks and static export on 2026-10-22; npx tsc --noEmit passed",
+    "github_actions": "Prior main run 38139124840 failed before runner steps; new remote checks pending",
+    "production": "Not deployed or smoke-tested against configured Supabase",
+    "visual": "Blocked: Chromium missing and browser download archives truncated; screenshots and live backend not verified"
   },
   "work_log": [
     {
@@ -199,15 +182,30 @@
         "Public sitemap URL list and Worker allowlist were independently compared: both contain the same 21 normalized paths.",
         "Production build/deployment is not verified."
       ]
+    },
+    {
+      "date": "2026-10-22",
+      "branch": "codex/platform-sitemap-v2",
+      "completed": [
+        "Migrated six standalone routes into services/account with query-preserving legacy redirects",
+        "Added personal overview, profile/subscription views and all V2 company/admin structural modules",
+        "Replaced old public service pricing with three pending platform tiers; removed priced intake packages",
+        "Added six product categories with search/type filters and content filters, without fictional inventory",
+        "Enabled Worker-first for all assets; updated sitemap, navigation, auth and migration tests"
+      ],
+      "outstanding": [
+        "Company request/membership/invitation backend and tenant RLS",
+        "Catalog/content publication, paid access and checkout",
+        "Per-member 7-day billing enforcement, cancellation and invoice history",
+        "Production deployment and database-backed end-to-end validation"
+      ]
     }
   ],
   "next_steps": [
-    "Run the route, navigation, auth, Worker, E2E, localization, dependency checks, and production build for the public sitemap allowlist change.",
-    "Inspect/reproduce the GitHub Actions QA failure; do not guess at its root cause or weaken checks.",
-    "Run npm run test:routes, localization, auth, worker, E2E contract, navigation, dependency checks, and npm run build on the updated branch.",
-    "Review public navigation layout at desktop/mobile breakpoints and Arabic/English RTL/LTR.",
-    "Continue route/dependency inventory against docs/LINETECH-SITEMAP.md and implement only verified, tested changes.",
-    "Keep product catalog, company workspace, and knowledge pages marked as planned until implemented and verified.",
-    "Do not merge into main until applicable checks pass and the change is reviewed."
+    "Review and merge tested V2 structural migration",
+    "Approve actual products and service catalog, then implement product/content backend",
+    "Implement company approval and isolated memberships before enabling company records",
+    "Select payment providers/currencies and approve licence/refund/retention policy",
+    "Implement and validate billing/grace/entitlements with real account tests"
   ]
 }

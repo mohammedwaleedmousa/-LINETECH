@@ -1,4 +1,4 @@
-import PageContent from "./PageContent";
+import PageContent from "../../how-we-work/PageContent";
 
 export const metadata = {
   title: "How We Work",

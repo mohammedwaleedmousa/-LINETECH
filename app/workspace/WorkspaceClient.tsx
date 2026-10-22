@@ -399,7 +399,7 @@ export default function WorkspaceClient() {
         title: t.actionDefaultTitle,
         detail: t.actionDefaultBody,
         label: t.actionDefaultLabel,
-        href: projectHref("/chat", currentProjectId),
+        href: projectHref("/account/projects/messages", currentProjectId),
       }
     : { required: false };
 
@@ -460,8 +460,8 @@ export default function WorkspaceClient() {
             <h2>{t.noRequestTitle}</h2>
             <p>{t.noRequestBody}</p>
             <div>
-              <Link className="ref-btn primary" href="/start">{t.start} ↗</Link>
-              <Link className="ref-btn ghost" href="/service-finder">{t.finder}</Link>
+              <Link className="ref-btn primary" href="/services/request">{t.start} ↗</Link>
+              <Link className="ref-btn ghost" href="/services/guide">{t.finder}</Link>
             </div>
           </div>
         </section>
@@ -678,7 +678,7 @@ export default function WorkspaceClient() {
 
                   <div className="workspace-brief-foot">
                     <span>{completedDate}</span>
-                    <Link href="/start">{t.newRequest} →</Link>
+                    <Link href="/services/request">{t.newRequest} →</Link>
                   </div>
                 </div>
               </details>
@@ -689,14 +689,14 @@ export default function WorkspaceClient() {
             <div className="ref-shell">
               <p className="workspace-kicker">{t.tools}</p>
               <nav className="workspace-tools-line" aria-label={t.tools}>
-                <Link href={projectHref("/chat", currentProjectId)}><span>01</span>{t.conversation}<b>↗</b></Link>
+                <Link href={projectHref("/account/projects/messages", currentProjectId)}><span>01</span>{t.conversation}<b>↗</b></Link>
                 <a href="#files"><span>02</span>{t.files}<b>↓</b></a>
                 {!handoverUnlocked ? (
                   <div className="is-locked">
                     <span>03</span>{t.handover}<b>{t.handoverLocked}</b>
                   </div>
                 ) : (
-                  <Link href={projectHref("/handover", currentProjectId)}><span>03</span>{t.handover}<b>✓</b></Link>
+                  <Link href={projectHref("/account/projects/handover", currentProjectId)}><span>03</span>{t.handover}<b>✓</b></Link>
                 )}
               </nav>
             </div>
