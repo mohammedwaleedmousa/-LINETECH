@@ -1,8 +1,8 @@
 {
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
-  "branch": "codex/platform-sitemap-v2",
-  "status": "platform_v2_structure_implemented_business_modules_pending",
+  "branch": "codex/design-v2-polish",
+  "status": "v2_design_refined_business_modules_pending",
   "updated_on": "2026-10-22",
   "source_of_truth": [
     "docs/LINETECH-SITEMAP.md",
@@ -10,7 +10,7 @@
     "docs/PROJECT-CONTEXT.json",
     "README.md"
   ],
-  "current_goal": "Implement the owner-approved V2 sitemap, migrate existing functions, remove retired standalone pages and obsolete public pricing, and distinguish working workflows from inactive business modules.",
+  "current_goal": "Finalize the V2 UI design while retaining existing auth/API contracts and clear inactive business-module states.",
   "guardrails": [
     "Do not merge to main until required checks pass and the change set is reviewed.",
     "Reuse working features; do not rebuild from scratch without evidence.",
@@ -114,10 +114,11 @@
     "Auditable administration and future least-privilege staff roles"
   ],
   "qa_baseline": {
-    "local": "npm run build passed all eight prebuild checks and static export on 2026-10-22; npx tsc --noEmit passed",
+    "local": "npm run build passed eight prebuild checks and static export; npx tsc --noEmit passed; catalog/knowledge filter and reset interactions covered in AR/EN.",
     "github_actions": "Prior main run 38139124840 failed before runner steps; new remote checks pending",
     "production": "Not deployed or smoke-tested against configured Supabase",
-    "visual": "Blocked: Chromium missing and browser download archives truncated; screenshots and live backend not verified"
+    "visual": "20 local AR/EN screenshot views passed at 390/1440px; temporary Chromium runtime outside repository. Public local UI only, not production/backend validation.",
+    "responsive": "50 checks passed at 320, 390, 768, 1024 and 1440px in AR/EN, plus desktop More and mobile menu behavior; no runtime errors."
   },
   "work_log": [
     {
@@ -198,6 +199,22 @@
         "Catalog/content publication, paid access and checkout",
         "Per-member 7-day billing enforcement, cancellation and invoice history",
         "Production deployment and database-backed end-to-end validation"
+      ]
+    },
+    {
+      "date": "2026-10-22",
+      "branch": "codex/design-v2-polish",
+      "completed": [
+        "Shared responsive hero, SVG icons, category cards, empty states and focus/reduced-motion styling",
+        "Catalog and knowledge filter/reset interactions and bilingual copy",
+        "Three-tier plan design with native FAQ disclosures",
+        "Personal overview/subscription retry states and localized company navigation",
+        "Desktop More disclosure and preserved mobile menu",
+        "Local screenshot inspection of 20 page/language/viewport combinations"
+      ],
+      "remaining": [
+        "Cloudflare account sign-in and deployment",
+        "Business capabilities listed in the V2 sitemap"
       ]
     }
   ],

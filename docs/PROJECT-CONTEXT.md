@@ -1,3 +1,13 @@
+# Design refinement — 2026-10-22
+
+The structural V2 implementation is merged into main at `1f622f2`. The design refinement unifies products/categories, knowledge, pricing, inactive modules, account overview and subscriptions. Shared `app/PlatformUI.tsx` provides scalable SVG icons, headers and empty states; `app/platform-v2.css` is the scoped responsive system. New homepage sections reuse the category card design. Secondary desktop navigation uses a native More disclosure; mobile keeps all public destinations. Company navigation is localized with active-page states.
+
+Catalog and knowledge filters have explicit no-match states and reset actions, verified in Arabic and English. Pricing has no unapproved price/benefit promises and native expandable explanations. Account/subscription views expose retry actions and retain existing APIs/auth. Public-facing text describes what users can do without infrastructure details; inactive modules remain clearly labelled.
+
+Local build, eight prebuild checks and TypeScript passed. Local screenshot review covered 20 AR/EN views of five pages at 390/1440px; the temporary Chromium runtime is outside the repository. Production, signed-in backend workflows, company commerce and tenant isolation remain unverified/unimplemented as documented in the V2 sitemap. Cloudflare deployment is blocked on completion of account sign-in; never claim it succeeded.
+
+---
+
 # LINETECH current project context — 2026-10-22
 
 Current source: `docs/LINETECH-SITEMAP.md` V2, approved for implementation by the owner. Branch: `codex/platform-sitemap-v2`.
@@ -152,3 +162,5 @@ Keep these three artifacts synchronized after each meaningful change:
 Never mark a feature as implemented unless the code exists and the relevant checks support that claim. Record unverified items as pending.
 
 Visual verification limitation (2026-10-22): Playwright could not start because Chromium was unavailable; browser installation failed with truncated download archives. No mobile screenshot QA or live backend validation is claimed.
+
+Final UI verification: 50 responsive checks across 320/390/768/1024/1440px passed in Arabic and English, including desktop More navigation, mobile menu and no runtime errors.

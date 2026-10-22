@@ -250,6 +250,8 @@ export default function SiteNav() {
     };
   }, [searchOpen]);
 
+  useEffect(() => { document.querySelectorAll<HTMLDetailsElement>(".platform-nav-more[open]").forEach(menu => { menu.open = false; }); }, [pathname]);
+
   const clientArea = ["/account/projects","/account/projects/messages","/account/projects/handover","/account"].some(
     route => pathname === route || pathname.startsWith(`${route}/`)
   );
@@ -364,10 +366,11 @@ export default function SiteNav() {
           <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
-          {visibleNavItems.map((item) => {
+          {(clientArea ? visibleNavItems : visibleNavItems.slice(0, 4)).map((item) => {
             const active = isActive(item.href) && !visibleNavItems.some(other => other.href !== item.href && other.href.startsWith(item.href + "/") && isActive(other.href));
             return <Link key={item.href} href={portalHref(item.href)} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>{language === "ar" ? item.ar : item.en}</Link>;
           })}
+          {!clientArea && <details className="platform-nav-more"><summary>{language === "ar" ? "المزيد" : "More"}<span aria-hidden="true">⌄</span></summary><div className="platform-nav-more-menu">{visibleNavItems.slice(4).map(item => <Link key={item.href} href={item.href} prefetch className={isActive(item.href) ? "active" : ""} aria-current={isActive(item.href) ? "page" : undefined} onClick={event => { event.currentTarget.closest("details")?.removeAttribute("open"); }}>{language === "ar" ? item.ar : item.en}</Link>)}</div></details>}
         </nav>
         <div className="ref-nav-end">
           <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "ENG" : "العربية"}</button>

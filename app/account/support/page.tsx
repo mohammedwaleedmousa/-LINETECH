@@ -1,3 +1,3 @@
 import ModulePage from "../../ModulePage";
 export const metadata={title:"Support",robots:{index:false,follow:false}};
-export default function Page(){return <ModulePage title={["الدعم", "Support"]} description={["إنشاء التذاكر ومتابعتها غير مفعّل حاليًا. يمكنك استخدام صفحة التواصل لإرسال استفسارك عبر الوسائل المعروضة.", "Ticket creation and tracking are not active yet. Use the contact page to reach us through the listed channels."]} href="/contact"/>;}
+export default function Page(){return <ModulePage title={["الدعم", "Support"]} description={["نحن هنا لمساعدتك. تواصل معنا عبر القنوات المتاحة لمناقشة استفسارك.", "We are here to help. Reach us through the available channels to discuss your question."]} href="/contact"/>;}
