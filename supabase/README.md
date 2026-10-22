@@ -19,3 +19,5 @@ Worker billing queries use `started_at`, `current_period_start`, and
 `current_period_end`, matching the inspected production schema. A SQL reset/replay
 against a disposable Supabase project is still required to validate a clean bootstrap;
 static schema tests do not substitute for that integration check.
+
+Company applications are added by `migrations/20261022183607_company_applications.sql`. See `../docs/company-applications-setup.md` for rollout and verification. This migration has only been verified locally; no live LINETECH database change is claimed.

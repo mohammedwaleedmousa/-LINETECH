@@ -31,7 +31,7 @@ Product details, article/research details, checkout, licences, paid-content enfo
 | `/account/projects` | Project requests, execution, milestones, files/reviews | Existing protected workspace |
 | `/account/projects/messages` | Project messages | Existing protected chat, preserving project query |
 | `/account/projects/handover` | Deliverables and acceptance | Existing protected handover |
-| `/account/companies` | Memberships and invitations | Explicit inactive state and company-space request entry |
+| `/account/companies` | Companies and application status | Submission/status/review source implemented; migration and deployment pending; invitations remain inactive |
 | `/account/billing` | Personal invoices/payments | Explicit inactive state |
 | `/account/support` | Support | Ticket backend pending; working link to contact channels |
 
@@ -39,11 +39,13 @@ Product details, article/research details, checkout, licences, paid-content enfo
 
 `/company-space/request`, `/company-space`, `/company-space/projects`, `/company-space/members`, `/company-space/billing`, `/company-space/settings`.
 
-All require sign-in. They are explicitly inactive structural pages. Authentication alone is **not** company authorization: do not expose company records until membership authorization and tenant RLS exist. No personal projects are reused as company data. Company requests need LINETECH approval; one personal account may join several companies. Per-member charges, 7-day grace, suspension/restoration and retention are required future behavior. Suspension must not automatically delete data.
+All company pages require sign-in. Application submission (`/company-space/request`), applicant status tracking (`/account/companies`) and the approved company overview (`/company-space?company=<id>`) now have backend/UI implementations. Approval creates a company and its owner membership atomically. RLS isolates these company/application records. The migration and deployment are still pending; see `docs/company-applications-setup.md`.
+
+Members/invitations, company projects, billing and settings remain inactive structural pages. Do not treat company approval as authorization for project records. Per-member billing, the 7-day grace period, suspension/restoration and retention remain future behavior. Suspension must not automatically delete data.
 
 ## LINETECH administration
 
-Existing `/admin`, `/admin/projects`, `/admin/clients`, `/admin/inbox`, `/admin/billing`, `/admin/team`, `/admin/account` and `/admin/login` remain. New `/admin/companies`, `/admin/products`, `/admin/content`, `/admin/audit` are protected structural pages explicitly marked inactive. Existing project activity is not presented as a complete administrative audit trail. The current owner/admin authorization remains; employee permissions require a separate implementation.
+Existing `/admin`, `/admin/projects`, `/admin/clients`, `/admin/inbox`, `/admin/billing`, `/admin/team`, `/admin/account` and `/admin/login` remain. `/admin/companies` now implements application review in source (migration/deployment pending). `/admin/products`, `/admin/content` and `/admin/audit` remain protected inactive structural pages. Existing project activity is not presented as a complete administrative audit trail. The current owner/admin authorization remains; employee permissions require a separate implementation.
 
 ## Retired routes and retained infrastructure
 

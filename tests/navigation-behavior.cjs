@@ -17,7 +17,7 @@ let session = null;
 let fail = false;
 let assets = 0;
 const core = {resolveSession:async()=>{if(fail)throw Error('auth unavailable');return session;},clearCookies:()=>[],withCookies:r=>r,withSecurityHeaders:r=>r};
-const worker = load('worker/index.ts',{'../lib/navigation/return-path':navigation,'./core':core,'./auth':{},'./client':{},'./admin':{}}).default;
+const worker = load('worker/index.ts',{'../lib/navigation/return-path':navigation,'./core':core,'./auth':{},'./client':{},'./admin':{},'./companies':{handleCompanyApi:async()=>null}}).default;
 const env = {ASSETS:{fetch:async()=>{assets++;return new Response('protected asset');}}};
 async function request(p){return worker.fetch(new Request('https://linetech.test'+p),env);}
 (async()=>{
