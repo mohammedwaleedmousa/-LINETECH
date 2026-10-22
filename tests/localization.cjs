@@ -329,7 +329,30 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.equal(document.querySelector('.notification-item.is-unread'), null);
   assert.equal(document.querySelector('.notification-badge'), null);
 
-  console.log('PASS: current Arabic/RTL nav, search, request completion, login, chat and notification flows');
+  const Catalog = require('../app/products/Catalog.tsx').default;
+  const Knowledge = require('../app/knowledge/KnowledgeHub.tsx').default;
+  await render(Catalog);
+  assert.equal(document.querySelectorAll('.platform-category-card').length, 6);
+  await fill(document.querySelector('input[type="search"]'), 'منتج غير موجود');
+  assert.ok(document.body.textContent.includes('لا توجد نتائج مطابقة.'));
+  assert.equal(document.querySelectorAll('.platform-category-card').length, 0);
+  await click(buttonContaining('مسح الفلاتر'));
+  assert.equal(document.querySelector('input[type="search"]').value, '');
+  assert.equal(document.querySelectorAll('.platform-category-card').length, 6);
+  await render(Knowledge);
+  await fill(document.querySelector('input[type="search"]'), 'AI');
+  const typeFilter = document.querySelector('select');
+  await act(async () => { typeFilter.value='research'; typeFilter.dispatchEvent(new window.Event('change', {bubbles:true})); });
+  assert.ok(document.body.textContent.includes('لا يوجد محتوى مطابق.'));
+  await click(buttonContaining('مسح الفلاتر'));
+  assert.equal(document.querySelector('input[type="search"]').value, '');
+  assert.equal(document.querySelector('select').value, '');
+  assert.ok(document.body.textContent.includes('كل معرفة تبدأ بسؤال.'));
+  await act(async () => setLanguage('en'));
+  await render(Catalog);
+  assert.ok(document.body.textContent.includes('Explore the catalog'));
+  assert.equal(document.querySelector('input[type="search"]').placeholder, 'Website, template, tool…');
+  console.log('PASS: Arabic/RTL nav, search, request completion, login, chat, notifications and bilingual catalog/content filter reset');
   await act(async () => root.unmount());
 })().catch(error => {
   console.error(error);

@@ -1,5 +1,37 @@
 "use client";
+
 import Link from "next/link";
-import {useLanguage} from "../Localized";
-const plans=[{code:"basic",ar:"أساسي",en:"Basic"},{code:"professional",ar:"احترافي",en:"Professional"},{code:"company",ar:"شركات",en:"Companies"}];
-export default function Pricing(){const ar=useLanguage()==="ar";return <main className="platform-page"><header className="platform-hero"><p className="ref-kicker">LINETECH / {ar?"الخطط والأسعار":"PLANS & PRICING"}</p><h1>{ar?"ثلاثة مستويات. اختيار واضح.":"Three tiers. A clear choice."}</h1><p>{ar?"نعتمد تفاصيل المزايا والأسعار بعد حصر المنتجات وتكاليف التشغيل. لا تتوفر عملية شراء خطة حاليًا.":"Benefits and prices will be finalized after the product catalog and operating costs are confirmed. Plan checkout is not available yet."}</p></header><section className="platform-section"><div className="platform-grid">{plans.map((p,i)=><article className="platform-card" key={p.code}><small>0{i+1}</small><h2>{ar?p.ar:p.en}</h2><span className="platform-badge">{ar?"قيد الاعتماد":"Pending approval"}</span><p>{ar?"السعر، المزايا، حدود الاستخدام ودورة الفوترة ستُعلن عند اعتماد الخطة.":"Price, benefits, usage limits and billing cycle will be published after approval."}</p><Link href="/contact">{ar?"استفسر عن الخطة":"Ask about this tier"} ↗</Link></article>)}</div><div className="platform-empty"><h2>{ar?"الاشتراك والخدمة المخصصة":"Subscriptions and custom services"}</h2><p>{ar?"تنفيذ مشروع مخصص له عرض سعر ونطاق عمل مستقل عن اشتراكات المنتجات والمحتوى.":"Custom project delivery has a separate quote and scope from product and content subscriptions."}</p><p>{ar?"عضويات الشركات: مهلة دفع 7 أيام، ثم تعليق الوصول وفق السياسة المعتمدة. تعليق الوصول لا يحذف المشاريع أو الملفات تلقائيًا. التجديد والإلغاء والاسترداد والاحتفاظ بالبيانات تحتاج اعتماد التفاصيل قبل تفعيل الدفع.":"Company memberships have a 7-day payment grace period, followed by access suspension under the approved policy. Suspension does not automatically delete projects or files. Renewal, cancellation, refunds and data retention require final policy approval before payments are enabled."}</p></div></section></main>}
+import { useLanguage } from "../Localized";
+import { PlatformHero, PlatformIcon } from "../PlatformUI";
+
+const plans = [
+  {code:"basic", ar:"أساسي", en:"Basic", audienceAr:"نقطة البداية", audienceEn:"Your starting point", icon:"user"},
+  {code:"professional", ar:"احترافي", en:"Professional", audienceAr:"مساحة أكبر لطموحك", audienceEn:"Room for your ambition", icon:"layers"},
+  {code:"company", ar:"شركات", en:"Companies", audienceAr:"لأعمالك وفريقك", audienceEn:"For your business & team", icon:"grid"},
+];
+
+export default function Pricing() {
+  const ar = useLanguage() === "ar";
+  return <main className="platform-page platform-pricing-page">
+    <PlatformHero eyebrow={ar ? "الخطط والأسعار" : "PLANS & PRICING"} title={ar ? "مساحة لطموحك.\nوخطة لخطوتك القادمة." : "Space for your ambition.\nA plan for your next step."} description={ar ? "ثلاثة مستويات للاشتراك في منظومة LINETECH. سنعلن الأسعار والمزايا وحدود الاستخدام عند اعتماد المنتجات المشمولة." : "Three subscription tiers for the LINETECH platform. Prices, benefits and usage limits will be published once the included products are confirmed."} icon="layers">
+      <a href="#plans" className="platform-button primary">{ar ? "تعرّف على المستويات" : "Explore the tiers"}<PlatformIcon kind="arrow"/></a>
+      <span className="platform-availability"><i/>{ar ? "الاشتراكات قيد التجهيز" : "Subscriptions in preparation"}</span>
+    </PlatformHero>
+    <section className="platform-section" id="plans" aria-label={ar ? "مستويات الاشتراك" : "Subscription tiers"}>
+      <div className="platform-grid platform-plan-grid">{plans.map((p, i) => <article className={`platform-card platform-plan-card ${i===1 ? "platform-plan-accent" : ""}`} key={p.code}>
+        <div className="platform-card-top"><span className="platform-card-icon"><PlatformIcon kind={p.icon}/></span><span className="platform-badge">{ar ? "قريبًا" : "Coming soon"}</span></div>
+        <p className="platform-plan-audience">{ar ? p.audienceAr : p.audienceEn}</p><h2>{ar ? p.ar : p.en}</h2>
+        <div className="platform-plan-price"><strong>—</strong><span>{ar ? "السعر يُعلن لاحقًا" : "Pricing to be announced"}</span></div>
+        <ul className="platform-plan-details">{[ar ? "المزايا المشمولة قيد الاعتماد" : "Included benefits pending approval", ar ? "حدود الاستخدام تُعلن مع الإطلاق" : "Usage limits published at launch", ar ? "تفاصيل التجديد والإلغاء ستُوضّح مسبقًا" : "Renewal and cancellation explained upfront"].map(x => <li key={x}><span className="platform-detail-dot"/>{x}</li>)}</ul>
+        <Link className={`platform-button ${i===1 ? "primary" : "secondary"}`} href="/contact">{ar ? "استفسر عن المستوى" : "Ask about this tier"}<PlatformIcon kind="arrow"/></Link>
+      </article>)}</div>
+      <aside className="platform-service-note"><span className="platform-card-icon"><PlatformIcon kind="technical-services"/></span><div><h2>{ar ? "لديك مشروع خاص؟" : "Have a custom project?"}</h2><p>{ar ? "الخدمات المخصصة لها نطاق عمل وعرض سعر مستقل. أخبرنا بفكرتك لنحدد الحل المناسب." : "Custom services have their own scope and quote. Tell us about your idea to find the right solution."}</p></div><Link className="platform-text-link" href="/services/request">{ar ? "اطلب مشروعًا" : "Request a project"}<span>↗</span></Link></aside>
+      <div className="platform-section-heading"><div><p className="platform-eyebrow">{ar ? "قبل أن تبدأ" : "BEFORE YOU START"}</p><h2>{ar ? "تفاصيل واضحة من البداية." : "Clarity from the beginning."}</h2></div></div>
+      <div className="platform-faq-list">
+        <details><summary>{ar ? "متى يمكنني الاشتراك؟" : "When can I subscribe?"}<span>+</span></summary><p>{ar ? "الشراء غير متاح حاليًا. ستظهر المزايا والأسعار النهائية ووسائل الدفع قبل تفعيل الاشتراكات." : "Checkout is not available yet. Final benefits, prices and payment methods will be published before subscriptions open."}</p></details>
+        <details><summary>{ar ? "كيف تعمل عضويات الشركات؟" : "How will company memberships work?"}<span>+</span></summary><p>{ar ? "النموذج المخطط يعتمد فوترة الأعضاء ومهلة دفع 7 أيام، ثم تعليق الوصول وفق السياسة المعتمدة. التفاصيل النهائية ستُنشر قبل التفعيل." : "The planned model uses per-member billing with a 7-day payment grace period, followed by access suspension under the approved policy. Final details will be published before activation."}</p></details>
+        <details><summary>{ar ? "ماذا يحدث للبيانات عند التعليق؟" : "What happens to data during suspension?"}<span>+</span></summary><p>{ar ? "تعليق الاشتراك لا يعني حذف المشاريع أو الملفات تلقائيًا. ستوضّح سياسة مستقلة مدة الاحتفاظ بالبيانات واستعادة الوصول، إلى جانب شروط التجديد والإلغاء والاسترداد." : "Subscription suspension does not automatically delete projects or files. A separate policy will explain retention and restored access, alongside renewal, cancellation and refund terms."}</p></details>
+      </div>
+    </section>
+  </main>;
+}
