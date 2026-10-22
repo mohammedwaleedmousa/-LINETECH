@@ -205,8 +205,8 @@ export default function PageContent() {
         <div className="ref-shell work-cta-inner">
           <div><p className="work-kicker">{t.cta.kicker}</p><h2>{t.cta.title}</h2><p>{t.cta.lead}</p></div>
           <div className="work-cta-actions">
-            <Link className="ref-btn primary" href="/start">{t.cta.start} ↗</Link>
-            <Link className="ref-btn ghost" href="/service-finder">{t.cta.finder}</Link>
+            <Link className="ref-btn primary" href="/services/request">{t.cta.start} ↗</Link>
+            <Link className="ref-btn ghost" href="/services/guide">{t.cta.finder}</Link>
           </div>
         </div>
       </section>

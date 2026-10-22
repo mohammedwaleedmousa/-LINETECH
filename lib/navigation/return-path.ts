@@ -3,7 +3,7 @@ export function documentPath(pathname: string): string {
   return pathname.replace(/\/index\.(?:txt|html)$/, "").replace(/\/+$/, "") || "/";
 }
 
-export function safeReturnPath(value: unknown, fallback = "/workspace"): string {
+export function safeReturnPath(value: unknown, fallback = "/account/projects"): string {
   if (typeof value !== "string" || !value.startsWith("/") || value.startsWith("//") || /[\\\u0000-\u001f]/.test(value)) return fallback;
   try {
     const url = new URL(value, "https://linetech.local");
@@ -18,5 +18,5 @@ export function safeReturnPath(value: unknown, fallback = "/workspace"): string 
 }
 
 export function isProtectedPath(pathname: string): boolean {
-  return /^\/(?:admin|workspace|chat|handover|account)(?:\/|$)/.test(documentPath(pathname));
+  return /^\/(?:admin|workspace|chat|handover|account|company-space)(?:\/|$)/.test(documentPath(pathname));
 }

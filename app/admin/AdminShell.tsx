@@ -11,6 +11,10 @@ const nav = [
   { href: "/admin/clients", label: "Clients", index: "04" },
   { href: "/admin/billing", label: "Billing", index: "05" },
   { href: "/admin/team", label: "Team & Accounts", index: "06" },
+  { href: "/admin/companies", label: "Companies & applications", index: "08" },
+  { href: "/admin/products", label: "Products & services", index: "09" },
+  { href: "/admin/content", label: "Content & research", index: "10" },
+  { href: "/admin/audit", label: "Audit log", index: "11" },
   { href: "/admin/account", label: "Admin Account", index: "07" },
 ];
 

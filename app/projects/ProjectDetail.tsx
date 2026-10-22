@@ -64,7 +64,7 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
           <p className="ref-kicker">{tag}</p>
           <h1>{title}</h1>
           <p className="project-detail-lead">{lead}</p>
-          <div className="ref-hero-actions"><Link className="ref-btn primary" href="/start" prefetch>Build with us ↗</Link><Link className="ref-btn ghost" href="/projects" prefetch>All projects</Link></div>
+          <div className="ref-hero-actions"><Link className="ref-btn primary" href="/services/request" prefetch>Build with us ↗</Link><Link className="ref-btn ghost" href="/projects" prefetch>All projects</Link></div>
         </div>
         <div className="project-detail-visual" aria-hidden="true"><span>LINETECH / CASE STUDY</span><div>{visualWords.map((word)=><strong key={word}>{word}</strong>)}</div><i/></div>
       </div>
@@ -128,6 +128,6 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
       </div>
     </section>
 
-    <section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">YOUR NEXT PROJECT</p><h2>Have a product that needs a clearer line?</h2><p>Start with the problem. We will help shape the right product.</p></div><Link className="ref-btn primary" href="/start" prefetch>Start Your Line ↗</Link></div></section>
+    <section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">YOUR NEXT PROJECT</p><h2>Have a product that needs a clearer line?</h2><p>Start with the problem. We will help shape the right product.</p></div><Link className="ref-btn primary" href="/services/request" prefetch>Start Your Line ↗</Link></div></section>
   </main></Localized>;
 }

@@ -17,11 +17,7 @@ function normalized(pathname:string) {
 }
 
 const publicSitemapRoutes = new Set([
-  "/", "/services", "/services/web-development", "/services/ecommerce-systems",
-  "/services/brand-identity", "/services/cv-portfolio", "/projects",
-  "/projects/flamingo-park", "/projects/etqan", "/projects/ledgerpro",
-  "/about", "/faq", "/start", "/privacy", "/terms", "/pricing",
-  "/how-we-work", "/service-finder", "/contact", "/products", "/knowledge",
+  "/", "/products", "/products/category/websites", "/products/category/mobile-apps", "/products/category/software-saas", "/products/category/brand-design", "/products/category/templates-tools", "/products/category/technical-services", "/services", "/services/web-development", "/services/ecommerce-systems", "/services/brand-identity", "/services/cv-portfolio", "/services/request", "/services/guide", "/services/process", "/projects", "/projects/flamingo-park", "/projects/etqan", "/projects/ledgerpro", "/knowledge", "/pricing", "/about", "/contact", "/faq", "/privacy", "/terms"
 ]);
 
 // Required account entry points and internal handoff utility remain functional,
@@ -64,12 +60,12 @@ function shouldLogRequest(request:Request,path:string,status:number) {
   return path.startsWith("/api/")
     || path==="/admin"
     || path.startsWith("/admin/")
-    || path==="/workspace"
-    || path.startsWith("/workspace/")
-    || path==="/chat"
-    || path.startsWith("/chat/")
-    || path==="/handover"
-    || path.startsWith("/handover/")
+    || path==="/account/projects"
+    || path.startsWith("/account/projects/")
+    || path==="/account/projects/messages"
+    || path.startsWith("/account/projects/messages/")
+    || path==="/account/projects/handover"
+    || path.startsWith("/account/projects/handover/")
     || path==="/account"
     || path.startsWith("/account/")
     || request.headers.get("Sec-Fetch-Mode")==="navigate"
@@ -96,6 +92,9 @@ function logRequest(request:Request,path:string,response:Response,requestId:stri
 }
 
 async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise<Response> {
+  const legacyRoutes:Record<string,string> = {"/service-finder": "/services/guide", "/how-we-work": "/services/process", "/start": "/services/request", "/workspace": "/account/projects", "/chat": "/account/projects/messages", "/handover": "/account/projects/handover"};
+  if (legacyRoutes[path]) { const target=new URL(legacyRoutes[path],request.url); target.search=url.search; return Response.redirect(target.toString(),308); }
+
   if(path==="/api/health" && request.method==="GET") {
     const upstream=await authFetch(env,"/health",{method:"GET"});
     return upstream.ok
@@ -148,9 +147,10 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
   }
 
   if(
-    path==="/workspace" || path.startsWith("/workspace/")
-    || path==="/chat" || path.startsWith("/chat/")
-    || path==="/handover" || path.startsWith("/handover/")
+    path==="/company-space" || path.startsWith("/company-space/")
+    || path==="/account/projects" || path.startsWith("/account/projects/")
+    || path==="/account/projects/messages" || path.startsWith("/account/projects/messages/")
+    || path==="/account/projects/handover" || path.startsWith("/account/projects/handover/")
     || path==="/account" || path.startsWith("/account/")
   ) {
     const session=await resolveSession(request,env);
@@ -158,12 +158,6 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
       return loginRedirect(request,url.pathname+url.search,clearCookies());
     }
     return withCookies(await env.ASSETS.fetch(request),session.setCookies);
-  }
-
-  // Product category routes are not in the current approved XML sitemap.
-  // Keep the catalogue landing page, but do not expose unlisted category pages.
-  if (path === "/products/category" || path.startsWith("/products/category/")) {
-    return hiddenRouteResponse();
   }
 
   if (!isPublicRouteAllowed(path)) return hiddenRouteResponse();

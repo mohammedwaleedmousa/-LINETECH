@@ -18,9 +18,7 @@ for (const file of [
 const wrangler = read("wrangler.jsonc");
 assert.match(wrangler, /"main"\s*:\s*"\.\/worker\/index\.ts"/);
 assert.match(wrangler, /"binding"\s*:\s*"ASSETS"/);
-for (const route of ["/api/*","/workspace*","/chat*","/admin*","/handover*"]) {
-  assert.ok(wrangler.includes(route), `Missing Worker-first route: ${route}`);
-}
+assert.ok(JSON.parse(wrangler).assets.run_worker_first === true, "Every document must pass through Worker authorization and route policy");
 assert.match(wrangler, /"observability"\s*:\s*\{/);
 assert.match(wrangler, /"enabled"\s*:\s*true/);
 assert.match(wrangler, /"head_sampling_rate"\s*:\s*1/);
@@ -48,8 +46,8 @@ assert.ok(workerIndex.includes('path==="/admin/login"'));
 assert.ok(workerIndex.includes("adminLoginRedirect"));
 assert.ok(workerIndex.includes('app_metadata?.role==="admin"'));
 assert.ok(workerIndex.includes('new URL("/admin",request.url)'));
-assert.ok(workerIndex.includes('path==="/handover"'));
-const clientPortalRouteStart = workerIndex.lastIndexOf('path==="/workspace"');
+assert.ok(workerIndex.includes('path==="/account/projects/handover"'));
+const clientPortalRouteStart = workerIndex.lastIndexOf('path==="/account/projects"');
 const clientPortalRouteEnd = workerIndex.indexOf('return env.ASSETS.fetch(request);', clientPortalRouteStart);
 const clientPortalRouteBlock = workerIndex.slice(clientPortalRouteStart, clientPortalRouteEnd);
 assert.ok(clientPortalRouteBlock.includes("loginRedirect"));
@@ -184,7 +182,7 @@ assert.ok(nav.includes("setInterval"));
 assert.ok(nav.includes("visibilitychange"));
 assert.ok(nav.includes('href="/account"'));
 assert.ok(nav.includes("Account Settings"));
-assert.ok(nav.includes('href="/workspace"'));
+assert.ok(nav.includes('href="/account/projects"'));
 assert.ok(nav.includes("const clientItems"));
 assert.ok(nav.includes('en: "Project Chat"'));
 assert.ok(nav.includes('en: "Handover"'));
@@ -229,10 +227,10 @@ assert.ok(projectIntake.includes("window.crypto.randomUUID()"));
 assert.ok(projectIntake.includes("submissionKey,"));
 assert.ok(projectIntake.includes('/api/auth/session'));
 assert.ok(projectIntake.includes('submittedProjectId'));
-assert.ok(projectIntake.includes('/workspace?project='));
-assert.ok(projectIntake.includes('/chat?project='));
-assert.ok(projectIntake.includes(': "/workspace"'));
-assert.ok(projectIntake.includes(': "/chat"'));
+assert.ok(projectIntake.includes('/account/projects?project='));
+assert.ok(projectIntake.includes('/account/projects/messages?project='));
+assert.ok(projectIntake.includes(': "/account/projects"'));
+assert.ok(projectIntake.includes(': "/account/projects/messages"'));
 assert.ok(projectIntake.includes("requestTooLarge"));
 assert.ok(projectIntake.includes("serviceUnavailable"));
 assert.ok(projectIntake.includes("requestDraftTtlMs"));
@@ -249,7 +247,7 @@ assert.ok(workspaceClient.includes("handoverUnlocked"));
 assert.ok(workspaceClient.includes("localizeWorkspaceText"));
 assert.ok(workspaceClient.includes("ClientProjectSwitcher"));
 assert.ok(workspaceClient.includes("requestedProjectSuffix"));
-assert.ok(workspaceClient.includes('projectHref("/chat", currentProjectId)'));
+assert.ok(workspaceClient.includes('projectHref("/account/projects/messages", currentProjectId)'));
 assert.ok(workspaceClient.includes("workspace-hero"));
 assert.ok(workspaceClient.includes("ContentHeroArt"));
 assert.ok(!workspaceClient.includes("workspace-dashboard-head"));
@@ -290,17 +288,17 @@ assert.ok(handoverClient.includes("loadHandover"));
 assert.ok(handoverClient.includes("visibilitychange"));
 assert.ok(handoverClient.includes("ClientProjectSwitcher"));
 assert.ok(handoverClient.includes("requestedProjectSuffix"));
-assert.ok(handoverClient.includes('projectHref("/workspace", currentProjectId)'));
+assert.ok(handoverClient.includes('projectHref("/account/projects", currentProjectId)'));
 assert.ok(client.includes("category=in.(handover,deliverable)"));
 assert.ok(client.includes("status=in.(ready,approved)"));
-assert.ok(workspaceClient.includes('projectHref("/handover", currentProjectId)'));
+assert.ok(workspaceClient.includes('projectHref("/account/projects/handover", currentProjectId)'));
 
 for (const file of [
   "app/account/page.tsx",
   "app/account/AccountClient.tsx",
   "app/admin/page.tsx",
   "app/admin/AdminClient.tsx",
-  "app/handover/page.tsx",
+  "app/account/projects/handover/page.tsx",
   "app/handover/HandoverClient.tsx",
 ]) {
   assert.ok(fs.existsSync(path.join(root, file)), `Missing protected workspace file: ${file}`);
@@ -363,8 +361,8 @@ assert.ok(adminClient.includes("/api/admin/chat/upload"));
 assert.ok(admin.includes("file_status_updated"));
 assert.ok(admin.includes("Project file updated"));
 assert.ok(admin.includes('action_kind:"message"'));
-assert.ok(admin.includes('clientProjectPath("/chat",projectId)'));
-assert.ok(admin.includes('clientProjectPath(handoverReady?"/handover":"/workspace",projectId)'));
+assert.ok(admin.includes('clientProjectPath("/account/projects/messages",projectId)'));
+assert.ok(admin.includes('clientProjectPath(handoverReady?"/account/projects/handover":"/account/projects",projectId)'));
 assert.ok(admin.includes('title:"Handover updated"'));
 assert.ok(admin.includes("clientProjectPath"));
 assert.ok(admin.includes('title:item.completed?"Handover item completed":"Handover updated"'));

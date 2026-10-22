@@ -45,7 +45,7 @@ async function main() {
     );
   }
 
-  for (const protectedPath of ["/workspace","/chat","/handover","/account"]) {
+  for (const protectedPath of ["/account/projects","/account/projects/messages","/account/projects/handover","/account"]) {
     const response = await fetch(`${base}${protectedPath}`, { redirect: "manual" });
     assert.ok(
       [301,302,303,307,308].includes(response.status),
@@ -59,21 +59,21 @@ async function main() {
   const robots = await fetch(`${base}/robots.txt`);
   assert.equal(robots.status, 200, "robots.txt is unavailable");
   const robotsText = await robots.text();
-  for (const privatePath of ["/admin","/login","/workspace","/chat","/handover","/account","/api/"]) {
+  for (const privatePath of ["/admin","/login","/account/projects","/account/projects/messages","/account/projects/handover","/account","/api/"]) {
     assert.ok(robotsText.includes(`Disallow: ${privatePath}`), `robots.txt exposes private path ${privatePath}`);
   }
 
   const sitemap = await fetch(`${base}/sitemap.xml`);
   assert.equal(sitemap.status, 200, "sitemap.xml is unavailable");
   const sitemapText = await sitemap.text();
-  for (const publicPath of ["/pricing","/how-we-work","/service-finder"]) {
+  for (const publicPath of ["/pricing","/services/process","/services/guide"]) {
     assert.ok(sitemapText.includes(`${publicPath}</loc>`), `sitemap is missing ${publicPath}`);
   }
 
   const adminLogin = await fetch(`${base}/admin/login`, { redirect: "manual" });
   assert.ok(adminLogin.status >= 200 && adminLogin.status < 400, `Admin login returned ${adminLogin.status}`);
 
-  for (const publicPath of ["/services","/pricing","/projects","/about","/how-we-work","/service-finder","/privacy","/terms","/start"]) {
+  for (const publicPath of ["/services","/pricing","/projects","/about","/services/process","/services/guide","/privacy","/terms","/services/request"]) {
     const response = await fetch(`${base}${publicPath}`, { redirect: "manual" });
     assert.ok(
       response.status >= 200 && response.status < 400,

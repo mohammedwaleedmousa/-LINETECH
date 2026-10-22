@@ -530,7 +530,7 @@ export default function ChatWorkspace(){
     <div className={`chat-main ${dragging?"is-dragging":""}`} onDragEnter={event=>{event.preventDefault();setDragging(true)}} onDragOver={event=>event.preventDefault()} onDragLeave={event=>{if(event.currentTarget===event.target)setDragging(false)}} onDrop={onDrop}>
       <header className="chat-header">
         <div className="chat-header-person"><span className="chat-avatar large"><i/><b/></span><div><strong>LINETECH Project Team</strong><span><i/> Project conversation</span></div></div>
-        <div className="chat-header-actions"><a href={currentProjectId ? `/workspace?project=${encodeURIComponent(currentProjectId)}` : "/workspace"} aria-label="Open project workspace">↗</a></div>
+        <div className="chat-header-actions"><a href={currentProjectId ? `/account/projects?project=${encodeURIComponent(currentProjectId)}` : "/account/projects"} aria-label="Open project workspace">↗</a></div>
       </header>
 
       <div className="chat-preview-banner"><span>PROJECT WORKSPACE</span><p>Messages, photos, documents and voice notes are securely connected to this project.</p></div>

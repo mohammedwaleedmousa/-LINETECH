@@ -72,7 +72,7 @@ export default function CompanyProfile() {
             <p className={styles.label}>{t.modelLabel}</p>
             <h3>{t.modelTitle}</h3>
             <p>{t.modelText}</p>
-            <Link href="/how-we-work" prefetch>{t.process}<span>→</span></Link>
+            <Link href="/services/process" prefetch>{t.process}<span>→</span></Link>
           </div>
           <div className={styles.standard}>
             {t.standard.map(([title, text], index) => (

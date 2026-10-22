@@ -7,18 +7,8 @@ import ScopePreview from "./ScopePreview";
 import "./custom-select.css";
 
 const services = ["Web Development", "E-commerce & Systems", "Brand Identity", "CV & Portfolio", "Other"] as const;
-const planOptions: Record<string, readonly string[]> = {
-  "Web Development": ["START", "BUSINESS", "PRO", "CUSTOM"],
-  "E-commerce & Systems": ["E-COMMERCE", "E-COMMERCE PRO", "CUSTOM"],
-};
-const planSummaries: Record<string, {setup: string; monthly: string; en: string; ar: string}> = {
-  START: {setup: "$149", monthly: "$19", en: "Up to 5 pages · One language", ar: "حتى 5 صفحات · لغة واحدة"},
-  BUSINESS: {setup: "$299", monthly: "$35", en: "Up to 10 pages · Arabic + English", ar: "حتى 10 صفحات · العربية والإنجليزية"},
-  PRO: {setup: "$499", monthly: "$59", en: "Up to 20 pages · Bookings", ar: "حتى 20 صفحة · حجوزات"},
-  "E-COMMERCE": {setup: "$699", monthly: "$79", en: "Up to 1,000 products · Store management", ar: "حتى 1,000 منتج · إدارة المتجر"},
-  "E-COMMERCE PRO": {setup: "$1,199", monthly: "$129", en: "Up to 10,000 products · Advanced inventory", ar: "حتى 10,000 منتج · مخزون متقدم"},
-  CUSTOM: {setup: "", monthly: "$199+", en: "A scope tailored to your business", ar: "نطاق مخصص لاحتياجات عملك"},
-};
+const planOptions: Record<string, readonly string[]> = {};
+const planSummaries: Record<string, {setup: string; monthly: string; en: string; ar: string}> = {};
 const stages = ["New idea", "Existing project", "Redesign / rebuild", "Improve an existing system"] as const;
 const goals = ["Sell / generate leads", "Bookings / requests", "Internal operations", "Build credibility", "Career / portfolio", "Other"] as const;
 const preferredContacts = ["WhatsApp", "Email", "Call", "Either"] as const;
@@ -477,7 +467,7 @@ export default function ProjectIntake() {
           window.sessionStorage.setItem(requestDraftKey, pendingDraft);
           window.localStorage.setItem(requestDraftKey, pendingDraft);
         } catch {}
-        window.location.assign("/login?next=/start");
+        window.location.assign("/login?next=/services/request");
         return;
       }
 
@@ -633,8 +623,8 @@ export default function ProjectIntake() {
       {actionStatus && <p className="brief-action-status" role="status">{actionStatus}</p>}
 
       <div className="brief-actions request-finish-actions">
-        <Link className="button button-light" href={submittedProjectId ? `/workspace?project=${encodeURIComponent(submittedProjectId)}` : "/workspace"}>{copy.openWorkspace} <span>→</span></Link>
-        <Link className="brief-share request-chat-link" href={submittedProjectId ? `/chat?project=${encodeURIComponent(submittedProjectId)}` : "/chat"}>{copy.openChat} <span>→</span></Link>
+        <Link className="button button-light" href={submittedProjectId ? `/account/projects?project=${encodeURIComponent(submittedProjectId)}` : "/account/projects"}>{copy.openWorkspace} <span>→</span></Link>
+        <Link className="brief-share request-chat-link" href={submittedProjectId ? `/account/projects/messages?project=${encodeURIComponent(submittedProjectId)}` : "/account/projects/messages"}>{copy.openChat} <span>→</span></Link>
         <button className="brief-share" type="button" onClick={copyBrief}>{copied ? copy.copied : copy.copy} <span>→</span></button>
       </div>
     </section>}

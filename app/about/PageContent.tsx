@@ -138,7 +138,7 @@ export default function AboutPage() {
             <h1 data-about-motion="hero">{t.hero.title}</h1>
             <p className={styles.heroLead} data-about-motion="hero">{t.hero.lead}</p>
             <div className={styles.heroActions} data-about-motion="hero">
-              <Link className={styles.primary} href="/start" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
+              <Link className={styles.primary} href="/services/request" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
               <Link className={styles.secondary} href="/projects" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
@@ -191,7 +191,7 @@ export default function AboutPage() {
       </section>
 
       <section className="ref-cta" data-about-motion="reveal">
-        <div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">{t.cta.kicker}</p><h2>{t.cta.title}</h2><p>{t.cta.lead}</p></div><Link className="ref-btn primary" href="/start" prefetch>{t.cta.button} ↗</Link></div>
+        <div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">{t.cta.kicker}</p><h2>{t.cta.title}</h2><p>{t.cta.lead}</p></div><Link className="ref-btn primary" href="/services/request" prefetch>{t.cta.button} ↗</Link></div>
       </section>
     </main>
   );

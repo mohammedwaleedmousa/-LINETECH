@@ -78,7 +78,7 @@ export default function FaqPage(){
             <p className="ref-kicker">{t.sideKicker}</p>
             <h2>{t.sideTitle}</h2>
             <p>{t.sideLead}</p>
-            <Link className="ref-btn ghost faq-aside-button" href="/start" prefetch>
+            <Link className="ref-btn ghost faq-aside-button" href="/services/request" prefetch>
               {t.cta} <span aria-hidden="true">→</span>
             </Link>
           </aside>

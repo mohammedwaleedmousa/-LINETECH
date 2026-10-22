@@ -62,7 +62,7 @@ export default function ServiceDetail({
   engagement,
 }: ServiceDetailProps) {
   const language = useLanguage();
-  const startHref = `/start?service=${encodeURIComponent(serviceParam)}`;
+  const startHref = `/services/request?service=${encodeURIComponent(serviceParam)}`;
   const e = engagement[language];
   const labels = engagementLabels[language];
   const engagementColumns: Array<[string, string, string[]]> = [

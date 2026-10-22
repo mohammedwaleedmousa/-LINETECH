@@ -1,3 +1,19 @@
+# LINETECH current project context — 2026-10-22
+
+Current source: `docs/LINETECH-SITEMAP.md` V2, approved for implementation by the owner. Branch: `codex/platform-sitemap-v2`.
+
+The new platform structure includes the public site, unified personal account, inactive company-space structure and expanded admin navigation. Existing account/project/chat/file/handover APIs and security are retained. Six standalone pages have been deleted and moved under canonical service/account routes; legacy Worker redirects preserve project parameters and old notification destinations.
+
+Products and knowledge have working empty-catalog filters. Pricing now displays Basic, Professional and Companies with pending prices/benefits and no purchase action. Existing subscription data remains available through the authenticated account API. Product checkout, publication, licenses, invoice history, company requests/memberships, tenant isolation, invitations, per-member billing and the complete audit backend are **not implemented**. Their pages explicitly state this.
+
+Local `npm run build` passed the eight prebuild checks and static export; `npx tsc --noEmit` passed. Migration tests cover old URLs, project query retention, nested account/company authentication and fail-closed access. Production and configured Supabase workflows have not been tested. Detailed visual QA is recorded in the final change notes when available.
+
+No database schema/data or Supabase configuration was changed. No deployment is claimed. Next: merge reviewed structural migration, approve actual catalog and commercial policies, then implement remaining business modules with backend and authorization tests.
+
+---
+
+## Historical context (superseded by V2 above)
+
 # LINETECH — Current Project Context
 
 > **Purpose:** A handoff document for a new ChatGPT conversation, coding agent, or contributor. Read this file first, then `docs/PROJECT-CONTEXT.json`, `docs/LINETECH-SITEMAP.md`, and `README.md`.
@@ -134,3 +150,5 @@ Keep these three artifacts synchronized after each meaningful change:
 - `README.md`: public project overview, implemented features, QA commands/status, and links to the two context files and sitemap.
 
 Never mark a feature as implemented unless the code exists and the relevant checks support that claim. Record unverified items as pending.
+
+Visual verification limitation (2026-10-22): Playwright could not start because Chromium was unavailable; browser installation failed with truncated download archives. No mobile screenshot QA or live backend validation is claimed.

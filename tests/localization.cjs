@@ -183,7 +183,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await render(Bridge, Nav, Intake);
   assert.equal(document.documentElement.dir, 'rtl');
   assert.ok(document.body.textContent.includes('الخدمات'));
-  assert.ok(document.body.textContent.includes('الباقات'));
+  assert.ok(document.body.textContent.includes('الخطط والأسعار'));
   assert.ok(document.body.textContent.includes('تسجيل الدخول'));
 
 
@@ -198,11 +198,8 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.ok(projectCards[0], 'Expected project type cards');
   await click(projectCards[0]);
   await click(document.querySelector('.intake-nav-end .button'));
-  assert.ok(document.body.textContent.includes('اختر الباقة الأقرب لك.'));
-
-  const planButtons = [...document.querySelectorAll('.plan-option-grid button')];
-  assert.ok(planButtons[0], 'Expected plan options for web development');
-  await click(planButtons[0]);
+  assert.ok(document.body.textContent.includes('مسارك جاهز.'));
+  assert.equal(document.querySelectorAll('.plan-option-grid button').length, 0, 'Retired paid service packages must not appear');
   await click(document.querySelector('.intake-nav .button'));
   assert.ok(document.body.textContent.includes('حوّل الفكرة إلى طلب واضح.'));
 

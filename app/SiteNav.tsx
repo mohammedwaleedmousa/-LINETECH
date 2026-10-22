@@ -20,10 +20,11 @@ const items = [
 
 const clientItems = [
   { href: "/", en: "Home", ar: "الرئيسية" },
-  { href: "/workspace", en: "Workspace", ar: "مساحة العمل" },
-  { href: "/chat", en: "Project Chat", ar: "محادثة المشروع" },
-  { href: "/handover", en: "Handover", ar: "التسليم" },
+  { href: "/account/projects", en: "Workspace", ar: "مساحة العمل" },
+  { href: "/account/projects/messages", en: "Project Chat", ar: "محادثة المشروع" },
+  { href: "/account/projects/handover", en: "Handover", ar: "التسليم" },
   { href: "/account", en: "Account", ar: "الحساب" },
+  { href: "/account/companies", en: "My companies", ar: "شركاتي" },
 ] as const;
 
 const searchItems = [
@@ -33,8 +34,8 @@ const searchItems = [
   { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology الرئيسية لينتك تقنية" },
   { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },
   { title: "Pricing", meta: "Plans", href: "/pricing", keywords: "pricing plans packages subscription website ecommerce اسعار باقات اشتراك مواقع متاجر" },
-  { title: "Find Your Service", meta: "Guide", href: "/service-finder", keywords: "service finder recommend choose service find help موجّه اختيار خدمة خدمتك" },
-  { title: "How We Work", meta: "Process", href: "/how-we-work", keywords: "process workflow scope proposal handover كيف نعمل مراحل نطاق عرض تسليم" },
+  { title: "Find Your Service", meta: "Guide", href: "/services/guide", keywords: "service finder recommend choose service find help موجّه اختيار خدمة خدمتك" },
+  { title: "How We Work", meta: "Process", href: "/services/process", keywords: "process workflow scope proposal handover كيف نعمل مراحل نطاق عرض تسليم" },
   { title: "Web Development", meta: "Service", href: "/services/web-development", keywords: "website web development landing business custom apps تطوير ويب مواقع تطبيقات" },
   { title: "E-commerce & Systems", meta: "Service", href: "/services/ecommerce-systems", keywords: "ecommerce commerce systems dashboard booking تجارة الكترونية أنظمة لوحات تحكم حجوزات" },
   { title: "Brand Identity", meta: "Service", href: "/services/brand-identity", keywords: "brand branding logo visual identity guidelines هوية بصرية شعار علامة" },
@@ -47,11 +48,11 @@ const searchItems = [
   { title: "FAQ", meta: "Page", href: "/faq", keywords: "faq questions payments revisions support timeline اسئلة شائعة دفعات تعديلات دعم" },
   { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief خصوصية بيانات معلومات" },
   { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website شروط نطاق دفعات اتفاق" },
-  { title: "Chat", meta: "Client", href: "/chat", keywords: "chat messages conversation support client company project محادثة رسائل دعم عميل شركة" },
-  { title: "Client Workspace", meta: "Client", href: "/workspace", keywords: "workspace project status files handover client مساحة العميل المشروع الحالة الملفات التسليم" },
+  { title: "Chat", meta: "Client", href: "/account/projects/messages", keywords: "chat messages conversation support client company project محادثة رسائل دعم عميل شركة" },
+  { title: "Client Workspace", meta: "Client", href: "/account/projects", keywords: "workspace project status files handover client مساحة العميل المشروع الحالة الملفات التسليم" },
   { title: "Account Settings", meta: "Account", href: "/account", keywords: "account profile email password sessions settings client حساب ملف شخصي بريد كلمة مرور جلسات إعدادات" },
   { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace تسجيل دخول إنشاء حساب" },
-  { title: "Start Your Line", meta: "Project request", href: "/start", keywords: "start project brief build idea ابدأ مشروع ملخص فكرة" },
+  { title: "Start Your Line", meta: "Project request", href: "/services/request", keywords: "start project brief build idea ابدأ مشروع ملخص فكرة" },
 ] as const;
 
 type SiteLanguage = "ar" | "en";
@@ -86,14 +87,14 @@ function formatNotificationTime(value: string, language: SiteLanguage){
 }
 
 function safeNotificationDestination(value?: string | null){
-  const raw=String(value||"/workspace").trim();
-  if(!raw.startsWith("/") || raw.startsWith("//")) return "/workspace";
+  const raw=String(value||"/account/projects").trim();
+  if(!raw.startsWith("/") || raw.startsWith("//")) return "/account/projects";
   try {
     const parsed=new URL(raw,"https://linetech.local");
-    if(parsed.origin!=="https://linetech.local") return "/workspace";
+    if(parsed.origin!=="https://linetech.local") return "/account/projects";
     return parsed.pathname+parsed.search+parsed.hash;
   } catch {
-    return "/workspace";
+    return "/account/projects";
   }
 }
 
@@ -249,7 +250,7 @@ export default function SiteNav() {
     };
   }, [searchOpen]);
 
-  const clientArea = ["/workspace","/chat","/handover","/account"].some(
+  const clientArea = ["/account/projects","/account/projects/messages","/account/projects/handover","/account"].some(
     route => pathname === route || pathname.startsWith(`${route}/`)
   );
   const activeProject = searchParams.get("project") || "";
@@ -258,7 +259,7 @@ export default function SiteNav() {
     : href;
   const visibleNavItems = clientArea ? clientItems : items;
   const visibleSearchItems = searchItems.filter((item) => {
-    const privateRoutes = ["/workspace", "/chat", "/handover", "/account"];
+    const privateRoutes = ["/account/projects", "/account/projects/messages", "/account/projects/handover", "/account"];
     if (privateRoutes.includes(item.href)) return signedIn && authRole !== "admin";
     if (item.href === "/login") return false;
     return true;
@@ -364,7 +365,7 @@ export default function SiteNav() {
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
           {visibleNavItems.map((item) => {
-            const active = isActive(item.href);
+            const active = isActive(item.href) && !visibleNavItems.some(other => other.href !== item.href && other.href.startsWith(item.href + "/") && isActive(other.href));
             return <Link key={item.href} href={portalHref(item.href)} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>{language === "ar" ? item.ar : item.en}</Link>;
           })}
         </nav>
@@ -414,15 +415,15 @@ export default function SiteNav() {
                       <p className="notification-empty">{noNotificationsLabel}</p>
                     )}
                   </div>
-                  <Link className="notification-panel-foot" href="/workspace" onClick={() => setNotificationsOpen(false)}>
+                  <Link className="notification-panel-foot" href="/account/projects" onClick={() => setNotificationsOpen(false)}>
                     {workspaceNotificationsLabel}<span>→</span>
                   </Link>
                 </div>
               )}
             </div>
           )}
-          {!clientArea && <Link className="ref-button light desktop-cta" href="/start" prefetch>{startLabel} <span>→</span></Link>}
-          {!clientArea && <Link className={`nav-login desktop-login ${pathname.startsWith("/workspace") ? "active" : ""}`} href="/workspace" prefetch>{workspaceLabel} <span>→</span></Link>}
+          {!clientArea && <Link className="ref-button light desktop-cta" href="/services/request" prefetch>{startLabel} <span>→</span></Link>}
+          {!clientArea && <Link className={`nav-login desktop-login ${pathname.startsWith("/account/projects") ? "active" : ""}`} href="/account/projects" prefetch>{workspaceLabel} <span>→</span></Link>}
           {!clientArea && authChecked && signedIn && authRole !== "admin" && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
           {authChecked && signedIn
             ? <Link className="nav-login desktop-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
@@ -434,13 +435,13 @@ export default function SiteNav() {
       <div id="mobile-navigation" className={`mobile-menu-panel ${open ? "open" : ""}`} aria-hidden={!open}>
         <nav aria-label="Mobile navigation">
           {visibleNavItems.map((item, index) => {
-            const active = isActive(item.href);
+            const active = isActive(item.href) && !visibleNavItems.some(other => other.href !== item.href && other.href.startsWith(item.href + "/") && isActive(other.href));
             return <Link key={item.href} href={portalHref(item.href)} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined} onClick={() => setOpen(false)}><span>0{index + 1}</span>{language === "ar" ? item.ar : item.en}<b>→</b></Link>;
           })}
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
-        {!clientArea && <Link className="mobile-start-line" href="/start" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>}
-        {!clientArea && <Link className="mobile-login" href="/workspace" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>}
+        {!clientArea && <Link className="mobile-start-line" href="/services/request" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>}
+        {!clientArea && <Link className="mobile-login" href="/account/projects" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>}
         {!clientArea && authChecked && signedIn && authRole !== "admin" && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
         {authChecked && signedIn
           ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
@@ -486,7 +487,7 @@ export default function SiteNav() {
               <p className="notification-empty">{noNotificationsLabel}</p>
             )}
           </div>
-          <Link className="notification-panel-foot" href="/workspace" onClick={() => setNotificationsOpen(false)}>
+          <Link className="notification-panel-foot" href="/account/projects" onClick={() => setNotificationsOpen(false)}>
             {workspaceNotificationsLabel}<span>→</span>
           </Link>
         </div>,

@@ -32,9 +32,9 @@ export default function ContactContent() {
       </section>
       <section className={styles.next}>
         <div><h2>{ar ? 'هل لديك تفاصيل جاهزة؟' : 'Already have a brief?'}</h2><p>{ar ? 'رتّب فكرة مشروعك واختر الخدمة والباقة المناسبة عبر نموذج الطلب.' : 'Organize your idea and choose a service and plan using the project request form.'}</p></div>
-        <Link href="/start">{ar ? 'ابدأ طلب مشروعك ←' : 'Start your project request →'}</Link>
+        <Link href="/services/request">{ar ? 'ابدأ طلب مشروعك ←' : 'Start your project request →'}</Link>
       </section>
-      <p className={styles.existing}>{ar ? 'تتابع مشروعًا قائمًا؟' : 'Following up on an existing project?'} <Link href="/chat">{ar ? 'افتح محادثة المشروع بعد تسجيل الدخول' : 'Sign in to open Project Chat'}</Link></p>
+      <p className={styles.existing}>{ar ? 'تتابع مشروعًا قائمًا؟' : 'Following up on an existing project?'} <Link href="/account/projects/messages">{ar ? 'افتح محادثة المشروع بعد تسجيل الدخول' : 'Sign in to open Project Chat'}</Link></p>
     </div>
   </main>;
 }

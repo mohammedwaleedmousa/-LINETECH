@@ -10,9 +10,9 @@ function load(file, dependencies = {}) {
   return module.exports;
 }
 const navigation = load('lib/navigation/return-path.ts');
-assert.equal(navigation.safeReturnPath('/chat/index.txt?_rsc=abc&project=123'),'/chat?project=123');
-assert.equal(navigation.safeReturnPath('/workspace/?project=123#activity'),'/workspace?project=123#activity');
-for(const input of ['//outside.test','https://outside.test','/\\outside.test','/api/auth/logout','/_next/file','/login','/admin/login',null]) assert.equal(navigation.safeReturnPath(input),'/workspace');
+assert.equal(navigation.safeReturnPath('/account/projects/messages/index.txt?_rsc=abc&project=123'),'/account/projects/messages?project=123');
+assert.equal(navigation.safeReturnPath('/account/projects/?project=123#activity'),'/account/projects?project=123#activity');
+for(const input of ['//outside.test','https://outside.test','/\\outside.test','/api/auth/logout','/_next/file','/login','/admin/login',null]) assert.equal(navigation.safeReturnPath(input),'/account/projects');
 let session = null;
 let fail = false;
 let assets = 0;
@@ -21,23 +21,38 @@ const worker = load('worker/index.ts',{'../lib/navigation/return-path':navigatio
 const env = {ASSETS:{fetch:async()=>{assets++;return new Response('protected asset');}}};
 async function request(p){return worker.fetch(new Request('https://linetech.test'+p),env);}
 (async()=>{
-  for(const p of ['/workspace','/chat/index.txt?_rsc=abc&project=123','/handover/','/account/','/admin/']){
+  for(const [oldPath,newPath] of [["/workspace","/account/projects"],["/chat","/account/projects/messages"],["/handover","/account/projects/handover"],["/start","/services/request"],["/service-finder","/services/guide"],["/how-we-work","/services/process"]]) {
+    const result=await request(oldPath+"/index.html?project=123");
+    assert.equal(result.status,308);
+    const target=new URL(result.headers.get("location"));
+    assert.equal(target.pathname,newPath);
+    assert.equal(target.searchParams.get("project"),"123");
+    assert.equal(assets,0);
+  }
+  for(const path of ["/account/profile","/account/orders","/account/billing","/account/companies","/company-space","/company-space/members","/company-space/billing"]) {
+    const result=await request(path);
+    assert.equal(result.status,302);
+    assert.equal(new URL(result.headers.get("location")).pathname,"/login");
+    assert.equal(assets,0);
+  }
+
+  for(const p of ['/account/projects','/account/projects/messages/index.txt?_rsc=abc&project=123','/account/projects/handover/','/account/','/admin/']){
     const r=await request(p);assert.equal(r.status,302);assert.equal(assets,0);
     const login=new URL(r.headers.get('location'));assert.equal(login.searchParams.get('next'),navigation.safeReturnPath(p));
   }
   fail=true;
-  for(const p of ['/admin/','/admin/index.txt','/account/','/chat/','/workspace/','/handover/']){
+  for(const p of ['/admin/','/admin/index.txt','/account/','/account/projects/messages/','/account/projects/','/account/projects/handover/']){
     const r=await request(p);assert.equal(r.status,503);assert.equal(r.headers.get('cache-control'),'no-store');assert.equal(assets,0);
   }
   assert.equal((await request('/pricing/')).status,200);assert.equal(assets,1);
   assert.equal((await request('/about/')).status,200);assert.equal(assets,2);
-  const hiddenCategory=await request('/products/category/websites/');assert.equal(hiddenCategory.status,404);assert.equal(hiddenCategory.headers.get('x-robots-tag'),'noindex, nofollow');assert.equal(assets,2);
-  assert.equal((await request('/unlisted-public-page/')).status,404);assert.equal(assets,2);
-  assert.equal((await request('/thank-you/')).status,200);assert.equal(assets,3);
+  const category=await request('/products/category/websites/');assert.equal(category.status,200);assert.equal(assets,3);
+  assert.equal((await request('/unlisted-public-page/')).status,404);assert.equal(assets,3);
+  assert.equal((await request('/thank-you/')).status,200);assert.equal(assets,4);
   fail=false;session={user:{app_metadata:{role:'client'}},setCookies:[]};
-  assert.equal((await request('/admin/')).status,302);assert.equal(assets,1);
-  assert.equal((await request('/workspace/')).status,200);assert.equal(assets,4);
-  session.user.app_metadata.role='admin';assert.equal((await request('/admin/')).status,200);assert.equal(assets,5);
+  assert.equal((await request('/admin/')).status,302);assert.equal(assets,4);
+  assert.equal((await request('/account/projects/')).status,200);assert.equal(assets,5);
+  session.user.app_metadata.role='admin';assert.equal((await request('/admin/')).status,200);assert.equal(assets,6);
   let existing = null;
   let saved;
   const calls = [];
