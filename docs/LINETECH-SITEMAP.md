@@ -1,74 +1,36 @@
-# LINETECH — Platform sitemap V2
+# LINETECH storefront sitemap — 2026-10-25
 
-Approved for implementation by the owner on 2026-10-22. This replaces the previous sitemap and the old rule that excluded all product categories. This is an experimental platform; the sitemap is the target, not a claim that all commerce/company features work.
+Owner-approved focus: ready-made websites/applications with direct previews; custom website/application projects; one-time purchases, monthly product subscriptions and separate after-sales care. Preserve the home design and order. This replaces the earlier platform/company/research sitemap.
 
-## Public website
+The executable route source is `lib/navigation/route-policy.ts`.
 
-| Section | Canonical routes | Implementation |
+| Area | Routes | Behavior |
 | --- | --- | --- |
-| Home | `/` | Existing service/project presentation plus product categories, knowledge entry and account CTA |
-| Products | `/products`, `/products/category/{websites,mobile-apps,software-saas,brand-design,templates-tools,technical-services}` | Search/type filters and category navigation; empty approved inventory |
-| Services | `/services`, existing four service detail routes | Existing custom service presentation |
-| Service request | `/services/request` | Existing authenticated, atomic and idempotent project-request workflow |
-| Service assistance | `/services/guide`, `/services/process` | Existing finder and process, nested under services |
-| Projects | `/projects`, existing case studies | Existing public portfolio; client permissions/content claims require owner review |
-| Knowledge & research | `/knowledge` | Article/research/access filters; no published records |
-| Plans & pricing | `/pricing` | Basic, Professional, Companies; price/benefits/limits pending approval; no checkout |
-| Company | `/about`, `/contact`, `/faq` | Existing information and contact channels |
-| Legal | `/privacy`, `/terms` | Existing documents retained; require final policies before commerce launch |
-| Authentication | `/login`, `/login?mode=signup`, `/login?mode=forgot` | Existing login/signup/recovery and verification callback |
+| Home | `/` | Preserved layout, hero and section order; relevant product/care copy and active links |
+| Catalog | `/products` | One catalog; website/app, search and purchase/monthly filters |
+| Product detail | `/products/view?product=<slug>` | Static shell, approved catalog data, HTTPS demo, offers, licence, renewal, care; noindex |
+| Custom development | `/services` | Websites/apps/stores; selection and process sections consolidated here |
+| Service detail | `/services/web-development`, `/services/app-development`, `/services/ecommerce-systems` | Current custom service scope |
+| Project request | `/services/request` | Existing authenticated submission and account project tracking |
+| Work portfolio | `/projects` and existing three case studies | Separate from products for sale; existing content retained |
+| Pricing | `/pricing`, `#purchase-options`, `#aftercare` | One-time, monthly and after-sales models; actual offer prices only from approved inventory |
+| Information | `/about`, `/contact`, `/faq`, `/privacy`, `/terms` | Current support/contact channels and retained legal documents |
+| Account | `/account`, `/account/profile`, `/account/orders`, `/account/subscriptions`, `/account/billing`, `/account/support` | Existing profile/subscription reads; orders/invoice/ticket capabilities still show honest inactive states |
+| Project workspace | `/account/projects`, `/account/projects/messages`, `/account/projects/handover` | Existing protected project lifecycle |
+| Admin | `/admin`, `/admin/projects`, `/admin/clients`, `/admin/inbox`, `/admin/billing`, `/admin/team`, `/admin/account`, `/admin/products` | Existing functions retained; catalog view is source-controlled/read-only |
+| System | `/login`, `/admin/login`, `/thank-you`, `/api/*`, assets | Auth/callback and existing technical behavior retained |
 
-Product details, article/research details, checkout, licences, paid-content enforcement and product administration require approved inventory and backend implementation. No fictional product or purchasable tier is created.
+## Removed and consolidated
 
-## Unified personal account
+- Knowledge/research and all company-space/account-company/admin-company pages: deleted; document routes return 410.
+- Company application/member/invitation APIs: removed from Worker routing and return 410; SQL migrations/data are retained.
+- Admin content/research and incomplete audit placeholder: deleted; routes return 410.
+- Brand identity and CV service pages: deleted; old URLs redirect to `/services`.
+- Finder and process standalone/nested pages and their unused components: deleted; old URLs redirect to `/services#choose` or `/services#process`.
+- Six category pages: deleted; website/app URLs redirect to corresponding catalog filters; other old categories redirect to `/products`.
+- `/start`, `/workspace`, `/chat`, `/handover`: old page files already removed; aliases continue to preserve project query parameters.
+- Existing customer identities, projects, messages, files, billing records and migration history are not deleted.
 
-| Route | Purpose | Implementation |
-| --- | --- | --- |
-| `/account` | Overview | Live authenticated account/subscription summary |
-| `/account/profile` | Profile, security, language | Existing account settings |
-| `/account/orders` | Purchases, orders and licences | Explicit inactive state; links to existing service projects |
-| `/account/subscriptions` | Current subscription | Reads existing account API; no fake cancellation/renewal |
-| `/account/projects` | Project requests, execution, milestones, files/reviews | Existing protected workspace |
-| `/account/projects/messages` | Project messages | Existing protected chat, preserving project query |
-| `/account/projects/handover` | Deliverables and acceptance | Existing protected handover |
-| `/account/companies` | Companies and application status | Submission/status/review source implemented; migration and deployment pending; internal invitation inbox now implemented in source |
-| `/account/billing` | Personal invoices/payments | Explicit inactive state |
-| `/account/support` | Support | Ticket backend pending; working link to contact channels |
+## Commerce state
 
-## Company spaces
-
-`/company-space/request`, `/company-space`, `/company-space/projects`, `/company-space/members`, `/company-space/billing`, `/company-space/settings`.
-
-All company pages require sign-in. Application submission (`/company-space/request`), applicant status tracking (`/account/companies`) and the approved company overview (`/company-space?company=<id>`) now have backend/UI implementations. Approval creates a company and its owner membership atomically. RLS isolates these company/application records. The migration and deployment are still pending; see `docs/company-applications-setup.md`.
-
-Members/invitations now have owner management, verified-email acceptance/decline and removal implementations in source (2026-10-25; rollout pending). See `company-members-setup.md`. Company projects, billing and settings remain inactive structural pages. Do not treat company approval as authorization for project records. Per-member billing, the 7-day grace period, suspension/restoration and retention remain future behavior. Suspension must not automatically delete data.
-
-## LINETECH administration
-
-Existing `/admin`, `/admin/projects`, `/admin/clients`, `/admin/inbox`, `/admin/billing`, `/admin/team`, `/admin/account` and `/admin/login` remain. `/admin/companies` now implements application review in source (migration/deployment pending). `/admin/products`, `/admin/content` and `/admin/audit` remain protected inactive structural pages. Existing project activity is not presented as a complete administrative audit trail. The current owner/admin authorization remains; employee permissions require a separate implementation.
-
-## Retired routes and retained infrastructure
-
-| Removed standalone page | Canonical destination |
-| --- | --- |
-| `/start` | `/services/request` |
-| `/service-finder` | `/services/guide` |
-| `/how-we-work` | `/services/process` |
-| `/workspace` | `/account/projects` |
-| `/chat` | `/account/projects/messages` |
-| `/handover` | `/account/projects/handover` |
-
-The old page.tsx files are deleted. Reusable implementation components remain in their existing directories, imported by the canonical pages. Worker 308 redirects preserve query strings for external bookmarks and historical notification destinations. APIs, SQL migration history, account records, project records and files are retained. `/thank-you` remains a non-indexable system handoff. Legal and technical infrastructure remain required even when absent from the business navigation diagram.
-
-Every request passes through the Worker before assets. The public XML sitemap and Worker allowlist must match. Personal/company/admin routes stay outside public discovery.
-
-## Commercial decisions still open
-
-Actual products/services and final categories; public case-study permissions; three subscription tiers' benefits/prices/usage; currencies and payment providers; billing cycles and member changes; licence/update/refund/retention policies; contractual acceptance stages and staff permissions. Old website package prices have been removed from public pricing/intake. Existing commercial records and admin billing are retained as legacy data, not relabelled as the new subscription tiers.
-
-## Delivery phases
-
-1. Public site, catalog/content structure, account and service workflows (structural migration implemented here; commerce backend outstanding).
-2. Project management (existing features reused; final contract/acceptance rules outstanding).
-3. Company requests, memberships, tenant isolation and member billing (outstanding).
-4. SaaS integrations, analytics and enterprise operations (outstanding).
+The catalog/model/detail/enquiry UI is implemented. Real approved products/prices and payment arrangements are not supplied, so the source catalog is empty and there is no live checkout or automatic subscription entitlement. The same product can configure one-time and monthly offers; care is independent and can also apply to custom projects. Existing legacy service subscriptions are not relabelled as product subscriptions.

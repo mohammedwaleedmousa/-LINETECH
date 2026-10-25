@@ -40,9 +40,9 @@ export function PlatformEmpty({ icon = "grid", title, body, children }: { icon?:
   return <div className="platform-empty" role="status"><span className="platform-empty-icon"><PlatformIcon kind={icon}/></span><h2>{title}</h2><p>{body}</p>{children && <div className="platform-empty-actions">{children}</div>}</div>;
 }
 
-export function CategoryCard({ slug, title, index }: { slug: string; title: string; index: number }) {
+export function CategoryCard({ slug, title, index, href }: { slug: string; title: string; index: number; href?:string }) {
   const ar = useLanguage() === "ar";
-  return <Link className="platform-card platform-category-card" href={`/products/category/${slug}`}>
+  return <Link className="platform-card platform-category-card" href={href || `/products?category=${encodeURIComponent(slug)}`}>
     <div className="platform-card-top"><span className="platform-card-icon"><PlatformIcon kind={slug}/></span><small>{String(index + 1).padStart(2, "0")}</small></div>
     <h2>{title}</h2><div className="platform-card-foot"><span>{ar ? "استكشف الفئة" : "Explore category"}</span><PlatformIcon kind="arrow"/></div>
   </Link>;

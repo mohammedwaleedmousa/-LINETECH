@@ -15,6 +15,9 @@ const copy = {
     sideLead: "If your question is specific to your project, prepare the brief first, then share it through your preferred contact channel.",
     cta: "Start Your Line",
     faqs: [
+      ["Can I try a ready-made product?","Open the live preview from the product details. Published websites have a direct preview link that opens in a new tab."],
+      ["Can I buy once or subscribe monthly?","Each product lists its available purchase options, licence, included services and renewal terms. Some products may offer both options."],
+      ["Can I subscribe to after-sales care?","Yes. Maintenance, support, updates and hosting can be scoped for a ready-made product or a custom project. The quote states the service scope, price and duration."],
       ["How do we start a project?","Start with the project brief. You can explain the idea in simple language; technical details can be defined after the goal and scope are clear."],
       ["Do I need a complete specification before contacting LINETECH?","No. A rough idea is enough to begin the conversation. The first step is understanding the outcome, then defining the useful scope."],
       ["How are project payments structured?","The payment structure depends on the project scope and is confirmed in the project proposal before work begins. The proposal should make the agreed stages, amounts, currency and payment method clear."],
@@ -34,6 +37,9 @@ const copy = {
     sideLead: "إذا كان سؤالك مرتبطًا بمشروعك تحديدًا، جهّز طلب المشروع أولًا ثم شاركه عبر قناة التواصل التي تفضلها.",
     cta: "ابدأ خطك",
     faqs: [
+      ["هل يمكن تجربة المنتج الجاهز؟","افتح المعاينة من صفحة تفاصيل المنتج. تتوفر للمواقع المنشورة روابط تجربة مباشرة تفتح في تبويب جديد."],
+      ["هل أستطيع الشراء مرة واحدة أو الاشتراك شهريًا؟","تعرض صفحة كل منتج خياراته المتاحة والترخيص والخدمات المشمولة وشروط التجديد. وقد يتوفر المنتج بالخيارين."],
+      ["هل تتوفر اشتراكات لخدمات ما بعد البيع؟","نعم. يمكن الاتفاق على الصيانة والدعم والتحديثات والاستضافة لمنتج جاهز أو مشروع خاص. يوضح العرض نطاق الخدمة وسعرها ومدتها."],
       ["كيف نبدأ مشروعًا؟","ابدأ بطلب المشروع. يمكنك شرح الفكرة بلغة بسيطة، ويمكن تحديد التفاصيل التقنية بعد أن تصبح النتيجة والنطاق واضحين."],
       ["هل أحتاج إلى مواصفات كاملة قبل التواصل مع لاين تك؟","لا. تكفي فكرة أولية لبدء الحوار. الخطوة الأولى هي فهم النتيجة المطلوبة ثم تحديد النطاق المفيد."],
       ["كيف يتم تنظيم دفعات المشروع؟","يعتمد نظام الدفعات على نطاق المشروع ويتم تأكيده داخل عرض المشروع قبل بدء العمل. يجب أن يوضح العرض المراحل والمبالغ والعملة وطريقة الدفع المتفق عليها."],

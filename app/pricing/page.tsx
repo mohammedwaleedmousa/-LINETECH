@@ -1,36 +1,25 @@
 "use client";
-
 import Link from "next/link";
-import { useLanguage } from "../Localized";
-import { PlatformHero, PlatformIcon } from "../PlatformUI";
-
-const plans = [
-  {code:"basic", ar:"أساسي", en:"Basic", audienceAr:"نقطة البداية", audienceEn:"Your starting point", icon:"user"},
-  {code:"professional", ar:"احترافي", en:"Professional", audienceAr:"مساحة أكبر لطموحك", audienceEn:"Room for your ambition", icon:"layers"},
-  {code:"company", ar:"شركات", en:"Companies", audienceAr:"لأعمالك وفريقك", audienceEn:"For your business & team", icon:"grid"},
-];
-
-export default function Pricing() {
-  const ar = useLanguage() === "ar";
+import {useLanguage} from "../Localized";
+import {PlatformHero,PlatformIcon} from "../PlatformUI";
+import {saleModels,aftercarePlans,formatPrice} from "../../lib/catalog";
+export default function Pricing(){
+  const language=useLanguage(),ar=language==="ar";
   return <main className="platform-page platform-pricing-page">
-    <PlatformHero eyebrow={ar ? "الخطط والأسعار" : "PLANS & PRICING"} title={ar ? "مساحة لطموحك.\nوخطة لخطوتك القادمة." : "Space for your ambition.\nA plan for your next step."} description={ar ? "ثلاثة مستويات للاشتراك في منظومة LINETECH. سنعلن الأسعار والمزايا وحدود الاستخدام عند اعتماد المنتجات المشمولة." : "Three subscription tiers for the LINETECH platform. Prices, benefits and usage limits will be published once the included products are confirmed."} icon="layers">
-      <a href="#plans" className="platform-button primary">{ar ? "تعرّف على المستويات" : "Explore the tiers"}<PlatformIcon kind="arrow"/></a>
-      <span className="platform-availability"><i/>{ar ? "الاشتراكات قيد التجهيز" : "Subscriptions in preparation"}</span>
-    </PlatformHero>
-    <section className="platform-section" id="plans" aria-label={ar ? "مستويات الاشتراك" : "Subscription tiers"}>
-      <div className="platform-grid platform-plan-grid">{plans.map((p, i) => <article className={`platform-card platform-plan-card ${i===1 ? "platform-plan-accent" : ""}`} key={p.code}>
-        <div className="platform-card-top"><span className="platform-card-icon"><PlatformIcon kind={p.icon}/></span><span className="platform-badge">{ar ? "قريبًا" : "Coming soon"}</span></div>
-        <p className="platform-plan-audience">{ar ? p.audienceAr : p.audienceEn}</p><h2>{ar ? p.ar : p.en}</h2>
-        <div className="platform-plan-price"><strong>—</strong><span>{ar ? "السعر يُعلن لاحقًا" : "Pricing to be announced"}</span></div>
-        <ul className="platform-plan-details">{[ar ? "المزايا المشمولة قيد الاعتماد" : "Included benefits pending approval", ar ? "حدود الاستخدام تُعلن مع الإطلاق" : "Usage limits published at launch", ar ? "تفاصيل التجديد والإلغاء ستُوضّح مسبقًا" : "Renewal and cancellation explained upfront"].map(x => <li key={x}><span className="platform-detail-dot"/>{x}</li>)}</ul>
-        <Link className={`platform-button ${i===1 ? "primary" : "secondary"}`} href="/contact">{ar ? "استفسر عن المستوى" : "Ask about this tier"}<PlatformIcon kind="arrow"/></Link>
+    <PlatformHero eyebrow={ar?"الباقات والأسعار":"PACKAGES & PRICING"} title={ar?"شراء يناسبك.\nودعم يستمر معك.":"Buy your way.\nKeep moving with care."} description={ar?"اختر شراء المنتج مرة واحدة، أو الاشتراك الشهري عند توفره. ويمكنك طلب خدمات ما بعد البيع لمنتج جاهز أو مشروع مخصص.":"Choose a one-time product purchase or a monthly subscription when offered. After-sales care can support a ready-made product or a custom project."} icon="layers"><a href="#purchase-options" className="platform-button primary">{ar?"قارن الخيارات":"Compare options"}<PlatformIcon kind="arrow"/></a></PlatformHero>
+    <section className="platform-section" id="purchase-options">
+      <div className="platform-grid platform-plan-grid">{saleModels.map((model,index)=><article id={model.id==="aftercare"?"aftercare":undefined} className={`platform-card platform-plan-card ${index===1?"platform-plan-accent":""}`} key={model.id}>
+        <span className="platform-card-icon"><PlatformIcon kind={index===2?"shield":"layers"}/></span><h2>{model[language]}</h2><p>{ar?model.bodyAr:model.bodyEn}</p>
+        <ul className="platform-plan-details">{(index===0?(ar?["السعر والترخيص موضحان لكل منتج","حدود التخصيص والتسليم تُحدّد مسبقًا","خدمات ما بعد البيع حسب العرض"]:["Product-specific price and licence","Customization and delivery defined upfront","After-sales care according to the offer"]):index===1?(ar?["قيمة شهرية لكل منتج متاح بالاشتراك","الخدمات المشمولة والتجديد موضّحة في العرض","شروط الإلغاء والوصول حسب الاتفاق"]:["A monthly amount for each subscription product","Included services and renewal stated in the offer","Cancellation and access follow the agreement"]):(ar?["تحديد الصيانة والدعم المطلوبين","توضيح التحديثات والاستضافة المشمولة","نطاق الخدمة ومدتها وسعرها قبل التفعيل"]:["Agree on maintenance and support","State included updates and hosting","Define scope, duration and price before activation"])).map(text=><li key={text}>{text}</li>)}</ul>
+        <Link className="platform-button secondary" href={index===2?"/contact?interest=aftercare":"/products"}>{index===2?(ar?"اطلب باقة دعم":"Request a care plan"):(ar?"استكشف المنتجات وأسعارها":"Explore products & prices")}</Link>
       </article>)}</div>
-      <aside className="platform-service-note"><span className="platform-card-icon"><PlatformIcon kind="technical-services"/></span><div><h2>{ar ? "لديك مشروع خاص؟" : "Have a custom project?"}</h2><p>{ar ? "الخدمات المخصصة لها نطاق عمل وعرض سعر مستقل. أخبرنا بفكرتك لنحدد الحل المناسب." : "Custom services have their own scope and quote. Tell us about your idea to find the right solution."}</p></div><Link className="platform-text-link" href="/services/request">{ar ? "اطلب مشروعًا" : "Request a project"}<span>↗</span></Link></aside>
-      <div className="platform-section-heading"><div><p className="platform-eyebrow">{ar ? "قبل أن تبدأ" : "BEFORE YOU START"}</p><h2>{ar ? "تفاصيل واضحة من البداية." : "Clarity from the beginning."}</h2></div></div>
+      <p className="company-form-note">{ar?"يُعرض السعر الفعلي في تفاصيل المنتج أو عرض السعر الخاص بك. طرق الدفع وتفعيل الاشتراك تُؤكّد قبل الاتفاق.":"Actual prices appear on each product or in your quote. Payment arrangements and subscription activation are confirmed before agreement."}</p>
+      {aftercarePlans.some(p=>p.published)&&<div className="platform-grid">{aftercarePlans.filter(p=>p.published).map(plan=><article className="platform-card" key={plan.id}><h2>{plan.title[language]}</h2><p>{plan.summary[language]}</p><p>{formatPrice(plan.amount,plan.currency,language)} · {ar?"شهريًا":"per month"}</p><ul>{plan.includes.map((item,i)=><li key={i}>{item[language]}</li>)}</ul><p>{plan.terms[language]}</p><Link className="platform-button secondary" href={"/contact?care="+encodeURIComponent(plan.id)}>{ar?"تفاصيل الاشتراك":"Discuss this care plan"}</Link></article>)}</div>}
+      <aside className="platform-service-note"><span className="platform-card-icon"><PlatformIcon kind="websites"/></span><div><h2>{ar?"تطوير حسب طلبك":"Custom development"}</h2><p>{ar?"المواقع والتطبيقات المخصصة لها عرض سعر مستقل بحسب المتطلبات والتسليمات. ويمكن إضافة اشتراك لخدمات ما بعد البيع.":"Custom websites and applications receive a separate quote based on requirements and deliverables. After-sales care can be added."}</p></div><Link className="platform-text-link" href="/services/request">{ar?"اطلب مشروعًا":"Request a project"}<span>↗</span></Link></aside>
       <div className="platform-faq-list">
-        <details><summary>{ar ? "متى يمكنني الاشتراك؟" : "When can I subscribe?"}<span>+</span></summary><p>{ar ? "الشراء غير متاح حاليًا. ستظهر المزايا والأسعار النهائية ووسائل الدفع قبل تفعيل الاشتراكات." : "Checkout is not available yet. Final benefits, prices and payment methods will be published before subscriptions open."}</p></details>
-        <details><summary>{ar ? "كيف تعمل عضويات الشركات؟" : "How will company memberships work?"}<span>+</span></summary><p>{ar ? "النموذج المخطط يعتمد فوترة الأعضاء ومهلة دفع 7 أيام، ثم تعليق الوصول وفق السياسة المعتمدة. التفاصيل النهائية ستُنشر قبل التفعيل." : "The planned model uses per-member billing with a 7-day payment grace period, followed by access suspension under the approved policy. Final details will be published before activation."}</p></details>
-        <details><summary>{ar ? "ماذا يحدث للبيانات عند التعليق؟" : "What happens to data during suspension?"}<span>+</span></summary><p>{ar ? "تعليق الاشتراك لا يعني حذف المشاريع أو الملفات تلقائيًا. ستوضّح سياسة مستقلة مدة الاحتفاظ بالبيانات واستعادة الوصول، إلى جانب شروط التجديد والإلغاء والاسترداد." : "Subscription suspension does not automatically delete projects or files. A separate policy will explain retention and restored access, alongside renewal, cancellation and refund terms."}</p></details>
+        <details><summary>{ar?"هل كل منتج متاح بالطريقتين؟":"Does every product offer both payment options?"}<span>+</span></summary><p>{ar?"لا، تعرض صفحة كل منتج خياراته المتاحة: دفع مرة واحدة أو اشتراك شهري أو كليهما.":"Each product states whether it offers one-time purchase, a monthly subscription, or both."}</p></details>
+        <details><summary>{ar?"هل الدعم والاستضافة مشمولان؟":"Are support and hosting included?"}<span>+</span></summary><p>{ar?"توضح تفاصيل العرض ما هو مشمول. يمكن الاتفاق على باقة مستقلة للصيانة والدعم والاستضافة عند الحاجة.":"The offer lists included services. A separate maintenance, support and hosting plan can be agreed when needed."}</p></details>
+        <details><summary>{ar?"كيف أطلب التجديد أو الإلغاء؟":"How do I request renewal or cancellation?"}<span>+</span></summary><p>{ar?"راجع تفاصيل اشتراكك واتفاقه، ثم تواصل معنا من حسابك. لن يُعرض تجديد أو إلغاء تلقائي دون تفعيل وسيلة تدعمه.":"Review your subscription and agreement, then contact us from your account. Automatic renewal or cancellation is only offered when the supporting payment process is active."}</p></details>
       </div>
     </section>
   </main>;

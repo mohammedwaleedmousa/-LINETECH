@@ -7,23 +7,21 @@ import { useLanguage } from "./Localized";
 const copy = {
   en: {
     brandLead: "Technology for a brighter tomorrow.",
-    brandText: "Digital products, systems and identities built around real business needs.",
+    brandText: "Websites, applications and ongoing care built around real business needs.",
     explore: "Explore",
     services: "Services",
     company: "Company",
     home: "Home",
     projects: "Projects",
     products: "Products",
-    knowledge: "Knowledge",
     about: "About",
     faq: "FAQ",
     contact: "Contact",
     web: "Web Development",
     commerce: "E-commerce & Systems",
-    brand: "Brand Identity",
-    cv: "CV & Portfolio",
-    finder: "Find Your Service",
-    how: "How We Work",
+    brand: "Application Development",
+    cv: "After-sales Care",
+    how: "Packages & Pricing",
     workspace: "Client Workspace",
     privacy: "Privacy",
     terms: "Terms",
@@ -32,23 +30,21 @@ const copy = {
   },
   ar: {
     brandLead: "تقنية لغدٍ أكثر إشراقًا.",
-    brandText: "منتجات وأنظمة وهويات رقمية مبنية حول احتياجات العمل الحقيقية.",
+    brandText: "مواقع وتطبيقات وخدمات دعم مبنية حول احتياجات العمل الحقيقية.",
     explore: "استكشف",
     services: "الخدمات",
     company: "الشركة",
     home: "الرئيسية",
     projects: "المشاريع",
     products: "المنتجات",
-    knowledge: "المعرفة والأبحاث",
     about: "عن لاين تك",
     faq: "الأسئلة الشائعة",
     contact: "تواصل معنا",
     web: "تطوير المواقع",
     commerce: "التجارة الإلكترونية والأنظمة",
-    brand: "الهوية البصرية",
-    cv: "السيرة الذاتية والملف المهني",
-    finder: "اعثر على خدمتك",
-    how: "كيف نعمل",
+    brand: "تطوير التطبيقات",
+    cv: "خدمات ما بعد البيع",
+    how: "الباقات والأسعار",
     workspace: "مساحة العميل",
     privacy: "الخصوصية",
     terms: "الشروط",
@@ -88,24 +84,22 @@ export default function SiteFooter() {
             <Link className={linkClass("/")} aria-current={isActive("/") ? "page" : undefined} href="/" prefetch>{t.home}</Link>
             <Link className={linkClass("/projects")} aria-current={isActive("/projects") ? "page" : undefined} href="/projects" prefetch>{t.projects}</Link>
             <Link className={linkClass("/products")} aria-current={isActive("/products") ? "page" : undefined} href="/products" prefetch>{t.products}</Link>
-            <Link className={linkClass("/knowledge")} aria-current={isActive("/knowledge") ? "page" : undefined} href="/knowledge" prefetch>{t.knowledge}</Link>
             <Link className={linkClass("/about")} aria-current={isActive("/about") ? "page" : undefined} href="/about" prefetch>{t.about}</Link>
             <Link className={linkClass("/faq")} aria-current={isActive("/faq") ? "page" : undefined} href="/faq" prefetch>{t.faq}</Link>
           </nav>
 
           <nav className="footer-v2-column" aria-label={t.services}>
             <h4>{t.services}</h4>
-            <Link className={linkClass("/services/guide")} href="/services/guide" prefetch>{t.finder}</Link>
             <Link className={linkClass("/services/web-development")} href="/services/web-development" prefetch>{t.web}</Link>
             <Link className={linkClass("/services/ecommerce-systems")} href="/services/ecommerce-systems" prefetch>{t.commerce}</Link>
-            <Link className={linkClass("/services/brand-identity")} href="/services/brand-identity" prefetch>{t.brand}</Link>
-            <Link className={linkClass("/services/cv-portfolio")} href="/services/cv-portfolio" prefetch>{t.cv}</Link>
+            <Link className={linkClass("/services/app-development")} href="/services/app-development" prefetch>{t.brand}</Link>
+            <Link className={linkClass("/pricing")} href="/pricing#aftercare" prefetch>{t.cv}</Link>
           </nav>
 
           <nav className="footer-v2-column" aria-label={t.company}>
             <h4>{t.company}</h4>
             <Link className={linkClass("/services")} href="/services" prefetch>{t.services}</Link>
-            <Link className={linkClass("/services/process")} href="/services/process" prefetch>{t.how}</Link>
+            <Link className={linkClass("/pricing")} href="/pricing" prefetch>{t.how}</Link>
             <Link className={linkClass("/account/projects")} href="/account/projects" prefetch>{t.workspace}</Link>
             <Link className={linkClass("/contact")} aria-current={isActive("/contact") ? "page" : undefined} href="/contact" prefetch>{t.contact}</Link>
             <Link className={linkClass("/privacy")} href="/privacy" prefetch>{t.privacy}</Link>

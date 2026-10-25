@@ -9,7 +9,7 @@ export default function ModulePage({title, description, items, href="/contact", 
 }) {
   const ar = useLanguage() === "ar";
   const index = ar ? 0 : 1;
-  const label = action?.[index] || (href === "/contact" ? ar ? "تواصل معنا" : "Contact us" : href === "/company-space/request" ? ar ? "طلب مساحة شركة" : "Request a company space" : ar ? "العودة إلى المساحة" : "Back to workspace");
+  const label = action?.[index] || (href === "/contact" ? ar ? "تواصل معنا" : "Contact us" : ar ? "العودة إلى المساحة" : "Back to workspace");
   return <main className="platform-page platform-module-page">
     <PlatformHero eyebrow={ar ? "مساحة العمل" : "WORKSPACE"} title={title[index]} description={description[index]} icon="grid"/>
     <section className="platform-section"><PlatformEmpty icon="layers" title={ar ? "خطوتك القادمة، قريبًا." : "Your next step is coming."} body={ar ? "نعمل على تجهيز هذا القسم. ستتوفر وظائفه هنا عند تفعيله، ويمكنك استخدام الرابط أدناه للمتابعة الآن." : "This section is being prepared. Its features will be available here when activated. Use the link below to continue for now."}>

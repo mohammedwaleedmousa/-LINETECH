@@ -210,11 +210,13 @@ for (const privateRoute of ["/admin","/login","/account/projects","/account/proj
 const sitemapPaths = [...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)]
   .map(([, value]) => new URL(value).pathname.replace(/\/+$/, "") || "/")
   .sort();
-const allowlistBlock = workerIndex.match(/const publicSitemapRoutes = new Set\(\[([\s\S]*?)\]\);/);
-assert.ok(allowlistBlock, "Worker public route allowlist is missing");
-const allowlistedPaths = [...allowlistBlock[1].matchAll(/"([^"]+)"/g)].map(([, value]) => value).sort();
-assert.deepEqual(allowlistedPaths, sitemapPaths, "Worker public route allowlist must exactly match public/sitemap.xml");
-for (const publicRoute of ["/pricing","/services/process","/services/guide"]) {
+const routePolicy=read("lib/navigation/route-policy.ts");
+const allowlistBlock=routePolicy.match(/export const publicRoutes=\[([\s\S]*?)\] as const;/);
+assert.ok(allowlistBlock,"Central route inventory missing");
+const allowlistedPaths=[...allowlistBlock[1].matchAll(/"([^"]+)"/g)].map(([,value])=>value).sort();
+assert.deepEqual(allowlistedPaths,sitemapPaths,"Route inventory must match sitemap");
+assert.ok(workerIndex.includes("new Set<string>(publicRoutes)"));
+for (const publicRoute of ["/pricing","/services/app-development","/services/request"]) {
   assert.ok(sitemap.includes(`${publicRoute}</loc>`), `Commercial route is missing from sitemap: ${publicRoute}`);
 }
 // Public top-level navigation follows the implemented public sitemap sections.
@@ -223,7 +225,6 @@ for (const [route, label] of [
   ["/products", 'en: "Products"'],
   ["/services", 'en: "Services"'],
   ["/projects", 'en: "Projects"'],
-  ["/knowledge", 'en: "Knowledge & Research"'],
   ["/pricing", 'en: "Plans & Pricing"'],
   ["/about", 'en: "About LINETECH"'],
   ["/contact", 'en: "Contact"'],
@@ -240,5 +241,5 @@ assert.ok(terms.includes("رسوم تأسيس واشتراكًا شهريًا"),
 
 console.log("PASS: LINETECH end-to-end lifecycle contract is wired from intake through handover");
 
-for(const name of ["Basic","Professional","Companies"]) assert.ok(pricing.includes(name), `Missing new subscription tier: ${name}`);
+for(const name of ["purchase","monthly","aftercare"]) assert.ok(read("lib/catalog.ts").includes(`id:"${name}"`), `Missing sale model: ${name}`);
 assert.ok(!/\$149|\$299|\$499/.test(pricing),"Retired prices must not be published");

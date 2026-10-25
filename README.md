@@ -2,85 +2,58 @@
 
 Every idea starts with a line.
 
-Technology company turning ideas into real digital products.
+LINETECH sells ready-made websites and applications and develops custom projects. Products can offer one-time purchase, monthly subscription, or both. After-sales care covers the agreed maintenance, support, updates and hosting for a product or custom project.
 
-## Platform status
+## Current implementation
 
-The current production architecture is a static Next.js frontend served through Cloudflare Workers with Supabase handling authentication, PostgreSQL data and private project storage.
+- The home layout, hero, component order and visual baseline are retained. Retired section copy and destinations now point to products, custom services and after-sales care.
+- One product catalog with website/application filters, bilingual search and purchase/monthly filters.
+- Product detail view at `/products/view?product=<slug>` with features, screenshots, licence, renewal terms, offers and a direct HTTPS demo link in a new tab.
+- Optional monthly care plans linked to products and presented separately from purchase prices.
+- Contextual WhatsApp/email enquiries include the actual approved product and offer. The visitor reviews and sends the message; this does not create a paid order or activate a subscription.
+- Existing authenticated custom project request → project workspace → chat/files → handover workflows remain.
+- Existing account and service subscription records and admin billing remain. Product checkout, multiple product subscription entitlements and automatic payment/renewal/cancellation are not implemented.
+- `/admin/products` provides a read-only publication/validation overview of the source-controlled catalog. Product editing is through `lib/catalog.ts`, not a database-backed admin editor.
 
-The implemented client lifecycle is:
+No inventory, demo URLs, prices, plan benefits or customer claims have been fabricated. The real catalog and care-plan arrays are empty until the owner supplies approved product information. `npm run build` rejects invalid product identities, unsafe demos, invalid offers or missing licences/renewal terms.
 
-`Account → Project request → Client workspace → Project chat → Files / reviews → Notifications → Handover`
+## Focused navigation and retired sections
 
-The admin workspace can manage project phase/status, client actions, activity history, project files, rich chat messages, handover items and team access.
+Home · Products · Services · Projects · Plans & Pricing · About · Contact · Support & FAQ · Account.
 
-## Backend safety
+Knowledge/research, company spaces/invitations/member billing, standalone service finder/process and brand/CV services are retired from this release. Company APIs return 410; they are not routed to a backend. Company SQL migration history and existing customer/database records are retained.
 
-- Authenticated sessions use Secure + HttpOnly + SameSite cookies.
-- Public project data is protected by Supabase Row Level Security.
-- Project files use the private `project-files` bucket.
-- Uploads are restricted by type, size and signature checks.
-- Mutating APIs reject cross-origin requests.
-- Login, project-request, chat and upload flows are rate limited.
-- Project-request creation is atomic and idempotent.
+`lib/navigation/route-policy.ts` is the canonical route inventory. `public/sitemap.xml` must match its public routes. Legacy project links preserve their query parameters. Former product categories redirect to catalog filters. Retired company/knowledge/admin sections return 410 before asset handling. Removed page files and unused components/styles are deleted, not copied into a second implementation.
 
-## QA
+## Architecture and security
 
-Before a production build, `prebuild` runs dependency, localization, route, backend-schema, auth/worker and end-to-end lifecycle contract checks.
+Next.js 15.5.24 / React 19.1.9 static export, Cloudflare Worker, Supabase Auth/PostgreSQL and private project storage. Existing secure HttpOnly cookies, RLS, private file checks, request idempotency, rate limits and admin authorization are preserved. No database migration or remote data change is introduced by this cleanup.
 
-Useful commands:
+The previous shared CSS cascade is flattened into `app/site-foundation.css` in exactly its existing order. `app/site.css` imports that baseline and scoped storefront rules. Page-specific/module styles remain. This consolidation preserves the selected home appearance; it does not claim that every historical selector has been optimized away.
+
+## Validation
 
 ```bash
-npm run test:e2e-contract
+npm ci --no-audit --no-fund
 npm run build
-BASE_URL=https://your-production-domain npm run smoke:prod
+npx tsc --noEmit
+npm run test:storefront
 ```
 
-The production smoke test verifies the Worker health endpoint, security headers, public routes, and authentication redirects for Admin, Workspace, Chat and Handover.
+Prebuild retains dependency, localization, routes, backend, auth, Worker, lifecycle, navigation and historical migration checks, and adds storefront business/retirement checks. Localization tests exercise product cards, direct demo links, product details, monthly offers and contextual enquiries using fixtures removed before completion. No fixtures are in the published catalog.
 
-## Project roadmap and agent handoff
+Optional browser tests use a development Playwright installation:
 
-The target information architecture and route-retention policy are documented in [`docs/LINETECH-SITEMAP.md`](docs/LINETECH-SITEMAP.md).
+```bash
+PLAYWRIGHT_MODULE=/path/to/playwright CHROMIUM_PATH=/path/to/chromium node tests/storefront-browser.cjs
+```
 
-For continuity across ChatGPT conversations or coding agents, read these files before starting work:
+`HOME_BASELINE_OUT` optionally points to the pre-cleanup static export for visual metric comparison. `SCREENSHOT_DIR` optionally writes temporary screenshots. Hosted Auth/PostgREST, payment processing and deployment need separate verification.
 
-- [Current project context and work log](docs/PROJECT-CONTEXT.md) — readable handoff, current phase, decisions, QA baseline, and next steps.
-- [Compact machine-readable project context](docs/PROJECT-CONTEXT.json) — structured project state for tools and agents.
-- [Target sitemap](docs/LINETECH-SITEMAP.md) — intended route structure and rules for retaining/removing routes.
+## Handoff
 
-**Documentation rule:** After every meaningful implementation or configuration change, update `docs/PROJECT-CONTEXT.json`, `docs/PROJECT-CONTEXT.md`, and this README in the same change set. Record actual files changed, behavior, test commands/results, blockers, and the next step. Never report an unimplemented feature as complete.
+Read [current context](docs/PROJECT-CONTEXT.md), [structured context](docs/PROJECT-CONTEXT.json), [sitemap](docs/LINETECH-SITEMAP.md) and [catalog publication guide](docs/CATALOG-PUBLISHING.md).
 
-**Current handoff status (2026-10-22):** V2 platform sitemap implementation is on `codex/platform-sitemap-v2`. Existing service intake, account settings, projects, messages and handover are reused under the new structure. Six old standalone page routes are removed and redirect to their canonical service/account destinations. Product and knowledge sections have empty-catalog filters. Public pricing now shows Basic, Professional and Companies without unapproved prices or purchase actions. Company spaces, product/content administration and audit pages explicitly identify their inactive state; memberships, commerce, tenant RLS and per-member billing still require implementation. Existing database records and migration history remain unchanged. All asset requests run through the Worker. Local build (including all eight prebuild checks) and TypeScript checks passed. Production deployment and database-backed smoke testing remain unverified.
+After meaningful code/config changes, update README and both context files together with actual behavior, checks and blockers. Current local verification and rollout status are recorded there. Never describe a requested purchase, local fixture or source change as a successful payment, activated subscription or verified production deployment.
 
-Visual verification limitation (2026-10-22): Playwright could not start because Chromium was unavailable; browser installation failed with truncated download archives. No mobile screenshot QA or live backend validation is claimed.
-
-## Design refinement — 2026-10-22
-
-The V2 pages now share a responsive dark/blue design system: illustrated headers, category icons, searchable catalogs, explicit empty states, plan cards and expandable policy answers. Account/subscription pages include clear loading/error states and retry actions. Desktop navigation groups secondary pages under More; company navigation follows the selected language. No catalog inventory, prices or business capabilities were fabricated.
-
-The structural V2 change was merged into main at `1f622f2da5ce7deb0217c0b8c729e0ec08bdf6a5`. Cloudflare publication remains pending account sign-in. The prior browser-install blocker was resolved for local development using a temporary Chromium runtime; no browser dependency was added to this repository. Local screenshot review covered AR/EN products, knowledge, pricing, account and company pages at 390px and 1440px. Build, localization interaction checks and TypeScript pass. This is local UI validation, not production or authenticated backend validation.
-
-Final UI verification: 50 responsive checks across 320/390/768/1024/1440px passed in Arabic and English, including desktop More navigation, mobile menu and no runtime errors.
-
-## Company applications — 2026-10-22
-
-Company request submission, status tracking, admin approval/rejection and the approved-company overview now have backend/UI implementations. Approval creates the company and owner membership atomically; applicant identity and company visibility are enforced in PostgreSQL RLS. Repeated submissions reuse a stable key. Payment, invitations and company project access are not enabled by approval.
-
-**Rollout pending:** the configured LINETECH Supabase project is not available through the current connection. No remote database was modified and Cloudflare remains unpublished. Apply the new migration to the verified LINETECH database, then deploy the Worker; see [company rollout](docs/company-applications-setup.md). Missing schema/RPCs produce an unavailable state rather than false success.
-
-`npm run test:companies` runs API boundary tests and real PostgreSQL migration/RPC/RLS tests using pinned dev-only PGlite. The build now includes this suite. Local tests verify idempotency, review authorization, rejection reasons, company isolation and rollback on membership failure.
-
-Company UI verification: synthetic browser API fixtures passed submission failure/retry with stable key, receipt/status tracking, required rejection reason, admin approval and selected workspace; 12 responsive views at 320/390/768/1440px passed. Real SQL/RLS was verified independently; hosted Auth/PostgREST remains untested.
-
-
-## Company members and internal invitations — 2026-10-25
-
-Owners can invite by email, cancel pending invitations and remove members. Recipients accept or decline invitations under My companies using their verified account email. The team page preserves Arabic/English and phone layouts. Invitations expire after seven days and remain inside the account; no email message is sent. Only the owner manages the team; joining a company does not grant project access or start billing.
-
-An additive migration uses a RLS-closed invitation table and explicitly authorized private helpers behind public invoker RPCs. It verifies the live auth record, protects owner membership and makes acceptance atomic/idempotent. Existing project permissions are retained. `npm run test:companies` now also runs invitation API and actual PostgreSQL lifecycle/isolation tests. Full local build and TypeScript passed; hosted Auth/PostgREST remains unverified.
-
-**Rollout still pending:** configured LINETECH database is unavailable to the current connector; no remote data changed. Cloudflare remains deferred. See [members rollout and verification](docs/company-members-setup.md). Next implementation: company project associations and member-specific project authorization, followed by approved billing policies.
-
-Local member UI verification: 33 browser fixture checks passed across AR/EN and 320/390/768/1440px, covering error/retry, owner/member controls, acceptance/decline, cancellation and removal. Mobile Arabic and desktop English screenshots were inspected. These checks use synthetic API fixtures, not hosted Auth/PostgREST.
-
-Remote QA status (PR #9): GitHub Actions run 40184799267 for PR #9 did not start because the account is locked due to a billing issue (confirmed check annotation). This is not a test result; no remote CI success is claimed. The full local prebuild suite, production build and TypeScript checks passed.
+Local verification: production build and TypeScript passed; all ten prebuild suites passed. 62 browser checks passed across AR/EN and 320/390/768/1440px. Home hero/font metrics, section order and card counts matched the pre-cleanup export at phone/desktop widths; screenshots reviewed. No production/payment readiness is implied.

@@ -15,3 +15,7 @@ Disallow: /account/projects
 Disallow: /account/projects/messages
 Disallow: /account/projects/handover
 Disallow: /thank-you
+
+Disallow: /products/view
+Disallow: /company-space/
+Disallow: /knowledge/

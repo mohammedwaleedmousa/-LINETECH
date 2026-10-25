@@ -19,7 +19,7 @@ const journeyCopy = {
     title: "One clear path from idea to delivery.",
     lead: "LINETECH projects are custom services. You choose the closest service, prepare and complete a project request, hand it to LINETECH, agree the scope, then move through build and handover.",
     steps: [
-      ["01", "Choose service", "Review the four services and choose the closest fit for what you want to achieve."],
+      ["01", "Choose service", "Review the available services and choose the closest fit for what you want to achieve."],
       ["02", "Prepare request", "Add the goal, current stage, must-have features, timing and any useful references."],
       ["03", "Review & complete", "Review the final request, confirm the details and complete it to receive a reference number."],
       ["04", "Share & scope", "Hand the completed request to LINETECH, then agree deliverables, timing, reviews and commercial terms."],
@@ -34,7 +34,7 @@ const journeyCopy = {
     title: "مسار واضح من الفكرة إلى التسليم.",
     lead: "مشاريع لاين تك خدمات مخصصة. تختار الخدمة الأقرب لاحتياجك، تجهز طلب المشروع وتتمّه، تسلمه إلى لاين تك، نتفق على النطاق، ثم ننتقل إلى التنفيذ والتسليم.",
     steps: [
-      ["01", "اختر الخدمة", "راجع الخدمات الأربع واختر الخدمة الأقرب للنتيجة التي تريد الوصول إليها."],
+      ["01", "اختر الخدمة", "راجع الخدمات المتاحة واختر الخدمة الأقرب للنتيجة التي تريد الوصول إليها."],
       ["02", "جهز الطلب", "أضف الهدف، مرحلة المشروع، المتطلبات الأساسية، التوقيت وأي مراجع مفيدة."],
       ["03", "راجع وأتم الطلب", "راجع الطلب النهائي، أكد صحة البيانات ثم أتمه للحصول على رقم مرجعي."],
       ["04", "سلّم الطلب وحدد النطاق", "سلّم الطلب المكتمل إلى لاين تك ثم نتفق على المخرجات والتوقيت والمراجعات والشروط التجارية."],

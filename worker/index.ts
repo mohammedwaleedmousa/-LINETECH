@@ -10,20 +10,18 @@ import {
 } from "./core";
 import { handleAuth } from "./auth";
 import { handleClientApi } from "./client";
-import { handleCompanyApi } from "./companies";
+import {publicRoutes,utilityRoutes,legacyRoutes,isRetired} from "../lib/navigation/route-policy";
 import { handleAdminApi } from "./admin";
 
 function normalized(pathname:string) {
   return documentPath(pathname);
 }
 
-const publicSitemapRoutes = new Set([
-  "/", "/products", "/products/category/websites", "/products/category/mobile-apps", "/products/category/software-saas", "/products/category/brand-design", "/products/category/templates-tools", "/products/category/technical-services", "/services", "/services/web-development", "/services/ecommerce-systems", "/services/brand-identity", "/services/cv-portfolio", "/services/request", "/services/guide", "/services/process", "/projects", "/projects/flamingo-park", "/projects/etqan", "/projects/ledgerpro", "/knowledge", "/pricing", "/about", "/contact", "/faq", "/privacy", "/terms"
-]);
+const publicSitemapRoutes = new Set<string>(publicRoutes);
 
 // Required account entry points and internal handoff utility remain functional,
 // but are deliberately not part of public discovery or the XML sitemap.
-const requiredUtilityRoutes = new Set(["/login", "/admin/login", "/thank-you"]);
+const requiredUtilityRoutes = new Set<string>(utilityRoutes);
 
 function isPublicRouteAllowed(path:string) {
   if (publicSitemapRoutes.has(path) || requiredUtilityRoutes.has(path)) return true;
@@ -93,8 +91,15 @@ function logRequest(request:Request,path:string,response:Response,requestId:stri
 }
 
 async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise<Response> {
-  const legacyRoutes:Record<string,string> = {"/service-finder": "/services/guide", "/how-we-work": "/services/process", "/start": "/services/request", "/workspace": "/account/projects", "/chat": "/account/projects/messages", "/handover": "/account/projects/handover"};
-  if (legacyRoutes[path]) { const target=new URL(legacyRoutes[path],request.url); target.search=url.search; return Response.redirect(target.toString(),308); }
+  if(isRetired(path)){
+    if(path.startsWith("/api/"))return json({ok:false,error:"feature_removed"},410);
+    return new Response('<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LINETECH</title><body><main><h1>هذا القسم لم يعد متاحًا</h1><p>يمكنك استكشاف المواقع والتطبيقات أو طلب مشروع خاص.</p><p lang="en" dir="ltr">This section has been retired. Explore our products or request a custom project.</p><a href="/products">المنتجات / Products</a> · <a href="/services">الخدمات / Services</a></main></body></html>',{status:410,headers:{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow"}});
+  }
+  if(legacyRoutes[path]){
+    const target=new URL(legacyRoutes[path],request.url);
+    for(const [key,value] of url.searchParams)if(!target.searchParams.has(key)&&key!=="_rsc")target.searchParams.append(key,value);
+    return Response.redirect(target.toString(),308);
+  }
 
   if(path==="/api/health" && request.method==="GET") {
     const upstream=await authFetch(env,"/health",{method:"GET"});
@@ -117,9 +122,6 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
     const response=await handleAuth(request,env,path);
     return response || new Response("Not found",{status:404});
   }
-
-  const companyResponse=await handleCompanyApi(request,env,path);
-  if(companyResponse)return companyResponse;
 
   if(path.startsWith("/api/admin/")) {
     const response=await handleAdminApi(request,env,path);
@@ -151,8 +153,7 @@ async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise
   }
 
   if(
-    path==="/company-space" || path.startsWith("/company-space/")
-    || path==="/account/projects" || path.startsWith("/account/projects/")
+    path==="/account/projects" || path.startsWith("/account/projects/")
     || path==="/account/projects/messages" || path.startsWith("/account/projects/messages/")
     || path==="/account/projects/handover" || path.startsWith("/account/projects/handover/")
     || path==="/account" || path.startsWith("/account/")
