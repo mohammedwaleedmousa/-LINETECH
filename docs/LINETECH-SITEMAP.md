@@ -31,7 +31,7 @@ Product details, article/research details, checkout, licences, paid-content enfo
 | `/account/projects` | Project requests, execution, milestones, files/reviews | Existing protected workspace |
 | `/account/projects/messages` | Project messages | Existing protected chat, preserving project query |
 | `/account/projects/handover` | Deliverables and acceptance | Existing protected handover |
-| `/account/companies` | Companies and application status | Submission/status/review source implemented; migration and deployment pending; invitations remain inactive |
+| `/account/companies` | Companies and application status | Submission/status/review source implemented; migration and deployment pending; internal invitation inbox now implemented in source |
 | `/account/billing` | Personal invoices/payments | Explicit inactive state |
 | `/account/support` | Support | Ticket backend pending; working link to contact channels |
 
@@ -41,7 +41,7 @@ Product details, article/research details, checkout, licences, paid-content enfo
 
 All company pages require sign-in. Application submission (`/company-space/request`), applicant status tracking (`/account/companies`) and the approved company overview (`/company-space?company=<id>`) now have backend/UI implementations. Approval creates a company and its owner membership atomically. RLS isolates these company/application records. The migration and deployment are still pending; see `docs/company-applications-setup.md`.
 
-Members/invitations, company projects, billing and settings remain inactive structural pages. Do not treat company approval as authorization for project records. Per-member billing, the 7-day grace period, suspension/restoration and retention remain future behavior. Suspension must not automatically delete data.
+Members/invitations now have owner management, verified-email acceptance/decline and removal implementations in source (2026-10-25; rollout pending). See `company-members-setup.md`. Company projects, billing and settings remain inactive structural pages. Do not treat company approval as authorization for project records. Per-member billing, the 7-day grace period, suspension/restoration and retention remain future behavior. Suspension must not automatically delete data.
 
 ## LINETECH administration
 

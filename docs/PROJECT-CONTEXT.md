@@ -1,3 +1,15 @@
+# Company members and invitations — 2026-10-25
+
+Continued from merged main `728a4fb` on `codex/company-members-invitations`. Implemented an owner-managed team page, internal verified-email invitation inbox, acceptance/decline, cancellation and member removal. The owner is protected from removal; invitations only create the member role. Seven-day invitation expiry is independent of future billing grace policies. No email messages are sent.
+
+New CLI-generated migration `20261025101553_company_members_invitations.sql` adds a RLS-closed invitation table, four public security-invoker wrappers and authenticated, explicitly authorized private helpers. Privileged helpers stay in a non-exposed schema to perform atomic membership writes and verify the current auth-user email/confirmation/ban state. See `docs/company-members-setup.md` for the rationale and rollout checks. Company membership does not grant project access; existing project authorization is preserved.
+
+Changed: company members/inbox UI and client helpers/styles, company overview, company types, Worker company APIs, migration/bootstrap snapshot, company API/database tests and the test command. Owner-only writes, live verified email, replay, expiry, cancellation, removal, tenant isolation and transactional rollback passed in actual local PostgreSQL. Full build and TypeScript passed. Browser fixtures passed 33 checks across Arabic/English at 320/390/768/1440px, including error/retry, owner/member controls, acceptance/decline, cancellation and removal. Mobile Arabic and desktop English screenshots were inspected. Hosted Auth/PostgREST remains untested.
+
+No remote database changed: the connection again lists only Flamingo/Genan and not the configured LINETECH project. Cloudflare remains deferred by the owner. Source readiness is separate from hosted readiness. Next: company project association and per-member access, then rollout against the verified database; billing/commerce remain pending.
+
+---
+
 # Company application implementation — 2026-10-22
 
 The company application slice is implemented in source: form submission/receipt, own status/history, company list/selected overview and admin review queue. `worker/companies.ts` adds bounded/validated authenticated APIs. The CLI-generated migration `20261022183607_company_applications.sql` adds three RLS tables and two security-invoker RPCs. Approval is atomic with owner membership; no project/billing entitlements are activated.

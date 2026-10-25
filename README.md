@@ -71,3 +71,14 @@ Company request submission, status tracking, admin approval/rejection and the ap
 `npm run test:companies` runs API boundary tests and real PostgreSQL migration/RPC/RLS tests using pinned dev-only PGlite. The build now includes this suite. Local tests verify idempotency, review authorization, rejection reasons, company isolation and rollback on membership failure.
 
 Company UI verification: synthetic browser API fixtures passed submission failure/retry with stable key, receipt/status tracking, required rejection reason, admin approval and selected workspace; 12 responsive views at 320/390/768/1440px passed. Real SQL/RLS was verified independently; hosted Auth/PostgREST remains untested.
+
+
+## Company members and internal invitations — 2026-10-25
+
+Owners can invite by email, cancel pending invitations and remove members. Recipients accept or decline invitations under My companies using their verified account email. The team page preserves Arabic/English and phone layouts. Invitations expire after seven days and remain inside the account; no email message is sent. Only the owner manages the team; joining a company does not grant project access or start billing.
+
+An additive migration uses a RLS-closed invitation table and explicitly authorized private helpers behind public invoker RPCs. It verifies the live auth record, protects owner membership and makes acceptance atomic/idempotent. Existing project permissions are retained. `npm run test:companies` now also runs invitation API and actual PostgreSQL lifecycle/isolation tests. Full local build and TypeScript passed; hosted Auth/PostgREST remains unverified.
+
+**Rollout still pending:** configured LINETECH database is unavailable to the current connector; no remote data changed. Cloudflare remains deferred. See [members rollout and verification](docs/company-members-setup.md). Next implementation: company project associations and member-specific project authorization, followed by approved billing policies.
+
+Local member UI verification: 33 browser fixture checks passed across AR/EN and 320/390/768/1440px, covering error/retry, owner/member controls, acceptance/decline, cancellation and removal. Mobile Arabic and desktop English screenshots were inspected. These checks use synthetic API fixtures, not hosted Auth/PostgREST.
