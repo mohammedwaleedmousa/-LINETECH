@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   },
   description: siteDescription,
   applicationName: "LINETECH",
-  keywords: ["LINETECH", "web development", "brand identity", "digital products", "Aden", "Yemen"],
+  keywords: ["LINETECH", "web development", "application development", "digital products", "Aden", "Yemen"],
   robots: { index: true, follow: true },
   openGraph: {
     title: "LINETECH — Every idea starts with a line.",

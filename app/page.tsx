@@ -12,8 +12,8 @@ import "./home-content.css";
 const services = [
   { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services/web-development" },
   { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works.", href: "/services/ecommerce-systems" },
-  { icon: "✦", title: "Brand Identity", text: "Clear visual systems that make a business feel consistent, modern and credible.", href: "/services/brand-identity" },
-  { icon: "◎", title: "CV & Portfolio", text: "Professional personal presentation for careers, portfolios and stronger opportunities.", href: "/services/cv-portfolio" },
+  { icon: "✦", title: "Application Development", text: "Mobile applications shaped around your users, workflows and project requirements.", href: "/services/app-development" },
+  { icon: "◎", title: "After-sales Care", text: "Maintenance, support and updates that keep your website or application moving forward.", href: "/pricing#aftercare" },
 ];
 
 const process = [
@@ -62,7 +62,7 @@ export default function Home() {
         <div className="ref-shell">
           <div className="ref-section-heading">
             <div><p className="ref-kicker with-line">OUR SERVICES</p><h2>Solutions for<br/>a smarter tomorrow.</h2></div>
-            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><Link className="ref-button ghost small" href="/services/guide" prefetch>Find Your Service <span>→</span></Link></div>
+            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><Link className="ref-button ghost small" href="/services#choose" prefetch>Find Your Service <span>→</span></Link></div>
           </div>
           <div className="ref-service-grid">
             {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><Link href={service.href} prefetch>Learn more <span>→</span></Link></article>)}
@@ -82,7 +82,7 @@ export default function Home() {
           <div className="process-center-head">
             <p>OUR PROCESS <span/></p>
             <h2>From idea to impact.</h2>
-            <Link className="ref-button ghost small" href="/services/process" prefetch>See full process <span>→</span></Link>
+            <Link className="ref-button ghost small" href="/services#process" prefetch>See full process <span>→</span></Link>
           </div>
           <div className="process-center-grid">
             {process.map(([n,t,d], index) => (
@@ -115,7 +115,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p><p className="home-start-note">Your request stays on your device until you choose to share it with LINETECH.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/services/request" prefetch>Start your project request <span>→</span></Link><Link className="home-start-help" href="/services/guide" prefetch>Find the right service <span>→</span></Link></div></div></section>
+      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p><p className="home-start-note">Your request stays on your device until you choose to share it with LINETECH.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/services/request" prefetch>Start your project request <span>→</span></Link><Link className="home-start-help" href="/services#choose" prefetch>Find the right service <span>→</span></Link></div></div></section>
     </main></Localized>
   );
 }

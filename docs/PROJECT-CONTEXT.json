@@ -1,263 +1,73 @@
 {
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
-  "branch": "codex/company-members-invitations",
-  "status": "company_invitations_source_ready_rollout_pending",
+  "branch": "codex/storefront-cleanup",
   "updated_on": "2026-10-25",
+  "source_base": "f8de175622de19c524130bf76a722534c17db396",
+  "status": "focused_storefront_source_ready_rollout_unverified",
+  "scope": [
+    "ready-made websites and applications",
+    "custom website/application projects",
+    "one-time or monthly product offers",
+    "monthly after-sales care",
+    "preserve home design and section order"
+  ],
   "source_of_truth": [
+    "lib/navigation/route-policy.ts",
     "docs/LINETECH-SITEMAP.md",
+    "lib/catalog.ts",
     "docs/PROJECT-CONTEXT.md",
-    "docs/PROJECT-CONTEXT.json",
     "README.md"
   ],
-  "current_goal": "Implement and verify internal company invitations and owner/member management; next isolate project access by company and member.",
-  "guardrails": [
-    "Do not merge to main until required checks pass and the change set is reviewed.",
-    "Reuse working features; do not rebuild from scratch without evidence.",
-    "Before removing any route/file, inspect imports, links, redirects, API callbacks, auth, tests, and deployment dependencies.",
-    "Never delete customer data, database tables, migrations, or APIs as incidental sitemap cleanup.",
-    "Preserve server-side authorization, Supabase RLS, secure cookies, private storage, rate limits, and fail-closed behavior.",
-    "Support Arabic/English and RTL/LTR.",
-    "Do not invent product inventory, prices, subscription benefits, client names, or case-study claims.",
-    "Keep custom service packages separate from platform/product subscription tiers.",
-    "Update both project context files and README after each meaningful implementation change.",
-    "Follow docs/LINETECH-SITEMAP.md V2. Public XML and Worker allowlist match; all assets pass through Worker first. Never claim inactive company/commerce modules are live."
+  "retired": [
+    "knowledge and research",
+    "company spaces and invitations/member billing",
+    "brand and CV services",
+    "standalone finder/process",
+    "old category pages",
+    "inactive admin content/audit placeholders"
   ],
-  "architecture": {
-    "frontend": "Next.js static export",
-    "edge": "Cloudflare Workers",
-    "backend": "Supabase Auth and PostgreSQL",
-    "storage": "Private Supabase project-file storage",
-    "framework_versions": {
-      "next": "15.5.24",
-      "react": "19.1.9",
-      "react_dom": "19.1.9"
-    },
-    "locale": [
-      "ar",
-      "en"
-    ],
-    "lifecycle": [
-      "account",
-      "project request",
-      "client workspace",
-      "project chat",
-      "files/reviews",
-      "notifications",
-      "handover"
-    ]
+  "implemented": [
+    "central route policy with 410 retirement and query-preserving redirects",
+    "two-category catalog and bilingual search/billing filters",
+    "product detail with direct safe HTTPS preview and multiple offers",
+    "monthly care plan model",
+    "contextual product/offer/care WhatsApp and email enquiries",
+    "source-controlled read-only admin catalog overview",
+    "flattened shared CSS preserving original cascade",
+    "existing customer/auth/project/billing behavior retained"
+  ],
+  "not_implemented": [
+    "actual product inventory and approved prices/licences",
+    "database-backed product editing",
+    "product checkout and payments",
+    "multi-product subscription entitlements",
+    "automatic renewal/cancellation",
+    "invoice/ticket backend",
+    "verified production deployment"
+  ],
+  "data_changes": "No database, schema or customer data changes; all SQL migrations retained.",
+  "home": "Same layout/hero/component order/card counts; only retired copy and link destinations aligned. Original shared CSS cascade preserved.",
+  "qa": {
+    "build": "Passed full npm run build, including all 10 prebuild suites and static export.",
+    "typescript": "Passed npx tsc --noEmit.",
+    "react": "Passed bilingual catalog filtering, product cards/details, live-demo links and contextual offer enquiry using test-only fixtures.",
+    "routes": "38 app routes; 168 static references resolved. Retirement/redirect/API/sitemap assertions passed.",
+    "browser": "62 checks passed across AR/EN at 320/390/768/1440px, including search/reset and no stale navigation. Home metrics matched pre-cleanup export at 390/1440px in both languages; screenshots inspected.",
+    "remote": "Previous Actions blocked by confirmed account billing lock; Cloudflare build failure. No new production success claimed."
   },
-  "current_capabilities_seen_in_readme": [
-    "Client project workspace and delivery lifecycle",
-    "Admin project/status management, client actions, activity history, files, chat, handover, and team access",
-    "Secure HttpOnly SameSite cookies",
-    "Supabase Row Level Security",
-    "Private project-file bucket",
-    "Upload type/size/signature checks",
-    "Cross-origin protections and rate limiting",
-    "Atomic/idempotent project-request creation"
-  ],
-  "target_sitemap": {
-    "source": "docs/LINETECH-SITEMAP.md",
-    "public_sections": [
-      "Home",
-      "Products",
-      "Services",
-      "Projects",
-      "Knowledge & Research",
-      "Plans & Pricing",
-      "About",
-      "Contact",
-      "Support & FAQ"
-    ],
-    "personal": [
-      "/account",
-      "/account/profile",
-      "/account/orders",
-      "/account/subscriptions",
-      "/account/projects",
-      "/account/projects/messages",
-      "/account/projects/handover",
-      "/account/companies",
-      "/account/billing",
-      "/account/support"
-    ],
-    "company": [
-      "/company-space/request",
-      "/company-space",
-      "/company-space/projects",
-      "/company-space/members",
-      "/company-space/billing",
-      "/company-space/settings"
-    ],
-    "admin": [
-      "/admin",
-      "/admin/projects",
-      "/admin/clients",
-      "/admin/inbox",
-      "/admin/billing",
-      "/admin/team",
-      "/admin/account",
-      "/admin/companies",
-      "/admin/products",
-      "/admin/content",
-      "/admin/audit"
-    ]
-  },
-  "target_capabilities_not_yet_confirmed_as_implemented": [
-    "LINETECH-owned product catalog with search, filters, categories, and product detail pages",
-    "Platform subscriptions distinct from service packages",
-    "Company workspace requests subject to LINETECH approval",
-    "Company memberships, per-member billing/entitlements, and permissions",
-    "Knowledge/research publishing",
-    "Product and subscription administration",
-    "Auditable administration and future least-privilege staff roles"
-  ],
-  "qa_baseline": {
-    "local": "npm run build passed eight prebuild checks and static export; npx tsc --noEmit passed; catalog/knowledge filter and reset interactions covered in AR/EN.",
-    "github_actions": "GitHub Actions run 40184799267 for PR #9 did not start because the account is locked due to a billing issue (confirmed check annotation). This is not a test result; no remote CI success is claimed. The full local prebuild suite, production build and TypeScript checks passed.",
-    "production": "Not deployed or smoke-tested against configured Supabase",
-    "visual": "20 local AR/EN screenshot views passed at 390/1440px; temporary Chromium runtime outside repository. Public local UI only, not production/backend validation.",
-    "responsive": "50 checks passed at 320, 390, 768, 1024 and 1440px in AR/EN, plus desktop More and mobile menu behavior; no runtime errors.",
-    "company": "API and actual PostgreSQL RLS/RPC tests passed, including replay, spoofed role denial, rejection and approval rollback. Build and TypeScript passed; remote Supabase/Auth/PostgREST and production not tested.",
-    "company_browser": "Passed synthetic API browser workflow from failed submission/retry through admin approval and selected company; 12 responsive views passed. Live Auth/PostgREST not tested.",
-    "company_members": "All company API/PostgreSQL suites, full build and TypeScript passed; 33 browser fixture checks covered AR/EN at 320/390/768/1440px, error/retry and invitation/member lifecycle. Screenshot review passed. Hosted Auth/PostgREST and project advisors unavailable."
-  },
-  "work_log": [
-    {
-      "date": "2026-10-11",
-      "branch": "codex/sitemap-alignment-audit",
-      "completed": [
-        "Created branch from main for sitemap alignment work.",
-        "Added docs/LINETECH-SITEMAP.md as the target sitemap and route-retention policy.",
-        "Included /service-finder after reviewing current navigation/search references."
-      ],
-      "not_done": [
-        "No application routes/components were changed yet.",
-        "No route/file was deleted.",
-        "No changes merged into main.",
-        "No QA run has been executed on this branch yet."
-      ]
-    },
-    {
-      "date": "2026-10-11",
-      "branch": "codex/sitemap-alignment-audit",
-      "completed": [
-        "Updated the public primary navigation with existing /service-finder, /how-we-work, and /contact routes, retaining Arabic and English labels.",
-        "Corrected the contact URL in public/sitemap.xml to the canonical no-trailing-slash path."
-      ],
-      "not_done": [
-        "Automated tests and production build have not yet been verified for this implementation commit.",
-        "GitHub Actions QA failure root cause remains unconfirmed because job steps/logs were unavailable.",
-        "No changes merged into main."
-      ]
-    },
-    {
-      "date": "2026-10-11",
-      "branch": "codex/sitemap-ui-alignment-phase1",
-      "completed": [
-        "Added a shared bilingual sitemap landing component styled with the existing LINETECH dark UI, responsive grid, blue accent, and shared shell.",
-        "Added the /products catalog landing page and six static category pages with explicit empty states; no fictional product inventory, prices, or features were introduced.",
-        "Added the /knowledge hub landing page with a clear empty state until real articles are published.",
-        "Added Products and Knowledge to site search and the global footer.",
-        "Updated public/sitemap.xml with canonical /products and /knowledge URLs; left private account/admin/workspace routes out of the public XML sitemap."
-      ],
-      "validation": [
-        "Repository source review completed for current layout, shared CSS, navigation, footer, sitemap, and route tests.",
-        "Automated test suite and production build have not yet been run in this environment."
-      ],
-      "pending": [
-        "Run npm install with a supported Node.js version, then npm run test:routes, npm run test:localization, npm run test:navigation, and npm run build.",
-        "Implement knowledge article routes and product detail pages only when real published content/catalog data is available.",
-        "Continue auditing target routes and existing routes before any deletion or redirect."
-      ]
-    },
-    {
-      "date": "2026-10-11",
-      "branch": "codex/sitemap-public-route-lockdown",
-      "completed": [
-        "Added a Cloudflare Worker public-route allowlist aligned with public/sitemap.xml; unlisted public document routes return a noindex 404.",
-        "Disabled the unlisted /products/category/[slug] routes and changed catalogue category cards to non-link informational cards.",
-        "Added robots disallow and automated contract coverage for unlisted product-category URLs.",
-        "Preserved login, authenticated customer/admin routes, APIs, static assets, and the non-indexable /thank-you handoff."
-      ],
-      "validation": [
-        "GitHub Actions run 38138022343 failed on the merge commit; detailed step logs were unavailable and the root cause remains unconfirmed.",
-        "Public sitemap URL list and Worker allowlist were independently compared: both contain the same 21 normalized paths.",
-        "Production build/deployment is not verified."
-      ]
-    },
-    {
-      "date": "2026-10-22",
-      "branch": "codex/platform-sitemap-v2",
-      "completed": [
-        "Migrated six standalone routes into services/account with query-preserving legacy redirects",
-        "Added personal overview, profile/subscription views and all V2 company/admin structural modules",
-        "Replaced old public service pricing with three pending platform tiers; removed priced intake packages",
-        "Added six product categories with search/type filters and content filters, without fictional inventory",
-        "Enabled Worker-first for all assets; updated sitemap, navigation, auth and migration tests"
-      ],
-      "outstanding": [
-        "Company request/membership/invitation backend and tenant RLS",
-        "Catalog/content publication, paid access and checkout",
-        "Per-member 7-day billing enforcement, cancellation and invoice history",
-        "Production deployment and database-backed end-to-end validation"
-      ]
-    },
-    {
-      "date": "2026-10-22",
-      "branch": "codex/design-v2-polish",
-      "completed": [
-        "Shared responsive hero, SVG icons, category cards, empty states and focus/reduced-motion styling",
-        "Catalog and knowledge filter/reset interactions and bilingual copy",
-        "Three-tier plan design with native FAQ disclosures",
-        "Personal overview/subscription retry states and localized company navigation",
-        "Desktop More disclosure and preserved mobile menu",
-        "Local screenshot inspection of 20 page/language/viewport combinations"
-      ],
-      "remaining": [
-        "Cloudflare account sign-in and deployment",
-        "Business capabilities listed in the V2 sitemap"
-      ]
-    },
-    {
-      "date": "2026-10-22",
-      "branch": "codex/company-applications",
-      "completed": [
-        "CLI-generated additive company application migration and fresh-bootstrap snapshot",
-        "Security-invoker submission/review RPCs with atomic company/owner creation and RLS isolation",
-        "Bounded authenticated Worker APIs, validation and throttling",
-        "Client submission/receipt/status views and selected company overview",
-        "Admin review filters, pagination and rejection reason requirements",
-        "Worker API and actual PostgreSQL/PGlite tests including failure rollback"
-      ],
-      "not_done": [
-        "No remote database changed: configured LINETECH project unavailable to current connection",
-        "Cloudflare publication skipped pending account sign-in",
-        "Invitations, company project permissions, member billing and payment enforcement remain unimplemented"
-      ]
-    },
-    {
-      "date": "2026-10-25",
-      "branch": "codex/company-members-invitations",
-      "completed": [
-        "Company owner invitation/revocation/member-removal APIs and bilingual responsive team UI",
-        "Verified-email internal invitation inbox with accept/decline and refreshed company cards",
-        "Additive CLI-generated migration, RLS-closed invitation table and private authorized privileged helpers behind public invoker wrappers",
-        "Actual PostgreSQL tests for isolation, live email identity, owner protection, expiry/replay/removal and rollback"
-      ],
-      "not_done": [
-        "No remote database changed: LINETECH project remains unavailable",
-        "Cloudflare publication remains explicitly deferred",
-        "Company project permissions, member billing and paid commerce remain unimplemented"
-      ]
-    }
-  ],
   "next_steps": [
-    "Implement isolated company project association and member permissions without changing existing personal project access",
-    "Connect verified LINETECH project, apply both company migrations, and run security/performance advisors",
-    "Test owner/member/unrelated accounts against actual hosted Auth/PostgREST",
-    "Deploy after Cloudflare authentication; keep publication deferred until requested",
-    "Implement approved billing and commerce policies after project permissions"
+    "Merge verified cleanup and check deployment status",
+    "Obtain approved real product/demos/prices/terms",
+    "Choose and implement payment/order and product subscription operations",
+    "Verify live Auth/PostgREST and production workflows"
+  ],
+  "guardrails": [
+    "Preserve the home design",
+    "No fabricated products/prices or checkout success",
+    "Preserve customer data/auth/RLS/storage/idempotency",
+    "No migration-history deletion",
+    "No changes to unrelated databases",
+    "Update README and both context files together"
   ]
 }

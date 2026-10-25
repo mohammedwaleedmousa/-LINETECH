@@ -20,13 +20,13 @@ const serviceFocus: Record<string, { en: string[]; ar: string[] }> = {
     en: ["Customer or operational journey", "Core system screens & states", "Management flow & launch readiness"],
     ar: ["رحلة العميل أو سير العمل التشغيلي", "شاشات النظام وحالاته الأساسية", "الإدارة والاستعداد للإطلاق"],
   },
-  "Brand Identity": {
-    en: ["Visual direction", "Identity system", "Practical usage & handover"],
-    ar: ["الاتجاه البصري", "نظام الهوية", "الاستخدام العملي والتسليم"],
+  "Application Development": {
+    en: ["Application screens & user journeys", "Mobile development & integrations", "Testing & handover"],
+    ar: ["شاشات التطبيق ومسار المستخدم", "التطوير والتكامل", "الاختبار والتسليم"],
   },
-  "CV & Portfolio": {
-    en: ["Content hierarchy", "Professional presentation", "Portfolio or digital presence"],
-    ar: ["ترتيب المحتوى", "التقديم المهني", "الـPortfolio أو الحضور الرقمي"],
+  "After-sales Care": {
+    en: ["Maintenance scope", "Support and update coverage", "Hosting and operational terms"],
+    ar: ["نطاق الصيانة", "تغطية الدعم والتحديثات", "الاستضافة وشروط التشغيل"],
   },
   Other: {
     en: ["Clarify the real need", "Define the smallest useful scope", "Choose the right delivery path"],
@@ -37,8 +37,8 @@ const serviceFocus: Record<string, { en: string[]; ar: string[] }> = {
 const valueLabels: Record<string, { en: string; ar: string }> = {
   "Web Development": { en: "Web Development", ar: "تطوير المواقع" },
   "E-commerce & Systems": { en: "E-commerce & Systems", ar: "التجارة الإلكترونية والأنظمة" },
-  "Brand Identity": { en: "Brand Identity", ar: "الهوية البصرية" },
-  "CV & Portfolio": { en: "CV & Portfolio", ar: "السيرة الذاتية والملف المهني" },
+  "Application Development": { en: "Application Development", ar: "تطوير التطبيقات" },
+  "After-sales Care": { en: "After-sales Care", ar: "خدمات ما بعد البيع" },
   Other: { en: "Other", ar: "أخرى" },
   "New idea": { en: "New idea", ar: "فكرة جديدة" },
   "Existing project": { en: "Existing project", ar: "مشروع قائم" },

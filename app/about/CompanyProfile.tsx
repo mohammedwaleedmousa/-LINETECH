@@ -16,8 +16,8 @@ const copy = {
     capabilities: [
       ["01", "Web products", "Company websites and web experiences structured around clarity, performance and real business use."],
       ["02", "Commerce & systems", "Customer journeys, operational workflows, dashboards and digital systems shaped around how the business works."],
-      ["03", "Identity systems", "Visual foundations that keep a company clear and consistent across its product and communication."],
-      ["04", "Professional presence", "CV and portfolio systems that organize experience and work into a stronger professional presentation."],
+      ["03", "Application development", "Mobile applications shaped around users and business workflows."],
+      ["04", "After-sales care", "Maintenance, support, updates and hosting under an agreed service plan."],
     ],
     standard: [
       ["Scope before execution", "The expected deliverables and priorities are made clear before the build begins."],
@@ -36,8 +36,8 @@ const copy = {
     capabilities: [
       ["01", "منتجات الويب", "مواقع شركات وتجارب ويب مبنية حول الوضوح والأداء والاستخدام الحقيقي في العمل."],
       ["02", "التجارة والأنظمة", "رحلات عملاء وسير عمل تشغيلي ولوحات تحكم وأنظمة رقمية مبنية حول طريقة عمل النشاط."],
-      ["03", "أنظمة الهوية", "أسس بصرية تحافظ على وضوح الشركة وتناسقها عبر المنتج والتواصل."],
-      ["04", "الحضور المهني", "أنظمة للسيرة الذاتية والـPortfolio ترتب الخبرة والأعمال في تقديم مهني أقوى."],
+      ["03", "تطوير التطبيقات", "تطبيقات جوال مبنية حول المستخدمين ومسارات العمل."],
+      ["04", "خدمات ما بعد البيع", "صيانة ودعم وتحديثات واستضافة حسب خطة الخدمة المتفق عليها."],
     ],
     standard: [
       ["النطاق قبل التنفيذ", "يتم توضيح المخرجات والأولويات المتوقعة قبل بدء البناء."],
@@ -72,7 +72,7 @@ export default function CompanyProfile() {
             <p className={styles.label}>{t.modelLabel}</p>
             <h3>{t.modelTitle}</h3>
             <p>{t.modelText}</p>
-            <Link href="/services/process" prefetch>{t.process}<span>→</span></Link>
+            <Link href="/services#process" prefetch>{t.process}<span>→</span></Link>
           </div>
           <div className={styles.standard}>
             {t.standard.map(([title, text], index) => (

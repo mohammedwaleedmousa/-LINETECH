@@ -461,7 +461,7 @@ export default function WorkspaceClient() {
             <p>{t.noRequestBody}</p>
             <div>
               <Link className="ref-btn primary" href="/services/request">{t.start} ↗</Link>
-              <Link className="ref-btn ghost" href="/services/guide">{t.finder}</Link>
+              <Link className="ref-btn ghost" href="/services#choose">{t.finder}</Link>
             </div>
           </div>
         </section>

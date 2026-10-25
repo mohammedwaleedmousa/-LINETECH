@@ -2,25 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://linetech.aiengineer77.workers.dev/</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/products</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/products/category/websites</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/products/category/mobile-apps</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/products/category/software-saas</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/products/category/brand-design</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/products/category/templates-tools</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/products/category/technical-services</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/services</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/services/web-development</loc></url>
+  <url><loc>https://linetech.aiengineer77.workers.dev/services/app-development</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/services/ecommerce-systems</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/services/brand-identity</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/services/cv-portfolio</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/services/request</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/services/guide</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/services/process</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/projects</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/projects/flamingo-park</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/projects/etqan</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/projects/ledgerpro</loc></url>
-  <url><loc>https://linetech.aiengineer77.workers.dev/knowledge</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/pricing</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/about</loc></url>
   <url><loc>https://linetech.aiengineer77.workers.dev/contact</loc></url>

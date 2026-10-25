@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import ScopePreview from "./ScopePreview";
 import "./custom-select.css";
 
-const services = ["Web Development", "E-commerce & Systems", "Brand Identity", "CV & Portfolio", "Other"] as const;
+const services = ["Web Development", "Application Development", "E-commerce & Systems", "After-sales Care", "Other"] as const;
 const planOptions: Record<string, readonly string[]> = {};
 const planSummaries: Record<string, {setup: string; monthly: string; en: string; ar: string}> = {};
 const stages = ["New idea", "Existing project", "Redesign / rebuild", "Improve an existing system"] as const;
@@ -275,7 +275,7 @@ export default function ProjectIntake() {
           if (typeof draft.company === "string") setCompany(draft.company);
           if (typeof draft.contact === "string") setContact(draft.contact);
           if (typeof draft.preferredContact === "string") setPreferredContact(draft.preferredContact);
-          if (typeof draft.service === "string") setService(draft.service);
+          if (typeof draft.service === "string" && services.includes(draft.service as (typeof services)[number])) setService(draft.service);
           if (typeof draft.plan === "string") setPlan(draft.plan);
           if (typeof draft.stage === "string") setStage(draft.stage);
           if (typeof draft.goal === "string") setGoal(draft.goal);

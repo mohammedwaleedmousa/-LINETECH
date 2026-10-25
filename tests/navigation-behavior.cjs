@@ -10,6 +10,7 @@ function load(file, dependencies = {}) {
   return module.exports;
 }
 const navigation = load('lib/navigation/return-path.ts');
+const policy=load('lib/navigation/route-policy.ts');
 assert.equal(navigation.safeReturnPath('/account/projects/messages/index.txt?_rsc=abc&project=123'),'/account/projects/messages?project=123');
 assert.equal(navigation.safeReturnPath('/account/projects/?project=123#activity'),'/account/projects?project=123#activity');
 for(const input of ['//outside.test','https://outside.test','/\\outside.test','/api/auth/logout','/_next/file','/login','/admin/login',null]) assert.equal(navigation.safeReturnPath(input),'/account/projects');
@@ -17,11 +18,11 @@ let session = null;
 let fail = false;
 let assets = 0;
 const core = {resolveSession:async()=>{if(fail)throw Error('auth unavailable');return session;},clearCookies:()=>[],withCookies:r=>r,withSecurityHeaders:r=>r};
-const worker = load('worker/index.ts',{'../lib/navigation/return-path':navigation,'./core':core,'./auth':{},'./client':{},'./admin':{},'./companies':{handleCompanyApi:async()=>null}}).default;
+const worker = load('worker/index.ts',{'../lib/navigation/return-path':navigation,'./core':core,'./auth':{},'./client':{},'./admin':{},'../lib/navigation/route-policy':policy}).default;
 const env = {ASSETS:{fetch:async()=>{assets++;return new Response('protected asset');}}};
 async function request(p){return worker.fetch(new Request('https://linetech.test'+p),env);}
 (async()=>{
-  for(const [oldPath,newPath] of [["/workspace","/account/projects"],["/chat","/account/projects/messages"],["/handover","/account/projects/handover"],["/start","/services/request"],["/service-finder","/services/guide"],["/how-we-work","/services/process"]]) {
+  for(const [oldPath,newPath] of [["/workspace","/account/projects"],["/chat","/account/projects/messages"],["/handover","/account/projects/handover"],["/start","/services/request"],["/service-finder","/services"],["/how-we-work","/services"]]) {
     const result=await request(oldPath+"/index.html?project=123");
     assert.equal(result.status,308);
     const target=new URL(result.headers.get("location"));
@@ -29,7 +30,7 @@ async function request(p){return worker.fetch(new Request('https://linetech.test
     assert.equal(target.searchParams.get("project"),"123");
     assert.equal(assets,0);
   }
-  for(const path of ["/account/profile","/account/orders","/account/billing","/account/companies","/company-space","/company-space/members","/company-space/billing"]) {
+  for(const path of ["/account/profile","/account/orders","/account/billing"]) {
     const result=await request(path);
     assert.equal(result.status,302);
     assert.equal(new URL(result.headers.get("location")).pathname,"/login");
@@ -46,7 +47,7 @@ async function request(p){return worker.fetch(new Request('https://linetech.test
   }
   assert.equal((await request('/pricing/')).status,200);assert.equal(assets,1);
   assert.equal((await request('/about/')).status,200);assert.equal(assets,2);
-  const category=await request('/products/category/websites/');assert.equal(category.status,200);assert.equal(assets,3);
+  const category=await request('/products/');assert.equal(category.status,200);assert.equal(assets,3);
   assert.equal((await request('/unlisted-public-page/')).status,404);assert.equal(assets,3);
   assert.equal((await request('/thank-you/')).status,200);assert.equal(assets,4);
   fail=false;session={user:{app_metadata:{role:'client'}},setCookies:[]};
