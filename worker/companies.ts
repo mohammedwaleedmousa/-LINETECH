@@ -1,4 +1,4 @@
-import {type Env,json,rateLimitAllowed,rateLimitResponse,requireAdmin,resolveSession,restFetch,safeJson} from "./core";
+import {type Env,type ResolvedSession,json,rateLimitAllowed,rateLimitResponse,requireAdmin,resolveSession,restFetch,safeJson} from "./core";
 
 const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 const applicationFields="id,company_name,contact_name,contact_email,contact_phone,description,status,decision_note,company_id,created_at,reviewed_at";
@@ -17,10 +17,11 @@ async function result(response:Response,cookies:string[],key:string){
   return json({ok:true,[key]:row},200,cookies);
 }
 export async function handleCompanyApi(request:Request,env:Env,path:string):Promise<Response|null>{
-  if(!["/api/company-applications","/api/companies","/api/admin/company-applications"].includes(path))return null;
+  if(!["/api/company-applications","/api/companies","/api/admin/company-applications","/api/company-team","/api/company-invitations"].includes(path))return null;
   const adminPath=path.startsWith("/api/admin/");
   const session=adminPath?await requireAdmin(request,env):await resolveSession(request,env);
   if(!session)return json({ok:false},adminPath?403:401);
+  if(path==="/api/company-team"||path==="/api/company-invitations")return handleTeamRequest(request,env,path,session);
   if(request.method==="GET"){
     const params=new URL(request.url).searchParams;
     const status=params.get("status")||"";
@@ -47,4 +48,38 @@ export async function handleCompanyApi(request:Request,env:Env,path:string):Prom
   if(!key||!uuid.test(key)||!name||!contact||!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)||phone===null||!description)return json({ok:false},400,session.setCookies);
   const response=await restFetch(env,"/rpc/submit_company_application",session.accessToken,{method:"POST",body:JSON.stringify({p_submission_key:key,p_company_name:name,p_contact_name:contact,p_contact_email:email,p_contact_phone:phone,p_description:description})});
   return result(response,session.setCookies,"application");
+}
+
+
+async function handleTeamRequest(request:Request,env:Env,path:string,session:ResolvedSession):Promise<Response>{
+  const inbox=path==="/api/company-invitations";
+  let rpc:string,input:Record<string,unknown>,key:string;
+  if(request.method==="GET"){
+    const companyId=new URL(request.url).searchParams.get("company")||"";
+    if(!inbox&&!uuid.test(companyId))return json({ok:false},400,session.setCookies);
+    rpc=inbox?"my_company_invitations":"company_team";
+    input=inbox?{}:{p_company_id:companyId};key=inbox?"invitations":"team";
+  }else if(request.method==="POST"){
+    if(!await rateLimitAllowed(env.PROJECT_REQUEST_RATE_LIMITER,`company-team:${session.user.id}`))return rateLimitResponse(session.setCookies);
+    const parsed=await body(request);if(parsed.error)return json({ok:false},parsed.error,session.setCookies);
+    const value=parsed.value!;
+    if(inbox){
+      if(typeof value.invitationId!=="string"||!uuid.test(value.invitationId)||!['accept','decline'].includes(String(value.action)))return json({ok:false},400,session.setCookies);
+      rpc="respond_company_invitation";input={p_invitation_id:value.invitationId,p_action:value.action};
+    }else{
+      if(typeof value.companyId!=="string"||!uuid.test(value.companyId)||!['invite','revoke','remove'].includes(String(value.action)))return json({ok:false},400,session.setCookies);
+      const email=text(value.email,3,254);
+      if(value.action==="invite"&&(!email||!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)))return json({ok:false},400,session.setCookies);
+      if(value.action==="revoke"&&(typeof value.invitationId!=="string"||!uuid.test(value.invitationId)))return json({ok:false},400,session.setCookies);
+      if(value.action==="remove"&&(typeof value.userId!=="string"||!uuid.test(value.userId)))return json({ok:false},400,session.setCookies);
+      rpc="manage_company_team";input={p_company_id:value.companyId,p_action:value.action,p_email:value.action==="invite"?email:null,p_invitation_id:value.action==="revoke"?value.invitationId:null,p_user_id:value.action==="remove"?value.userId:null};
+    }
+    key="result";
+  }else return json({ok:false},405,session.setCookies);
+  const response=await restFetch(env,`/rpc/${rpc}`,session.accessToken,{method:"POST",body:JSON.stringify(input)});
+  if(!response.ok)return result(response,session.setCookies,key);
+  const payload=await safeJson(response);
+  const valid=key==="invitations"?Array.isArray(payload):key==="team"?payload?.id&&Array.isArray(payload.members)&&Array.isArray(payload.invitations):payload?.id;
+  if(!valid)return json({ok:false,error:"unavailable"},503,session.setCookies);
+  return json({ok:true,[key]:payload},200,session.setCookies);
 }

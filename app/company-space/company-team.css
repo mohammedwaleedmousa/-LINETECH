@@ -1,0 +1,20 @@
+.company-team-list{display:grid;gap:12px;margin-block:20px 36px}
+.company-team-row{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:24px;min-width:0}
+.company-team-row>div{min-width:0}
+.company-team-row h3{font-size:1rem;overflow-wrap:anywhere;margin:0 0 8px}
+.company-team-row p{margin:0;color:var(--platform-muted,#a0a8b8);font-size:.85rem;overflow-wrap:anywhere}
+.company-team-actions{display:flex;gap:10px;flex-shrink:0}
+.company-invite-form{margin-block:32px 40px}
+.company-invite-fields{display:flex;align-items:flex-end;gap:16px;margin-top:20px}
+.company-invite-fields label{display:grid;gap:10px;flex:1;min-width:0}
+.company-invite-fields input{box-sizing:border-box;width:100%;min-width:0;border:1px solid #ffffff26;border-radius:12px;padding:14px;background:#ffffff05;color:inherit;font:inherit}
+.company-invitation-inbox{border-top:1px solid #ffffff16;margin-top:40px;padding-top:32px}
+.company-team-page .platform-button:disabled,.company-invitation-inbox .platform-button:disabled{opacity:.55;cursor:wait}
+.company-team-page .company-feedback{overflow-wrap:anywhere}
+@media(max-width:600px){
+  .company-team-row{align-items:stretch;flex-direction:column;padding:20px;gap:16px}
+  .company-team-actions{flex-wrap:wrap}
+  .company-team-actions .platform-button{flex:1}
+  .company-invite-fields{align-items:stretch;flex-direction:column}
+  .company-team-page .platform-section-heading,.company-invitation-inbox .platform-section-heading{flex-wrap:wrap;gap:16px}
+}

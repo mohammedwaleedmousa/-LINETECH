@@ -1,16 +1,16 @@
 {
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
-  "branch": "codex/company-applications",
-  "status": "company_application_source_ready_rollout_pending",
-  "updated_on": "2026-10-22",
+  "branch": "codex/company-members-invitations",
+  "status": "company_invitations_source_ready_rollout_pending",
+  "updated_on": "2026-10-25",
   "source_of_truth": [
     "docs/LINETECH-SITEMAP.md",
     "docs/PROJECT-CONTEXT.md",
     "docs/PROJECT-CONTEXT.json",
     "README.md"
   ],
-  "current_goal": "Complete and locally verify company submission, status tracking, admin review and atomic approved-space creation without touching unrelated databases.",
+  "current_goal": "Implement and verify internal company invitations and owner/member management; next isolate project access by company and member.",
   "guardrails": [
     "Do not merge to main until required checks pass and the change set is reviewed.",
     "Reuse working features; do not rebuild from scratch without evidence.",
@@ -115,12 +115,13 @@
   ],
   "qa_baseline": {
     "local": "npm run build passed eight prebuild checks and static export; npx tsc --noEmit passed; catalog/knowledge filter and reset interactions covered in AR/EN.",
-    "github_actions": "Prior main run 38139124840 failed before runner steps; new remote checks pending",
+    "github_actions": "GitHub Actions run 40184799267 for PR #9 did not start because the account is locked due to a billing issue (confirmed check annotation). This is not a test result; no remote CI success is claimed. The full local prebuild suite, production build and TypeScript checks passed.",
     "production": "Not deployed or smoke-tested against configured Supabase",
     "visual": "20 local AR/EN screenshot views passed at 390/1440px; temporary Chromium runtime outside repository. Public local UI only, not production/backend validation.",
     "responsive": "50 checks passed at 320, 390, 768, 1024 and 1440px in AR/EN, plus desktop More and mobile menu behavior; no runtime errors.",
     "company": "API and actual PostgreSQL RLS/RPC tests passed, including replay, spoofed role denial, rejection and approval rollback. Build and TypeScript passed; remote Supabase/Auth/PostgREST and production not tested.",
-    "company_browser": "Passed synthetic API browser workflow from failed submission/retry through admin approval and selected company; 12 responsive views passed. Live Auth/PostgREST not tested."
+    "company_browser": "Passed synthetic API browser workflow from failed submission/retry through admin approval and selected company; 12 responsive views passed. Live Auth/PostgREST not tested.",
+    "company_members": "All company API/PostgreSQL suites, full build and TypeScript passed; 33 browser fixture checks covered AR/EN at 320/390/768/1440px, error/retry and invitation/member lifecycle. Screenshot review passed. Hosted Auth/PostgREST and project advisors unavailable."
   },
   "work_log": [
     {
@@ -235,12 +236,28 @@
         "Cloudflare publication skipped pending account sign-in",
         "Invitations, company project permissions, member billing and payment enforcement remain unimplemented"
       ]
+    },
+    {
+      "date": "2026-10-25",
+      "branch": "codex/company-members-invitations",
+      "completed": [
+        "Company owner invitation/revocation/member-removal APIs and bilingual responsive team UI",
+        "Verified-email internal invitation inbox with accept/decline and refreshed company cards",
+        "Additive CLI-generated migration, RLS-closed invitation table and private authorized privileged helpers behind public invoker wrappers",
+        "Actual PostgreSQL tests for isolation, live email identity, owner protection, expiry/replay/removal and rollback"
+      ],
+      "not_done": [
+        "No remote database changed: LINETECH project remains unavailable",
+        "Cloudflare publication remains explicitly deferred",
+        "Company project permissions, member billing and paid commerce remain unimplemented"
+      ]
     }
   ],
   "next_steps": [
-    "Connect verified LINETECH project and apply company migration; run project advisors",
-    "Deploy current main to Cloudflare after authentication",
-    "Verify full applicant/admin workflow against actual Supabase Auth/PostgREST",
-    "Implement invitations and isolated company project permissions before paid member billing"
+    "Implement isolated company project association and member permissions without changing existing personal project access",
+    "Connect verified LINETECH project, apply both company migrations, and run security/performance advisors",
+    "Test owner/member/unrelated accounts against actual hosted Auth/PostgREST",
+    "Deploy after Cloudflare authentication; keep publication deferred until requested",
+    "Implement approved billing and commerce policies after project permissions"
   ]
 }
