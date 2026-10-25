@@ -82,3 +82,5 @@ An additive migration uses a RLS-closed invitation table and explicitly authoriz
 **Rollout still pending:** configured LINETECH database is unavailable to the current connector; no remote data changed. Cloudflare remains deferred. See [members rollout and verification](docs/company-members-setup.md). Next implementation: company project associations and member-specific project authorization, followed by approved billing policies.
 
 Local member UI verification: 33 browser fixture checks passed across AR/EN and 320/390/768/1440px, covering error/retry, owner/member controls, acceptance/decline, cancellation and removal. Mobile Arabic and desktop English screenshots were inspected. These checks use synthetic API fixtures, not hosted Auth/PostgREST.
+
+Remote QA status (PR #9): GitHub Actions run 40184799267 for PR #9 did not start because the account is locked due to a billing issue (confirmed check annotation). This is not a test result; no remote CI success is claimed. The full local prebuild suite, production build and TypeScript checks passed.

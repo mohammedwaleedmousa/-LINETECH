@@ -6,6 +6,8 @@ New CLI-generated migration `20261025101553_company_members_invitations.sql` add
 
 Changed: company members/inbox UI and client helpers/styles, company overview, company types, Worker company APIs, migration/bootstrap snapshot, company API/database tests and the test command. Owner-only writes, live verified email, replay, expiry, cancellation, removal, tenant isolation and transactional rollback passed in actual local PostgreSQL. Full build and TypeScript passed. Browser fixtures passed 33 checks across Arabic/English at 320/390/768/1440px, including error/retry, owner/member controls, acceptance/decline, cancellation and removal. Mobile Arabic and desktop English screenshots were inspected. Hosted Auth/PostgREST remains untested.
 
+GitHub Actions run 40184799267 for PR #9 did not start because the account is locked due to a billing issue (confirmed check annotation). This is not a test result; no remote CI success is claimed. The full local prebuild suite, production build and TypeScript checks passed.
+
 No remote database changed: the connection again lists only Flamingo/Genan and not the configured LINETECH project. Cloudflare remains deferred by the owner. Source readiness is separate from hosted readiness. Next: company project association and per-member access, then rollout against the verified database; billing/commerce remain pending.
 
 ---

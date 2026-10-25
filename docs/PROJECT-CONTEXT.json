@@ -115,7 +115,7 @@
   ],
   "qa_baseline": {
     "local": "npm run build passed eight prebuild checks and static export; npx tsc --noEmit passed; catalog/knowledge filter and reset interactions covered in AR/EN.",
-    "github_actions": "Prior main run 38139124840 failed before runner steps; new remote checks pending",
+    "github_actions": "GitHub Actions run 40184799267 for PR #9 did not start because the account is locked due to a billing issue (confirmed check annotation). This is not a test result; no remote CI success is claimed. The full local prebuild suite, production build and TypeScript checks passed.",
     "production": "Not deployed or smoke-tested against configured Supabase",
     "visual": "20 local AR/EN screenshot views passed at 390/1440px; temporary Chromium runtime outside repository. Public local UI only, not production/backend validation.",
     "responsive": "50 checks passed at 320, 390, 768, 1024 and 1440px in AR/EN, plus desktop More and mobile menu behavior; no runtime errors.",
