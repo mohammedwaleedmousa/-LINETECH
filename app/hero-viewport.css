@@ -1,0 +1,24 @@
+/* One viewport for each marketing hero, with the fixed nav overlaid.
+   svh keeps the mobile opening screen stable as browser chrome retracts.
+   Content can still expand on unusually short screens rather than clipping. */
+html body[data-surface="site"] main[data-viewport-page],
+#top.ref-home[data-viewport-page]{
+  padding-block-start:0!important;
+}
+main[data-viewport-page] > [data-viewport-hero],
+#top.ref-home > .ref-hero.home-line-hero[data-viewport-hero]{
+  box-sizing:border-box;
+  height:auto!important;
+  min-height:100vh!important;
+  min-height:100svh!important;
+  max-height:none!important;
+  padding-block:0!important;
+}
+main[data-viewport-page] [data-viewport-hero-body],
+#top.ref-home > .ref-hero.home-line-hero[data-viewport-hero] .ref-hero-grid[data-viewport-hero-body]{
+  box-sizing:border-box;
+  height:auto!important;
+  min-height:calc(100vh - 1px)!important;
+  min-height:calc(100svh - 1px)!important;
+  max-height:none!important;
+}

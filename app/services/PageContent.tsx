@@ -18,7 +18,7 @@ export default function Services(){return <Suspense fallback={null}><ServicesCon
 function ServicesContent(){
   const language=useLanguage(),ar=language==="ar";
   const {params,queryObserver}=usePageQuery();
-  return <main className={`${styles.page} platform-page`}>{queryObserver}
+  return <main className={`${styles.page} platform-page`} data-viewport-page>{queryObserver}
     <MarketingHero eyebrow={ar?"الخدمات والحلول":"SERVICES & SOLUTIONS"} title={ar?"فكرتك،\nبتفاصيل تناسبك.":"Your idea.\nBuilt around you."} description={ar?"تطوير المواقع والتطبيقات والأنظمة، والمنتجات الجاهزة وخيارات الدعم في مكان واحد.":"Websites, applications and business systems, with ready-made products and ongoing care in one place."}><Link className="platform-button primary" href="/contact#request">{ar?"ابدأ مشروعك":"Start your project"}</Link><a className="platform-button secondary" href="#catalog">{ar?"المنتجات والباقات":"Products & plans"}</a></MarketingHero>
     <section className="platform-section" id="choose">
       <div className="platform-section-heading"><h2>{ar?"ماذا تريد أن تبني؟":"What would you like to build?"}</h2></div>

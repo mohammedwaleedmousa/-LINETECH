@@ -120,8 +120,8 @@ export default function ProjectsPage() {
   const t = copy[language];
 
   return (
-    <main className={`${styles.page} ref-page page-projects`}>
-      <section className={styles.hero} data-project-hero>
+    <main className={`${styles.page} ref-page page-projects`} data-viewport-page>
+      <section className={styles.hero} data-project-hero data-viewport-hero>
         <div className="projects-line-art" aria-hidden="true">
           <svg viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice" focusable="false">
             <defs>
@@ -161,7 +161,7 @@ export default function ProjectsPage() {
           </svg>
         </div>
 
-        <div className={styles.heroShell}>
+        <div className={styles.heroShell} data-viewport-hero-body>
           <div className={styles.heroCopy}>
             <p className={styles.kicker} data-project-motion="hero">{t.hero.kicker}</p>
             <h1 data-project-motion="hero">{t.hero.title}</h1>
