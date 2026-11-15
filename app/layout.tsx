@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import SiteSurface from "./SiteSurface";
 import "./site.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.company";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
 
 export const metadata: Metadata = {

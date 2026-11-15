@@ -9,8 +9,8 @@ Disallow: /account
 Disallow: /company-space
 Disallow: /api/
 
-Sitemap: https://linetech.aiengineer77.workers.dev/sitemap.xml
-Host: https://linetech.aiengineer77.workers.dev
+Sitemap: https://linetech.company/sitemap.xml
+Host: https://linetech.company
 Disallow: /account/projects
 Disallow: /account/projects/messages
 Disallow: /account/projects/handover
