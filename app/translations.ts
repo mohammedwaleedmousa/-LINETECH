@@ -3,6 +3,7 @@ import arabic from "./arabic.json";
 export type Language = "ar" | "en";
 const dictionary: Record<string, string> = arabic;
 const qaCopy: Record<string, string> = {
+  "Websites, applications and business systems built around your idea.": "مواقع وتطبيقات وأنظمة أعمال مبنية حول فكرتك.",
   "Review request": "مراجعة الطلب",
   "Describe your idea, choose a service and complete a clear project request.": "اشرح فكرتك، واختر الخدمة، ثم أكمل طلب مشروع واضحًا.",
   "Your request stays on your device until you choose to share it with LINETECH.": "يبقى طلبك على جهازك حتى تختار مشاركته مع لاين تك.",

@@ -37,7 +37,7 @@ const copy = {
     home: "الرئيسية",
     projects: "المشاريع",
     products: "المنتجات",
-    about: "عن لاين تك",
+    about: "عن LINETECH",
     faq: "الأسئلة الشائعة",
     contact: "تواصل معنا",
     web: "تطوير المواقع",
@@ -48,7 +48,7 @@ const copy = {
     workspace: "مساحة العميل",
     privacy: "الخصوصية",
     terms: "الشروط",
-    rights: "© 2026 لاين تك. جميع الحقوق محفوظة.",
+    rights: "© 2026 LINETECH. جميع الحقوق محفوظة.",
     line: "كل فكرة تبدأ بخط.",
   },
 } as const;
@@ -81,7 +81,6 @@ export default function SiteFooter() {
 
           <nav className="footer-v2-column" aria-label={t.explore}>
             <h4>{t.explore}</h4>
-            <Link className={linkClass("/")} aria-current={isActive("/") ? "page" : undefined} href="/" prefetch>{t.home}</Link>
             <Link className={linkClass("/projects")} aria-current={isActive("/projects") ? "page" : undefined} href="/projects" prefetch>{t.projects}</Link>
             <Link className={linkClass("/products")} aria-current={isActive("/products") ? "page" : undefined} href="/products" prefetch>{t.products}</Link>
             <Link className={linkClass("/about")} aria-current={isActive("/about") ? "page" : undefined} href="/about" prefetch>{t.about}</Link>
@@ -98,9 +97,7 @@ export default function SiteFooter() {
 
           <nav className="footer-v2-column" aria-label={t.company}>
             <h4>{t.company}</h4>
-            <Link className={linkClass("/services")} href="/services" prefetch>{t.services}</Link>
             <Link className={linkClass("/pricing")} href="/pricing" prefetch>{t.how}</Link>
-            <Link className={linkClass("/account/projects")} href="/account/projects" prefetch>{t.workspace}</Link>
             <Link className={linkClass("/contact")} aria-current={isActive("/contact") ? "page" : undefined} href="/contact" prefetch>{t.contact}</Link>
             <Link className={linkClass("/privacy")} href="/privacy" prefetch>{t.privacy}</Link>
             <Link className={linkClass("/terms")} href="/terms" prefetch>{t.terms}</Link>
