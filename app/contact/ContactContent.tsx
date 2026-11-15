@@ -7,7 +7,7 @@ import {products,aftercarePlans,formatPrice} from '../../lib/catalog';
 import { useLanguage } from '../Localized';
 import styles from './contact.module.css';
 
-const email = 'aiengineer77@icloud.com';
+const email = 'info@linetech.company';
 const phone = '+967773335065';
 
 export default function ContactContent(){return <Suspense fallback={null}><ContactDetails/></Suspense>;}

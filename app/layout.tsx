@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 import SiteSurface from "./SiteSurface";
 import "./site.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.aiengineer77.workers.dev";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.company";
 const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
 
 export const metadata: Metadata = {
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     description: siteDescription,
     siteName: "LINETECH",
     type: "website",
-    images: [{ url: "/hero/home.webp", width: 1536, height: 1024, alt: "LINETECH" }],
+    images: [{ url: "/brand/social.png", width: 1200, height: 630, alt: "LINETECH" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "LINETECH — Every idea starts with a line.",
     description: siteDescription,
-    images: ["/hero/home.webp"],
+    images: ["/brand/social.png"],
   },
 };
 

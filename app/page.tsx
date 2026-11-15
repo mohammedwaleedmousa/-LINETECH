@@ -1,121 +1,56 @@
 "use client";
 
-import Localized from "./Localized";
-import HomeHeroArt from "./HomeHeroArt";
-import HomeProjects from "./HomeProjects";
-import HomeAbout from "./HomeAbout";
-import HomePlatform from "./HomePlatform";
-import HomeWhy from "./HomeWhy";
 import Link from "next/link";
-import "./home-content.css";
+import { useLanguage } from "./Localized";
+import styles from "./brand-home.module.css";
 
 const services = [
-  { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services/web-development" },
-  { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works.", href: "/services/ecommerce-systems" },
-  { icon: "✦", title: "Application Development", text: "Mobile applications shaped around your users, workflows and project requirements.", href: "/services/app-development" },
-  { icon: "◎", title: "After-sales Care", text: "Maintenance, support and updates that keep your website or application moving forward.", href: "/pricing#aftercare" },
+  { n:"01", en:"Websites & commerce", ar:"المواقع والمتاجر", enText:"Company websites and online stores designed around your customers, from the first page to the final order.", arText:"مواقع شركات ومتاجر إلكترونية مصمّمة حول عملائك، من الصفحة الأولى إلى إتمام الطلب.", href:"/services/web-development", type:"WEB / COMMERCE" },
+  { n:"02", en:"Mobile applications", ar:"تطبيقات الجوال", enText:"Thoughtful mobile experiences, with the design, development and launch scope agreed around your product.", arText:"تجارب جوال واضحة وسهلة، بتصميم وتطوير وخطة إطلاق تناسب منتجك.", href:"/services/app-development", type:"iOS / ANDROID" },
+  { n:"03", en:"Business systems", ar:"الأنظمة البرمجية", enText:"Dashboards and custom workflows that bring your operations together in one practical system.", arText:"لوحات إدارة وسير عمل مخصّص يجمع عملياتك في نظام عملي واحد.", href:"/services/ecommerce-systems", type:"SYSTEMS / OPERATIONS" },
+  { n:"04", en:"AI & automation", ar:"الذكاء الاصطناعي والأتمتة", enText:"Explore where AI can solve a real problem. Define the data, feasibility and a focused prototype before expanding.", arText:"نحدّد أين يمكن للذكاء الاصطناعي حل مشكلة فعلية، ثم نقيّم البيانات والجدوى ونبدأ بنموذج أولي محدّد.", href:"/contact?service=ai", type:"AI / AUTOMATION" },
 ];
-
 const process = [
-  ["01", "Understand", "We define the idea, goals and the real challenge."],
-  ["02", "Plan", "We shape the right structure, scope and direction."],
-  ["03", "Build", "We design, develop and test with precision."],
-  ["04", "Launch", "We deploy, hand over and support the next step."],
-];
-
-const commitments = [
-  ["An agreed scope", "Pages, features, deliverables and priorities are defined before work begins."],
-  ["Planned reviews", "Review stages and included revisions are agreed as part of the project scope."],
-  ["A clear handover", "Source files, assets and access are handed over according to the project agreement."],
-  ["Support arrangements", "Hosting, maintenance and any support after launch are defined during planning."],
-];
-
-const faqs = [
-  ["How is the project price determined?", "Pricing depends on the service, scope, required features and deliverables. These details are clarified before a proposal is agreed."],
-  ["How long does a project take?", "Timing depends on the type of work, scope, content readiness and feedback speed. The schedule is defined after the project is understood rather than promising one fixed duration for every project."],
-  ["What do I need to prepare?", "Start with your idea, the people it serves and the result you want. If you have content, a current website or references, include them in your brief."],
-  ["What happens after launch?", "The handover includes the agreed project assets and launch state. Ongoing maintenance or support can be scoped separately when needed."],
+  ["Understand","نفهم","Your objective, users and constraints.","هدفك ومستخدميك وحدود المشروع."],
+  ["Build","نبني","Design, engineering and planned reviews.","تصميم وتطوير ومراجعات متفق عليها."],
+  ["Evolve","نطوّر","Launch, handover and agreed aftercare.","إطلاق وتسليم ودعم حسب الاتفاق."],
 ];
 
 export default function Home() {
-  return (
-    <Localized><main className="ref-home" id="top">
-      <section className="ref-hero ref-line-section home-line-hero">
-        <HomeHeroArt/>
-        <div className="ref-shell ref-hero-grid">
-          <div className="ref-hero-copy">
-            <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
-            <h1>Every idea<br/>starts with a line.</h1>
-            <p className="ref-lead">We build websites, online stores and business systems for companies and founders, with a clear identity and an experience designed around their customers.</p>
-            <div className="ref-actions"><Link className="ref-button light" href="/services/request" prefetch>Start Your Line <span>→</span></Link><a className="ref-button ghost" href="#projects">View Our Work <span>↓</span></a></div>
-            <div className="ref-stats">
-              <div><strong>01</strong><span>Founder-led</span></div>
-              <div><strong>{String(services.length).padStart(2, "0")}</strong><span>Core Services</span></div>
-              <div><strong>{String(process.length).padStart(2, "0")}</strong><span>Clear Steps</span></div>
-              <div><strong>03</strong><span>Selected Projects</span></div>
-            </div>
+  const ar = useLanguage() === "ar";
+  const t = (en:string, arabic:string) => ar ? arabic : en;
+  return <main className={styles.home} id="top" dir={ar?"rtl":"ltr"}>
+    <section className={styles.hero}>
+      <div className={styles.shell}>
+        <div className={styles.eyebrow}><span/>{t("INDEPENDENT TECHNOLOGY COMPANY · ADEN, YEMEN","شركة تقنية مستقلة · عدن، اليمن")}</div>
+        <div className={styles.heroGrid}>
+          <div>
+            <h1>{t("Your idea.","فكرتك.")}<br/><span>{t("Built for the real world.","حلّ يستحق التنفيذ.")}</span></h1>
+            <p className={styles.lead}>{t("We turn ideas into websites, applications and intelligent systems. Clear thinking, considered design and engineering that serves your business.","نحوّل أفكارك إلى مواقع وتطبيقات وأنظمة ذكية. فهم واضح، وتصميم مدروس، وتطوير يخدم احتياج عملك.")}</p>
+            <div className={styles.actions}><Link className={styles.primary} href="/services/request">{t("Discuss your project","ناقش مشروعك")} <span aria-hidden="true">↗</span></Link><a className={styles.secondary} href="#projects">{t("View our work","شاهد أعمالنا")} <span aria-hidden="true">↓</span></a></div>
           </div>
+          <div className={styles.heroArt} aria-hidden="true"><div className={styles.artGrid}/><img src="/brand/symbol-white.png" alt="" width="452" height="491"/><span className={styles.artCaption}>Every idea starts with a line.</span></div>
         </div>
-      </section>
+        <div className={styles.heroFoot}><span>{t("FROM THE FIRST LINE TO LAUNCH","من أول خط إلى الإطلاق")}</span><span>WEB · MOBILE · SYSTEMS · AI</span></div>
+      </div>
+    </section>
 
-      <section className="ref-section ref-line-section" id="services">
-        <div className="ref-shell">
-          <div className="ref-section-heading">
-            <div><p className="ref-kicker with-line">OUR SERVICES</p><h2>Solutions for<br/>a smarter tomorrow.</h2></div>
-            <div className="ref-heading-side"><p>We combine technology, design and engineering to deliver solutions that solve real problems.</p><Link className="ref-button ghost small" href="/services#choose" prefetch>Find Your Service <span>→</span></Link></div>
-          </div>
-          <div className="ref-service-grid">
-            {services.map((service) => <article className="ref-service-card" key={service.title}><span className="ref-service-icon">{service.icon}</span><h3>{service.title}</h3><p>{service.text}</p><Link href={service.href} prefetch>Learn more <span>→</span></Link></article>)}
-          </div>
-        </div>
-      </section>
+    <section className={styles.light} id="services"><div className={styles.shell}>
+      <div className={styles.sectionHead}><div><p className={styles.kicker}>{t("01 / WHAT WE DO","01 / ماذا نقدّم")}</p><h2>{t("The right solution.","الحل المناسب.")}<br/>{t("For your next step.","لخطوتك القادمة.")}</h2></div><p>{t("Start with the outcome you need. We define the deliverables, priorities and scope before development begins.","نبدأ بالنتيجة التي تحتاجها، ونحدّد المخرجات والأولويات ونطاق العمل قبل بدء التنفيذ.")}</p></div>
+      <div className={styles.services}>{services.map(s=><Link key={s.n} href={s.href} className={styles.service}><div className={styles.serviceTop}><span>{s.n}</span><span aria-hidden="true">↗</span></div><small>{s.type}</small><h3>{ar?s.ar:s.en}</h3><p>{ar?s.arText:s.enText}</p><span className={styles.serviceLink}>{t("Explore the service","استكشف الخدمة")} <span aria-hidden="true">→</span></span></Link>)}</div>
+    </div></section>
 
-      <HomeProjects/>
-      <HomePlatform/>
+    <section className={styles.work} id="projects"><div className={styles.shell}>
+      <div className={styles.sectionHead}><div><p className={styles.kicker}>{t("02 / SELECTED WORK","02 / أعمال مختارة")}</p><h2>{t("Ideas, made tangible.","أفكار أصبحت واقعًا.")}</h2></div><Link className={styles.textLink} href="/projects">{t("All project case studies","كل دراسات المشاريع")} ↗</Link></div>
+      <Link className={styles.featured} href="/projects/flamingo-park"><div className={styles.projectArt}><span>FP.</span><div className={styles.projectArtBottom}><span>FLAMINGO PARK</span><span>COMMERCE / WEB</span></div></div><div className={styles.projectCopy}><span className={styles.kicker}>{t("FOUNDER'S WORK / E-COMMERCE","من أعمال المؤسس / تجارة إلكترونية")}</span><h3>Flamingo Park</h3><p>{t("A commerce website that connects product discovery, ordering and store operations. Explore the project scope and engineering decisions.","موقع تجاري يجمع اكتشاف المنتجات والطلبات وعمليات المتجر. اطّلع على نطاق المشروع والقرارات التقنية.")}</p><span className={styles.textLink}>{t("Explore the case study","اطّلع على تفاصيل المشروع")} ↗</span></div></Link>
+      <div className={styles.workNote}>{t("The project artwork is a brand illustration. Project details are available in the case study.","الصورة معالجة بصرية لاسم المشروع؛ تفاصيل التنفيذ موضّحة في دراسة المشروع.")}</div>
+      <Link className={styles.concept} href="/projects/etqan"><div><span className={styles.kicker}>{t("CONCEPT EXPLORATION","مشروع تصوّري")}</span><h3>Etqan</h3></div><p>{t("A service-marketplace concept exploring provider discovery and a clearer customer journey.","تصوّر لسوق خدمات يستكشف اكتشاف مقدّمي الخدمات وتنظيم رحلة العميل.")}</p><span aria-hidden="true">↗</span></Link>
+    </div></section>
 
-      <HomeAbout/>
+    <section className={styles.light} id="about"><div className={`${styles.shell} ${styles.about}`}><div><p className={styles.kicker}>{t("03 / ABOUT LINETECH","03 / عن LINETECH")}</p><h2>{t("Small by design.","بداية مركّزة.")}<br/>{t("Serious about the work.","وجديّة في العمل.")}</h2><Link className={styles.textLink} href="/about">{t("Meet LINETECH","تعرّف على LINETECH")} ↗</Link></div><div><p className={styles.aboutLead}>{t("LINETECH is a founder-led technology company based in Aden. You work directly with the person responsible for understanding, building and delivering your project.","LINETECH شركة تقنية يقودها مؤسسها من عدن. تتعامل مباشرةً مع المسؤول عن فهم مشروعك وبنائه وتسليمه.")}</p><div className={styles.founder}><span>MW</span><div><strong>Mohammed Waleed</strong><p>Founder &amp; CEO</p></div></div><p>{t("We agree on scope, review stages, handover and support before work begins. The aim is a useful product you can understand, operate and continue to develop.","نتّفق على نطاق العمل والمراجعات والتسليم والدعم قبل البداية. هدفنا منتج مفيد تستطيع فهمه وتشغيله وتطويره.")}</p></div></div></section>
 
-      <HomeWhy/>
+    <section className={styles.process}><div className={styles.shell}><p className={styles.kicker}>{t("04 / HOW WE WORK","04 / كيف نعمل")}</p><div className={styles.steps}>{process.map(([en,arabic,desc,descAr],i)=><article key={en}><span className={styles.stepNumber}>0{i+1}</span><h3>{ar?arabic:en}</h3><p>{ar?descAr:desc}</p></article>)}</div></div></section>
 
-      <section className="process-center ref-line-section">
-        <div className="process-center-shell">
-          <div className="process-center-head">
-            <p>OUR PROCESS <span/></p>
-            <h2>From idea to impact.</h2>
-            <Link className="ref-button ghost small" href="/services#process" prefetch>See full process <span>→</span></Link>
-          </div>
-          <div className="process-center-grid">
-            {process.map(([n,t,d], index) => (
-              <article key={n} className="process-center-card">
-                <div className={`process-center-num ${index===1||index===2?"accent":""}`}>{n}<i/></div>
-                <h3>{t}</h3>
-                <p>{d}</p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className="ref-section ref-line-section home-commitments" aria-labelledby="commitments-title">
-        <div className="ref-shell">
-          <div className="ref-section-heading">
-            <div><p className="ref-kicker with-line">OUR STANDARD</p><h2 id="commitments-title">Clear expectations.<br/>At every step.</h2></div>
-            <div className="ref-heading-side"><p>Agree on the details that matter before execution, and keep decisions clear through delivery.</p></div>
-          </div>
-          <div className="home-commitment-grid">
-            {commitments.map(([title, text], index) => <article key={title}><span className="home-section-number" aria-hidden="true">{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{text}</p></article>)}
-          </div>
-        </div>
-      </section>
-
-      <section className="ref-section ref-line-section home-faq" aria-labelledby="home-faq-title">
-        <div className="ref-shell home-faq-grid">
-          <div className="home-faq-intro"><p className="ref-kicker with-line">BEFORE WE START</p><h2 id="home-faq-title">A few clear answers.</h2><p>The essentials to help you take the first step.</p><Link className="ref-button ghost small" href="/faq" prefetch>View all questions <span>→</span></Link></div>
-          <div className="home-faq-list">{faqs.map(([question, answer]) => <details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
-        </div>
-      </section>
-
-      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p><p className="home-start-note">Your request stays on your device until you choose to share it with LINETECH.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/services/request" prefetch>Start your project request <span>→</span></Link><Link className="home-start-help" href="/services#choose" prefetch>Find the right service <span>→</span></Link></div></div></section>
-    </main></Localized>
-  );
+    <section className={styles.contact} id="contact"><div className={styles.shell}><p className={styles.kicker}>{t("05 / LET'S TALK","05 / لنبدأ الحديث")}</p><h2>{t("What's your next idea?","ما فكرتك القادمة؟")}</h2><p>{t("Tell us what you want to build. We will help you define a clear next step.","أخبرنا بما تريد بناءه، ولنحدّد معًا الخطوة التالية بوضوح.")}</p><div className={styles.actions}><Link href="/contact" className={styles.primary}>{t("Discuss your project","ناقش مشروعك")} ↗</Link><a className={styles.secondary} href="https://wa.me/967773335065" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a></div><div className={styles.contactDetails}><a href="mailto:info@linetech.company">info@linetech.company</a><a href="tel:+967773335065" dir="ltr">+967 773 335 065</a><span>{t("Aden, Yemen","عدن، اليمن")}</span></div><Link href="/privacy" className={styles.privacy}>{t("How we handle your information","كيف نتعامل مع معلوماتك")}</Link></div></section>
+  </main>;
 }

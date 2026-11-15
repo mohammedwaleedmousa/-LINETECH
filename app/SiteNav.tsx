@@ -8,12 +8,12 @@ import { createPortal } from "react-dom";
 
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
-  { href: "/products", en: "Products", ar: "المنتجات" },
   { href: "/services", en: "Services", ar: "الخدمات" },
-  { href: "/projects", en: "Projects", ar: "المشاريع" },
-  { href: "/pricing", en: "Plans & Pricing", ar: "الخطط والأسعار" },
+  { href: "/projects", en: "Projects", ar: "أعمالنا" },
   { href: "/about", en: "About LINETECH", ar: "عن LINETECH" },
   { href: "/contact", en: "Contact", ar: "تواصل معنا" },
+  { href: "/products", en: "Products", ar: "المنتجات" },
+  { href: "/pricing", en: "Plans & Pricing", ar: "الخطط والأسعار" },
   { href: "/faq", en: "Support & FAQ", ar: "الدعم والأسئلة الشائعة" },
 ] as const;
 
@@ -358,7 +358,7 @@ export default function SiteNav() {
     <Localized><>
       <header className="ref-nav ref-shell site-nav global-site-nav">
         <Link className="ref-brand" href="/" prefetch aria-label="LINETECH home">
-          <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
+          <img className="approved-symbol" src="/brand/symbol-white.png" alt="" width="32" height="35"/><img className="approved-wordmark" src="/brand/wordmark-white.png" alt="LINETECH" width="142" height="20"/>
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
           {(clientArea ? visibleNavItems : visibleNavItems.slice(0, 4)).map((item) => {
