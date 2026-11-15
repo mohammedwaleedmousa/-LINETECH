@@ -8,6 +8,8 @@ import {usePageQuery} from '../QueryState';
 import {products,aftercarePlans,formatPrice} from '../../lib/catalog';
 import { useLanguage } from '../Localized';
 import styles from './contact.module.css';
+import MarketingHero from '../MarketingHero';
+import shared from '../MarketingPage.module.css';
 
 const email = 'info@linetech.company';
 const phone = '+967773335065';
@@ -33,16 +35,15 @@ function ContactDetails() {
     { label: ar ? 'البريد الإلكتروني' : 'Email', detail: email, href: `mailto:${email}`+(context?"?"+new URLSearchParams({subject:ar?"استفسار عن منتجات وخدمات LINETECH":"LINETECH product & care enquiry",body:context}):""), action: ar ? 'اكتب رسالة' : 'Write an email', external: false },
     { label: ar ? 'الاتصال' : 'Phone', detail: phone, href: `tel:${phone}`, action: ar ? 'اتصل بنا' : 'Call us', external: false },
   ];
-  return <main className={styles.page} dir={ar ? 'rtl' : 'ltr'}>
+  return <main className={`${styles.page} ${shared.page}`} dir={ar ? 'rtl' : 'ltr'}>
     {queryObserver}
+    <MarketingHero eyebrow={ar?'تواصل معنا':'CONTACT'} title={ar?'لنبدأ\nبمحادثة.':'Start with\na conversation.'} description={ar?'لديك سؤال أو فكرة مشروع؟ تواصل معنا بالطريقة المناسبة لك، دون إنشاء حساب.':'Have a question or a project in mind? Reach us in the way that works for you. No account required.'}>
+      <a className="platform-button primary" href="#request">{ar?'أخبرنا عن مشروعك':'Tell us about your project'}</a><a className="platform-button secondary" href="#contact-options">{ar?'طرق التواصل':'Contact options'}</a>
+    </MarketingHero>
     <div className={styles.shell}>
-      <header className={styles.header}>
-        <p className={styles.kicker}>LINETECH / {ar ? 'تواصل معنا' : 'CONTACT'}</p>
-        <h1>{ar ? 'لنبدأ بمحادثة.' : 'Start with a conversation.'}</h1>
-        <p>{ar ? 'لديك سؤال أو فكرة مشروع؟ تواصل معنا بالطريقة المناسبة لك، دون إنشاء حساب.' : 'Have a question or a project in mind? Reach us in the way that works for you. No account required.'}</p>
-      </header>
       {context&&<section className="storefront-context" aria-label={ar?'تفاصيل الاستفسار':'Enquiry details'}><h2>{ar?'استفسارك جاهز':'Your enquiry is ready'}</h2><p style={{whiteSpace:'pre-line'}}>{context}</p><p>{ar?'اختر واتساب أو البريد لمراجعة الرسالة وإرسالها. لم يُسجل شراء أو يُفعّل اشتراك بعد.':'Choose WhatsApp or email to review and send your message. No purchase or subscription has been activated.'}</p></section>}
-      <section className={styles.channels} aria-label={ar ? 'وسائل التواصل' : 'Contact options'}>
+      <div className={shared.sectionHeading}><h2>{ar?"طرق التواصل":"Contact options"}</h2></div>
+      <section id="contact-options" className={styles.channels} aria-label={ar ? 'وسائل التواصل' : 'Contact options'}>
         {channels.map((channel, index) => <a className={styles.channel} key={channel.label} href={channel.href} target={channel.external ? '_blank' : undefined} rel={channel.external ? 'noopener noreferrer' : undefined}>
           <span className={styles.number} aria-hidden="true">0{index + 1}</span>
           <h2>{channel.label}</h2>
