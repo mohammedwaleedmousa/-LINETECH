@@ -35,7 +35,7 @@ function ContactDetails() {
     { label: ar ? 'البريد الإلكتروني' : 'Email', detail: email, href: `mailto:${email}`+(context?"?"+new URLSearchParams({subject:ar?"استفسار عن منتجات وخدمات LINETECH":"LINETECH product & care enquiry",body:context}):""), action: ar ? 'اكتب رسالة' : 'Write an email', external: false },
     { label: ar ? 'الاتصال' : 'Phone', detail: phone, href: `tel:${phone}`, action: ar ? 'اتصل بنا' : 'Call us', external: false },
   ];
-  return <main className={`${styles.page} ${shared.page}`} dir={ar ? 'rtl' : 'ltr'}>
+  return <main className={`${styles.page} ${shared.page}`} data-viewport-page dir={ar ? 'rtl' : 'ltr'}>
     {queryObserver}
     <MarketingHero eyebrow={ar?'تواصل معنا':'CONTACT'} title={ar?'لنبدأ\nبمحادثة.':'Start with\na conversation.'} description={ar?'لديك سؤال أو فكرة مشروع؟ تواصل معنا بالطريقة المناسبة لك، دون إنشاء حساب.':'Have a question or a project in mind? Reach us in the way that works for you. No account required.'}>
       <a className="platform-button primary" href="#request">{ar?'أخبرنا عن مشروعك':'Tell us about your project'}</a><a className="platform-button secondary" href="#contact-options">{ar?'طرق التواصل':'Contact options'}</a>

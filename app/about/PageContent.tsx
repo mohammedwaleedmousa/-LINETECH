@@ -125,14 +125,14 @@ export default function AboutPage() {
   const t = copy[language];
 
   return (
-    <main className={`${styles.page} ref-page page-about`}>
-      <section className={styles.hero} data-content-hero="about">
+    <main className={`${styles.page} ref-page page-about`} data-viewport-page>
+      <section className={styles.hero} data-content-hero="about" data-viewport-hero>
         <ContentHeroArt motif="about" />
         <div className="about-soft-light" aria-hidden="true">
           <span className="about-soft-glow" />
           <span className="about-soft-haze" />
         </div>
-        <div className={`${styles.shell} ${styles.heroShell}`}>
+        <div className={`${styles.shell} ${styles.heroShell}`} data-viewport-hero-body>
           <div className={styles.heroCopy}>
             <p className={styles.kicker} data-about-motion="hero">{t.hero.kicker}</p>
             <h1 data-about-motion="hero">{t.hero.title}</h1>

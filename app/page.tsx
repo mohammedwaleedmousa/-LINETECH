@@ -16,10 +16,10 @@ const services = [
 
 export default function Home() {
   return (
-    <Localized><main className="ref-home" id="top">
-      <section className="ref-hero ref-line-section home-line-hero">
+    <Localized><main className="ref-home" id="top" data-viewport-page>
+      <section className="ref-hero ref-line-section home-line-hero" data-viewport-hero>
         <HomeHeroArt/>
-        <div className="ref-shell ref-hero-grid">
+        <div className="ref-shell ref-hero-grid" data-viewport-hero-body>
           <div className="ref-hero-copy">
             <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
             <h1>Every idea<br/>starts with a line.</h1>
