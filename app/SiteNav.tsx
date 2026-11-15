@@ -9,12 +9,9 @@ import { createPortal } from "react-dom";
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
   { href: "/services", en: "Services", ar: "الخدمات" },
-  { href: "/projects", en: "Projects", ar: "المشاريع" },
+  { href: "/projects", en: "Our Work", ar: "أعمالنا" },
+  { href: "/about", en: "About LINETECH", ar: "عن الشركة" },
   { href: "/contact", en: "Contact", ar: "تواصل معنا" },
-  { href: "/products", en: "Products", ar: "المنتجات" },
-  { href: "/pricing", en: "Plans & Pricing", ar: "الخطط والأسعار" },
-  { href: "/about", en: "About LINETECH", ar: "عن LINETECH" },
-  { href: "/faq", en: "Support & FAQ", ar: "الدعم والأسئلة الشائعة" },
 ] as const;
 
 const clientItems = [
@@ -27,27 +24,27 @@ const clientItems = [
 
 const searchItems = [
   { title: "Contact LINETECH", meta: "Page", href: "/contact", keywords: "contact email phone whatsapp تواصل بريد اتصال واتساب" },
-  { title: "LINETECH Products", meta: "Catalog", href: "/products", keywords: "products digital tools software catalog منتجات أدوات رقمية برمجيات كتالوج" },
+  { title: "LINETECH Products", meta: "Catalog", href: "/services#catalog", keywords: "products digital tools software catalog منتجات أدوات رقمية برمجيات كتالوج" },
   { title: "Home", meta: "Page", href: "/", keywords: "home linetech technology الرئيسية لينتك تقنية" },
   { title: "Services", meta: "Page", href: "/services", keywords: "services solutions خدمات حلول" },
-  { title: "Pricing", meta: "Plans", href: "/pricing", keywords: "pricing plans packages subscription website ecommerce اسعار باقات اشتراك مواقع متاجر" },
-  { title: "Web Development", meta: "Service", href: "/services/web-development", keywords: "website web development landing business custom apps تطوير ويب مواقع تطبيقات" },
-  { title: "Application Development", meta: "Service", href: "/services/app-development", keywords: "application android ios mobile apps تطبيقات جوال" },
-  { title: "After-sales Care", meta: "Service", href: "/pricing#aftercare", keywords: "maintenance support hosting updates صيانة دعم استضافة تحديثات" },
-  { title: "E-commerce & Systems", meta: "Service", href: "/services/ecommerce-systems", keywords: "ecommerce commerce systems dashboard booking تجارة الكترونية أنظمة لوحات تحكم حجوزات" },
+  { title: "Pricing", meta: "Plans", href: "/services#pricing", keywords: "pricing plans packages subscription website ecommerce اسعار باقات اشتراك مواقع متاجر" },
+  { title: "Web Development", meta: "Service", href: "/services#web-development", keywords: "website web development landing business custom apps تطوير ويب مواقع تطبيقات" },
+  { title: "Application Development", meta: "Service", href: "/services#app-development", keywords: "application android ios mobile apps تطبيقات جوال" },
+  { title: "After-sales Care", meta: "Service", href: "/services#aftercare", keywords: "maintenance support hosting updates صيانة دعم استضافة تحديثات" },
+  { title: "E-commerce & Systems", meta: "Service", href: "/services#ecommerce-systems", keywords: "ecommerce commerce systems dashboard booking تجارة الكترونية أنظمة لوحات تحكم حجوزات" },
   { title: "Projects", meta: "Page", href: "/projects", keywords: "projects work portfolio products مشاريع اعمال منتجات" },
-  { title: "Flamingo Park", meta: "Project", href: "/projects/flamingo-park", keywords: "flamingo park ecommerce retail فلامنجو بارك متجر" },
-  { title: "Etqan", meta: "Project", href: "/projects/etqan", keywords: "etqan marketplace services اتقان سوق خدمات" },
-  { title: "LedgerPro", meta: "Project", href: "/projects/ledgerpro", keywords: "ledgerpro business system finance ليدجر برو نظام مالي" },
+  { title: "Flamingo Park", meta: "Project", href: "/projects#flamingo-park", keywords: "flamingo park ecommerce retail فلامنجو بارك متجر" },
+  { title: "Etqan", meta: "Project", href: "/projects#etqan", keywords: "etqan marketplace services اتقان سوق خدمات" },
+  { title: "LedgerPro", meta: "Project", href: "/projects#ledgerpro", keywords: "ledgerpro business system finance ليدجر برو نظام مالي" },
   { title: "About LINETECH", meta: "Page", href: "/about", keywords: "about company founder Mohammed Waleed عن الشركة المؤسس محمد وليد" },
-  { title: "FAQ", meta: "Page", href: "/faq", keywords: "faq questions payments revisions support timeline اسئلة شائعة دفعات تعديلات دعم" },
+  { title: "FAQ", meta: "Page", href: "/contact#faq", keywords: "faq questions payments revisions support timeline اسئلة شائعة دفعات تعديلات دعم" },
   { title: "Privacy", meta: "Page", href: "/privacy", keywords: "privacy data information project brief خصوصية بيانات معلومات" },
   { title: "Terms", meta: "Page", href: "/terms", keywords: "terms scope payments agreement website شروط نطاق دفعات اتفاق" },
   { title: "Chat", meta: "Client", href: "/account/projects/messages", keywords: "chat messages conversation support client company project محادثة رسائل دعم عميل شركة" },
   { title: "Client Workspace", meta: "Client", href: "/account/projects", keywords: "workspace project status files handover client مساحة العميل المشروع الحالة الملفات التسليم" },
   { title: "Account Settings", meta: "Account", href: "/account", keywords: "account profile email password sessions settings client حساب ملف شخصي بريد كلمة مرور جلسات إعدادات" },
   { title: "Login / Create Account", meta: "Account", href: "/login", keywords: "login sign in create account register client workspace تسجيل دخول إنشاء حساب" },
-  { title: "Start Your Line", meta: "Project request", href: "/services/request", keywords: "start project brief build idea ابدأ مشروع ملخص فكرة" },
+  { title: "Start Your Line", meta: "Project request", href: "/contact#request", keywords: "start project brief build idea ابدأ مشروع ملخص فكرة" },
 ] as const;
 
 type SiteLanguage = "ar" | "en";
@@ -245,7 +242,6 @@ export default function SiteNav() {
     };
   }, [searchOpen]);
 
-  useEffect(() => { document.querySelectorAll<HTMLDetailsElement>(".platform-nav-more[open]").forEach(menu => { menu.open = false; }); }, [pathname]);
 
   const clientArea = ["/account/projects","/account/projects/messages","/account/projects/handover","/account"].some(
     route => pathname === route || pathname.startsWith(`${route}/`)
@@ -361,11 +357,10 @@ export default function SiteNav() {
           <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
-          {(clientArea ? visibleNavItems : visibleNavItems.slice(0, 4)).map((item) => {
+          {visibleNavItems.map((item) => {
             const active = isActive(item.href) && !visibleNavItems.some(other => other.href !== item.href && other.href.startsWith(item.href + "/") && isActive(other.href));
             return <Link key={item.href} href={portalHref(item.href)} prefetch className={active ? "active" : ""} aria-current={active ? "page" : undefined}>{language === "ar" ? item.ar : item.en}</Link>;
           })}
-          {!clientArea && <details className="platform-nav-more"><summary>{language === "ar" ? "المزيد" : "More"}<span aria-hidden="true">⌄</span></summary><div className="platform-nav-more-menu">{visibleNavItems.slice(4).map(item => <Link key={item.href} href={item.href} prefetch className={isActive(item.href) ? "active" : ""} aria-current={isActive(item.href) ? "page" : undefined} onClick={event => { event.currentTarget.closest("details")?.removeAttribute("open"); }}>{language === "ar" ? item.ar : item.en}</Link>)}</div></details>}
         </nav>
         <div className="ref-nav-end">
           <button className="language-toggle desktop-language" type="button" onClick={toggleLanguage} aria-label={language === "ar" ? "Switch to English" : "Switch to Arabic"} title={language === "ar" ? "English" : "Arabic"}><GlobeIcon/>{language === "ar" ? "ENG" : "العربية"}</button>
@@ -420,8 +415,8 @@ export default function SiteNav() {
               )}
             </div>
           )}
-          {!clientArea && <Link className="ref-button light desktop-cta" href="/services/request" prefetch>{startLabel} <span>→</span></Link>}
-          {!clientArea && <Link className={`nav-login desktop-login ${pathname.startsWith("/account/projects") ? "active" : ""}`} href="/account/projects" prefetch>{workspaceLabel} <span>→</span></Link>}
+          {!clientArea && <Link className="ref-button light desktop-cta" href="/contact#request" prefetch>{startLabel} <span>→</span></Link>}
+          {!clientArea && authChecked && signedIn && <Link className={`nav-login desktop-login ${pathname.startsWith("/account/projects") ? "active" : ""}`} href="/account/projects" prefetch>{workspaceLabel} <span>→</span></Link>}
           {!clientArea && authChecked && signedIn && authRole !== "admin" && <Link className={`nav-login desktop-login ${pathname.startsWith("/account") ? "active" : ""}`} href="/account" prefetch>{accountLabel} <span>→</span></Link>}
           {authChecked && signedIn
             ? <Link className="nav-login desktop-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>
@@ -438,8 +433,8 @@ export default function SiteNav() {
           })}
         </nav>
         <button className="mobile-language-toggle" type="button" onClick={toggleLanguage}><span>{language === "ar" ? "ENG" : "AR"}</span><strong>{language === "ar" ? "English" : "العربية"}</strong></button>
-        {!clientArea && <Link className="mobile-start-line" href="/services/request" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>}
-        {!clientArea && <Link className="mobile-login" href="/account/projects" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>}
+        {!clientArea && <Link className="mobile-start-line" href="/contact#request" prefetch onClick={() => setOpen(false)}>{startLabel} <span>→</span></Link>}
+        {!clientArea && authChecked && signedIn && <Link className="mobile-login" href="/account/projects" prefetch onClick={() => setOpen(false)}>{workspaceLabel} <span>→</span></Link>}
         {!clientArea && authChecked && signedIn && authRole !== "admin" && <Link className="mobile-login" href="/account" prefetch onClick={() => setOpen(false)}>{accountLabel} <span>→</span></Link>}
         {authChecked && signedIn
           ? <Link className="mobile-login" href="/" onClick={logout}>{logoutLabel} <span>↗</span></Link>

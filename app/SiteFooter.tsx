@@ -82,22 +82,22 @@ export default function SiteFooter() {
           <nav className="footer-v2-column" aria-label={t.explore}>
             <h4>{t.explore}</h4>
             <Link className={linkClass("/projects")} aria-current={isActive("/projects") ? "page" : undefined} href="/projects" prefetch>{t.projects}</Link>
-            <Link className={linkClass("/products")} aria-current={isActive("/products") ? "page" : undefined} href="/products" prefetch>{t.products}</Link>
+            <Link className={linkClass("/services#catalog")} aria-current={isActive("/services#catalog") ? "page" : undefined} href="/services#catalog" prefetch>{t.products}</Link>
             <Link className={linkClass("/about")} aria-current={isActive("/about") ? "page" : undefined} href="/about" prefetch>{t.about}</Link>
-            <Link className={linkClass("/faq")} aria-current={isActive("/faq") ? "page" : undefined} href="/faq" prefetch>{t.faq}</Link>
+            <Link className={linkClass("/contact#faq")} aria-current={isActive("/contact#faq") ? "page" : undefined} href="/contact#faq" prefetch>{t.faq}</Link>
           </nav>
 
           <nav className="footer-v2-column" aria-label={t.services}>
             <h4>{t.services}</h4>
-            <Link className={linkClass("/services/web-development")} href="/services/web-development" prefetch>{t.web}</Link>
-            <Link className={linkClass("/services/ecommerce-systems")} href="/services/ecommerce-systems" prefetch>{t.commerce}</Link>
-            <Link className={linkClass("/services/app-development")} href="/services/app-development" prefetch>{t.brand}</Link>
-            <Link className={linkClass("/pricing")} href="/pricing#aftercare" prefetch>{t.cv}</Link>
+            <Link className={linkClass("/services#web-development")} href="/services#web-development" prefetch>{t.web}</Link>
+            <Link className={linkClass("/services#ecommerce-systems")} href="/services#ecommerce-systems" prefetch>{t.commerce}</Link>
+            <Link className={linkClass("/services#app-development")} href="/services#app-development" prefetch>{t.brand}</Link>
+            <Link className={linkClass("/services#pricing")} href="/services#aftercare" prefetch>{t.cv}</Link>
           </nav>
 
           <nav className="footer-v2-column" aria-label={t.company}>
             <h4>{t.company}</h4>
-            <Link className={linkClass("/pricing")} href="/pricing" prefetch>{t.how}</Link>
+            <Link className={linkClass("/services#pricing")} href="/services#pricing" prefetch>{t.how}</Link>
             <Link className={linkClass("/contact")} aria-current={isActive("/contact") ? "page" : undefined} href="/contact" prefetch>{t.contact}</Link>
             <Link className={linkClass("/privacy")} href="/privacy" prefetch>{t.privacy}</Link>
             <Link className={linkClass("/terms")} href="/terms" prefetch>{t.terms}</Link>

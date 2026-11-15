@@ -1,5 +1,8 @@
 "use client";
 
+import Flamingo from "./flamingo-park/CaseStudy";
+import Etqan from "./etqan/CaseStudy";
+import LedgerPro from "./ledgerpro/CaseStudy";
 import type { CSSProperties } from "react";
 import Link from "next/link";
 import { useLanguage } from "../Localized";
@@ -30,7 +33,7 @@ const copy = {
         description: "A mobile-first commerce experience built around product discovery, faster ordering and clearer store operations.",
         built: ["Catalog & discovery", "Product experience", "Store operations"],
         stack: ["React + Vite", "Tailwind CSS", "Supabase", "Cloudflare Pages"],
-        href: "/projects/flamingo-park",
+        href: "/projects#flamingo-park",
       },
       {
         n: "02",
@@ -39,7 +42,7 @@ const copy = {
         description: "A services marketplace structured around clearer discovery, provider visibility, customer journeys and scalable administration.",
         built: ["Service discovery", "Provider structure", "Admin operations"],
         stack: ["React + Vite", "Tailwind CSS", "Supabase", "Cloudflare"],
-        href: "/projects/etqan",
+        href: "/projects#etqan",
       },
       {
         n: "03",
@@ -48,7 +51,7 @@ const copy = {
         description: "A business system designed to organize financial records, repeatable workflows and clearer operational visibility.",
         built: ["Records structure", "Operational workflows", "Dashboard visibility"],
         stack: ["React + Vite", "Node.js + Express", "Sequelize", "PostgreSQL"],
-        href: "/projects/ledgerpro",
+        href: "/projects#ledgerpro",
       },
     ],
     cta: {
@@ -82,7 +85,7 @@ const copy = {
         description: "تجربة تجارة إلكترونية Mobile-first مبنية حول اكتشاف المنتجات وتسريع الطلبات وتوضيح عمليات تشغيل المتجر.",
         built: ["الكتالوج والاكتشاف", "تجربة المنتج", "تشغيل المتجر"],
         stack: ["React + Vite", "Tailwind CSS", "Supabase", "Cloudflare Pages"],
-        href: "/projects/flamingo-park",
+        href: "/projects#flamingo-park",
       },
       {
         n: "02",
@@ -91,7 +94,7 @@ const copy = {
         description: "منصة خدمات منظمة حول اكتشاف أوضح ومقدمي خدمات ظاهرين ورحلة عميل مفهومة وإدارة قابلة للتوسع.",
         built: ["اكتشاف الخدمات", "هيكلة مقدمي الخدمة", "عمليات الإدارة"],
         stack: ["React + Vite", "Tailwind CSS", "Supabase", "Cloudflare"],
-        href: "/projects/etqan",
+        href: "/projects#etqan",
       },
       {
         n: "03",
@@ -100,7 +103,7 @@ const copy = {
         description: "نظام أعمال صُمم لتنظيم السجلات المالية وسير العمل المتكرر وإعطاء رؤية تشغيلية أوضح.",
         built: ["هيكلة السجلات", "سير العمل التشغيلي", "وضوح لوحة التحكم"],
         stack: ["React + Vite", "Node.js + Express", "Sequelize", "PostgreSQL"],
-        href: "/projects/ledgerpro",
+        href: "/projects#ledgerpro",
       },
     ],
     cta: {
@@ -164,7 +167,7 @@ export default function ProjectsPage() {
             <h1 data-project-motion="hero">{t.hero.title}</h1>
             <p className={styles.heroLead} data-project-motion="hero">{t.hero.lead}</p>
             <div className={styles.heroActions} data-project-motion="hero">
-              <Link className={styles.primary} href="/services/request" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
+              <Link className={styles.primary} href="/contact#request" prefetch>{t.hero.primary}<span aria-hidden="true">→</span></Link>
               <Link className={styles.secondary} href="/services" prefetch>{t.hero.secondary}<span aria-hidden="true">→</span></Link>
             </div>
           </div>
@@ -193,7 +196,7 @@ export default function ProjectsPage() {
 
           <div className={styles.caseStudies}>
             {t.projects.map((project) => (
-              <article className={styles.caseStudy} key={project.n} data-project-motion="card">
+              <article className={styles.caseStudy} key={project.n} id={project.href.split("#")[1]} data-project-motion="card">
                 <div className={styles.caseTop} data-project-part="meta">
                   <div className={styles.caseIdentity}>
                     <span className={styles.caseNumber}>{project.n}</span>
@@ -220,9 +223,10 @@ export default function ProjectsPage() {
                     <span className={styles.stackLabel}>{t.work.stackLabel}</span>
                     <div className={styles.stackLine}>{project.stack.map((item) => <span key={item}>{item}</span>)}</div>
                   </div>
-                  <Link className={styles.caseOpen} href={project.href} prefetch data-project-part="link">
-                    {t.work.caseStudy}<span aria-hidden="true">→</span>
-                  </Link>
+                  <details className="project-inline-details" id={`${project.href.split("#")[1]}-details`}>
+                    <summary className={styles.caseOpen}>{t.work.caseStudy}<span aria-hidden="true">+</span></summary>
+                    {project.n === "01" ? <Flamingo/> : project.n === "02" ? <Etqan/> : <LedgerPro/>}
+                  </details>
                 </div>
               </article>
             ))}
@@ -237,7 +241,7 @@ export default function ProjectsPage() {
             <h2>{t.cta.title}</h2>
             <p>{t.cta.lead}</p>
           </div>
-          <Link className="ref-btn primary" href="/services/request" prefetch>{t.cta.button} ↗</Link>
+          <Link className="ref-btn primary" href="/contact#request" prefetch>{t.cta.button} ↗</Link>
         </div>
       </section>
     </main>

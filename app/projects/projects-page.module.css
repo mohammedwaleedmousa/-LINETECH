@@ -336,3 +336,9 @@
   .heroField{transition:none!important;transform:none!important}
   .caseStudy{transition:none!important}
 }
+
+.caseStudy :global(.project-inline-details){min-width:0;max-width:100%;flex-basis:100%}
+.caseStudy :global(.project-inline-details) summary{cursor:pointer;width:fit-content}
+.caseStudy :global(.project-inline-details)>div{padding:24px 0;color:#a8b4c2;line-height:1.85;overflow-wrap:anywhere}
+.caseStudy :global(.project-inline-details) h4{color:#f5f7fa;margin:24px 0 8px}
+.caseStudy :global(.project-inline-details) li{margin:8px 0}

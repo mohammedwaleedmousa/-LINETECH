@@ -11,7 +11,7 @@ export default function Page() {
     <main className="info-page thank-you-page">
       <script
         dangerouslySetInnerHTML={{
-          __html: "window.location.replace('/services/request#brief');",
+          __html: "window.location.replace('/contact#request');",
         }}
       />
       <section className="thank-you-hero">
@@ -20,7 +20,7 @@ export default function Page() {
           <h1>Continue your project request.</h1>
           <p className="thank-you-lead">This step now lives inside the complete LINETECH project request flow.</p>
           <div className="thank-you-actions">
-            <Link className="ref-btn primary" href="/services/request#brief">Continue ↗</Link>
+            <Link className="ref-btn primary" href="/contact#request">Continue ↗</Link>
           </div>
         </div>
       </section>

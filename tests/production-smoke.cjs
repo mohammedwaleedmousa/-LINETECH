@@ -66,14 +66,14 @@ async function main() {
   const sitemap = await fetch(`${base}/sitemap.xml`);
   assert.equal(sitemap.status, 200, "sitemap.xml is unavailable");
   const sitemapText = await sitemap.text();
-  for (const publicPath of ["/pricing","/services/process","/services/guide"]) {
+  for (const publicPath of ["/services","/projects","/contact"]) {
     assert.ok(sitemapText.includes(`${publicPath}</loc>`), `sitemap is missing ${publicPath}`);
   }
 
   const adminLogin = await fetch(`${base}/admin/login`, { redirect: "manual" });
   assert.ok(adminLogin.status >= 200 && adminLogin.status < 400, `Admin login returned ${adminLogin.status}`);
 
-  for (const publicPath of ["/services","/pricing","/projects","/about","/services/process","/services/guide","/privacy","/terms","/services/request"]) {
+  for (const publicPath of ["/","/services","/projects","/about","/contact","/privacy","/terms"]) {
     const response = await fetch(`${base}${publicPath}`, { redirect: "manual" });
     assert.ok(
       response.status >= 200 && response.status < 400,

@@ -460,7 +460,7 @@ export default function WorkspaceClient() {
             <h2>{t.noRequestTitle}</h2>
             <p>{t.noRequestBody}</p>
             <div>
-              <Link className="ref-btn primary" href="/services/request">{t.start} ↗</Link>
+              <Link className="ref-btn primary" href="/contact#request">{t.start} ↗</Link>
               <Link className="ref-btn ghost" href="/services#choose">{t.finder}</Link>
             </div>
           </div>
@@ -678,7 +678,7 @@ export default function WorkspaceClient() {
 
                   <div className="workspace-brief-foot">
                     <span>{completedDate}</span>
-                    <Link href="/services/request">{t.newRequest} →</Link>
+                    <Link href="/contact#request">{t.newRequest} →</Link>
                   </div>
                 </div>
               </details>

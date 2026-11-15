@@ -19,3 +19,5 @@
 .storefront-detail .platform-card .platform-button{margin-top:20px}
 .storefront-context{margin-block:24px;padding:24px;background:#112033;border:1px solid #ffffff25;border-radius:16px;overflow-wrap:anywhere}
 @media(max-width:600px){.storefront-gallery,.storefront-feature-list{grid-template-columns:1fr}.storefront-detail .platform-hero-actions{align-items:stretch}}
+
+.platform-page :is(#web-development,#app-development,#ecommerce-systems,#catalog,#pricing,#aftercare),.page-projects article[id],.page-about #process{scroll-margin-top:110px}

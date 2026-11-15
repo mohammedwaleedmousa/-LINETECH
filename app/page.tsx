@@ -8,10 +8,10 @@ import Link from "next/link";
 import "./home-content.css";
 
 const services = [
-  { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services/web-development" },
-  { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works.", href: "/services/ecommerce-systems" },
-  { icon: "✦", title: "Application Development", text: "Mobile applications shaped around your users, workflows and project requirements.", href: "/services/app-development" },
-  { icon: "◎", title: "After-sales Care", text: "Maintenance, support and updates that keep your website or application moving forward.", href: "/pricing#aftercare" },
+  { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services#web-development" },
+  { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works.", href: "/services#ecommerce-systems" },
+  { icon: "✦", title: "Application Development", text: "Mobile applications shaped around your users, workflows and project requirements.", href: "/services#app-development" },
+  { icon: "◎", title: "After-sales Care", text: "Maintenance, support and updates that keep your website or application moving forward.", href: "/services#aftercare" },
 ];
 
 export default function Home() {
@@ -24,7 +24,7 @@ export default function Home() {
             <p className="ref-kicker">TECHNOLOGY FOR A BRIGHTER TOMORROW</p>
             <h1>Every idea<br/>starts with a line.</h1>
             <p className="ref-lead">Websites, applications and business systems built around your idea.</p>
-            <div className="ref-actions"><Link className="ref-button light" href="/services/request" prefetch>Start Your Line <span>→</span></Link><a className="ref-button ghost" href="#projects">View Our Work <span>↓</span></a></div>
+            <div className="ref-actions"><Link className="ref-button light" href="/contact#request" prefetch>Start Your Line <span>→</span></Link><a className="ref-button ghost" href="#projects">View Our Work <span>↓</span></a></div>
           </div>
         </div>
       </section>
@@ -44,7 +44,7 @@ export default function Home() {
       <HomeProjects/>
       <HomeAbout/>
 
-      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/services/request" prefetch>Start your project request <span>→</span></Link></div></div></section>
+      <section className="ref-cta ref-line-section home-start" id="contact"><div className="cta-blue-line left"/><div className="cta-blue-line right"/><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">LET&apos;S BUILD TOGETHER</p><h2>Every idea starts with a line.</h2><p>Describe your idea, choose a service and complete a clear project request.</p></div><div className="home-start-actions"><Link className="ref-button light" href="/contact#request" prefetch>Start your project request <span>→</span></Link></div></div></section>
     </main></Localized>
   );
 }

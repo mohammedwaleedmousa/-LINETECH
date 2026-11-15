@@ -183,7 +183,9 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   await render(Bridge, Nav, Intake);
   assert.equal(document.documentElement.dir, 'rtl');
   assert.ok(document.body.textContent.includes('الخدمات'));
-  assert.ok(document.body.textContent.includes('الخطط والأسعار'));
+  assert.ok(document.body.textContent.includes('أعمالنا'));
+  assert.equal(document.querySelectorAll('.ref-nav-links > a').length,5);
+  assert.equal(document.querySelector('.platform-nav-more'),null);
   assert.ok(document.body.textContent.includes('تسجيل الدخول'));
 
 
@@ -328,6 +330,27 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.equal(notificationPatched, true);
   assert.equal(document.querySelector('.notification-item.is-unread'), null);
   assert.equal(document.querySelector('.notification-badge'), null);
+
+  await act(async () => setLanguage('en'));
+  const ContactForm = require('../app/contact/ProjectEnquiry.tsx').default;
+  await render(ContactForm);
+  await fill(document.querySelector('input[name="name"]'), 'Customer <One>');
+  await fill(document.querySelector('input[name="contact"]'), 'customer@example.test');
+  await fill(document.querySelector('textarea[name="brief"]'), 'A company website');
+  await click(buttonContaining('Prepare enquiry'));
+  const prepared = document.querySelector('[role="status"]');
+  assert(prepared.textContent.includes('Customer <One>'));
+  assert.equal(prepared.querySelector('one'), null);
+  assert(new URL(prepared.querySelector('a[href^="https://wa.me/"]').href).searchParams.get('text').includes('A company website'));
+  assert(new URL(prepared.querySelector('a[href^="mailto:"]').href).searchParams.get('body').includes('customer@example.test'));
+  await fill(document.querySelector('textarea[name="brief"]'), 'Updated idea');
+  assert.equal(document.querySelector('[role="status"]'),null,'Editing invalidates the prepared message');
+  const Services = require('../app/services/PageContent.tsx').default;
+  await render(Services);
+  assert.equal(document.querySelectorAll('main').length,1);
+  assert.equal(document.querySelectorAll('h1').length,1);
+  for(const id of ['choose','web-development','app-development','ecommerce-systems','catalog','pricing','aftercare'])assert(document.getElementById(id), 'Missing merged section '+id);
+  await act(async () => setLanguage('ar'));
 
   const Catalog = require('../app/products/Catalog.tsx').default;
   await render(Catalog);

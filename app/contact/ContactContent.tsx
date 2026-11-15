@@ -1,8 +1,10 @@
 'use client';
 
 import Link from '../IntentLink';
+import ProjectEnquiry from './ProjectEnquiry';
+import {faqCopy} from './faq-copy';
 import {Suspense} from 'react';
-import {useSearchParams} from 'next/navigation';
+import {usePageQuery} from '../QueryState';
 import {products,aftercarePlans,formatPrice} from '../../lib/catalog';
 import { useLanguage } from '../Localized';
 import styles from './contact.module.css';
@@ -12,7 +14,8 @@ const phone = '+967773335065';
 
 export default function ContactContent(){return <Suspense fallback={null}><ContactDetails/></Suspense>;}
 function ContactDetails() {
-  const language=useLanguage(),ar=language==='ar',params=useSearchParams();
+  const language=useLanguage(),ar=language==='ar';
+  const {params,queryObserver}=usePageQuery();
   const product=products.find(p=>p.published&&p.slug===params.get('product'));
   const offer=product?.offers.find(o=>o.id===params.get('offer'));
   const care=aftercarePlans.find(p=>p.published&&p.id===params.get('care')&&(!product||product.aftercareIds.includes(p.id)));
@@ -31,6 +34,7 @@ function ContactDetails() {
     { label: ar ? 'الاتصال' : 'Phone', detail: phone, href: `tel:${phone}`, action: ar ? 'اتصل بنا' : 'Call us', external: false },
   ];
   return <main className={styles.page} dir={ar ? 'rtl' : 'ltr'}>
+    {queryObserver}
     <div className={styles.shell}>
       <header className={styles.header}>
         <p className={styles.kicker}>LINETECH / {ar ? 'تواصل معنا' : 'CONTACT'}</p>
@@ -47,9 +51,10 @@ function ContactDetails() {
           {channel.external && <small>{ar ? 'يفتح في نافذة جديدة' : 'Opens in a new tab'}</small>}
         </a>)}
       </section>
-      <section className={styles.next}>
-        <div><h2>{ar ? 'هل لديك تفاصيل جاهزة؟' : 'Already have a brief?'}</h2><p>{ar ? 'رتّب فكرة مشروعك واختر الخدمة والباقة المناسبة عبر نموذج الطلب.' : 'Organize your idea and choose a service and plan using the project request form.'}</p></div>
-        <Link href="/services/request">{ar ? 'ابدأ طلب مشروعك ←' : 'Start your project request →'}</Link>
+      <ProjectEnquiry key={params.get('service')||'general'} initialService={params.get('service')||''}/>
+      <section className={styles.faq} id="faq" aria-labelledby="contact-faq-title">
+        <h2 id="contact-faq-title">{ar?'أسئلة قبل أن نبدأ':'Before we begin'}</h2>
+        <div className="platform-faq-list">{faqCopy[language].faqs.filter((_,index)=>[0,1,3,5,6,10].includes(index)).map(([question,answer])=><details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>
       </section>
       <p className={styles.existing}>{ar ? 'تتابع مشروعًا قائمًا؟' : 'Following up on an existing project?'} <Link href="/account/projects/messages">{ar ? 'افتح محادثة المشروع بعد تسجيل الدخول' : 'Sign in to open Project Chat'}</Link></p>
     </div>
