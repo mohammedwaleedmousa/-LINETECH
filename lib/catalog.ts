@@ -28,7 +28,7 @@ export function safeDemoUrl(value:unknown):string|null {
   if(typeof value!=="string")return null;
   try{const url=new URL(value);return url.protocol==="https:"&&!url.username&&!url.password?url.href:null;}catch{return null;}
 }
-export function productHref(slug:string){return "/products/view?product="+encodeURIComponent(slug);}
+export function productHref(slug:string){return "/services?product="+encodeURIComponent(slug)+"#catalog";}
 export function inquiryHref(product:Product,offer:ProductOffer){
   return "/contact?"+new URLSearchParams({product:product.slug,offer:offer.id}).toString();
 }

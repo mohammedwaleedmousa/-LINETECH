@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://linetech.company/</loc></url>
-  <url><loc>https://linetech.company/products</loc></url>
   <url><loc>https://linetech.company/services</loc></url>
-  <url><loc>https://linetech.company/services/web-development</loc></url>
-  <url><loc>https://linetech.company/services/app-development</loc></url>
-  <url><loc>https://linetech.company/services/ecommerce-systems</loc></url>
-  <url><loc>https://linetech.company/services/request</loc></url>
   <url><loc>https://linetech.company/projects</loc></url>
-  <url><loc>https://linetech.company/projects/flamingo-park</loc></url>
-  <url><loc>https://linetech.company/projects/etqan</loc></url>
-  <url><loc>https://linetech.company/projects/ledgerpro</loc></url>
-  <url><loc>https://linetech.company/pricing</loc></url>
   <url><loc>https://linetech.company/about</loc></url>
   <url><loc>https://linetech.company/contact</loc></url>
-  <url><loc>https://linetech.company/faq</loc></url>
   <url><loc>https://linetech.company/privacy</loc></url>
   <url><loc>https://linetech.company/terms</loc></url>
 </urlset>

@@ -8,7 +8,7 @@ import {PlatformHero,PlatformIcon} from "../PlatformUI";
 type Data={profile?:{fullName?:string};subscription?:{status:string;planCode:string;nextBillingAt?:string}|null};
 const shortcuts=[
   {href:"/account/projects",ar:"مشاريعي",en:"My projects",bodyAr:"تحديثات العمل والملفات والتسليمات",bodyEn:"Updates, files and deliverables",icon:"websites"},
-  {href:"/services/request",ar:"ابدأ مشروعًا",en:"Start a project",bodyAr:"حوّل فكرتك إلى طلب واضح",bodyEn:"Turn your idea into a clear brief",icon:"technical-services"},
+  {href:"/contact#request",ar:"ابدأ مشروعًا",en:"Start a project",bodyAr:"حوّل فكرتك إلى طلب واضح",bodyEn:"Turn your idea into a clear brief",icon:"technical-services"},
   {href:"/account/profile",ar:"حسابي وأماني",en:"Profile & security",bodyAr:"بياناتك وتفضيلاتك وأمان حسابك",bodyEn:"Your details, preferences and security",icon:"shield"},
   {href:"/account/subscriptions",ar:"اشتراكاتي",en:"My subscriptions",bodyAr:"اشتراكات المنتجات وخدمات ما بعد البيع",bodyEn:"Product subscriptions and after-sales care",icon:"layers"},
 ];
@@ -20,7 +20,7 @@ export default function AccountOverview(){
   useEffect(()=>{const controller=new AbortController();setState("loading");fetch("/api/account",{cache:"no-store",signal:controller.signal}).then(async r=>{if(r.status===401){window.location.assign("/login?next=/account");return;}const p=await r.json();if(!r.ok||!p.ok)throw Error();setAccount(p.account);setState("ready")}).catch(e=>{if(e.name!=="AbortError")setState("error")});return()=>controller.abort()},[attempt]);
   return <main className="platform-page platform-account-page">
     <PlatformHero eyebrow={ar?"حسابك الموحد":"YOUR ACCOUNT"} title={account?.profile?.fullName?(ar?`مرحبًا، ${account.profile.fullName}.`:`Welcome, ${account.profile.fullName}.`):(ar?"كل أعمالك،\nمن حساب واحد.":"Your work.\nOne account.")} description={ar?"تابع مشروعاتك وطلباتك واشتراكاتك، وتواصل معنا من مكان واحد.":"Track projects, requests and subscriptions, and contact us from one place."} icon="user">
-      <Link className="platform-button primary" href="/services/request">{ar?"طلب مشروع جديد":"Request a project"}<PlatformIcon kind="arrow"/></Link>
+      <Link className="platform-button primary" href="/contact#request">{ar?"طلب مشروع جديد":"Request a project"}<PlatformIcon kind="arrow"/></Link>
     </PlatformHero>
     <section className="platform-section">
       <div className="platform-account-summary" aria-live="polite">

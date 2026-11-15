@@ -22,7 +22,7 @@ const worker = load('worker/index.ts',{'../lib/navigation/return-path':navigatio
 const env = {ASSETS:{fetch:async()=>{assets++;return new Response('protected asset');}}};
 async function request(p){return worker.fetch(new Request('https://linetech.test'+p),env);}
 (async()=>{
-  for(const [oldPath,newPath] of [["/workspace","/account/projects"],["/chat","/account/projects/messages"],["/handover","/account/projects/handover"],["/start","/services/request"],["/service-finder","/services"],["/how-we-work","/services"]]) {
+  for(const [oldPath,newPath] of [["/workspace","/account/projects"],["/chat","/account/projects/messages"],["/handover","/account/projects/handover"],["/start","/contact"],["/service-finder","/services"],["/how-we-work","/about"]]) {
     const result=await request(oldPath+"/index.html?project=123");
     assert.equal(result.status,308);
     const target=new URL(result.headers.get("location"));
@@ -45,9 +45,9 @@ async function request(p){return worker.fetch(new Request('https://linetech.test
   for(const p of ['/admin/','/admin/index.txt','/account/','/account/projects/messages/','/account/projects/','/account/projects/handover/']){
     const r=await request(p);assert.equal(r.status,503);assert.equal(r.headers.get('cache-control'),'no-store');assert.equal(assets,0);
   }
-  assert.equal((await request('/pricing/')).status,200);assert.equal(assets,1);
+  assert.equal((await request('/services/')).status,200);assert.equal(assets,1);
   assert.equal((await request('/about/')).status,200);assert.equal(assets,2);
-  const category=await request('/products/');assert.equal(category.status,200);assert.equal(assets,3);
+  const category=await request('/projects/');assert.equal(category.status,200);assert.equal(assets,3);
   assert.equal((await request('/unlisted-public-page/')).status,404);assert.equal(assets,3);
   assert.equal((await request('/thank-you/')).status,200);assert.equal(assets,4);
   fail=false;session={user:{app_metadata:{role:'client'}},setCookies:[]};

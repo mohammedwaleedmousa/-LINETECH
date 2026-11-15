@@ -93,7 +93,7 @@ function logRequest(request:Request,path:string,response:Response,requestId:stri
 async function routeRequest(request:Request,env:Env,path:string,url:URL):Promise<Response> {
   if(isRetired(path)){
     if(path.startsWith("/api/"))return json({ok:false,error:"feature_removed"},410);
-    return new Response('<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LINETECH</title><body><main><h1>هذا القسم لم يعد متاحًا</h1><p>يمكنك استكشاف المواقع والتطبيقات أو طلب مشروع خاص.</p><p lang="en" dir="ltr">This section has been retired. Explore our products or request a custom project.</p><a href="/products">المنتجات / Products</a> · <a href="/services">الخدمات / Services</a></main></body></html>',{status:410,headers:{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow"}});
+    return new Response('<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>LINETECH</title><body><main><h1>هذا القسم لم يعد متاحًا</h1><p>يمكنك استكشاف المواقع والتطبيقات أو طلب مشروع خاص.</p><p lang="en" dir="ltr">This section has been retired. Explore our products or request a custom project.</p><a href="/services#catalog">المنتجات / Products</a> · <a href="/services">الخدمات / Services</a></main></body></html>',{status:410,headers:{"Content-Type":"text/html; charset=utf-8","Cache-Control":"no-store","X-Robots-Tag":"noindex, nofollow"}});
   }
   if(legacyRoutes[path]){
     const target=new URL(legacyRoutes[path],request.url);

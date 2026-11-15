@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 export default function FlamingoParkPage(){
-  return <ProjectDetail
+  return <ProjectDetail embedded
     className="project-flamingo"
     tag="E-COMMERCE"
     title="Flamingo Park"

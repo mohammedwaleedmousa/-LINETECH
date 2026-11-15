@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 export default function EtqanPage(){
-  return <ProjectDetail
+  return <ProjectDetail embedded
     className="project-etqan"
     tag="SERVICES MARKETPLACE"
     title="Etqan"

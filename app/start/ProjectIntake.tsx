@@ -467,7 +467,7 @@ export default function ProjectIntake() {
           window.sessionStorage.setItem(requestDraftKey, pendingDraft);
           window.localStorage.setItem(requestDraftKey, pendingDraft);
         } catch {}
-        window.location.assign("/login?next=/services/request");
+        window.location.assign("/login?next=/contact#request");
         return;
       }
 
@@ -559,7 +559,7 @@ export default function ProjectIntake() {
       <div className="intake-step-head"><span>02 / {language==="ar"?"المسار":"PLAN"}</span><h3>{needsPlan ? (language==="ar"?"اختر الباقة الأقرب لك.":"Choose the closest plan.") : (language==="ar"?"مسارك جاهز.":"Your path is ready.")}</h3><p>{language==="ar"?"لا تحتاج لقراءة كل التفاصيل الآن. اختر المسار الأقرب ويمكننا ضبط النطاق لاحقًا.":"No need to study every detail now. Pick the closest path and we can refine the scope later."}</p></div>
       <div className="line-selection-summary"><span>{language==="ar"?"نوع المشروع":"PROJECT TYPE"}</span><strong>{t(service)}</strong><button type="button" onClick={()=>changeStep(1)}>{language==="ar"?"تغيير":"Change"}</button></div>
       {needsPlan ? <div className="plan-picker">
-        <div className="plan-picker-head"><div><span>{language==="ar"?"اختر الباقة *":"Choose a plan *"}</span><p>{language==="ar"?"رسوم التأسيس والاشتراك الشهري موضحة لكل باقة.":"Compare setup and monthly fees before choosing."}</p></div><Link href="/pricing">{language==="ar"?"مقارنة الباقات":"Compare plans"} →</Link></div>
+        <div className="plan-picker-head"><div><span>{language==="ar"?"اختر الباقة *":"Choose a plan *"}</span><p>{language==="ar"?"رسوم التأسيس والاشتراك الشهري موضحة لكل باقة.":"Compare setup and monthly fees before choosing."}</p></div><Link href="/services#pricing">{language==="ar"?"مقارنة الباقات":"Compare plans"} →</Link></div>
         <div className="plan-option-grid">{availablePlans.map(item=>{const summary=planSummaries[item];return <button type="button" key={item} aria-pressed={plan===item} className={plan===item?"selected":""} onClick={()=>setPlan(item)}><strong dir="ltr">{item}</strong><span>{summary[language]}</span><small>{language==="ar"?"التأسيس: ":"Setup: "}<b dir="ltr">{summary.setup||(language==="ar"?"حسب المشروع":"Quoted")}</b></small><small>{language==="ar"?"شهريًا: ":"Monthly: "}<b dir="ltr">{summary.monthly}</b></small></button>})}</div>
       </div> : <div className="custom-path-card"><span>LINETECH / CUSTOM</span><strong>{language==="ar"?"سنحدد نطاق المشروع معك.":"We will shape the project scope with you."}</strong></div>}
       <div className="intake-nav"><button className="intake-back" type="button" onClick={()=>changeStep(1)}>← {language==="ar"?"الفكرة":"Idea"}</button><button className="button button-light" type="button" disabled={!canStep2} onClick={()=>changeStep(3)}>{language==="ar"?"أضف التفاصيل":"Add the brief"} <span>→</span></button></div>

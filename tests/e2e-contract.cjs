@@ -23,7 +23,7 @@ const accountClient = read("app/account/AccountClient.tsx");
 const billingClient = read("app/admin/BillingClient.tsx");
 const dashboardClient = read("app/admin/DashboardClient.tsx");
 const clientsClient = read("app/admin/ClientsClient.tsx");
-const pricing = read("app/pricing/page.tsx");
+const pricing = read("app/services/PricingOptions.tsx");
 const siteNav = read("app/SiteNav.tsx");
 const chatWorkspace = read("app/chat/ChatWorkspace.tsx");
 const robots = read("public/robots.txt");
@@ -216,19 +216,16 @@ assert.ok(allowlistBlock,"Central route inventory missing");
 const allowlistedPaths=[...allowlistBlock[1].matchAll(/"([^"]+)"/g)].map(([,value])=>value).sort();
 assert.deepEqual(allowlistedPaths,sitemapPaths,"Route inventory must match sitemap");
 assert.ok(workerIndex.includes("new Set<string>(publicRoutes)"));
-for (const publicRoute of ["/pricing","/services/app-development","/services/request"]) {
+for (const publicRoute of ["/services","/projects","/contact"]) {
   assert.ok(sitemap.includes(`${publicRoute}</loc>`), `Commercial route is missing from sitemap: ${publicRoute}`);
 }
 // Public top-level navigation follows the implemented public sitemap sections.
 for (const [route, label] of [
   ["/", 'en: "Home"'],
-  ["/products", 'en: "Products"'],
   ["/services", 'en: "Services"'],
-  ["/projects", 'en: "Projects"'],
-  ["/pricing", 'en: "Plans & Pricing"'],
+  ["/projects", 'en: "Our Work"'],
   ["/about", 'en: "About LINETECH"'],
   ["/contact", 'en: "Contact"'],
-  ["/faq", 'en: "Support & FAQ"'],
 ]) {
   assert.ok(siteNav.includes(`href: "${route}"`) && siteNav.includes(label), `Primary navigation is missing implemented public section: ${route}`);
   assert.ok(sitemap.includes(`${route}</loc>`), `Public sitemap is missing navigation section: ${route}`);

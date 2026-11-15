@@ -18,7 +18,7 @@ async function serve(root){root=path.resolve(root);const server=http.createServe
       await page.addInitScript(language=>localStorage.setItem('linetech-language-v1',language),lang);
       for(const width of [320,390,768,1440]){
         await page.setViewportSize({width,height:900});
-        for(const route of ['/products/','/pricing/','/services/','/services/app-development/','/products/view/?product=missing','/contact/','/account/subscriptions/']){
+        for(const route of ['/','/services/','/projects/','/about/','/services/?product=missing','/contact/','/account/subscriptions/']){
           await page.goto(live.url+route);await page.locator('main h1').first().waitFor();
           // Let language hydration and font metrics settle, without relying on a fixed delay.
           await page.waitForFunction(()=>!document.documentElement.classList.contains('language-hydrating'));
@@ -27,13 +27,13 @@ async function serve(root){root=path.resolve(root);const server=http.createServe
           assert.equal(await page.locator('html').getAttribute('dir'),lang==='ar'?'rtl':'ltr');checks++;
           const stale=await page.locator('a').evaluateAll(links=>links.map(a=>a.getAttribute('href')).filter(h=>h&&/^\/(knowledge|company-space|account\/companies|services\/(guide|process|brand-identity|cv-portfolio))(\/|$|\?)/.test(h)));
           assert.deepEqual(stale,[]);
-          if(route==='/pricing/')for(const text of lang==='ar'?['شراء لمرة واحدة','اشتراك شهري','خدمات ما بعد البيع']:['One-time purchase','Monthly subscription','After-sales care'])assert(await page.getByRole('heading',{name:text,exact:true}).count());
-          if(route==='/products/view/?product=missing')assert(await page.getByRole('heading',{name:lang==='ar'?'المنتج غير متاح.':'Product unavailable.',exact:true}).count());
-          if(process.env.SCREENSHOT_DIR&&width===390&&['/products/','/pricing/'].includes(route)){fs.mkdirSync(process.env.SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.SCREENSHOT_DIR,route.replaceAll('/','')+'-'+lang+'.png'),fullPage:true});}
+          if(route==='/services/')for(const text of lang==='ar'?['شراء لمرة واحدة','اشتراك شهري','خدمات ما بعد البيع']:['One-time purchase','Monthly subscription','After-sales care'])assert(await page.getByRole('heading',{name:text,exact:true}).count());
+          if(route==='/services/?product=missing')assert(await page.getByRole('heading',{name:lang==='ar'?'المنتج غير متاح.':'Product unavailable.',exact:true}).count());
+          if(process.env.SCREENSHOT_DIR&&width===390&&['/services/','/contact/'].includes(route)){fs.mkdirSync(process.env.SCREENSHOT_DIR,{recursive:true});await page.screenshot({path:path.join(process.env.SCREENSHOT_DIR,route.replaceAll('/','')+'-'+lang+'.png'),fullPage:true});}
         }
       }
       // Search/filter and reset on the actual compiled catalog.
-      await page.goto(live.url+'/products/');await page.getByRole('button',{name:lang==='ar'?'مواقع جاهزة':'Ready-made websites',exact:true}).click();await page.locator('input[type=search]').fill('no-product');
+      await page.goto(live.url+'/services/');await page.getByRole('button',{name:lang==='ar'?'مواقع جاهزة':'Ready-made websites',exact:true}).click();await page.locator('input[type=search]').fill('no-product');
       await page.getByRole('button',{name:lang==='ar'?'مسح الفلاتر':'Clear filters',exact:true}).click();assert.equal(await page.locator('input[type=search]').inputValue(),'');assert.equal(await page.getByRole('button',{name:lang==='ar'?'جميع المنتجات':'All products',exact:true}).getAttribute('aria-pressed'),'true');checks++;
       if(baseline){
         for(const width of [390,1440]){

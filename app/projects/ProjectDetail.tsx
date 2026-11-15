@@ -15,6 +15,7 @@ type CaseStudyCopy = {
 };
 
 type ProjectDetailProps = {
+  embedded?: boolean;
   className: string;
   tag: string;
   title: string;
@@ -50,10 +51,18 @@ const caseLabels = {
   },
 } as const;
 
-export default function ProjectDetail({ className, tag, title, lead, summary, challenge, approach, built, stack, visualWords, caseStudy }: ProjectDetailProps){
+export default function ProjectDetail({ embedded = false, className, tag, title, lead, summary, challenge, approach, built, stack, visualWords, caseStudy }: ProjectDetailProps){
   const language = useLanguage();
   const c = caseStudy[language];
   const labels = caseLabels[language];
+
+  if (embedded) return <Localized><div className="platform-faq-list">
+    <h4>{language === "ar" ? "عن المشروع" : "Overview"}</h4><p>{summary}</p>
+    <h4>{language === "ar" ? "التحدي" : "The challenge"}</h4><p>{challenge}</p>
+    <h4>{language === "ar" ? "الحل" : "The approach"}</h4><p>{approach}</p>
+    <h4>{language === "ar" ? "ما تم تنفيذه" : "What we built"}</h4><ul>{built.map(([name,text]) => <li key={name}><strong>{name}</strong> — {text}</li>)}</ul>
+    <h4>{labels.outcomeKicker}</h4><p>{c.outcome}</p>
+  </div></Localized>;
 
   return <Localized><main className={`ref-page project-detail-page ${className}`}>
     <section className="project-detail-hero" data-content-hero={className}>
@@ -64,7 +73,7 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
           <p className="ref-kicker">{tag}</p>
           <h1>{title}</h1>
           <p className="project-detail-lead">{lead}</p>
-          <div className="ref-hero-actions"><Link className="ref-btn primary" href="/services/request" prefetch>Build with us ↗</Link><Link className="ref-btn ghost" href="/projects" prefetch>All projects</Link></div>
+          <div className="ref-hero-actions"><Link className="ref-btn primary" href="/contact#request" prefetch>Build with us ↗</Link><Link className="ref-btn ghost" href="/projects" prefetch>All projects</Link></div>
         </div>
         <div className="project-detail-visual" aria-hidden="true"><span>LINETECH / CASE STUDY</span><div>{visualWords.map((word)=><strong key={word}>{word}</strong>)}</div><i/></div>
       </div>
@@ -128,6 +137,6 @@ export default function ProjectDetail({ className, tag, title, lead, summary, ch
       </div>
     </section>
 
-    <section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">YOUR NEXT PROJECT</p><h2>Have a product that needs a clearer line?</h2><p>Start with the problem. We will help shape the right product.</p></div><Link className="ref-btn primary" href="/services/request" prefetch>Start Your Line ↗</Link></div></section>
+    <section className="ref-cta"><div className="ref-shell ref-cta-inner"><div><p className="ref-kicker">YOUR NEXT PROJECT</p><h2>Have a product that needs a clearer line?</h2><p>Start with the problem. We will help shape the right product.</p></div><Link className="ref-btn primary" href="/contact#request" prefetch>Start Your Line ↗</Link></div></section>
   </main></Localized>;
 }

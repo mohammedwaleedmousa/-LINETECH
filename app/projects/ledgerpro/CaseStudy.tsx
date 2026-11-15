@@ -6,7 +6,7 @@ export const metadata = {
 };
 
 export default function LedgerProPage(){
-  return <ProjectDetail
+  return <ProjectDetail embedded
     className="project-ledger"
     tag="BUSINESS SYSTEM"
     title="LedgerPro"

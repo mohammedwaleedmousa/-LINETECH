@@ -28,6 +28,10 @@ walk(appDir, file => {
   if (path.basename(file) === 'page.tsx') routes.add(routeFromPage(file));
 });
 
+const policySource = fs.readFileSync(path.join(rootDir,'lib/navigation/route-policy.ts'),'utf8');
+const legacyBlock = policySource.split('export const legacyRoutes:Record<string,string>={')[1].split('};')[0];
+const legacyRoutes = new Set([...legacyBlock.matchAll(/"([^"]+)"\s*:/g)].map(m=>m[1]));
+
 const publicAssets = new Set();
 if (fs.existsSync(publicDir)) {
   walk(publicDir, file => {
@@ -57,7 +61,7 @@ walk(appDir, file => {
 });
 
 const missing = references.filter(
-  reference => !routes.has(reference.pathname) && !publicAssets.has(reference.pathname)
+  reference => !routes.has(reference.pathname) && !legacyRoutes.has(reference.pathname) && !publicAssets.has(reference.pathname)
 );
 assert.deepEqual(
   missing,

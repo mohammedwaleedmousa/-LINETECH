@@ -19,6 +19,12 @@ assert(model.catalogErrors([{...product,offers:[{...offer,amount:-1}]}],[care]).
 assert(model.catalogErrors([{...product,offers:[offer,offer]}],[care]).some(e=>e.includes('offer')));
 assert(model.catalogErrors([product,product],[care]).some(e=>e.includes('duplicate')));
 assert.equal(new URL(model.inquiryHref(product,offer),'https://local.test').searchParams.get('offer'),'once');
+assert.deepEqual([...policy.primaryRoutes],["/","/services","/projects","/about","/contact"]);
+for(const old of ['/products','/products/view','/pricing','/faq','/services/request','/services/web-development','/services/app-development','/services/ecommerce-systems','/projects/flamingo-park','/projects/etqan','/projects/ledgerpro']){
+ assert(policy.legacyRoutes[old], 'Merged page must redirect: '+old);
+ assert(!fs.existsSync('app'+old+'/page.tsx'), 'Merged route still has a page: '+old);
+ assert(!policy.publicRoutes.includes(old));
+}
 const xml=fs.readFileSync('public/sitemap.xml','utf8');
 assert.deepEqual([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).sort(),[...policy.publicRoutes].sort());
 for(const p of [...policy.retiredPrefixes,'/services/guide','/services/process','/services/brand-identity','/services/cv-portfolio'])assert(!policy.publicRoutes.includes(p));
