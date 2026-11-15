@@ -37,7 +37,7 @@ const copy = {
     home: "الرئيسية",
     projects: "المشاريع",
     products: "المنتجات",
-    about: "عن LINETECH",
+    about: "عن لاين تك",
     faq: "الأسئلة الشائعة",
     contact: "تواصل معنا",
     web: "تطوير المواقع",
@@ -48,7 +48,7 @@ const copy = {
     workspace: "مساحة العميل",
     privacy: "الخصوصية",
     terms: "الشروط",
-    rights: "© 2026 LINETECH. جميع الحقوق محفوظة.",
+    rights: "© 2026 لاين تك. جميع الحقوق محفوظة.",
     line: "كل فكرة تبدأ بخط.",
   },
 } as const;
@@ -73,7 +73,7 @@ export default function SiteFooter() {
         <div className="footer-v2-main">
           <div className="footer-v2-brand">
             <Link className="ref-brand footer-v2-logo" href="/" prefetch aria-label="LINETECH home">
-              <img className="approved-symbol" src="/brand/symbol-white.png" alt="" width="32" height="35"/><img className="approved-wordmark" src="/brand/wordmark-white.png" alt="LINETECH" width="142" height="20"/>
+              <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
             </Link>
             <h3>{t.brandLead}</h3>
             <p>{t.brandText}</p>
@@ -107,7 +107,6 @@ export default function SiteFooter() {
           </nav>
         </div>
 
-        <div className="brand-footer-contact"><a href="mailto:info@linetech.company">info@linetech.company</a><a href="tel:+967773335065" dir="ltr">+967 773 335 065</a><a href="https://wa.me/967773335065" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a></div>
         <div className="footer-v2-bottom">
           <span>{t.rights}</span>
           <span className="footer-v2-core-line"><i aria-hidden="true" />{t.line}</span>

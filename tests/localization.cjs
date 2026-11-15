@@ -171,7 +171,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.equal(translate('Review request', 'ar'), 'مراجعة الطلب');
   assert.equal(
     translate('تم تسليم الطلب إلى LINETECH', 'ar'),
-    'تم تسليم الطلب إلى LINETECH'
+    'تم تسليم الطلب إلى لاين تك'
   );
 
 

@@ -26,14 +26,11 @@ for(const p of ['app/company-space','app/account/companies','app/knowledge','app
 for(const file of ['app/SiteNav.tsx','app/SiteFooter.tsx','app/account/AccountNav.tsx','app/admin/AdminShell.tsx']){
  const source=fs.readFileSync(file,'utf8');for(const p of policy.retiredPrefixes)assert(!source.includes('"'+p+'"'),'Retired navigation destination in '+file+': '+p);
 }
-// The redesigned public home retains useful destinations and company identity.
+// Home layout stays identical; only copy/links and card data change.
 const home=fs.readFileSync('app/page.tsx','utf8');
-for(const id of ['services','projects','about','contact'])assert(home.includes('id="'+id+'"'));
-for(const route of ['/services/request','/projects/flamingo-park','/about','/privacy'])assert(home.includes('href="'+route+'"'));
-assert(home.includes('info@linetech.company'));
-assert(home.includes('https://wa.me/967773335065'));
-assert(home.includes('useLanguage()'));
-for(const asset of ['symbol-white.png','wordmark-white.png','social.png'])assert(fs.existsSync('public/brand/'+asset));
+for(const component of ['HomeHeroArt','HomeProjects','HomePlatform','HomeAbout','HomeWhy'])assert(home.includes('<'+component));
+assert(home.includes('Every idea<br/>starts with a line.'));
+assert.equal((home.match(/<section /g)||[]).length,6);
 const core={json:load('worker/core.ts').json,resolveSession:async()=>{throw Error('No auth access expected on retired routes');},withCookies:r=>r,withSecurityHeaders:r=>r};
 const worker=load('worker/index.ts',{'../lib/navigation/return-path':load('lib/navigation/return-path.ts'),'../lib/navigation/route-policy':policy,'./core':core,'./auth':{},'./client':{},'./admin':{}}).default;
 (async()=>{

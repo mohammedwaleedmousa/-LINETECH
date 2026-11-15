@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     description: siteDescription,
     siteName: "LINETECH",
     type: "website",
-    images: [{ url: "/brand/social.png", width: 1200, height: 630, alt: "LINETECH" }],
+    images: [{ url: "/hero/home.webp", width: 1536, height: 1024, alt: "LINETECH" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "LINETECH — Every idea starts with a line.",
     description: siteDescription,
-    images: ["/brand/social.png"],
+    images: ["/hero/home.webp"],
   },
 };
 
