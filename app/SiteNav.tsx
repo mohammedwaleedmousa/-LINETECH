@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "./IntentLink";
+import BrandLogo from "./BrandLogo";
 import Localized, { useLanguage, setLanguage } from "./Localized";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -353,8 +354,8 @@ export default function SiteNav() {
   return (
     <Localized><>
       <header className="ref-nav ref-shell site-nav global-site-nav">
-        <Link className="ref-brand" href="/" prefetch aria-label="LINETECH home">
-          <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
+        <Link className="ref-brand" href="/" prefetch aria-label="LINETECH home" data-no-translate translate="no" lang="en">
+          <BrandLogo/>
         </Link>
         <nav className="ref-nav-links" aria-label="Primary navigation">
           {visibleNavItems.map((item) => {
