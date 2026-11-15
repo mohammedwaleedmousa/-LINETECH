@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "./IntentLink";
+import BrandLogo from "./BrandLogo";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "./Localized";
 
@@ -72,8 +73,8 @@ export default function SiteFooter() {
       <div className="ref-shell footer-v2-shell">
         <div className="footer-v2-main">
           <div className="footer-v2-brand">
-            <Link className="ref-brand footer-v2-logo" href="/" prefetch aria-label="LINETECH home">
-              <span className="ref-mark"><i/><b/></span><strong>LINETECH</strong>
+            <Link className="ref-brand footer-v2-logo" href="/" prefetch aria-label="LINETECH home" data-no-translate translate="no" lang="en">
+              <BrandLogo/>
             </Link>
             <h3>{t.brandLead}</h3>
             <p>{t.brandText}</p>

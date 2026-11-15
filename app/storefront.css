@@ -21,3 +21,7 @@
 @media(max-width:600px){.storefront-gallery,.storefront-feature-list{grid-template-columns:1fr}.storefront-detail .platform-hero-actions{align-items:stretch}}
 
 .platform-page :is(#web-development,#app-development,#ecommerce-systems,#catalog,#pricing,#aftercare),.page-projects article[id],.page-about #process{scroll-margin-top:110px}
+
+/* Approved symbol + custom wordmark; keep its proportions in both languages. */
+.ref-brand .linetech-brand-logo{display:block;width:161px;height:34px;max-width:none;object-fit:contain;flex:none}
+@media(max-width:420px){.ref-brand .linetech-brand-logo{width:142px;height:30px}}
