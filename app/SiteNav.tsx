@@ -8,12 +8,12 @@ import { createPortal } from "react-dom";
 
 const items = [
   { href: "/", en: "Home", ar: "الرئيسية" },
-  { href: "/products", en: "Products", ar: "المنتجات" },
   { href: "/services", en: "Services", ar: "الخدمات" },
   { href: "/projects", en: "Projects", ar: "المشاريع" },
+  { href: "/contact", en: "Contact", ar: "تواصل معنا" },
+  { href: "/products", en: "Products", ar: "المنتجات" },
   { href: "/pricing", en: "Plans & Pricing", ar: "الخطط والأسعار" },
   { href: "/about", en: "About LINETECH", ar: "عن LINETECH" },
-  { href: "/contact", en: "Contact", ar: "تواصل معنا" },
   { href: "/faq", en: "Support & FAQ", ar: "الدعم والأسئلة الشائعة" },
 ] as const;
 

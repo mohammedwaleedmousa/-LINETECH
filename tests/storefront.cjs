@@ -26,11 +26,11 @@ for(const p of ['app/company-space','app/account/companies','app/knowledge','app
 for(const file of ['app/SiteNav.tsx','app/SiteFooter.tsx','app/account/AccountNav.tsx','app/admin/AdminShell.tsx']){
  const source=fs.readFileSync(file,'utf8');for(const p of policy.retiredPrefixes)assert(!source.includes('"'+p+'"'),'Retired navigation destination in '+file+': '+p);
 }
-// Home layout stays identical; only copy/links and card data change.
+// Keep the core home journey; secondary information lives on dedicated pages.
 const home=fs.readFileSync('app/page.tsx','utf8');
-for(const component of ['HomeHeroArt','HomeProjects','HomePlatform','HomeAbout','HomeWhy'])assert(home.includes('<'+component));
+for(const component of ['HomeHeroArt','HomeProjects','HomeAbout'])assert(home.includes('<'+component));
 assert(home.includes('Every idea<br/>starts with a line.'));
-assert.equal((home.match(/<section /g)||[]).length,6);
+assert.equal((home.match(/<section /g)||[]).length,3);
 const core={json:load('worker/core.ts').json,resolveSession:async()=>{throw Error('No auth access expected on retired routes');},withCookies:r=>r,withSecurityHeaders:r=>r};
 const worker=load('worker/index.ts',{'../lib/navigation/return-path':load('lib/navigation/return-path.ts'),'../lib/navigation/route-policy':policy,'./core':core,'./auth':{},'./client':{},'./admin':{}}).default;
 (async()=>{
@@ -47,5 +47,5 @@ const worker=load('worker/index.ts',{'../lib/navigation/return-path':load('lib/n
   if(expected.searchParams.has('category'))assert.equal(target.searchParams.get('category'),expected.searchParams.get('category'));
  }
  assert.equal(assets,0);
- console.log('PASS: two product types, purchase/monthly/care model, safe demos, publication validation, no published test inventory, retired routes/APIs, canonical redirects, sitemap and preserved home structure');
+ console.log('PASS: two product types, purchase/monthly/care model, safe demos, publication validation, no published test inventory, retired routes/APIs, canonical redirects, sitemap and focused home structure');
 })().catch(e=>{console.error(e);process.exitCode=1;});

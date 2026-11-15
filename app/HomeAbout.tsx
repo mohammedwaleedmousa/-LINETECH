@@ -9,7 +9,7 @@ const copy = {
     kicker: "ABOUT LINETECH",
     titleA: "More than technology.",
     titleB: "A smarter tomorrow.",
-    body: "LINETECH turns ideas into digital products built around real business needs. We connect clarity, design and engineering so the result is not only polished, but useful, maintainable and ready for real-world operation.",
+    body: "LINETECH brings design and development together to turn your idea into a useful digital product.",
     link: "Discover LINETECH",
     path: [
       ["01", "IDEA", "Start with the real objective."],
@@ -22,7 +22,7 @@ const copy = {
     kicker: "عن LINETECH",
     titleA: "أكثر من مجرد تقنية.",
     titleB: "غدٌ أكثر ذكاءً.",
-    body: "تحوّل LINETECH الأفكار إلى منتجات رقمية مبنية حول احتياجات العمل الحقيقية. نربط الوضوح بالتصميم والهندسة حتى لا تكون النتيجة جميلة فقط، بل عملية وقابلة للتطوير وجاهزة للاستخدام الحقيقي.",
+    body: "تجمع LINETECH التصميم والتطوير لتحويل فكرتك إلى منتج رقمي يخدم عملك.",
     link: "اكتشف LINETECH",
     path: [
       ["01", "الفكرة", "نبدأ بالهدف الحقيقي."],
