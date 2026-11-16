@@ -62,3 +62,10 @@
 @keyframes waveBreathe{from{opacity:.25}to{opacity:.7}}
 @keyframes waveFieldDrift{from{transform:translate3d(-14px,-7px,0) rotate(-1deg)}to{transform:translate3d(15px,9px,0) rotate(1deg)}}
 @media(prefers-reduced-motion:reduce){.moduleFrame,.communicationWave{animation:none!important}.communicationWave{opacity:.5}}
+
+/* After-sales care: concentric service cycles, distinct from branches and waves. */
+.aftercareAtmosphere .ambientGlow{background:radial-gradient(ellipse at 55% 50%,rgba(70,130,190,.12),transparent 60%)}
+.careOrbit{stroke:#8bb9ed;stroke-width:1;stroke-dasharray:3 13;opacity:.45;animation:nodeBreathe 9s ease-in-out infinite alternate;vector-effect:non-scaling-stroke}
+.careSweep{stroke:#b3d4ff;stroke-width:1.5;stroke-dasharray:12 88;transform-origin:0 0;animation:careCycle 24s linear infinite;vector-effect:non-scaling-stroke}
+@keyframes careCycle{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.careOrbit,.careSweep{animation:none!important}}

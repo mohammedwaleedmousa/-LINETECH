@@ -1,7 +1,7 @@
 /** Single route inventory for the focused LINETECH storefront. */
 export const primaryRoutes=["/","/services","/projects","/about","/contact"] as const;
 export const publicRoutes=[
-  "/","/services","/projects","/about","/contact","/privacy","/terms",
+  "/","/services","/services/after-sales-care","/projects","/about","/contact","/privacy","/terms",
 ] as const;
 export const utilityRoutes=["/login","/admin/login","/thank-you"] as const;
 export const legacyRoutes:Record<string,string>={

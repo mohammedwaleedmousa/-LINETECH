@@ -31,7 +31,7 @@ const searchItems = [
   { title: "Pricing", meta: "Plans", href: "/services#pricing", keywords: "pricing plans packages subscription website ecommerce اسعار باقات اشتراك مواقع متاجر" },
   { title: "Web Development", meta: "Service", href: "/services#web-development", keywords: "website web development landing business custom apps تطوير ويب مواقع تطبيقات" },
   { title: "Application Development", meta: "Service", href: "/services#app-development", keywords: "application android ios mobile apps تطبيقات جوال" },
-  { title: "After-sales Care", meta: "Service", href: "/services#aftercare", keywords: "maintenance support hosting updates صيانة دعم استضافة تحديثات" },
+  { title: "After-sales Care", meta: "Service", href: "/services/after-sales-care", keywords: "maintenance support hosting updates صيانة دعم استضافة تحديثات" },
   { title: "E-commerce & Systems", meta: "Service", href: "/services#ecommerce-systems", keywords: "ecommerce commerce systems dashboard booking تجارة الكترونية أنظمة لوحات تحكم حجوزات" },
   { title: "Projects", meta: "Page", href: "/projects", keywords: "projects work portfolio products مشاريع اعمال منتجات" },
   { title: "Flamingo Park", meta: "Project", href: "/projects#flamingo-park", keywords: "flamingo park ecommerce retail فلامنجو بارك متجر" },

@@ -1,4 +1,4 @@
-.section{position:relative;isolation:isolate;overflow:hidden;padding:54px 0;background:#05080c;color:#f5f7f8;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.1)}
+.section{position:relative;isolation:isolate;overflow:hidden;padding:54px 0;background:var(--lt-closing-surface,#05080c);color:#f5f7f8;border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.1)}
 .section::before,.section::after{content:"";position:absolute;z-index:-1;height:1px;background:#3882f6;box-shadow:0 0 14px #3882f6;pointer-events:none}
 .section::before{width:36%;left:-6%;top:70%;transform:rotate(-42deg)}
 .section::after{width:32%;right:-4%;top:35%;transform:rotate(-48deg)}

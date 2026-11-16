@@ -7,10 +7,18 @@ const branches = [
 ];
 const wave = "M70 310C180 310 190 150 310 150S450 470 570 470S730 250 850 250";
 
-export default function MarketingHeroArt({variant}:{variant:"services"|"contact"}){
-  return <div className={`${styles.atmosphere} ${variant==="services"?styles.servicesAtmosphere:styles.contactAtmosphere}`} aria-hidden="true" data-hero-art={variant}>
+export default function MarketingHeroArt({variant}:{variant:"services"|"contact"|"aftercare"}){
+  return <div className={`${styles.atmosphere} ${variant==="services"?styles.servicesAtmosphere:variant==="contact"?styles.contactAtmosphere:styles.aftercareAtmosphere}`} aria-hidden="true" data-hero-art={variant}>
     <div className={styles.ambientGlow}/>
-    {variant==="services"?<svg viewBox="0 0 900 620" fill="none" focusable="false">
+    {variant==="aftercare"?<svg viewBox="0 0 900 620" fill="none" focusable="false">
+      <g transform="translate(540 310)">
+        {[104,166,228].map((radius,index)=><circle key={radius} className={styles.careOrbit} cx="0" cy="0" r={radius} style={{animationDelay:`${-index*3}s`}}/>)}
+        <circle className={styles.careSweep} cx="0" cy="0" r="166" pathLength="100"/>
+        <path className={styles.route} d="M-42 0L-10 32L48-34"/>
+        <circle className={styles.node} cx="0" cy="-228" r="4"/>
+        <circle className={`${styles.node} ${styles.secondNode}`} cx="166" cy="0" r="4"/>
+      </g>
+    </svg>:variant==="services"?<svg viewBox="0 0 900 620" fill="none" focusable="false">
       <g className={styles.blueprintGuides}><path d="M120 100H530M160 560H780M810 130V510"/></g>
       {branches.map(d=><path key={d} className={styles.route} d={d}/>)}
       <path className={styles.signal} pathLength="100" d={branches[0]}/>

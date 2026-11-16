@@ -1,9 +1,10 @@
 /* Inspect the emitted HTML, rather than only the metadata source. Run after next build. */
 const fs = require('node:fs');
 const assert = require('node:assert/strict');
-const paths = ['/', '/services', '/projects', '/about', '/contact', '/privacy', '/terms'];
+const paths = ['/', '/services', '/services/after-sales-care', '/projects', '/about', '/contact', '/privacy', '/terms'];
 const titles = new Set();
 const descriptions = new Set();
+const closingTitles = new Set();
 const decode = s => s.replaceAll('&amp;', '&').replaceAll('&quot;', '"');
 const attributes = tag => Object.fromEntries([...tag.matchAll(/([\w:-]+)="([^"]*)"/g)].map(([,k,v])=>[k,decode(v)]));
 for (const path of paths) {
@@ -28,9 +29,13 @@ for (const path of paths) {
     assert.ok(links.some(l=>l.href.split('?')[0] === href), `${path}: missing ${href}`);
     assert.ok(fs.existsSync(`out${href}`));
   }
+  const closingTitle = decode(html.match(/<section\b[^>]*(?:class="[^"]*ref-cta[^"]*"|data-footer-cta)[\s\S]*?<h2[^>]*>(.*?)<\/h2>/)?.[1] || "");
+  assert.ok(closingTitle,`${path}: closing title must be present`);
+  assert.ok(!closingTitles.has(closingTitle),`${path}: closing CTA title must be unique`);
+  closingTitles.add(closingTitle);
   const ctas = [...html.matchAll(/<section\b[^>]*class="[^"]*ref-cta[^"]*"|<section\b[^>]*data-footer-cta/g)];
   assert.equal(ctas.length,1,`${path}: exactly one closing CTA`);
-  if (['/services','/contact','/privacy','/terms'].includes(path)) {
+  if (['/services','/services/after-sales-care','/contact','/privacy','/terms'].includes(path)) {
     assert.ok(/<section[^>]*data-footer-cta[\s\S]*?<\/section><footer/.test(html),`${path}: CTA must directly precede footer`);
   } else assert.ok(!html.includes('data-footer-cta'),`${path}: existing CTA must stay unchanged`);
   assert.equal(value('og:image'), 'https://linetech.company/brand/social-card.png');
@@ -51,4 +56,4 @@ for (const path of ['/login','/admin/login','/account','/thank-you']) {
 const sitemap = fs.readFileSync('out/sitemap.xml','utf8');
 assert.equal([...sitemap.matchAll(/<loc>/g)].length,paths.length);
 for (const path of paths) assert.ok(sitemap.includes(`https://linetech.company${path === '/' ? '/' : path + '/'}</loc>`));
-console.log('PASS: emitted metadata, unique canonicals, structured data, new brand icons, seven sitemap URLs and private noindex');
+console.log('PASS: emitted metadata, unique canonicals, structured data, new brand icons, eight sitemap URLs and private noindex');

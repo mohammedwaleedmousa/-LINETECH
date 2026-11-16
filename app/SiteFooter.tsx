@@ -93,7 +93,7 @@ export default function SiteFooter() {
             <Link className={linkClass("/services#web-development")} href="/services#web-development" prefetch>{t.web}</Link>
             <Link className={linkClass("/services#ecommerce-systems")} href="/services#ecommerce-systems" prefetch>{t.commerce}</Link>
             <Link className={linkClass("/services#app-development")} href="/services#app-development" prefetch>{t.brand}</Link>
-            <Link className={linkClass("/services#pricing")} href="/services#aftercare" prefetch>{t.cv}</Link>
+            <Link className={linkClass("/services/after-sales-care")} href="/services/after-sales-care" prefetch>{t.cv}</Link>
           </nav>
 
           <nav className="footer-v2-column" aria-label={t.company}>

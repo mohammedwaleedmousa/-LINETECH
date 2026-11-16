@@ -25,7 +25,7 @@ export default function HomePlatform() {
       <p className="platform-eyebrow">{ar ? "الدعم يكمل رحلتك" : "SUPPORT FOR YOUR NEXT STEP"}</p>
       <h2 id="home-care-title">{ar ? "أطلق مشروعك. وواصل بثقة." : "Launch your idea. Keep moving."}</h2>
       <p>{ar ? "خيارات للصيانة والدعم والتحديثات والاستضافة، حسب احتياجات منتجك أو مشروعك." : "Maintenance, support, updates and hosting options shaped around your product or custom project."}</p>
-      <Link className="platform-text-link" href="/services#aftercare">{ar ? "استكشف خدمات ما بعد البيع" : "Explore after-sales care"}<span>↗</span></Link>
+      <Link className="platform-text-link" href="/services/after-sales-care">{ar ? "استكشف خدمات ما بعد البيع" : "Explore after-sales care"}<span>↗</span></Link>
       <div className="platform-grid platform-next-grid">{[["/services#catalog", "استكشف المنتجات", "Explore products"], ["/contact#request", "اطلب مشروعًا", "Request a project"], ["/login?mode=signup", "أنشئ حسابك الموحد", "Create your account"]].map(([href,a,e]) => <Link className="platform-card" key={href} href={href}><h3>{ar ? a : e}</h3><PlatformIcon kind="arrow"/></Link>)}</div>
     </section>
   </>;
