@@ -4,6 +4,7 @@ import { ReactNode, Suspense, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import SiteNav from "./SiteNav";
 import SiteFooter from "./SiteFooter";
+import FooterCTA from "./FooterCTA";
 import LanguageBridge from "./LanguageBridge";
 import HomeMotion from "./HomeMotion";
 import ServicesMotion from "./ServicesMotion";
@@ -36,6 +37,7 @@ export default function SiteSurface({ children }: { children: ReactNode }) {
         <SiteNav />
       </Suspense>
       {children}
+      <FooterCTA />
       <SiteFooter />
     </>
   );
