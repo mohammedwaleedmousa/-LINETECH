@@ -3,3 +3,7 @@
 @import "./storefront.css";
 
 @import "./hero-viewport.css";
+
+/* The same closing surface on every public page, including existing CTAs. */
+:root{--lt-closing-surface:#05080c}
+body[data-surface="site"] main > section.ref-cta{background:var(--lt-closing-surface)!important}

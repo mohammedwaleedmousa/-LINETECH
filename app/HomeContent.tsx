@@ -11,7 +11,7 @@ const services = [
   { icon: "▱", title: "Web Development", text: "Fast, polished company websites and digital experiences built for real business use.", href: "/services#web-development" },
   { icon: "</>", title: "E-commerce & Systems", text: "Commerce flows, dashboards and custom systems shaped around the way your business works.", href: "/services#ecommerce-systems" },
   { icon: "✦", title: "Application Development", text: "Mobile applications shaped around your users, workflows and project requirements.", href: "/services#app-development" },
-  { icon: "◎", title: "After-sales Care", text: "Maintenance, support and updates that keep your website or application moving forward.", href: "/services#aftercare" },
+  { icon: "◎", title: "After-sales Care", text: "Maintenance, support and updates that keep your website or application moving forward.", href: "/services/after-sales-care" },
 ];
 
 export default function Home() {

@@ -73,7 +73,7 @@ async function main() {
   const adminLogin = await fetch(`${base}/admin/login`, { redirect: "manual" });
   assert.ok(adminLogin.status >= 200 && adminLogin.status < 400, `Admin login returned ${adminLogin.status}`);
 
-  for (const publicPath of ["/","/services","/projects","/about","/contact","/privacy","/terms"]) {
+  for (const publicPath of ["/","/services","/services/after-sales-care","/projects","/about","/contact","/privacy","/terms"]) {
     const response = await fetch(`${base}${publicPath}`, { redirect: "manual" });
     assert.ok(
       response.status >= 200 && response.status < 400,

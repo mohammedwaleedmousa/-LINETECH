@@ -2,7 +2,7 @@ import type {ReactNode} from "react";
 import styles from "./MarketingPage.module.css";
 import MarketingHeroArt from "./MarketingHeroArt";
 
-export default function MarketingHero({variant,eyebrow,title,description,children}:{variant:"services"|"contact";eyebrow:string;title:string;description:string;children?:ReactNode}){
+export default function MarketingHero({variant,eyebrow,title,description,children}:{variant:"services"|"contact"|"aftercare";eyebrow:string;title:string;description:string;children?:ReactNode}){
   return <section className={styles.hero} data-viewport-hero>
     <MarketingHeroArt variant={variant}/>
     <div className={styles.heroShell} data-viewport-hero-body>
