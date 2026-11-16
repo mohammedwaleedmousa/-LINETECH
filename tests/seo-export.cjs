@@ -24,10 +24,15 @@ for (const path of paths) {
   assert.ok(!titles.has(title), `Duplicate title: ${path}`);
   assert.ok(!descriptions.has(description), `Duplicate description: ${path}`);
   titles.add(title); descriptions.add(description);
-  for (const href of ['/favicon.ico','/brand/icon.svg','/brand/icon-192.png','/apple-touch-icon.png','/brand/safari-pinned-tab.svg']) {
+  for (const href of ['/brand/linetech-symbol.ico','/brand/linetech-symbol.svg','/brand/linetech-symbol-192.png','/brand/apple-touch-icon.png','/brand/safari-pinned-tab.svg']) {
     assert.ok(links.some(l=>l.href.split('?')[0] === href), `${path}: missing ${href}`);
     assert.ok(fs.existsSync(`out${href}`));
   }
+  const ctas = [...html.matchAll(/<section\b[^>]*class="[^"]*ref-cta[^"]*"|<section\b[^>]*data-footer-cta/g)];
+  assert.equal(ctas.length,1,`${path}: exactly one closing CTA`);
+  if (['/services','/contact','/privacy','/terms'].includes(path)) {
+    assert.ok(/<section[^>]*data-footer-cta[\s\S]*?<\/section><footer/.test(html),`${path}: CTA must directly precede footer`);
+  } else assert.ok(!html.includes('data-footer-cta'),`${path}: existing CTA must stay unchanged`);
   assert.equal(value('og:image'), 'https://linetech.company/brand/social-card.png');
   const data = [...html.matchAll(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/g)].map(m=>JSON.parse(m[1]));
   assert.equal(data.length,1);
