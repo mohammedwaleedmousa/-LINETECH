@@ -12,7 +12,6 @@
 .atmosphere{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 80% 48%,rgba(108,168,248,.045),transparent 40%)}
 .atmosphere svg{position:absolute;inset-inline-end:-7%;inset-block-start:8%;width:min(62vw,900px);height:90%;opacity:.22}
 .route{stroke:#6ca8f8;stroke-width:1;vector-effect:non-scaling-stroke}
-.secondaryRoute{stroke-dasharray:3 14;opacity:.45;animation:routeFlow 28s linear infinite}
 .signal{stroke:#b3d4ff;stroke-width:1.8;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-dasharray:12 100;stroke-dashoffset:112;opacity:.95;animation:signalFlow 8s linear infinite}
 .secondSignal{stroke:#79aff5;stroke-dasharray:8 104;animation-duration:11s;animation-delay:-5s}
 .node{fill:#8cbaf8;animation:nodeBreathe 5s ease-in-out infinite alternate}
@@ -20,7 +19,6 @@
 .ambientGlow{position:absolute;inset-inline-end:4%;top:0;width:min(80vw,1000px);height:100%;background:radial-gradient(ellipse at 50% 48%,rgba(64,121,195,.14),rgba(45,85,140,.035) 36%,transparent 68%);animation:glowDrift 18s ease-in-out infinite alternate}
 .atmosphere svg{animation:lineDrift 16s ease-in-out infinite alternate}
 @keyframes signalFlow{from{stroke-dashoffset:112}to{stroke-dashoffset:0}}
-@keyframes routeFlow{to{stroke-dashoffset:-340}}
 @keyframes nodeBreathe{from{opacity:.35}to{opacity:.95}}
 @keyframes glowDrift{from{transform:translate3d(-4%,3%,0) scale(.94);opacity:.5}to{transform:translate3d(5%,-4%,0) scale(1.08);opacity:.95}}
 @keyframes lineDrift{from{transform:translate3d(-8px,8px,0)}to{transform:translate3d(12px,-12px,0)}}
@@ -49,3 +47,18 @@
 @media(prefers-reduced-motion:reduce){.page :global(.platform-card){transition:none}}
 
 @media(prefers-reduced-motion:reduce){.atmosphere svg,.ambientGlow,.route,.signal,.node{animation:none!important}.signal{stroke-dashoffset:0;opacity:.4}}
+
+/* Each public page has its own decorative geometry and motion. */
+.servicesAtmosphere .ambientGlow{background:radial-gradient(ellipse at 48% 62%,rgba(64,121,195,.12),transparent 64%)}
+.blueprintGuides{stroke:#6ca8f8;stroke-width:.7;stroke-dasharray:2 12;opacity:.3}
+.moduleFrame{stroke:#8cbaf8;stroke-width:1;vector-effect:non-scaling-stroke;fill:rgba(77,132,204,.025);animation:moduleBreathe 9s ease-in-out infinite alternate}
+.moduleFrame:nth-of-type(2n){animation-delay:-4s}
+.contactAtmosphere svg{animation:waveFieldDrift 20s ease-in-out infinite alternate}
+.contactAtmosphere .ambientGlow{background:radial-gradient(ellipse at 48% 50%,rgba(85,151,204,.12),transparent 62%);animation-duration:24s;animation-direction:alternate-reverse}
+.communicationWave{stroke:#8bb9ed;stroke-width:1;vector-effect:non-scaling-stroke;animation:waveBreathe 8s ease-in-out infinite alternate}
+.contactAtmosphere .signal{animation-duration:12s;stroke:#c7e5ff}
+.contactAtmosphere .secondSignal{animation-duration:15s;animation-direction:reverse}
+@keyframes moduleBreathe{from{stroke-opacity:.45;fill-opacity:.2}to{stroke-opacity:.95;fill-opacity:.8}}
+@keyframes waveBreathe{from{opacity:.25}to{opacity:.7}}
+@keyframes waveFieldDrift{from{transform:translate3d(-14px,-7px,0) rotate(-1deg)}to{transform:translate3d(15px,9px,0) rotate(1deg)}}
+@media(prefers-reduced-motion:reduce){.moduleFrame,.communicationWave{animation:none!important}.communicationWave{opacity:.5}}

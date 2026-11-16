@@ -37,7 +37,7 @@ function ContactDetails() {
   ];
   return <main className={`${styles.page} ${shared.page}`} data-viewport-page dir={ar ? 'rtl' : 'ltr'}>
     {queryObserver}
-    <MarketingHero eyebrow={ar?'تواصل معنا':'CONTACT'} title={ar?'لنبدأ\nبمحادثة.':'Start with\na conversation.'} description={ar?'لديك سؤال أو فكرة مشروع؟ تواصل معنا بالطريقة المناسبة لك، دون إنشاء حساب.':'Have a question or a project in mind? Reach us in the way that works for you. No account required.'}>
+    <MarketingHero variant="contact" eyebrow={ar?'تواصل معنا':'CONTACT'} title={ar?'لنبدأ\nبمحادثة.':'Start with\na conversation.'} description={ar?'لديك سؤال أو فكرة مشروع؟ تواصل معنا بالطريقة المناسبة لك، دون إنشاء حساب.':'Have a question or a project in mind? Reach us in the way that works for you. No account required.'}>
       <a className="platform-button primary" href="#request">{ar?'أخبرنا عن مشروعك':'Tell us about your project'}</a><a className="platform-button secondary" href="#contact-options">{ar?'طرق التواصل':'Contact options'}</a>
     </MarketingHero>
     <div className={styles.shell}>
