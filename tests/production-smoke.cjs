@@ -67,7 +67,7 @@ async function main() {
   assert.equal(sitemap.status, 200, "sitemap.xml is unavailable");
   const sitemapText = await sitemap.text();
   for (const publicPath of ["/services","/projects","/contact"]) {
-    assert.ok(sitemapText.includes(`${publicPath}</loc>`), `sitemap is missing ${publicPath}`);
+    assert.ok(sitemapText.includes(`${publicPath === "/" ? "/" : publicPath + "/"}</loc>`), `sitemap is missing ${publicPath}`);
   }
 
   const adminLogin = await fetch(`${base}/admin/login`, { redirect: "manual" });

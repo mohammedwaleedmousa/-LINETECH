@@ -217,7 +217,7 @@ const allowlistedPaths=[...allowlistBlock[1].matchAll(/"([^"]+)"/g)].map(([,valu
 assert.deepEqual(allowlistedPaths,sitemapPaths,"Route inventory must match sitemap");
 assert.ok(workerIndex.includes("new Set<string>(publicRoutes)"));
 for (const publicRoute of ["/services","/projects","/contact"]) {
-  assert.ok(sitemap.includes(`${publicRoute}</loc>`), `Commercial route is missing from sitemap: ${publicRoute}`);
+  assert.ok(sitemapPaths.includes(publicRoute), `Commercial route is missing from sitemap: ${publicRoute}`);
 }
 // Public top-level navigation follows the implemented public sitemap sections.
 for (const [route, label] of [
@@ -228,7 +228,7 @@ for (const [route, label] of [
   ["/contact", 'en: "Contact"'],
 ]) {
   assert.ok(siteNav.includes(`href: "${route}"`) && siteNav.includes(label), `Primary navigation is missing implemented public section: ${route}`);
-  assert.ok(sitemap.includes(`${route}</loc>`), `Public sitemap is missing navigation section: ${route}`);
+  assert.ok(sitemapPaths.includes(route), `Public sitemap is missing navigation section: ${route}`);
 }
 for (const futureRoute of ["/support", "/register", "/companies", "/admin/dashboard"]) {
   assert.ok(!sitemap.includes(`${futureRoute}</loc>`), `Unimplemented/future route must not be added to public sitemap: ${futureRoute}`);

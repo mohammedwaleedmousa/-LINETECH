@@ -26,14 +26,14 @@ for(const old of ['/products','/products/view','/pricing','/faq','/services/requ
  assert(!policy.publicRoutes.includes(old));
 }
 const xml=fs.readFileSync('public/sitemap.xml','utf8');
-assert.deepEqual([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname).sort(),[...policy.publicRoutes].sort());
+assert.deepEqual([...xml.matchAll(/<loc>(.*?)<\/loc>/g)].map(m=>new URL(m[1]).pathname.replace(/\/$/, "") || "/").sort(),[...policy.publicRoutes].sort());
 for(const p of [...policy.retiredPrefixes,'/services/guide','/services/process','/services/brand-identity','/services/cv-portfolio'])assert(!policy.publicRoutes.includes(p));
 for(const p of ['app/company-space','app/account/companies','app/knowledge','app/admin/companies','app/admin/content','app/admin/audit','app/services/guide','app/services/process','app/service-finder','app/how-we-work','app/products/category'])assert(!fs.existsSync(p),'Retired source remains: '+p);
 for(const file of ['app/SiteNav.tsx','app/SiteFooter.tsx','app/account/AccountNav.tsx','app/admin/AdminShell.tsx']){
  const source=fs.readFileSync(file,'utf8');for(const p of policy.retiredPrefixes)assert(!source.includes('"'+p+'"'),'Retired navigation destination in '+file+': '+p);
 }
 // Keep the core home journey; secondary information lives on dedicated pages.
-const home=fs.readFileSync('app/page.tsx','utf8');
+const home=fs.readFileSync('app/HomeContent.tsx','utf8');
 for(const component of ['HomeHeroArt','HomeProjects','HomeAbout'])assert(home.includes('<'+component));
 assert(home.includes('Every idea<br/>starts with a line.'));
 assert.equal((home.match(/<section /g)||[]).length,3);

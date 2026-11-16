@@ -6,16 +6,12 @@ Disallow: /workspace
 Disallow: /chat
 Disallow: /handover
 Disallow: /account
-Disallow: /company-space
-Disallow: /api/
-
-Sitemap: https://linetech.company/sitemap.xml
-Host: https://linetech.company
 Disallow: /account/projects
 Disallow: /account/projects/messages
 Disallow: /account/projects/handover
+Disallow: /company-space
+Disallow: /knowledge/
+Disallow: /api/
 Disallow: /thank-you
 
-Disallow: /products/view
-Disallow: /company-space/
-Disallow: /knowledge/
+Sitemap: https://linetech.company/sitemap.xml

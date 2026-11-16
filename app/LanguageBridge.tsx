@@ -16,12 +16,12 @@ export default function LanguageBridge() {
     // Next updates route metadata separately from the page's React content.
     const originals = new Map<Element, { source: string; rendered: string }>();
     const applyMetadata = () => {
-      document.head.querySelectorAll('title, meta[name="description"], meta[property^="og:"], meta[name^="twitter:"]').forEach(element => {
+      document.head.querySelectorAll('title, meta[name="description"], meta[property="og:title"], meta[property="og:description"], meta[property="og:site_name"], meta[name="twitter:title"], meta[name="twitter:description"]').forEach(element => {
         const isTitle = element.tagName === "TITLE";
         const current = isTitle ? element.textContent || "" : element.getAttribute("content") || "";
         const previous = originals.get(element);
         const source = previous && previous.rendered === current ? previous.source : current;
-        const rendered = translate(source, language);
+        const rendered = translate(source, language).replaceAll("لاين تك", "LINETECH");
         originals.set(element, { source, rendered });
         if (current === rendered) return;
         if (isTitle) element.textContent = rendered;
