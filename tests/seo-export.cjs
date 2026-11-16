@@ -25,7 +25,7 @@ for (const path of paths) {
   assert.ok(!titles.has(title), `Duplicate title: ${path}`);
   assert.ok(!descriptions.has(description), `Duplicate description: ${path}`);
   titles.add(title); descriptions.add(description);
-  for (const href of ['/brand/linetech-symbol.ico','/brand/linetech-symbol.svg','/brand/linetech-symbol-192.png','/brand/apple-touch-icon.png','/brand/safari-pinned-tab.svg']) {
+  for (const href of ['/brand/linetech-mark-transparent.ico','/brand/linetech-mark-transparent.svg','/brand/linetech-mark-transparent-192.png','/brand/apple-touch-icon.png','/brand/safari-pinned-tab.svg']) {
     assert.ok(links.some(l=>l.href.split('?')[0] === href), `${path}: missing ${href}`);
     assert.ok(fs.existsSync(`out${href}`));
   }
