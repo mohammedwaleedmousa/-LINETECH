@@ -12,9 +12,11 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
   icons: {
     icon: [
-      { url: "/brand/linetech-symbol.ico?v=black", type: "image/x-icon", sizes: "16x16 32x32 48x48 64x64 128x128 256x256" },
-      { url: "/brand/linetech-symbol-192.png?v=black", type: "image/png", sizes: "192x192" },
-      { url: "/brand/linetech-symbol.svg?v=black", type: "image/svg+xml" },
+      { url: "/brand/linetech-mark-transparent-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/brand/linetech-mark-transparent-48.png", type: "image/png", sizes: "48x48" },
+      { url: "/brand/linetech-mark-transparent.ico", type: "image/x-icon", sizes: "16x16 32x32 48x48 64x64 128x128 256x256" },
+      { url: "/brand/linetech-mark-transparent-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/brand/linetech-mark-transparent.svg", type: "image/svg+xml" },
     ],
     apple: [{ url: "/brand/apple-touch-icon.png?v=black", sizes: "180x180", type: "image/png" }],
     other: [{ rel: "mask-icon", url: "/brand/safari-pinned-tab.svg", color: "#050708" }],
