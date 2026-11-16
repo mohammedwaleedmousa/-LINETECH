@@ -2,32 +2,25 @@ import type { Metadata, Viewport } from "next";
 import SiteSurface from "./SiteSurface";
 import "./site.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://linetech.company";
-const siteDescription = "LINETECH is a technology company that turns ideas into real digital products through strategy, design and engineering.";
+import { SITE_URL, siteDescription, socialImage } from "../lib/seo";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-  title: {
-    default: "LINETECH — Every idea starts with a line.",
-    template: "%s — LINETECH",
-  },
+  metadataBase: new URL(SITE_URL),
+  title: { default: "LINETECH — Every idea starts with a line.", template: "%s — LINETECH" },
   description: siteDescription,
   applicationName: "LINETECH",
-  keywords: ["LINETECH", "web development", "application development", "digital products", "Aden", "Yemen"],
   robots: { index: true, follow: true },
-  openGraph: {
-    title: "LINETECH — Every idea starts with a line.",
-    description: siteDescription,
-    siteName: "LINETECH",
-    type: "website",
-    images: [{ url: "/hero/home.webp", width: 1536, height: 1024, alt: "LINETECH" }],
+  icons: {
+    icon: [
+      { url: "/brand/icon-192.png", type: "image/png", sizes: "192x192" },
+      { url: "/brand/icon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }],
+    other: [{ rel: "mask-icon", url: "/brand/safari-pinned-tab.svg", color: "#050708" }],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "LINETECH — Every idea starts with a line.",
-    description: siteDescription,
-    images: ["/hero/home.webp"],
-  },
+  manifest: "/site.webmanifest",
+  openGraph: { title: "LINETECH", description: siteDescription, siteName: "LINETECH", type: "website", images: [socialImage] },
+  twitter: { card: "summary_large_image", title: "LINETECH", description: siteDescription, images: [socialImage.url] },
 };
 
 export const viewport: Viewport = {

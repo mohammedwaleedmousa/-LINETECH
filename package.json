@@ -19,7 +19,9 @@
     "test:deps": "node tests/dependency-security.cjs",
     "test:navigation": "node tests/navigation-behavior.cjs",
     "test:migrations": "node tests/company-database.cjs && node tests/company-members-database.cjs",
-    "test:storefront": "node tests/storefront.cjs"
+    "test:storefront": "node tests/storefront.cjs",
+    "test:seo": "node tests/seo-export.cjs",
+    "postbuild": "npm run test:seo"
   },
   "dependencies": {
     "next": "15.5.24",
