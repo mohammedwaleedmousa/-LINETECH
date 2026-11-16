@@ -11,7 +11,19 @@
 .heroActions{display:flex;gap:12px;flex-wrap:wrap;margin-top:31px}
 .atmosphere{position:absolute;inset:0;z-index:0;pointer-events:none;background:radial-gradient(ellipse at 80% 48%,rgba(108,168,248,.045),transparent 40%)}
 .atmosphere svg{position:absolute;inset-inline-end:-7%;inset-block-start:8%;width:min(62vw,900px);height:90%;opacity:.22}
-.atmosphere path{stroke:#6ca8f8;stroke-width:1;vector-effect:non-scaling-stroke}.atmosphere path+path{stroke-dasharray:3 14;opacity:.45}.atmosphere circle{fill:#8cbaf8}
+.route{stroke:#6ca8f8;stroke-width:1;vector-effect:non-scaling-stroke}
+.secondaryRoute{stroke-dasharray:3 14;opacity:.45;animation:routeFlow 28s linear infinite}
+.signal{stroke:#b3d4ff;stroke-width:1.8;stroke-linecap:round;vector-effect:non-scaling-stroke;stroke-dasharray:12 100;stroke-dashoffset:112;opacity:.95;animation:signalFlow 8s linear infinite}
+.secondSignal{stroke:#79aff5;stroke-dasharray:8 104;animation-duration:11s;animation-delay:-5s}
+.node{fill:#8cbaf8;animation:nodeBreathe 5s ease-in-out infinite alternate}
+.secondNode{animation-delay:-2.5s}
+.ambientGlow{position:absolute;inset-inline-end:4%;top:0;width:min(80vw,1000px);height:100%;background:radial-gradient(ellipse at 50% 48%,rgba(64,121,195,.14),rgba(45,85,140,.035) 36%,transparent 68%);animation:glowDrift 18s ease-in-out infinite alternate}
+.atmosphere svg{animation:lineDrift 16s ease-in-out infinite alternate}
+@keyframes signalFlow{from{stroke-dashoffset:112}to{stroke-dashoffset:0}}
+@keyframes routeFlow{to{stroke-dashoffset:-340}}
+@keyframes nodeBreathe{from{opacity:.35}to{opacity:.95}}
+@keyframes glowDrift{from{transform:translate3d(-4%,3%,0) scale(.94);opacity:.5}to{transform:translate3d(5%,-4%,0) scale(1.08);opacity:.95}}
+@keyframes lineDrift{from{transform:translate3d(-8px,8px,0)}to{transform:translate3d(12px,-12px,0)}}
 .page :global(.platform-button){min-height:46px;padding:0 18px;border-radius:9px;font-size:12px;font-weight:650;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:12px}
 .page :global(.platform-button.primary){background:#f4f5f3;color:#080c11;border:1px solid #f4f5f3}.page :global(.platform-button.primary:hover){background:#e4ebf3;border-color:#e4ebf3}
 .page :global(.platform-button.secondary){background:rgba(255,255,255,.01);color:#dbe5ef;border:1px solid #293542}.page :global(.platform-button.secondary:hover){border-color:#40556b;color:#fff}
@@ -35,3 +47,5 @@
 @media(max-width:760px){.hero,.heroShell{min-height:610px}.heroShell{width:calc(100% - 36px);padding:120px 0 48px}.hero h1{font-size:clamp(48px,8vw,68px)}.heroLead{font-size:14px;line-height:1.8}.atmosphere svg{width:95vw;opacity:.13}.page :global(.platform-section){width:calc(100% - 36px);padding:48px 0}.page :global(.platform-section-heading),.sectionHeading{align-items:flex-start;flex-direction:column;gap:14px}.page :global(.platform-card){padding:24px}.page :global(.platform-card) h2,.page :global(.platform-card) h3{font-size:23px}.page :global(.platform-grid){grid-template-columns:1fr}.page :global(.platform-section) :global(.platform-section){width:100%}}
 @media(max-width:520px){.hero,.heroShell{min-height:590px}.heroShell{width:calc(100% - 36px);padding:112px 0 42px}.hero h1{font-size:48px;line-height:1.04}.heroActions{flex-direction:column;align-items:stretch;max-width:340px}.page :global(.platform-section-heading) h2,.sectionHeading h2{font-size:32px}}
 @media(prefers-reduced-motion:reduce){.page :global(.platform-card){transition:none}}
+
+@media(prefers-reduced-motion:reduce){.atmosphere svg,.ambientGlow,.route,.signal,.node{animation:none!important}.signal{stroke-dashoffset:0;opacity:.4}}
