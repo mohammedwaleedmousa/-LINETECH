@@ -147,6 +147,12 @@ html[dir="rtl"] .ref-home .home-feature-label{letter-spacing:0}
 .ref-home .home-line-art svg{display:block;width:100%;height:auto;overflow:visible}
 .ref-home .home-line-hero .ref-hero-copy{position:relative;z-index:3;text-shadow:none}
 html[dir="rtl"] .ref-home .home-line-hero{--home-light-x:22%}
+html[dir="rtl"] .home-line-hero .ref-hero-copy h1{
+  font-family:"Amiri",var(--arabic-ui-font);
+  font-size:clamp(65px,6vw,90px)!important;
+  font-weight:700;
+  line-height:1.32!important;
+}
 html[dir="rtl"] .ref-home .home-line-art svg{transform:scaleX(-1)}
 @media(max-width:1100px){
   .ref-home .home-line-hero .home-line-art{width:56%;inset-inline-end:-5%;opacity:.72}
@@ -158,6 +164,7 @@ html[dir="rtl"] .ref-home .home-line-art svg{transform:scaleX(-1)}
   .ref-home .home-line-art .home-line-detail{display:none}
 }
 @media(max-width:620px){
+  html[dir="rtl"] .home-line-hero .ref-hero-copy h1{font-size:clamp(49px,14.2vw,66px)!important}
   .ref-home .home-line-hero .home-line-art{width:88%;bottom:-7%;inset-inline-end:-26%;opacity:.14}
   .ref-home .home-line-art .home-line-branches{display:none}
 }
