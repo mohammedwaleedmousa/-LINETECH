@@ -10,7 +10,7 @@ LINETECH sells ready-made websites and applications and develops custom projects
 - One product catalog with website/application filters, bilingual search and purchase/monthly filters.
 - Product detail view at `/products/view?product=<slug>` with features, screenshots, licence, renewal terms, offers and a direct HTTPS demo link in a new tab.
 - Optional monthly care plans linked to products and presented separately from purchase prices.
-- Contextual WhatsApp/email enquiries include the actual approved product and offer. The visitor reviews and sends the message; this does not create a paid order or activate a subscription.
+- The public enquiry form opens with the selected service or after-sales care and prepares a localized WhatsApp or email draft. Product, offer and care details carry through when provided. The visitor reviews and sends the message.
 - Existing authenticated custom project request → project workspace → chat/files → handover workflows remain.
 - Existing account and service subscription records and admin billing remain. Product checkout, multiple product subscription entitlements and automatic payment/renewal/cancellation are not implemented.
 - `/admin/products` provides a read-only publication/validation overview of the source-controlled catalog. Product editing is through `lib/catalog.ts`, not a database-backed admin editor.
@@ -19,7 +19,7 @@ No inventory, demo URLs, prices, plan benefits or customer claims have been fabr
 
 ## Focused navigation and retired sections
 
-Home · Products · Services · Projects · Plans & Pricing · About · Contact · Support & FAQ · Account.
+Primary navigation: Home · Services · Projects · About · Contact. The catalog and pricing sit within Services, FAQs sit within Contact, and client accounts retain a separate sign-in.
 
 Knowledge/research, company spaces/invitations/member billing, standalone service finder/process and brand/CV services are retired from this release. Company APIs return 410; they are not routed to a backend. Company SQL migration history and existing customer/database records are retained.
 
@@ -56,4 +56,4 @@ Read [current context](docs/PROJECT-CONTEXT.md), [structured context](docs/PROJE
 
 After meaningful code/config changes, update README and both context files together with actual behavior, checks and blockers. Current local verification and rollout status are recorded there. Never describe a requested purchase, local fixture or source change as a successful payment, activated subscription or verified production deployment.
 
-Local verification: production build and TypeScript passed; all ten prebuild suites passed. 62 browser checks passed across AR/EN and 320/390/768/1440px. Home hero/font metrics, section order and card counts matched the pre-cleanup export at phone/desktop widths; screenshots reviewed. No production/payment readiness is implied.
+Launch check (2026-11-21): the eight public pages, sitemap and browser icon responded on `linetech.company`. The public enquiry flow works independently of account sign-in. The deployed Worker's `/api/health` returned HTTP 503 with `supabaseAuth: false`, so live customer and admin sign-in still need verification.
