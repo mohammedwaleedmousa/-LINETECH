@@ -1,10 +1,10 @@
 {
   "project": "LINETECH",
   "repository": "mohammedwaleedmousa/-LINETECH",
-  "branch": "codex/storefront-cleanup",
-  "updated_on": "2026-10-25",
-  "source_base": "f8de175622de19c524130bf76a722534c17db396",
-  "status": "focused_storefront_source_ready_rollout_unverified",
+  "branch": "codex/linetech-launch-enquiry",
+  "updated_on": "2026-11-21",
+  "source_base": "4baf12f80df8c8ecd82d3bacc91d045d5d492c60",
+  "status": "public_launch_pass_production_auth_unhealthy",
   "scope": [
     "ready-made websites and applications",
     "custom website/application projects",
@@ -35,7 +35,8 @@
     "contextual product/offer/care WhatsApp and email enquiries",
     "source-controlled read-only admin catalog overview",
     "flattened shared CSS preserving original cascade",
-    "existing customer/auth/project/billing behavior retained"
+    "existing customer/auth/project/billing behavior retained",
+    "localized public enquiry with selected service, care, product and offer context"
   ],
   "not_implemented": [
     "actual product inventory and approved prices/licences",
@@ -51,16 +52,16 @@
   "qa": {
     "build": "Passed full npm run build, including all 10 prebuild suites and static export.",
     "typescript": "Passed npx tsc --noEmit.",
-    "react": "Passed bilingual catalog filtering, product cards/details, live-demo links and contextual offer enquiry using test-only fixtures.",
-    "routes": "38 app routes; 168 static references resolved. Retirement/redirect/API/sitemap assertions passed.",
-    "browser": "62 checks passed across AR/EN at 320/390/768/1440px, including search/reset and no stale navigation. Home metrics matched pre-cleanup export at 390/1440px in both languages; screenshots inspected.",
-    "remote": "Previous Actions blocked by confirmed account billing lock; Cloudflare build failure. No new production success claimed."
+    "react": "Passed bilingual catalog filtering, product cards/details, live-demo links and contextual offer enquiry using test-only fixtures. The enquiry draft preserves selected service and product context in Arabic and English.",
+    "routes": "158 internal references resolve to 28 app routes or 75 public assets.",
+    "browser": "The earlier storefront pass included AR/EN browser checks at 320/390/768/1440px. The launch pass verifies enquiry interactions in the localization suite.",
+    "remote": "Eight public URLs and crawl assets returned HTTP 200. Protected client and admin project URLs redirect to sign-in. The live Worker health returned HTTP 503 with supabaseAuth false."
   },
   "next_steps": [
-    "Merge verified cleanup and check deployment status",
+    "Check that the deploy serves the updated contact and services pages",
     "Obtain approved real product/demos/prices/terms",
     "Choose and implement payment/order and product subscription operations",
-    "Verify live Auth/PostgREST and production workflows"
+    "Restore LINETECH Supabase Auth health and verify customer and admin sign-in on the production domain"
   ],
   "guardrails": [
     "Preserve the home design",

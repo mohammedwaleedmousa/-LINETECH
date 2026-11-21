@@ -10,9 +10,7 @@ import { useLanguage } from '../Localized';
 import styles from './contact.module.css';
 import MarketingHero from '../MarketingHero';
 import shared from '../MarketingPage.module.css';
-
-const email = 'info@linetech.company';
-const phone = '+967773335065';
+import {email, emailLink, phone, whatsappLink} from './enquiry';
 
 export default function ContactContent(){return <Suspense fallback={null}><ContactDetails/></Suspense>;}
 function ContactDetails() {
@@ -22,17 +20,21 @@ function ContactDetails() {
   const offer=product?.offers.find(o=>o.id===params.get('offer'));
   const care=aftercarePlans.find(p=>p.published&&p.id===params.get('care')&&(!product||product.aftercareIds.includes(p.id)));
   const interest=params.get('interest')==='aftercare';
-  const context=product||care||interest?[
-    ar?'أرغب في الاستفسار من LINETECH عن:':'I would like to ask LINETECH about:',
+  const details=[
     product?.title[language],
     offer?offer.title[language]+' — '+formatPrice(offer.amount,offer.currency,language):'',
     offer?(offer.billing==='monthly'?(ar?'اشتراك شهري':'Monthly subscription'):(ar?'شراء لمرة واحدة':'One-time purchase')):'',
-    care?care.title[language]:interest?(ar?'خدمات ما بعد البيع':'After-sales care'):'',
+    care?.title[language],
+  ].filter(Boolean).join('\n');
+  const context=details?[
+    ar?'أرغب في الاستفسار من LINETECH عن:':'I would like to ask LINETECH about:',
+    details,
     ar?'يرجى تأكيد السعر والخدمات والترخيص وطريقة الدفع قبل الاتفاق.':'Please confirm price, services, licence and payment arrangements before agreement.',
-  ].filter(Boolean).join('\n'):'';
+  ].join('\n'):'';
+  const channelMessage=context || (interest ? (ar ? 'أرغب في الاستفسار عن خدمات ما بعد البيع.' : 'I would like to ask about after-sales care.') : '');
   const channels = [
-    { label: ar ? 'واتساب' : 'WhatsApp', detail: phone, href: 'https://wa.me/967773335065'+(context?'?text='+encodeURIComponent(context):''), action: ar ? 'افتح المحادثة' : 'Open WhatsApp', external: true },
-    { label: ar ? 'البريد الإلكتروني' : 'Email', detail: email, href: `mailto:${email}`+(context?"?"+new URLSearchParams({subject:ar?"استفسار عن منتجات وخدمات LINETECH":"LINETECH product & care enquiry",body:context}):""), action: ar ? 'اكتب رسالة' : 'Write an email', external: false },
+    { label: ar ? 'واتساب' : 'WhatsApp', detail: phone, href: whatsappLink(channelMessage), action: ar ? 'افتح المحادثة' : 'Open WhatsApp', external: true },
+    { label: ar ? 'البريد الإلكتروني' : 'Email', detail: email, href: emailLink(channelMessage ? (ar ? 'استفسار عن منتجات وخدمات LINETECH' : 'LINETECH product & care enquiry') : undefined, channelMessage), action: ar ? 'اكتب رسالة' : 'Write an email', external: false },
     { label: ar ? 'الاتصال' : 'Phone', detail: phone, href: `tel:${phone}`, action: ar ? 'اتصل بنا' : 'Call us', external: false },
   ];
   return <main className={`${styles.page} ${shared.page}`} data-viewport-page dir={ar ? 'rtl' : 'ltr'}>
@@ -52,7 +54,7 @@ function ContactDetails() {
           {channel.external && <small>{ar ? 'يفتح في نافذة جديدة' : 'Opens in a new tab'}</small>}
         </a>)}
       </section>
-      <ProjectEnquiry key={params.get('service')||'general'} initialService={params.get('service')||''}/>
+      <ProjectEnquiry initialService={interest || care ? 'after-sales-care' : params.get('service') || ''} details={details}/>
       <section className={styles.faq} id="faq" aria-labelledby="contact-faq-title">
         <h2 id="contact-faq-title">{ar?'أسئلة قبل أن نبدأ':'Before we begin'}</h2>
         <div className="platform-faq-list">{faqCopy[language].faqs.filter((_,index)=>[0,1,3,5,6,10].includes(index)).map(([question,answer])=><details key={question}><summary>{question}<span aria-hidden="true">+</span></summary><p>{answer}</p></details>)}</div>

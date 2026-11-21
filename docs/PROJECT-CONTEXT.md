@@ -1,6 +1,6 @@
-# LINETECH current context — 2026-10-25
+# LINETECH current context — 2026-11-21
 
-Repository: `mohammedwaleedmousa/-LINETECH`. Implementation branch: `codex/storefront-cleanup`, based on main `f8de175`. The owner asked to resolve accumulated versions/pages and implement the focused storefront described in this conversation. This document supersedes previous platform/company/research handoff text; historical details remain in git and SQL migration history.
+Repository: `mohammedwaleedmousa/-LINETECH`. The public-site launch pass builds on main `4baf12f`. Earlier storefront changes and SQL migration history remain in Git.
 
 ## Approved scope
 
@@ -17,17 +17,19 @@ Repository: `mohammedwaleedmousa/-LINETECH`. Implementation branch: `codex/store
 
 Catalog and product detail UI render real configured data. Website publication requires an HTTPS demo. Enquiry links select a published product and known offer/care plan; WhatsApp/email messages include the product/option and require the visitor to review and send. These are enquiries, not payment/order/subscription confirmation. `/admin/products` is a read-only source publication overview, not an online editor.
 
+The primary navigation is Home, Services, Projects, About and Contact. The Services hero points to available custom services while the product catalog is empty. Service and aftercare links preselect the relevant option in the public enquiry form, which carries product and offer details into its localized draft when applicable.
+
 `lib/navigation/route-policy.ts` owns canonical public/utility/legacy/retired paths; sitemap mirrors it. Removed page files/components/unused CSS are deleted. Company APIs no longer reach a backend. Removed document routes return 410, while consolidated service/category and legacy project routes use query-preserving 308 redirects. Auth protections, RLS, existing customer data and all SQL migrations are retained.
 
 Shared CSS files are flattened verbatim in original cascade order into `app/site-foundation.css`; scoped new product rules live in `app/storefront.css`. Page/module styles remain. This avoids another layer of patch files while retaining the home baseline. It does not claim a full selector-level rewrite.
 
 ## Current validation
 
-Full local build (including ten prebuild suites) and `npx tsc --noEmit` passed. 168 static references resolve to 38 app routes or existing assets. Browser verification passed 62 checks in AR/EN at 320/390/768/1440px, including empty catalog/reset, sale-model pages and absence of retired links. Home hero/font metrics, section classes/order and card counts matched the pre-cleanup export at 390/1440px in both languages. Mobile pricing and desktop home screenshots were inspected. Existing security/lifecycle and historical PostgreSQL migration tests remain in prebuild. New tests cover catalog publication rules, purchase/monthly/care models, direct-demo safety, contextual enquiries, deleted pages, API retirement, redirects and sitemap alignment. React fixture products are never published.
+The launch pass extends the existing localization suite with checks for service and aftercare preselection, Arabic draft content, and product context in email and WhatsApp enquiries. The production build includes route, security, migration, storefront, and exported SEO checks. The prior storefront cleanup included browser layout checks at 320, 390, 768 and 1440 pixels.
 
 ## Rollout and remaining work
 
-No remote database changes are made by this cleanup. Configured LINETECH Supabase project `vbaomkixvrtuuujcodii` was not available in the connected account; do not apply changes to Flamingo/Genan. Last main GitHub Actions run did not start due to a confirmed account billing lock; Cloudflare build failed and production does not establish source parity. New deployment status must be checked after publication; never claim rollout from a merge alone.
+On 2026-11-21 the eight public URLs, sitemap, robots.txt, and browser icon returned HTTP 200 on `linetech.company`. Unauthenticated client and admin project URLs redirected to their sign-in pages. The Worker returned HTTP 503 from `/api/health` with `supabaseAuth: false`. Access to the configured LINETECH Supabase project `vbaomkixvrtuuujcodii` was denied, so the upstream failure and authenticated workflows could not be verified. No remote database changes were made.
 
 Remaining: owner-approved real catalog data/prices/licences/care terms, database-backed catalog editing if wanted, actual product purchase/order/payment processing, multi-product subscription entitlements and renewal/cancellation, invoice/ticket capabilities, verified live deployment and Auth/PostgREST end-to-end checks. Existing legacy service subscriptions continue to use existing account/admin APIs.
 

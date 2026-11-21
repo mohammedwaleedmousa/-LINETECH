@@ -350,6 +350,7 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   assert.equal(document.querySelectorAll('main').length,1);
   assert.equal(document.querySelectorAll('h1').length,1);
   for(const id of ['choose','web-development','app-development','ecommerce-systems','catalog','pricing','aftercare'])assert(document.getElementById(id), 'Missing merged section '+id);
+  assert.equal(document.querySelector('[data-viewport-hero] a[href="#choose"]').textContent,'Explore services');
   await act(async () => setLanguage('ar'));
 
   const Catalog = require('../app/products/Catalog.tsx').default;
@@ -386,7 +387,40 @@ const buttonContaining = text => [...document.querySelectorAll('button')]
   const message=new URL(whatsapp.href).searchParams.get('text');
   assert(message.includes('Fixture store')&&message.includes('Monthly subscription'));
   assert(document.body.textContent.includes('No purchase or subscription has been activated.'));
+  await fill(document.querySelector('input[name="name"]'), 'Customer One');
+  await fill(document.querySelector('input[name="contact"]'), 'customer@example.test');
+  await fill(document.querySelector('textarea[name="brief"]'), 'Can I customise this product?');
+  await click(buttonContaining('Prepare enquiry'));
+  assert(document.querySelector('[role="status"]').textContent.includes('Fixture store'));
+
   await act(async()=>setLanguage('ar'));
+  for (const [query, id, label] of [
+    ['service=web-development', 'web-development', 'تطوير المواقع'],
+    ['service=Stores+%26+business+systems', 'ecommerce-systems', 'المتاجر والأنظمة'],
+    ['interest=aftercare', 'after-sales-care', 'خدمات ما بعد البيع'],
+  ]) {
+    window.history.replaceState({}, '', '/contact?' + query + '#request');
+    await render(Contact);
+    const select = document.querySelector('select[name="service"]');
+    assert.equal(select.value, id);
+    assert.equal(select.selectedOptions[0].textContent, label);
+  }
+  await fill(document.querySelector('input[name="name"]'), 'عميل جديد');
+  await fill(document.querySelector('input[name="contact"]'), '+967 700 000 000');
+  await fill(document.querySelector('textarea[name="brief"]'), 'صيانة موقع\nوتحديث صفحتين');
+  await click(buttonContaining('جهّز رسالة الطلب'));
+  const careDraft = document.querySelector('[role="status"]');
+  const mailto = careDraft.querySelector('a[href^="mailto:"]').getAttribute('href');
+  assert.equal(new URL(mailto).searchParams.get('subject'), 'استفسار عن مشروع لدى LINETECH');
+  assert(new URL(mailto).searchParams.get('body').includes('صيانة موقع\r\nوتحديث صفحتين'));
+  assert(!mailto.includes('+'));
+  assert(careDraft.textContent.includes('خدمات ما بعد البيع'));
+  assert.equal(document.activeElement, careDraft.querySelector('h3'));
+
+  window.history.replaceState({}, '', '/contact?service=unknown');
+  await render(Contact);
+  assert.equal(document.querySelector('select[name="service"]').value, '');
+
   window.history.replaceState({},'', '/products/view?product=missing');
   await render(Detail);
   assert(document.body.textContent.includes('المنتج غير متاح.'));
