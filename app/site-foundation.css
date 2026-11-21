@@ -4111,8 +4111,9 @@ html[dir="rtl"] .chat-message-meta{right:auto!important;left:9px!important}
 .language-toggle .language-globe{width:15px;height:15px;margin-inline-end:7px;opacity:.8}
 
 html[dir="rtl"] body{
+  --arabic-ui-font:"IBM Plex Sans Arabic","Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
   direction:rtl;
-  font-family:"Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+  font-family:var(--arabic-ui-font);
   font-kerning:normal;
   text-rendering:optimizeLegibility;
 }
@@ -4128,7 +4129,7 @@ html[dir="rtl"] .info-page-hero h1,
 html[dir="rtl"] .login-copy h1,
 html[dir="rtl"] .thank-you-hero h1,
 html[dir="rtl"] .not-found-page h1{
-  font-family:"Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+  font-family:var(--arabic-ui-font);
   letter-spacing:0!important;
   line-height:1.08!important;
   font-weight:700;
@@ -4145,7 +4146,7 @@ html[dir="rtl"] textarea,
 html[dir="rtl"] select,
 html[dir="rtl"] button,
 html[dir="rtl"] a{
-  font-family:"Tajawal","Noto Kufi Arabic","Segoe UI",Tahoma,Arial,sans-serif;
+  font-family:var(--arabic-ui-font);
 }
 
 /* English uses tracking on small technical labels; Arabic should feel equally premium without artificial spacing. */

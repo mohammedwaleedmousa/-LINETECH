@@ -1,4 +1,5 @@
 /* Keep the home visual baseline stable; new commerce rules are scoped. */
+@import "./arabic-fonts.css";
 @import "./site-foundation.css";
 @import "./storefront.css";
 
